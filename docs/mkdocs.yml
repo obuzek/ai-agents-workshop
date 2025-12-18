@@ -1,0 +1,83 @@
+# Inherit config from base
+INHERIT: ./base.yml
+
+# Project Information
+site_name: "AI Agents Workshop"
+site_url: "https://ibm.github.io/ai-agents-workshop/"
+site_description: "Hands-on workshop for building AI agents"
+site_author: "IBM Research"
+
+# Repository Information
+repo_name: "IBM/ai-agents-workshop"
+repo_url: "https://github.com/IBM/ai-agents-workshop"
+
+# Copyright
+copyright: Copyright &copy; 2025- IBM Research
+
+# Theme settings
+theme:
+  language: en
+  features:
+    - announce.dismiss # Button to dismiss the current temporary announcement
+    - content.action.edit
+    - content.action.feedback
+    # - content.action.view
+    - content.code.annotate # Attach arbitrary content to specific sections of code blocks by adding numeric markers
+    - content.code.copy # Button to allow the user to copy a code block's contents to the clipboard
+    # - content.tabs.link
+    # - navigation.expand     # Expand left sidebar by default
+    - navigation.indexes # Attach documents to sections, useful for providing overview pages
+    - navigation.instant # Single page instant refresh
+    # - navigation.sections   # Top level tabs rendered in sidebar
+    - navigation.tabs # Navigation tabs across top. Comment this out to have navigation on the left
+    - navigation.tabs.sticky # Tab always displayed
+    - navigation.top # Back-to-top button. Rendered centered and just below the header
+    - navigation.tracking # URL updated with active anchor
+    - search.share
+    - search.suggest
+    - toc.integrate # Integrate page TOC in left sidebar - wider page
+  icon:
+    edit: "material/pencil-outline"
+
+markdown_extensions:
+  pymdownx.magiclink:
+    provider: "github"
+    repo_url_shortener: true
+    repo_url_shorthand: false
+    social_url_shorthand: true
+    user: IBM
+    repo: ai-agents-workshop
+  toc:
+    permalink: true
+    toc_depth: 3
+
+plugins:
+  # Built-in blog plugin - see https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
+  # blog:
+  #     blog_dir: "blog"
+  #     pagination_per_page: 5
+  #     post_date_format: full
+  #     post_url_date_format: yyyy/MM/dd
+  # Allow Tags on the pages - see https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/
+  # tags:
+  #     tags_file: tags.md
+  # Configure the PDF export plugin - DISABLED (requires system libraries)
+  # To enable: install pango, cairo, etc. and uncomment below
+  # with-pdf: # This creates a single PDF document for the whole site
+  #   author: IBM Research
+  #   copyright: Copyright &copy; 2025- IBM Research
+  #   cover: true
+  #   back_cover: false
+  #   cover_title: AI Agents Workshop
+  #   cover_subtitle: Hands-on with AI Agents
+  #   cover_logo: "theme/logo.png"
+  #   toc_title: Contents
+  #   toc_level: 2
+  #   exclude_pages:
+  #     - "blog"
+  #   output_path: ./pdf/ai-agents-workshop-docs.pdf
+  #   enabled_if_env: ENABLE_PDF_EXPORT
+  #   debug_html: true
+  #   verbose: false
+
+# Made with Bob

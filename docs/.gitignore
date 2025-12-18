@@ -1,0 +1,9 @@
+tmp/
+*.db
+.DS_Store
+env
+site/
+.idea/
+*.swp
+build.log
+.cache
