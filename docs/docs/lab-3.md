@@ -1,117 +1,86 @@
-# Lab 3: Advanced Agent Patterns
+# Lab 3: Improving Your Agent
 
-In this lab, you'll explore advanced agent architectures including multi-agent systems, memory management, and production-ready patterns.
+**Duration:** ~20 minutes
 
-## Learning Objectives
-
-- Implement multi-agent systems
-- Add persistent memory to agents
-- Build agent orchestration patterns
-- Apply production best practices
-
-## Coming Soon
-
-This lab is currently under development. Check back soon for:
-
-- Multi-agent collaboration patterns
-- Advanced memory systems
-- Agent orchestration frameworks
-- Production deployment strategies
-- Monitoring and observability
-- Security and safety considerations
-
-## Preview: Multi-Agent Architecture
-
-```mermaid
-flowchart TB
-    A[User Request] --> B[Orchestrator Agent]
-    B --> C{Task Type?}
-    C -->|Research| D[Research Agent]
-    C -->|Analysis| E[Analysis Agent]
-    C -->|Writing| F[Writing Agent]
-    D --> G[Synthesizer Agent]
-    E --> G
-    F --> G
-    G --> H[Final Response]
-```
-
-## Topics to be Covered
-
-### 1. Multi-Agent Systems
-- Agent roles and specialization
-- Communication protocols
-- Task delegation
-- Result aggregation
-
-### 2. Memory Systems
-- Vector databases for long-term memory
-- Conversation summarization
-- Knowledge graphs
-- Retrieval strategies
-
-### 3. Advanced Reasoning
-- Chain-of-Thought prompting
-- Tree-of-Thoughts exploration
-- Self-reflection and critique
-- Planning and replanning
-
-### 4. Production Patterns
-- Error handling and recovery
-- Rate limiting and quotas
-- Monitoring and logging
-- Testing strategies
-
-## Placeholder Code Examples
-
-### Multi-Agent Coordinator
-
-```python
-class AgentCoordinator:
-    """Coordinates multiple specialized agents."""
-    
-    def __init__(self):
-        self.agents = {
-            "research": ResearchAgent(),
-            "analysis": AnalysisAgent(),
-            "writing": WritingAgent()
-        }
-    
-    async def process_task(self, task: str):
-        # Determine which agents to use
-        # Coordinate their work
-        # Synthesize results
-        pass
-```
-
-### Memory-Enhanced Agent
-
-```python
-class MemoryAgent:
-    """Agent with persistent memory."""
-    
-    def __init__(self):
-        self.vector_store = VectorStore()
-        self.conversation_buffer = []
-    
-    def remember(self, content: str):
-        # Store in vector database
-        pass
-    
-    def recall(self, query: str):
-        # Retrieve relevant memories
-        pass
-```
-
-## Stay Tuned
-
-This lab will be completed soon. In the meantime:
-
-1. Review [Lab 1](./lab-1.md) and [Lab 2](./lab-2.md)
-2. Experiment with your own agent implementations
-3. Explore the [Additional Resources](./resources.md)
+???+ abstract "What You'll Improve"
+    You have a working agent and you can see what it's doing. Now let's make it better. In this lab you'll use the observability data from Lab 2 to identify failure modes, then apply targeted improvements: better prompting, error recovery, and guardrails.
 
 ---
 
-## Feedback Welcome
+## Learning Objectives
 
-Have ideas for what should be included in this lab? Open an issue or discussion on GitHub!
+- Use trace data to identify where the agent fails or loops
+- Improve agent reliability with better system prompts and constraints
+- Implement graceful error handling and retry logic
+- Add a human-in-the-loop approval step for high-stakes actions
+
+---
+
+## Overview
+
+Common failure modes in the naive agent (visible once you have observability):
+
+| Problem | Symptom | Fix |
+|---|---|---|
+| Infinite loops | Agent keeps calling the same tool | Max iterations + exit conditions |
+| Bad tool inputs | Tool errors cascade | Input validation + retry with feedback |
+| Hallucinated tools | Agent calls a tool that doesn't exist | Strict tool list enforcement |
+| Runaway actions | Agent takes unintended side effects | Human-in-the-loop for destructive actions |
+
+---
+
+## Step 1: Fix Infinite Loops
+
+```python
+# TODO: add iteration limits and loop detection
+```
+
+---
+
+## Step 2: Add Error Recovery
+
+```python
+# TODO: implement retry logic with error feedback to the model
+```
+
+---
+
+## Step 3: Strengthen the System Prompt
+
+```python
+# TODO: add constraints and clearer behavioral guidelines
+```
+
+---
+
+## Step 4: Add a Human Approval Gate
+
+```python
+# TODO: add human-in-the-loop for high-stakes tool calls
+```
+
+---
+
+## Step 5: Verify Improvements with Observability
+
+Run the same test cases from Lab 1 and compare the traces side by side.
+
+```bash
+# TODO: add comparison instructions
+```
+
+---
+
+## What Did We Learn?
+
+A few targeted improvements dramatically change agent reliability:
+
+- Clear exit conditions prevent runaway loops
+- Error feedback to the model enables self-correction
+- Constrained prompts reduce hallucination and scope creep
+- Human gates are the last line of defense for irreversible actions
+
+---
+
+???+ tip "Up Next"
+    Head to [Lab 4: Securing Data Used By The Agent](./lab-4.md) to harden your agent against data leakage and prompt injection.

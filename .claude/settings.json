@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(python3 *)",
+      "Bash(make *)",
+      "Bash(ls *)",
+      "Bash(cp *)",
+      "Bash(mkdir *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(which *)",
+      "Bash(echo *)",
+      "mcp__github__*",
+      "WebFetch",
+      "WebSearch"
+    ]
+  }
+}

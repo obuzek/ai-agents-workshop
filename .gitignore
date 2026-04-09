@@ -172,3 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+.claude/.env
+.claude/settings.local.json
+.ai-worktrees/
+.agent-lock

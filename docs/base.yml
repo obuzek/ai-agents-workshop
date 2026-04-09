@@ -5,7 +5,7 @@ edit_uri: "edit/main/docs/docs"
 docs_dir: "docs"
 site_dir: "site"
 remote_branch: "gh-pages"
-remote_name: "origin"
+remote_name: "github"
 
 # Server info
 dev_addr: "127.0.0.1:8003"
@@ -36,7 +36,9 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-  font: false
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
   favicon: "favicon.ico"
   logo: "logo.png"
 

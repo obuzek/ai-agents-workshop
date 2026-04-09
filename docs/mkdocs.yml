@@ -3,13 +3,13 @@ INHERIT: ./base.yml
 
 # Project Information
 site_name: "AI Agents Workshop"
-site_url: "https://ibm.github.io/ai-agents-workshop/"
+site_url: "https://obuzek.github.io/ai-agents-workshop/"
 site_description: "Hands-on workshop for building AI agents"
 site_author: "IBM Research"
 
 # Repository Information
-repo_name: "IBM/ai-agents-workshop"
-repo_url: "https://github.com/IBM/ai-agents-workshop"
+repo_name: "obuzek/ai-agents-workshop"
+repo_url: "https://github.com/obuzek/ai-agents-workshop"
 
 # Copyright
 copyright: Copyright &copy; 2025- IBM Research
