@@ -12,7 +12,7 @@
         <meta name="author" content="IBM Research">
       
       
-        <link rel="canonical" href="https://ibm.github.io/ai-agents-workshop/lab-1/">
+        <link rel="canonical" href="https://obuzek.github.io/ai-agents-workshop/lab-1/">
       
       
         <link rel="prev" href="../getting-started/">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Lab 1: Introduction to AI Agents - AI Agents Workshop</title>
+        <title>Lab 1: Naive Agent Implementation - AI Agents Workshop</title>
       
     
     
@@ -46,6 +46,12 @@
       
     
     
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
     
@@ -74,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-1-introduction-to-ai-agents" class="md-skip">
+        <a href="#lab-1-naive-agent-implementation" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 1: Introduction to AI Agents
+              Lab 1: Naive Agent Implementation
             
           </span>
         </div>
@@ -196,13 +202,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/IBM/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/obuzek/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    IBM/ai-agents-workshop
+    obuzek/ai-agents-workshop
   </div>
 </a>
       </div>
@@ -286,7 +292,7 @@
   
     
   
-  Lab 1: Introduction to AI Agents
+  Lab 1: Naive Agent Implementation
 
       </a>
     </li>
@@ -305,7 +311,7 @@
   
     
   
-  Lab 2: Building Your First Agent with Tools
+  Lab 2: Observability
 
       </a>
     </li>
@@ -324,7 +330,26 @@
   
     
   
-  Lab 3: Advanced Agent Patterns
+  Lab 3: Improving Your Agent
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../lab-4/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Lab 4: Securing Data Used By The Agent
 
       </a>
     </li>
@@ -363,6 +388,25 @@
     
   
   Additional Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../slides/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Presentation
 
       </a>
     </li>
@@ -430,13 +474,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/IBM/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/obuzek/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    IBM/ai-agents-workshop
+    obuzek/ai-agents-workshop
   </div>
 </a>
     </div>
@@ -547,7 +591,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 1: Introduction to AI Agents
+    Lab 1: Naive Agent Implementation
   
 
     
@@ -565,7 +609,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 1: Introduction to AI Agents
+    Lab 1: Naive Agent Implementation
   
 
     
@@ -602,10 +646,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Overview
       
     </span>
   </a>
@@ -613,10 +657,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-overview" class="md-nav__link">
+  <a href="#step-1-set-up-your-environment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab Overview
+        Step 1: Set Up Your Environment
       
     </span>
   </a>
@@ -624,10 +668,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-project-setup" class="md-nav__link">
+  <a href="#step-2-define-your-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Project Setup
+        Step 2: Define Your Tools
       
     </span>
   </a>
@@ -635,21 +679,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-create-your-first-agent" class="md-nav__link">
+  <a href="#step-3-implement-the-agent-loop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Create Your First Agent
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-create-environment-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Create Environment File
+        Step 3: Implement the Agent Loop
       
     </span>
   </a>
@@ -668,185 +701,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#understanding-the-code" class="md-nav__link">
+  <a href="#what-did-we-learn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Understanding the Code
+        What Did We Learn?
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Understanding the Code">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-agent-class" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Agent Class
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-system-prompt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The System Prompt
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-chat-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Chat Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exercises" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exercises
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Exercises">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#exercise-1-customize-the-system-prompt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exercise 1: Customize the System Prompt
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exercise-2-add-conversation-limits" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exercise 2: Add Conversation Limits
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exercise-3-add-response-streaming" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exercise 3: Add Response Streaming
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alternative-using-ollama" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Alternative: Using Ollama
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key Takeaways
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next Steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#api-key-errors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Key Errors
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rate-limiting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rate Limiting
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import-errors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Import Errors
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -872,7 +733,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 2: Building Your First Agent with Tools
+    Lab 2: Observability
   
 
     
@@ -899,7 +760,34 @@
   <span class="md-ellipsis">
     
   
-    Lab 3: Advanced Agent Patterns
+    Lab 3: Improving Your Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 4: Securing Data Used By The Agent
   
 
     
@@ -972,6 +860,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../slides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
       
@@ -990,7 +905,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -1013,8 +928,8 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1050,7 +965,7 @@
 
 
   
-    <a href="https://github.com/IBM/ai-agents-workshop/edit/main/docs/docs/lab-1.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/obuzek/ai-agents-workshop/edit/main/docs/docs/lab-1.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.06 9 .94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg>
     </a>
@@ -1058,316 +973,67 @@
   
 
 
-<h1 id="lab-1-introduction-to-ai-agents">Lab 1: Introduction to AI Agents<a class="headerlink" href="#lab-1-introduction-to-ai-agents" title="Permanent link">&para;</a></h1>
-<p>In this lab, you'll build your first AI agent - a simple but functional agent that can respond to queries and demonstrate basic reasoning capabilities.</p>
-<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
-<p>By the end of this lab, you will:</p>
-<ul>
-<li>Understand the basic structure of an AI agent</li>
-<li>Create a simple agent using Python</li>
-<li>Implement basic prompt engineering</li>
-<li>Test and interact with your agent</li>
-</ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Completed <a href="../prerequisites/">Prerequisites</a> setup</li>
-<li>Python 3.11+ installed</li>
-<li>API key configured (OpenAI, watsonx.ai, or Ollama running)</li>
-</ul>
-<h2 id="lab-overview">Lab Overview<a class="headerlink" href="#lab-overview" title="Permanent link">&para;</a></h2>
-<p>We'll build a simple agent that can:</p>
-<ol>
-<li>Accept user queries</li>
-<li>Process them using an LLM</li>
-<li>Generate helpful responses</li>
-<li>Maintain conversation context</li>
-</ol>
-<h2 id="step-1-project-setup">Step 1: Project Setup<a class="headerlink" href="#step-1-project-setup" title="Permanent link">&para;</a></h2>
-<p>Create a new directory for your agent:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>my-first-agent
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>my-first-agent
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Create a virtual environment</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>uv<span class="w"> </span>venv
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: .venv\Scripts\activate</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Install required packages</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>openai<span class="w"> </span>python-dotenv
-</span></code></pre></div>
-<h2 id="step-2-create-your-first-agent">Step 2: Create Your First Agent<a class="headerlink" href="#step-2-create-your-first-agent" title="Permanent link">&para;</a></h2>
-<p>Create a file called <code>simple_agent.py</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># simple_agent.py</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Load environment variables</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">load_dotenv</span><span class="p">()</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">SimpleAgent</span><span class="p">:</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;A basic AI agent that can respond to queries.&quot;&quot;&quot;</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">):</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the agent with an LLM.&quot;&quot;&quot;</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">))</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="c1"># Define the agent&#39;s system prompt</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="s2">        You are a helpful AI assistant. Your role is to:</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="s2">        - Answer questions clearly and concisely</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="s2">        - Break down complex topics into understandable parts</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="s2">        - Ask for clarification when needed</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="s2">        - Admit when you don&#39;t know something</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="s2">        </span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="s2">        Always be helpful, honest, and harmless.</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="s2">        &quot;&quot;&quot;</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="sd">        Send a message to the agent and get a response.</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="sd">        </span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="sd">        Args:</span>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="sd">            user_message: The user&#39;s input message</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="sd">            </span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="sd">        Returns:</span>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="sd">            The agent&#39;s response</span>
-</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>        <span class="c1"># Add user message to history</span>
-</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_message</span>
-</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>        <span class="p">})</span>
-</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>        
-</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>        <span class="c1"># Prepare messages for the API call</span>
-</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>        <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span><span class="p">}</span>
-</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>        <span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span>
-</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>        
-</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>        <span class="c1"># Call the LLM</span>
-</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>            <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span>
-</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>        <span class="p">)</span>
-</span><span id="__span-1-57"><a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>        
-</span><span id="__span-1-58"><a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>        <span class="c1"># Extract the assistant&#39;s response</span>
-</span><span id="__span-1-59"><a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>        <span class="n">assistant_message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-</span><span id="__span-1-60"><a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>        
-</span><span id="__span-1-61"><a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>        <span class="c1"># Add to conversation history</span>
-</span><span id="__span-1-62"><a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-1-63"><a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-1-64"><a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">assistant_message</span>
-</span><span id="__span-1-65"><a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>        <span class="p">})</span>
-</span><span id="__span-1-66"><a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>        
-</span><span id="__span-1-67"><a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a>        <span class="k">return</span> <span class="n">assistant_message</span>
-</span><span id="__span-1-68"><a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a>    
-</span><span id="__span-1-69"><a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-1-70"><a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear the conversation history.&quot;&quot;&quot;</span>
-</span><span id="__span-1-71"><a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-1-72"><a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a>
-</span><span id="__span-1-73"><a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>
-</span><span id="__span-1-74"><a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-</span><span id="__span-1-75"><a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Run an interactive chat session with the agent.&quot;&quot;&quot;</span>
-</span><span id="__span-1-76"><a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple AI Agent&quot;</span><span class="p">)</span>
-</span><span id="__span-1-77"><a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-</span><span id="__span-1-78"><a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Type &#39;quit&#39; to exit, &#39;reset&#39; to clear history</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-1-79"><a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a>    
-</span><span id="__span-1-80"><a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a>    <span class="n">agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">()</span>
-</span><span id="__span-1-81"><a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a>    
-</span><span id="__span-1-82"><a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="__span-1-83"><a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a>        <span class="c1"># Get user input</span>
-</span><span id="__span-1-84"><a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a>        <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;You: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-</span><span id="__span-1-85"><a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a>        
-</span><span id="__span-1-86"><a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_input</span><span class="p">:</span>
-</span><span id="__span-1-87"><a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a>            <span class="k">continue</span>
-</span><span id="__span-1-88"><a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a>            
-</span><span id="__span-1-89"><a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>        <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;quit&#39;</span><span class="p">:</span>
-</span><span id="__span-1-90"><a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
-</span><span id="__span-1-91"><a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a>            <span class="k">break</span>
-</span><span id="__span-1-92"><a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>            
-</span><span id="__span-1-93"><a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a>        <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;reset&#39;</span><span class="p">:</span>
-</span><span id="__span-1-94"><a id="__codelineno-1-94" name="__codelineno-1-94" href="#__codelineno-1-94"></a>            <span class="n">agent</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-</span><span id="__span-1-95"><a id="__codelineno-1-95" name="__codelineno-1-95" href="#__codelineno-1-95"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conversation history cleared.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-1-96"><a id="__codelineno-1-96" name="__codelineno-1-96" href="#__codelineno-1-96"></a>            <span class="k">continue</span>
-</span><span id="__span-1-97"><a id="__codelineno-1-97" name="__codelineno-1-97" href="#__codelineno-1-97"></a>        
-</span><span id="__span-1-98"><a id="__codelineno-1-98" name="__codelineno-1-98" href="#__codelineno-1-98"></a>        <span class="c1"># Get agent response</span>
-</span><span id="__span-1-99"><a id="__codelineno-1-99" name="__codelineno-1-99" href="#__codelineno-1-99"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-1-100"><a id="__codelineno-1-100" name="__codelineno-1-100" href="#__codelineno-1-100"></a>            <span class="n">response</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
-</span><span id="__span-1-101"><a id="__codelineno-1-101" name="__codelineno-1-101" href="#__codelineno-1-101"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Agent: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-1-102"><a id="__codelineno-1-102" name="__codelineno-1-102" href="#__codelineno-1-102"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-1-103"><a id="__codelineno-1-103" name="__codelineno-1-103" href="#__codelineno-1-103"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-1-104"><a id="__codelineno-1-104" name="__codelineno-1-104" href="#__codelineno-1-104"></a>
-</span><span id="__span-1-105"><a id="__codelineno-1-105" name="__codelineno-1-105" href="#__codelineno-1-105"></a>
-</span><span id="__span-1-106"><a id="__codelineno-1-106" name="__codelineno-1-106" href="#__codelineno-1-106"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="__span-1-107"><a id="__codelineno-1-107" name="__codelineno-1-107" href="#__codelineno-1-107"></a>    <span class="n">main</span><span class="p">()</span>
-</span></code></pre></div>
-<h2 id="step-3-create-environment-file">Step 3: Create Environment File<a class="headerlink" href="#step-3-create-environment-file" title="Permanent link">&para;</a></h2>
-<p>Create a <code>.env</code> file with your API key:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .env</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>your-api-key-here
-</span></code></pre></div>
-<h2 id="step-4-run-your-agent">Step 4: Run Your Agent<a class="headerlink" href="#step-4-run-your-agent" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>simple_agent.py
-</span></code></pre></div>
-<p>Try these example interactions:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>You: What is an AI agent?
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Agent: [Explains AI agents...]
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>You: Can you give me an example?
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Agent: [Provides examples with context from previous message...]
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>You: reset
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Conversation history cleared.
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>You: quit
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Goodbye!
-</span></code></pre></div>
-<h2 id="understanding-the-code">Understanding the Code<a class="headerlink" href="#understanding-the-code" title="Permanent link">&para;</a></h2>
-<h3 id="the-agent-class">The Agent Class<a class="headerlink" href="#the-agent-class" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SimpleAgent</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">):</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        <span class="c1"># Initialize with model and empty history</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span> <span class="o">=</span> <span class="p">[]</span>
-</span></code></pre></div>
-<p>The agent maintains conversation history to provide context-aware responses.</p>
-<h3 id="the-system-prompt">The System Prompt<a class="headerlink" href="#the-system-prompt" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s2">You are a helpful AI assistant...</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s2">&quot;&quot;&quot;</span>
-</span></code></pre></div>
-<p>The system prompt defines the agent's behavior and personality.</p>
-<h3 id="the-chat-method">The Chat Method<a class="headerlink" href="#the-chat-method" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="c1"># Add message to history</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="c1"># Call LLM with full context</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="c1"># Return response</span>
-</span></code></pre></div>
-<p>This method handles the conversation flow and maintains context.</p>
-<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
-<h3 id="exercise-1-customize-the-system-prompt">Exercise 1: Customize the System Prompt<a class="headerlink" href="#exercise-1-customize-the-system-prompt" title="Permanent link">&para;</a></h3>
-<p>Modify the system prompt to create different agent personalities:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># A coding assistant</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="s2">You are an expert programming assistant specializing in Python.</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="s2">Help users write clean, efficient code with clear explanations.</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># A creative writing helper</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="s2">You are a creative writing assistant. Help users brainstorm ideas,</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="s2">develop characters, and improve their storytelling.</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="s2">&quot;&quot;&quot;</span>
-</span></code></pre></div>
-<h3 id="exercise-2-add-conversation-limits">Exercise 2: Add Conversation Limits<a class="headerlink" href="#exercise-2-add-conversation-limits" title="Permanent link">&para;</a></h3>
-<p>Prevent the conversation history from growing too large:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_history</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="c1"># Keep only the last N messages</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_history</span><span class="p">:</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="p">[</span><span class="o">-</span><span class="n">max_history</span><span class="p">:]</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="c1"># ... rest of the method</span>
-</span></code></pre></div>
-<h3 id="exercise-3-add-response-streaming">Exercise 3: Add Response Streaming<a class="headerlink" href="#exercise-3-add-response-streaming" title="Permanent link">&para;</a></h3>
-<p>Make the agent stream responses for better UX:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">chat_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Stream the agent&#39;s response token by token.&quot;&quot;&quot;</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="c1"># Add user message</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_message</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="p">})</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span><span class="p">}</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    <span class="c1"># Stream the response</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    <span class="n">stream</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>        <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>        <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>
-</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>    <span class="p">)</span>
-</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>    
-</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>    <span class="n">full_response</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
-</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>        <span class="k">if</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
-</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>            <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span>
-</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>            <span class="n">full_response</span> <span class="o">+=</span> <span class="n">content</span>
-</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>    
-</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>    <span class="nb">print</span><span class="p">()</span>  <span class="c1"># New line after streaming</span>
-</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>    
-</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>    <span class="c1"># Add to history</span>
-</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>        <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">full_response</span>
-</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>    <span class="p">})</span>
-</span></code></pre></div>
-<h2 id="alternative-using-ollama">Alternative: Using Ollama<a class="headerlink" href="#alternative-using-ollama" title="Permanent link">&para;</a></h2>
-<p>If you prefer to run models locally:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># simple_agent_ollama.py</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">OllamaAgent</span><span class="p">:</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3.2&quot;</span><span class="p">):</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;You are a helpful AI assistant.&quot;</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_message</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>        <span class="p">})</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>        
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>        <span class="c1"># Call Ollama API</span>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>            <span class="s2">&quot;http://localhost:11434/api/chat&quot;</span><span class="p">,</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>            <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>                <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>                    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_prompt</span><span class="p">}</span>
-</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>                <span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="p">,</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>                <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="kc">False</span>
-</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>            <span class="p">}</span>
-</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>        <span class="p">)</span>
-</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>        
-</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>        <span class="n">assistant_message</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">][</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
-</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>        
-</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">assistant_message</span>
-</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>        <span class="p">})</span>
-</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>        
-</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a>        <span class="k">return</span> <span class="n">assistant_message</span>
-</span></code></pre></div>
-<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Simple agents</strong> need just an LLM and a system prompt</li>
-<li><strong>Conversation history</strong> enables context-aware responses</li>
-<li><strong>System prompts</strong> define agent behavior and personality</li>
-<li><strong>Error handling</strong> is important for production agents</li>
-</ol>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<p>Now that you have a basic agent working, proceed to <a href="../lab-2/">Lab 2: Building Your First Agent</a> where you'll add tool-using capabilities!</p>
+<h1 id="lab-1-naive-agent-implementation">Lab 1: Naive Agent Implementation<a class="headerlink" href="#lab-1-naive-agent-implementation" title="Permanent link">&para;</a></h1>
+<p><strong>Duration:</strong> ~20 minutes</p>
+<details class="abstract" open="open">
+<summary>What You'll Build</summary>
+<p>In this lab you'll implement a basic AI agent from scratch — no frameworks, no guardrails. The goal is to understand the core loop: receive input, reason with an LLM, call a tool, observe the result, repeat.</p>
+<p>By the end you'll have a working (if naive) agent and a clear sense of where the rough edges are.</p>
+</details>
 <hr />
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="api-key-errors">API Key Errors<a class="headerlink" href="#api-key-errors" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Error: Incorrect API key provided
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Understand the agent reasoning loop (perceive → reason → act → observe)</li>
+<li>Implement tool calling manually against an LLM API</li>
+<li>Run your agent against a simple task end-to-end</li>
+<li>Identify the limitations of a naive implementation</li>
+</ul>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>A minimal agent needs three things:</p>
+<ol>
+<li><strong>A model</strong> — to reason and decide what to do</li>
+<li><strong>Tools</strong> — functions the model can call</li>
+<li><strong>A loop</strong> — to keep running until the task is done</li>
+</ol>
+<p>We'll build each piece in order.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[User Input] --&gt; B[LLM]
+    B --&gt; C{Tool Call?}
+    C --&gt;|Yes| D[Execute Tool]
+    D --&gt; B
+    C --&gt;|No| E[Return Response]</code></pre>
+<hr />
+<h2 id="step-1-set-up-your-environment">Step 1: Set Up Your Environment<a class="headerlink" href="#step-1-set-up-your-environment" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># TODO: add setup instructions</span>
 </span></code></pre></div>
-<p>Solution: Check your <code>.env</code> file and ensure the API key is correct.</p>
-<h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Error: Rate limit exceeded
+<hr />
+<h2 id="step-2-define-your-tools">Step 2: Define Your Tools<a class="headerlink" href="#step-2-define-your-tools" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># TODO: add tool definitions</span>
 </span></code></pre></div>
-<p>Solution: Add retry logic or use a different model tier.</p>
-<h3 id="import-errors">Import Errors<a class="headerlink" href="#import-errors" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ModuleNotFoundError: No module named &#39;openai&#39;
+<hr />
+<h2 id="step-3-implement-the-agent-loop">Step 3: Implement the Agent Loop<a class="headerlink" href="#step-3-implement-the-agent-loop" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># TODO: add agent loop implementation</span>
 </span></code></pre></div>
-<p>Solution: Ensure you've activated your virtual environment and installed dependencies.</p>
+<hr />
+<h2 id="step-4-run-your-agent">Step 4: Run Your Agent<a class="headerlink" href="#step-4-run-your-agent" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># TODO: add run instructions and expected output</span>
+</span></code></pre></div>
+<hr />
+<h2 id="what-did-we-learn">What Did We Learn?<a class="headerlink" href="#what-did-we-learn" title="Permanent link">&para;</a></h2>
+<p>By running this naive implementation you should have noticed:</p>
+<ul>
+<li>The agent can loop indefinitely without a stopping condition</li>
+<li>There's no visibility into what the agent is "thinking"</li>
+<li>Errors from tools aren't handled gracefully</li>
+<li>Nothing prevents the agent from taking unintended actions</li>
+</ul>
+<p>These are the problems we'll address in the next three labs.</p>
+<hr />
+<details class="tip" open="open">
+<summary>Up Next</summary>
+<p>Head to <a href="../lab-2/">Lab 2: Observability</a> to add tracing and logging so you can actually see what your agent is doing.</p>
+</details>
 
 
 

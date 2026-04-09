@@ -12,13 +12,13 @@
         <meta name="author" content="IBM Research">
       
       
-        <link rel="canonical" href="https://ibm.github.io/ai-agents-workshop/lab-3/">
+        <link rel="canonical" href="https://obuzek.github.io/ai-agents-workshop/lab-3/">
       
       
         <link rel="prev" href="../lab-2/">
       
       
-        <link rel="next" href="../prerequisites/">
+        <link rel="next" href="../lab-4/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Lab 3: Advanced Agent Patterns - AI Agents Workshop</title>
+        <title>Lab 3: Improving Your Agent - AI Agents Workshop</title>
       
     
     
@@ -46,6 +46,12 @@
       
     
     
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
     
@@ -74,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-3-advanced-agent-patterns" class="md-skip">
+        <a href="#lab-3-improving-your-agent" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 3: Advanced Agent Patterns
+              Lab 3: Improving Your Agent
             
           </span>
         </div>
@@ -196,13 +202,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/IBM/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/obuzek/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    IBM/ai-agents-workshop
+    obuzek/ai-agents-workshop
   </div>
 </a>
       </div>
@@ -284,7 +290,7 @@
   
     
   
-  Lab 1: Introduction to AI Agents
+  Lab 1: Naive Agent Implementation
 
       </a>
     </li>
@@ -303,7 +309,7 @@
   
     
   
-  Lab 2: Building Your First Agent with Tools
+  Lab 2: Observability
 
       </a>
     </li>
@@ -324,7 +330,26 @@
   
     
   
-  Lab 3: Advanced Agent Patterns
+  Lab 3: Improving Your Agent
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../lab-4/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Lab 4: Securing Data Used By The Agent
 
       </a>
     </li>
@@ -363,6 +388,25 @@
     
   
   Additional Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../slides/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Presentation
 
       </a>
     </li>
@@ -430,13 +474,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/IBM/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/obuzek/ai-agents-workshop" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    IBM/ai-agents-workshop
+    obuzek/ai-agents-workshop
   </div>
 </a>
     </div>
@@ -538,7 +582,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 1: Introduction to AI Agents
+    Lab 1: Naive Agent Implementation
   
 
     
@@ -565,7 +609,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 2: Building Your First Agent with Tools
+    Lab 2: Observability
   
 
     
@@ -601,7 +645,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 3: Advanced Agent Patterns
+    Lab 3: Improving Your Agent
   
 
     
@@ -619,7 +663,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 3: Advanced Agent Patterns
+    Lab 3: Improving Your Agent
   
 
     
@@ -656,10 +700,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#coming-soon" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Coming Soon
+        Overview
       
     </span>
   </a>
@@ -667,10 +711,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preview-multi-agent-architecture" class="md-nav__link">
+  <a href="#step-1-fix-infinite-loops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Preview: Multi-Agent Architecture
+        Step 1: Fix Infinite Loops
       
     </span>
   </a>
@@ -678,110 +722,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#topics-to-be-covered" class="md-nav__link">
+  <a href="#step-2-add-error-recovery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topics to be Covered
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Topics to be Covered">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-multi-agent-systems" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Multi-Agent Systems
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-memory-systems" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Memory Systems
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-advanced-reasoning" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Advanced Reasoning
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-production-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Production Patterns
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#placeholder-code-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Placeholder Code Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Placeholder Code Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multi-agent-coordinator" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Multi-Agent Coordinator
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#memory-enhanced-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory-Enhanced Agent
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stay-tuned" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stay Tuned
+        Step 2: Add Error Recovery
       
     </span>
   </a>
@@ -789,10 +733,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#feedback-welcome" class="md-nav__link">
+  <a href="#step-3-strengthen-the-system-prompt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Feedback Welcome
+        Step 3: Strengthen the System Prompt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-add-a-human-approval-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Add a Human Approval Gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-verify-improvements-with-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Verify Improvements with Observability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-did-we-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Did We Learn?
       
     </span>
   </a>
@@ -803,6 +780,33 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 4: Securing Data Used By The Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -867,6 +871,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../slides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
       
@@ -885,7 +916,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -908,8 +939,8 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -945,7 +976,7 @@
 
 
   
-    <a href="https://github.com/IBM/ai-agents-workshop/edit/main/docs/docs/lab-3.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/obuzek/ai-agents-workshop/edit/main/docs/docs/lab-3.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.06 9 .94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg>
     </a>
@@ -953,109 +984,89 @@
   
 
 
-<h1 id="lab-3-advanced-agent-patterns">Lab 3: Advanced Agent Patterns<a class="headerlink" href="#lab-3-advanced-agent-patterns" title="Permanent link">&para;</a></h1>
-<p>In this lab, you'll explore advanced agent architectures including multi-agent systems, memory management, and production-ready patterns.</p>
+<h1 id="lab-3-improving-your-agent">Lab 3: Improving Your Agent<a class="headerlink" href="#lab-3-improving-your-agent" title="Permanent link">&para;</a></h1>
+<p><strong>Duration:</strong> ~20 minutes</p>
+<details class="abstract" open="open">
+<summary>What You'll Improve</summary>
+<p>You have a working agent and you can see what it's doing. Now let's make it better. In this lab you'll use the observability data from Lab 2 to identify failure modes, then apply targeted improvements: better prompting, error recovery, and guardrails.</p>
+</details>
+<hr />
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Implement multi-agent systems</li>
-<li>Add persistent memory to agents</li>
-<li>Build agent orchestration patterns</li>
-<li>Apply production best practices</li>
+<li>Use trace data to identify where the agent fails or loops</li>
+<li>Improve agent reliability with better system prompts and constraints</li>
+<li>Implement graceful error handling and retry logic</li>
+<li>Add a human-in-the-loop approval step for high-stakes actions</li>
 </ul>
-<h2 id="coming-soon">Coming Soon<a class="headerlink" href="#coming-soon" title="Permanent link">&para;</a></h2>
-<p>This lab is currently under development. Check back soon for:</p>
-<ul>
-<li>Multi-agent collaboration patterns</li>
-<li>Advanced memory systems</li>
-<li>Agent orchestration frameworks</li>
-<li>Production deployment strategies</li>
-<li>Monitoring and observability</li>
-<li>Security and safety considerations</li>
-</ul>
-<h2 id="preview-multi-agent-architecture">Preview: Multi-Agent Architecture<a class="headerlink" href="#preview-multi-agent-architecture" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart TB
-    A[User Request] --&gt; B[Orchestrator Agent]
-    B --&gt; C{Task Type?}
-    C --&gt;|Research| D[Research Agent]
-    C --&gt;|Analysis| E[Analysis Agent]
-    C --&gt;|Writing| F[Writing Agent]
-    D --&gt; G[Synthesizer Agent]
-    E --&gt; G
-    F --&gt; G
-    G --&gt; H[Final Response]</code></pre>
-<h2 id="topics-to-be-covered">Topics to be Covered<a class="headerlink" href="#topics-to-be-covered" title="Permanent link">&para;</a></h2>
-<h3 id="1-multi-agent-systems">1. Multi-Agent Systems<a class="headerlink" href="#1-multi-agent-systems" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Agent roles and specialization</li>
-<li>Communication protocols</li>
-<li>Task delegation</li>
-<li>Result aggregation</li>
-</ul>
-<h3 id="2-memory-systems">2. Memory Systems<a class="headerlink" href="#2-memory-systems" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Vector databases for long-term memory</li>
-<li>Conversation summarization</li>
-<li>Knowledge graphs</li>
-<li>Retrieval strategies</li>
-</ul>
-<h3 id="3-advanced-reasoning">3. Advanced Reasoning<a class="headerlink" href="#3-advanced-reasoning" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Chain-of-Thought prompting</li>
-<li>Tree-of-Thoughts exploration</li>
-<li>Self-reflection and critique</li>
-<li>Planning and replanning</li>
-</ul>
-<h3 id="4-production-patterns">4. Production Patterns<a class="headerlink" href="#4-production-patterns" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Error handling and recovery</li>
-<li>Rate limiting and quotas</li>
-<li>Monitoring and logging</li>
-<li>Testing strategies</li>
-</ul>
-<h2 id="placeholder-code-examples">Placeholder Code Examples<a class="headerlink" href="#placeholder-code-examples" title="Permanent link">&para;</a></h2>
-<h3 id="multi-agent-coordinator">Multi-Agent Coordinator<a class="headerlink" href="#multi-agent-coordinator" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentCoordinator</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Coordinates multiple specialized agents.&quot;&quot;&quot;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>            <span class="s2">&quot;research&quot;</span><span class="p">:</span> <span class="n">ResearchAgent</span><span class="p">(),</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            <span class="s2">&quot;analysis&quot;</span><span class="p">:</span> <span class="n">AnalysisAgent</span><span class="p">(),</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="s2">&quot;writing&quot;</span><span class="p">:</span> <span class="n">WritingAgent</span><span class="p">()</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="p">}</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="c1"># Determine which agents to use</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="c1"># Coordinate their work</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="c1"># Synthesize results</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="k">pass</span>
-</span></code></pre></div>
-<h3 id="memory-enhanced-agent">Memory-Enhanced Agent<a class="headerlink" href="#memory-enhanced-agent" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MemoryAgent</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Agent with persistent memory.&quot;&quot;&quot;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">vector_store</span> <span class="o">=</span> <span class="n">VectorStore</span><span class="p">()</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conversation_buffer</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">remember</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="c1"># Store in vector database</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">pass</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">recall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="c1"># Retrieve relevant memories</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="k">pass</span>
-</span></code></pre></div>
-<h2 id="stay-tuned">Stay Tuned<a class="headerlink" href="#stay-tuned" title="Permanent link">&para;</a></h2>
-<p>This lab will be completed soon. In the meantime:</p>
-<ol>
-<li>Review <a href="../lab-1/">Lab 1</a> and <a href="../lab-2/">Lab 2</a></li>
-<li>Experiment with your own agent implementations</li>
-<li>Explore the <a href="../resources/">Additional Resources</a></li>
-</ol>
 <hr />
-<h2 id="feedback-welcome">Feedback Welcome<a class="headerlink" href="#feedback-welcome" title="Permanent link">&para;</a></h2>
-<p>Have ideas for what should be included in this lab? Open an issue or discussion on GitHub!</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Common failure modes in the naive agent (visible once you have observability):</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infinite loops</td>
+<td>Agent keeps calling the same tool</td>
+<td>Max iterations + exit conditions</td>
+</tr>
+<tr>
+<td>Bad tool inputs</td>
+<td>Tool errors cascade</td>
+<td>Input validation + retry with feedback</td>
+</tr>
+<tr>
+<td>Hallucinated tools</td>
+<td>Agent calls a tool that doesn't exist</td>
+<td>Strict tool list enforcement</td>
+</tr>
+<tr>
+<td>Runaway actions</td>
+<td>Agent takes unintended side effects</td>
+<td>Human-in-the-loop for destructive actions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="step-1-fix-infinite-loops">Step 1: Fix Infinite Loops<a class="headerlink" href="#step-1-fix-infinite-loops" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># TODO: add iteration limits and loop detection</span>
+</span></code></pre></div>
+<hr />
+<h2 id="step-2-add-error-recovery">Step 2: Add Error Recovery<a class="headerlink" href="#step-2-add-error-recovery" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># TODO: implement retry logic with error feedback to the model</span>
+</span></code></pre></div>
+<hr />
+<h2 id="step-3-strengthen-the-system-prompt">Step 3: Strengthen the System Prompt<a class="headerlink" href="#step-3-strengthen-the-system-prompt" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># TODO: add constraints and clearer behavioral guidelines</span>
+</span></code></pre></div>
+<hr />
+<h2 id="step-4-add-a-human-approval-gate">Step 4: Add a Human Approval Gate<a class="headerlink" href="#step-4-add-a-human-approval-gate" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># TODO: add human-in-the-loop for high-stakes tool calls</span>
+</span></code></pre></div>
+<hr />
+<h2 id="step-5-verify-improvements-with-observability">Step 5: Verify Improvements with Observability<a class="headerlink" href="#step-5-verify-improvements-with-observability" title="Permanent link">&para;</a></h2>
+<p>Run the same test cases from Lab 1 and compare the traces side by side.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># TODO: add comparison instructions</span>
+</span></code></pre></div>
+<hr />
+<h2 id="what-did-we-learn">What Did We Learn?<a class="headerlink" href="#what-did-we-learn" title="Permanent link">&para;</a></h2>
+<p>A few targeted improvements dramatically change agent reliability:</p>
+<ul>
+<li>Clear exit conditions prevent runaway loops</li>
+<li>Error feedback to the model enables self-correction</li>
+<li>Constrained prompts reduce hallucination and scope creep</li>
+<li>Human gates are the last line of defense for irreversible actions</li>
+</ul>
+<hr />
+<details class="tip" open="open">
+<summary>Up Next</summary>
+<p>Head to <a href="../lab-4/">Lab 4: Securing Data Used By The Agent</a> to harden your agent against data leakage and prompt injection.</p>
+</details>
 
 
 
