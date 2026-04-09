@@ -52,13 +52,19 @@ cd ai-agents-workshop
 ### 2. Set Up Development Environment
 
 ```bash
-# Create virtual environment
-uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# Install lab code dependencies
+uv sync
 
-# Install dependencies
-cd docs
-uv pip install -r requirements.txt
+# Install MkDocs as a global tool (one-time, for docs work)
+uv tool install mkdocs \
+  --with mkdocs-material \
+  --with mkdocs-awesome-pages-plugin \
+  --with mkdocs-git-revision-date-localized-plugin \
+  --with mkdocs-git-authors-plugin \
+  --with mkdocs-glightbox \
+  --with mkdocs-minify-plugin \
+  --with mkdocs-rss-plugin \
+  --with mkdocs-table-reader-plugin
 ```
 
 ### 3. Make Your Changes

@@ -1,0 +1,15 @@
+[project]
+name = "ai-agents-workshop"
+version = "0.1.0"
+description = "Hands-on workshop: building, observing, improving, and securing AI agents"
+requires-python = ">=3.11"
+dependencies = [
+    # TODO: add lab code dependencies here as labs are developed
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []

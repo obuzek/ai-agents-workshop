@@ -128,19 +128,13 @@ ollama list
 
 ```bash
 # Clone the repository
-git clone https://github.com/IBM/ai-agents-workshop.git
+git clone https://github.com/obuzek/ai-agents-workshop.git
 
 # Navigate to the workshop directory
 cd ai-agents-workshop
 
-# Create a virtual environment
-uv venv
-
-# Activate the virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install dependencies
-uv pip install -r requirements.txt
+# Create a virtual environment and install lab dependencies
+uv sync
 ```
 
 ## Verify Your Setup
@@ -225,12 +219,11 @@ source ~/.bashrc
 
 ### Package Installation Errors
 
-If you encounter issues with `uv`:
+If you encounter issues with `uv sync`, ensure you have uv installed and are in the repo root:
 
 ```bash
-# Fall back to pip
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+uv --version
+uv sync
 ```
 
 ## Next Steps

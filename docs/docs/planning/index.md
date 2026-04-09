@@ -34,7 +34,7 @@ For each, list:
 
 * **Healthcare:**
     * Scenario: Enhanced training for medical staff
-        * "You are responsible for building a learning platform for healthcare workers - to help them level up on their abilities to talk to patients."
+        * "You are responsible for building a learning platform for healthcare workers - to help them level up on their abilities to talk to patients." - https://github.com/jjasghar/pete
     * **OLIVIA** Scenario: Agent to help them sort out for a patient, if they've totally forgotten about it, haven't heard back in 4-5 months - stale / stalled messages. Some portal management.
     * Scenario: "Need medical advice, but people may not be comfortable talking about it even with doctors. Can the assistant help you take some initial steps? Bad breath, normal sort of thing - hard to talk about it and get medical help and advice. Understand, but start just with tips - guardian models, reasoning models to explain the recommendations. How do you encode knowing its limitations?"
         * Guardian models - for use cases where someone is seeking advice, how do we build governance around it? Not to go overboard, not to derail, not to end up with consequences. Adversarial robustness, etc.
