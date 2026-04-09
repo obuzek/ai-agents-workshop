@@ -101,7 +101,7 @@ GitHub Actions (`.github/workflows/deploy-docs.yml`) auto-deploys on push to `ma
 uv tool install mkdocs --with <plugin-name>
 ```
 
-Add the `--with` flag to the install command in `docs/README.md`, `docs/docs/contributing.md`, and `.github/workflows/deploy-docs.yml`.
+Add the `--with` flag to the install command in `docs/README.md`, `docs/content/contributing.md`, and `.github/workflows/deploy-docs.yml`.
 
 ### Adding Lab Dependencies
 
@@ -111,8 +111,8 @@ Add to `pyproject.toml` under `[project] dependencies`, then run `uv sync`.
 
 ### Add a New Lab
 
-1. Create `docs/docs/lab-N.md`
-2. Add to navigation in `docs/docs/.pages`
+1. Create `docs/content/lab-N.md`
+2. Add to navigation in `docs/content/.pages`
 3. Test locally with `mkdocs serve`, then deploy
 
 ### Fix Build Errors

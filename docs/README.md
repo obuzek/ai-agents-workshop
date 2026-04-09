@@ -49,7 +49,7 @@ docs/
 ├── base.yml              # Base MkDocs configuration (theme, plugins, extensions)
 ├── mkdocs.yml            # Workshop-specific configuration (inherits from base.yml)
 ├── theme/                # Custom theme files (favicon, logos)
-└── docs/                 # Documentation content
+└── content/              # Documentation content (docs_dir in base.yml)
     ├── .pages            # Navigation structure
     ├── index.md          # Home page
     ├── slides.md         # Presentation slide viewer
