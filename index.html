@@ -574,10 +574,121 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
         Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workshop-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workshop Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workshop Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab-1-naive-agent-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 1: Naive Agent Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-2-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2: Observability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-3-improving-your-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 3: Improving Your Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-4-securing-data-used-by-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4: Securing Data Used By The Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Resources
       
     </span>
   </a>
@@ -930,7 +1041,7 @@
 
 
   
-    <a href="https://github.com/obuzek/ai-agents-workshop/edit/main/docs/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/obuzek/ai-agents-workshop/edit/main/docs/content/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.06 9 .94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg>
     </a>
@@ -940,25 +1051,31 @@
 
 <h1 id="ai-agents-workshop">AI Agents Workshop<a class="headerlink" href="#ai-agents-workshop" title="Permanent link">&para;</a></h1>
 <details class="abstract" open="open">
-<summary>ODSC Workshop — 2 Hours</summary>
-<p>A hands-on introduction to building, observing, improving, and securing AI agents. We'll move from theory to working code across four progressive labs.</p>
-<p><strong>Format:</strong></p>
+<summary>What You'll Learn</summary>
+<p>In this hands-on workshop, you'll learn how to build intelligent AI agents from the ground up. We'll cover the fundamentals of agent architecture, practical implementation patterns, and best practices for production deployment.</p>
+<p><strong>Workshop Highlights:</strong></p>
 <ul>
-<li><strong>First 30 min</strong> — Presentation: AI Development Lifecycle + Opportunities, Risks &amp; Mitigation</li>
-<li><strong>4 × 20 min labs</strong> — Hands-on implementation, each building on the last</li>
+<li><strong>Foundations</strong>: Understanding AI agents, their components, and architecture patterns</li>
+<li><strong>Hands-On Building</strong>: Create your first AI agent with practical examples</li>
+<li><strong>Advanced Patterns</strong>: Observability, reliability, and security for agents</li>
+<li><strong>Production Ready</strong>: Testing, monitoring, and deployment strategies</li>
+<li><strong>Real-World Applications</strong>: Use cases and implementation patterns</li>
 </ul>
 </details>
-<hr />
 <h2 id="workshop-flow">Workshop Flow<a class="headerlink" href="#workshop-flow" title="Permanent link">&para;</a></h2>
 <ol>
-<li><a href="prerequisites/">Prerequisites</a> — Set up your environment before the session</li>
-<li><a href="getting-started/">Getting Started</a> — What you need to know going in</li>
-<li><a href="slides/">Slides</a> — Educational presentation (ADLC + Risks &amp; Mitigation)</li>
-<li><a href="lab-1/">Lab 1: Naive Agent Implementation</a> — Build the core agent loop</li>
+<li><a href="prerequisites/">Prerequisites</a> — Set up your development environment</li>
+<li><a href="getting-started/">Getting Started</a> — Introduction to AI agents and core concepts</li>
+<li><a href="slides/">Slides</a> — AI Development Lifecycle + Opportunities, Risks &amp; Mitigation</li>
+<li><a href="lab-1/">Lab 1: Naive Agent Implementation</a> — Build your first simple agent</li>
 <li><a href="lab-2/">Lab 2: Observability</a> — Instrument and trace your agent</li>
 <li><a href="lab-3/">Lab 3: Improving Your Agent</a> — Fix failure modes, add guardrails</li>
 <li><a href="lab-4/">Lab 4: Securing Data Used By The Agent</a> — Harden against injection and leakage</li>
 </ol>
+<details class="tip" open="open">
+<summary>Time Estimate</summary>
+<p>The workshop runs for 2 hours: ~30 minutes of presentation followed by four ~20-minute labs.</p>
+</details>
 <hr />
 <h2 id="what-are-ai-agents">What Are AI Agents?<a class="headerlink" href="#what-are-ai-agents" title="Permanent link">&para;</a></h2>
 <p>AI agents are autonomous systems that can:</p>
@@ -976,22 +1093,59 @@
     C --&gt; E[Learning]
     E --&gt; C</code></pre>
 <hr />
+<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="agent-architecture">Agent Architecture<a class="headerlink" href="#agent-architecture" title="Permanent link">&para;</a></h3>
+<p>Modern AI agents typically consist of:</p>
+<ul>
+<li><strong>LLM Core</strong>: Language model for reasoning and decision-making</li>
+<li><strong>Memory</strong>: Short-term and long-term information storage</li>
+<li><strong>Tools</strong>: Functions the agent can call to interact with the world</li>
+<li><strong>Planning</strong>: Strategy for breaking down complex tasks</li>
+<li><strong>Execution</strong>: Runtime for carrying out actions</li>
+</ul>
+<h3 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>ReAct</strong>: Reasoning and Acting in an interleaved manner</li>
+<li><strong>Chain-of-Thought</strong>: Breaking down complex reasoning into steps</li>
+<li><strong>Tool Use</strong>: Extending agent capabilities with external functions</li>
+<li><strong>Multi-Agent</strong>: Coordinating multiple specialized agents</li>
+</ul>
+<hr />
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p>Before the session, ensure you have:</p>
+<p>Before starting the workshop, ensure you have:</p>
 <ul>
 <li>Python 3.11 or higher</li>
-<li>Basic Python programming familiarity</li>
+<li>Basic understanding of Python programming</li>
 <li>Familiarity with APIs and REST concepts</li>
+<li>(Optional) Experience with LLMs and prompt engineering</li>
 </ul>
-<p>See the <a href="prerequisites/">Prerequisites</a> page for full setup instructions.</p>
+<p>See the <a href="prerequisites/">Prerequisites</a> page for detailed setup instructions.</p>
+<hr />
+<h2 id="workshop-structure">Workshop Structure<a class="headerlink" href="#workshop-structure" title="Permanent link">&para;</a></h2>
+<h3 id="lab-1-naive-agent-implementation">Lab 1: Naive Agent Implementation<a class="headerlink" href="#lab-1-naive-agent-implementation" title="Permanent link">&para;</a></h3>
+<p>Build the core agent loop from scratch — no frameworks, no guardrails.</p>
+<h3 id="lab-2-observability">Lab 2: Observability<a class="headerlink" href="#lab-2-observability" title="Permanent link">&para;</a></h3>
+<p>Instrument your agent with tracing and logging so you can see what it's doing.</p>
+<h3 id="lab-3-improving-your-agent">Lab 3: Improving Your Agent<a class="headerlink" href="#lab-3-improving-your-agent" title="Permanent link">&para;</a></h3>
+<p>Use observability data to fix failure modes and add guardrails.</p>
+<h3 id="lab-4-securing-data-used-by-the-agent">Lab 4: Securing Data Used By The Agent<a class="headerlink" href="#lab-4-securing-data-used-by-the-agent" title="Permanent link">&para;</a></h3>
+<p>Harden your agent against prompt injection and data leakage.</p>
+<hr />
+<h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="resources/">Additional Resources</a> — Links to papers, frameworks, and tools</li>
+<li><a href="contributing/">Contributing</a> — How to contribute to this workshop</li>
+</ul>
 <hr />
 <h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
-<p>If you run into issues:</p>
+<p>If you encounter issues during the workshop:</p>
 <ol>
-<li>Check the <a href="prerequisites/">Prerequisites</a> page</li>
-<li>Ask in the room — that's what we're here for</li>
-<li>Open an issue on <a href="https://github.com/obuzek/ai-agents-workshop">GitHub</a></li>
+<li>Check the <a href="prerequisites/">Prerequisites</a> page for setup help</li>
+<li>Review the lab instructions carefully</li>
+<li>Ask questions in the workshop discussion forum</li>
+<li>Open an issue on GitHub for bugs or improvements</li>
 </ol>
+<p>Let's get started! Head to <a href="prerequisites/">Prerequisites</a> to set up your environment.</p>
 
 
 
