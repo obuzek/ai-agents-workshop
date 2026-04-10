@@ -18,7 +18,7 @@ ai-agents-workshop/
 │   ├── mkdocs.yml                 # Workshop-specific config (inherits base.yml)
 │   ├── README.md                  # MkDocs setup and usage instructions
 │   ├── theme/                     # Custom theme assets (favicon, logos)
-│   └── docs/                      # Markdown content
+│   └── content/                   # Markdown content (docs_dir: "content")
 │       ├── .pages                 # Navigation structure (awesome-pages plugin)
 │       ├── index.md               # Workshop home page
 │       ├── slides.md              # Slide viewer (ADLC + Risks & Mitigation)
@@ -46,15 +46,15 @@ This repo deliberately keeps **two environments separate**:
 MkDocs is installed once as a global tool, not in a project venv:
 
 ```bash
-uv tool install mkdocs \
-  --with mkdocs-material \
-  --with mkdocs-awesome-pages-plugin \
-  --with mkdocs-git-revision-date-localized-plugin \
-  --with mkdocs-git-authors-plugin \
-  --with mkdocs-glightbox \
-  --with mkdocs-minify-plugin \
-  --with mkdocs-rss-plugin \
-  --with mkdocs-table-reader-plugin
+uv tool install "mkdocs==1.6.1" \
+  --with "mkdocs-material==9.7.6" \
+  --with "mkdocs-awesome-pages-plugin==2.10.1" \
+  --with "mkdocs-git-revision-date-localized-plugin==1.5.1" \
+  --with "mkdocs-git-authors-plugin==0.10.0" \
+  --with "mkdocs-glightbox==0.5.2" \
+  --with "mkdocs-minify-plugin==0.8.0" \
+  --with "mkdocs-rss-plugin==1.18.0" \
+  --with "mkdocs-table-reader-plugin==3.1.0"
 ```
 
 Do NOT add MkDocs or its plugins to `pyproject.toml`.

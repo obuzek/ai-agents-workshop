@@ -56,15 +56,15 @@ cd ai-agents-workshop
 uv sync
 
 # Install MkDocs as a global tool (one-time, for docs work)
-uv tool install mkdocs \
-  --with mkdocs-material \
-  --with mkdocs-awesome-pages-plugin \
-  --with mkdocs-git-revision-date-localized-plugin \
-  --with mkdocs-git-authors-plugin \
-  --with mkdocs-glightbox \
-  --with mkdocs-minify-plugin \
-  --with mkdocs-rss-plugin \
-  --with mkdocs-table-reader-plugin
+uv tool install "mkdocs==1.6.1" \
+  --with "mkdocs-material==9.7.6" \
+  --with "mkdocs-awesome-pages-plugin==2.10.1" \
+  --with "mkdocs-git-revision-date-localized-plugin==1.5.1" \
+  --with "mkdocs-git-authors-plugin==0.10.0" \
+  --with "mkdocs-glightbox==0.5.2" \
+  --with "mkdocs-minify-plugin==0.8.0" \
+  --with "mkdocs-rss-plugin==1.18.0" \
+  --with "mkdocs-table-reader-plugin==3.1.0"
 ```
 
 ### 3. Make Your Changes
