@@ -11,6 +11,7 @@ Install MkDocs and all required plugins:
 ```bash
 uv tool install "mkdocs==1.6.1" \
   --with "mkdocs-material==9.7.6" \
+  --with "mkdocs-revealjs" \
   --with "mkdocs-awesome-pages-plugin==2.10.1" \
   --with "mkdocs-git-revision-date-localized-plugin==1.5.1" \
   --with "mkdocs-git-authors-plugin==0.10.0" \
@@ -52,7 +53,9 @@ docs/
 └── content/              # Documentation content (docs_dir in base.yml)
     ├── .pages            # Navigation structure
     ├── index.md          # Home page
-    ├── slides.md         # Presentation slide viewer
+    ├── slides.md         # Presentation page (iframe wrapper)
+    ├── slides/
+    │   └── presentation.html  # Reveal.js slide deck (edit this for slide content)
     ├── prerequisites.md
     ├── getting-started.md
     ├── lab-1.md          # Naive Agent Implementation
@@ -62,6 +65,57 @@ docs/
     ├── resources.md
     └── contributing.md
 ```
+
+## Editing slides
+
+Slides live in `content/slides.md` and are rendered by the
+[mkdocs-revealjs](https://pypi.org/project/mkdocs-revealjs/) plugin.
+Edit the file and the dev server picks up changes automatically.
+
+**Slide separators:** use `---` (surrounded by blank lines) between slides.
+End the presentation with `=====` — anything after that renders as normal MkDocs content.
+
+```markdown
+## Slide Title
+
+- Bullet point one
+- Bullet point two
+
+---
+
+## Next Slide
+
+Content here.
+
+=====
+
+Normal page content here (not part of the presentation).
+```
+
+**Per-slide attributes** (background color, transitions, etc.) go in an HTML comment
+at the top of the slide:
+
+```markdown
+<!-- .slide: data-background="#0f62fe" -->
+
+# Section Header
+```
+
+**Speaker notes** go after `Note:` and are hidden from the audience
+(press `S` in the presentation to open the speaker view):
+
+```markdown
+## My Slide
+
+- Point A
+- Point B
+
+Note: Remind attendees to check prerequisites before this section.
+```
+
+**AI generation:** the content is plain Markdown — ask an LLM to rewrite or expand
+any section. Keep `---` separators, `<!-- .slide: -->` directives for section headers,
+and the `=====` terminator.
 
 ## Troubleshooting
 

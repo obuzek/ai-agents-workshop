@@ -1,6 +1,5 @@
 nav:
-  - Home:
-    - "🏠 Workshop Home": index.md
+  - Home: index.md
   - Getting Started:
     - "📋 Prerequisites": prerequisites.md
     - "🚀 Getting Started": getting-started.md

@@ -139,6 +139,7 @@ markdown_extensions:
 
 plugins:
   search: {}
+  revealjs: {}
   # inline-svg: {}
   table-reader: {}
   git-revision-date-localized:
