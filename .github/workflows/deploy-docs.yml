@@ -45,7 +45,7 @@ jobs:
       - name: Build and deploy to GitHub Pages
         run: |
           cd docs
-          mkdocs gh-deploy --force --clean --verbose
+          mkdocs gh-deploy --force --clean --verbose --remote-name origin
 
       - name: Summary
         run: |
