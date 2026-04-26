@@ -11,7 +11,6 @@ patient data. No access controls, no scoping. That's the point —
 later labs will fix this.
 """
 
-import os
 import requests
 
 # The @tool decorator does three things:
@@ -24,7 +23,7 @@ from langchain_core.tools import tool
 
 # Tools call the main EHR API to fetch patient data.
 # The agent API and main API are separate services — tools bridge the gap.
-API_URL = os.environ.get("API_URL", "http://localhost:8000")
+from lab1.agent import API_URL
 
 
 # --- Tools the LLM can call ---

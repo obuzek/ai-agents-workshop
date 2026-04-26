@@ -124,6 +124,3 @@ class Patient:
     @property
     def active_medications(self) -> list[Medication]:
         return [m for m in self.medications if m.status == "active"]
-
-    def new_message_count(self) -> int:
-        return sum(1 for m in self.messages if m.needs_response())

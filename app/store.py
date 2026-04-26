@@ -153,6 +153,13 @@ def load_patients() -> dict[str, Patient]:
     return patients
 
 
+def load_patient(patient_id: str) -> Patient:
+    """Load a single patient record by ID."""
+    filepath = _patient_filepath(patient_id)
+    with open(filepath) as f:
+        return _parse_patient(json.load(f))
+
+
 def save_reply(patient_id: str, message_id: str, sender_name: str, body: str, date: str):
     """Append a reply to a message in the JSON file on disk.
     This writes directly to JSON since we need to preserve the full file structure."""

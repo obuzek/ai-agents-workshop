@@ -11,7 +11,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests as http_client
 
-from app.store import load_patients, save_reply
+from app.store import load_patient, load_patients, save_reply
 
 app = FastAPI(title="Lakeview Family Medicine EHR", version="0.1.0")
 
@@ -31,10 +31,22 @@ class ReplyRequest(BaseModel):
 
 def get_patient_or_404(patient_id: str):
     """Load a single patient by ID, or raise 404."""
-    patients = load_patients()
-    if patient_id not in patients:
+    try:
+        return load_patient(patient_id)
+    except (ValueError, FileNotFoundError):
         raise HTTPException(status_code=404, detail="Patient not found")
-    return patients[patient_id]
+
+
+def _agent_request(method: str, path: str, *, fallback=None):
+    """Make a request to the agent API. Returns fallback on failure, or raises 503."""
+    try:
+        resp = getattr(http_client, method)(f"{AGENT_API_URL}{path}", timeout=5)
+        resp.raise_for_status()
+        return resp.json()
+    except http_client.RequestException:
+        if fallback is not None:
+            return fallback
+        raise HTTPException(status_code=503, detail="Agent API unavailable")
 
 
 # --- Endpoints ---
@@ -78,53 +90,28 @@ def get_concerns(patient_id: str):
     is unavailable — the UI degrades gracefully without the agent.
     """
     get_patient_or_404(patient_id)
-    try:
-        resp = http_client.get(
-            f"{AGENT_API_URL}/patients/{patient_id}/concerns",
-            timeout=5,
-        )
-        resp.raise_for_status()
-        return resp.json()
-    except http_client.RequestException:
-        return []
+    return _agent_request("get", f"/patients/{patient_id}/concerns", fallback=[])
 
 
 @app.post("/patients/{patient_id}/run")
 def trigger_agent(patient_id: str):
     """Trigger the agent for a single patient. Proxies to the agent API."""
     get_patient_or_404(patient_id)
-    try:
-        resp = http_client.post(f"{AGENT_API_URL}/patients/{patient_id}/run", timeout=5)
-        resp.raise_for_status()
-        return resp.json()
-    except http_client.RequestException:
-        raise HTTPException(status_code=503, detail="Agent API unavailable")
+    return _agent_request("post", f"/patients/{patient_id}/run")
 
 
 @app.post("/patients/{patient_id}/concerns/{concern_id}/resolve")
 def resolve_concern(patient_id: str, concern_id: str):
     """Mark a concern as resolved. Proxies to the agent API."""
     get_patient_or_404(patient_id)
-    try:
-        resp = http_client.post(
-            f"{AGENT_API_URL}/patients/{patient_id}/concerns/{concern_id}/resolve",
-            timeout=5,
-        )
-        resp.raise_for_status()
-        return resp.json()
-    except http_client.RequestException:
-        raise HTTPException(status_code=503, detail="Agent API unavailable")
+    return _agent_request("post", f"/patients/{patient_id}/concerns/{concern_id}/resolve")
 
 
 @app.get("/agent/status")
 def agent_status():
     """Get the agent's current status. Proxies to the agent API."""
-    try:
-        resp = http_client.get(f"{AGENT_API_URL}/status", timeout=5)
-        resp.raise_for_status()
-        return resp.json()
-    except http_client.RequestException:
-        return {"running": False, "last_run": "", "error": "Agent API unavailable"}
+    return _agent_request("get", "/status",
+                          fallback={"running": False, "last_run": "", "error": "Agent API unavailable"})
 
 
 @app.get("/inbox")
@@ -152,7 +139,6 @@ def reply_to_message(patient_id: str, message_id: str, reply: ReplyRequest):
     """Add a provider reply to a patient message."""
     patient = get_patient_or_404(patient_id)
 
-    # Verify the message exists
     if not any(m.id == message_id for m in patient.messages):
         raise HTTPException(status_code=404, detail="Message not found")
 
@@ -167,7 +153,6 @@ def reply_to_message(patient_id: str, message_id: str, reply: ReplyRequest):
 
 
 # --- Serialization helpers ---
-# These convert model objects to dicts for the JSON API responses.
 
 
 def _serialize_patient(patient):

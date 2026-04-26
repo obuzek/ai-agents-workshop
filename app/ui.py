@@ -346,6 +346,7 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
     if concerns:
         concerns = sorted(concerns, key=lambda c: urgency_order.get(c.get("urgency", "routine"), 99))
+        msg_subjects = {m.id: m.subject for m in messages} if messages else {}
         for concern in concerns:
             urgency = concern.get("urgency", "routine")
             status_val = concern.get("status", "")
@@ -391,12 +392,6 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
                 has_links = msg_ids or lab_dates or conditions or encounter_dates
                 if has_links:
                     st.markdown("**Related:**")
-
-                # Build a lookup for message subjects
-                msg_subjects = {}
-                if messages:
-                    for m in messages:
-                        msg_subjects[m.id] = m.subject
 
                 for mid in msg_ids:
                     subject = msg_subjects.get(mid, mid)

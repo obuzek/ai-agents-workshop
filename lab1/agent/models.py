@@ -5,7 +5,13 @@ Any service that serves or consumes concerns must use these models.
 The main API proxies to the agent API; both sides agree on this schema.
 """
 
+from typing import Literal
+
 from pydantic import BaseModel
+
+ConcernType = Literal["medication", "lab_result", "symptom", "follow_up", "administrative"]
+Urgency = Literal["routine", "soon", "urgent"]
+ConcernStatus = Literal["unresolved", "monitoring", "resolved"]
 
 
 # --- The contract: what a "concern" looks like to the UI ---
@@ -25,10 +31,10 @@ class Concern(BaseModel):
     patient_id: str
     title: str
     summary: str            # one sentence: what's going on and why it matters
-    action: str = ""        # what the doctor should do: "Reply to message", "Review labs", etc.
-    concern_type: str       # medication, lab_result, symptom, follow_up, administrative
-    urgency: str            # routine, soon, urgent
-    status: str             # unresolved, monitoring, resolved
+    action: str = ""        # what the doctor should do
+    concern_type: ConcernType
+    urgency: Urgency
+    status: ConcernStatus
     onset: str              # when the concern was first identified or reported
     last_updated: str       # ISO timestamp of last agent update
     evidence: list[str]     # key data points supporting this concern

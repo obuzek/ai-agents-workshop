@@ -12,16 +12,14 @@ import logging
 import time
 from datetime import datetime, timezone
 
-logger = logging.getLogger(__name__)
-
-import os
 import requests
 
+from lab1.agent import API_URL
 from lab1.agent.agent import process_patient
 from lab1.agent.store import load_store, save_store
 from lab1.agent.models import ConcernsStore
 
-API_URL = os.environ.get("API_URL", "http://localhost:8000")
+logger = logging.getLogger(__name__)
 
 POLL_INTERVAL = 30  # seconds between passes
 
@@ -45,21 +43,11 @@ def run_pass() -> ConcernsStore:
     resp = requests.get(f"{API_URL}/patients")
     resp.raise_for_status()
     patients = resp.json()
-    store = load_store()
 
     for p in patients:
-        patient_id = p["id"]
-        logger.info("Processing %s (%s)", p["name"], patient_id)
+        run_single(p["id"])
 
-        result = process_patient(patient_id)
-        store.patients[patient_id] = result
-        store.last_run = datetime.now(timezone.utc).isoformat()
-        save_store(store)
-
-        n = len(result.concerns)
-        logger.info("  -> %d concern%s identified (saved)", n, "s" if n != 1 else "")
-
-    return store
+    return load_store()
 
 
 def stores_match(a: ConcernsStore, b: ConcernsStore) -> bool:
@@ -83,7 +71,6 @@ def main():
 
     while True:
         new_store = run_pass()
-        save_store(new_store)
 
         total = sum(len(pc.concerns) for pc in new_store.patients.values())
         logger.info("Pass complete: %d total concerns across %d patients", total, len(new_store.patients))
