@@ -1,0 +1,1817 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-004",
+  "demographics": {
+    "name": {
+      "given": "Raj",
+      "family": "Patel"
+    },
+    "birthDate": "1967-12-30",
+    "gender": "male",
+    "phone": "773-555-0891",
+    "email": "rajpatel_trucker@hotmail.com",
+    "address": {
+      "line": "8845 S Pulaski Rd",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60652"
+    },
+    "emergencyContact": {
+      "name": "Sunita Patel",
+      "relationship": "Wife",
+      "phone": "773-555-0892"
+    },
+    "insurance": {
+      "type": "Medicaid",
+      "planName": "Illinois Medicaid (Meridian)",
+      "memberId": "MCD-IL-9938271"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Current smoker, 1 pack/day for 30+ years (approximately 30 pack-years)",
+    "alcohol": "Denies current use. NOTE: 2023-06-15 encounter documented '2-3 beers most nights.'",
+    "exercise": "Sedentary. Reports sitting in truck cab 10-12 hours/day. States 'no time' for exercise.",
+    "notes": "Married, 3 adult children. Wife Sunita manages his appointments. Long-haul truck driver, frequently on the road and difficult to reach. Diet consists largely of truck stop and fast food by patient's own report. Often misses appointments due to work schedule."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Type 2 diabetes mellitus with diabetic retinopathy, insulin-dependent",
+      "deceased": true
+    },
+    {
+      "relationship": "Father",
+      "condition": "Myocardial infarction at age 60",
+      "deceased": true
+    },
+    {
+      "relationship": "Brother",
+      "condition": "Type 2 diabetes mellitus, diagnosed at age 45",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Lisinopril",
+      "category": "medication",
+      "reaction": "Persistent dry cough",
+      "criticality": "low",
+      "status": "active",
+      "note": "Developed chronic cough within 2 weeks of starting lisinopril 10mg in 2022. Cough resolved after discontinuation. Switched to losartan. Listed as allergy per patient preference to prevent re-prescribing."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "E11.65",
+        "display": "Type 2 diabetes mellitus with hyperglycemia"
+      },
+      "status": "active",
+      "onsetDate": "2020-03-10",
+      "notes": "Poorly controlled. A1C trending upward: 7.8% (2023) -> 8.4% (2024) -> 9.1% (2026). Patient non-adherent with medications, diet, and follow-up appointments. Multiple medication changes attempted."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "E66.01",
+        "display": "Morbid (severe) obesity due to excess calories"
+      },
+      "status": "active",
+      "onsetDate": "2020-03-10",
+      "notes": "BMI consistently ~38. Counseled on diet and exercise at every visit. Patient reports inability to exercise due to occupation. Diet consists of truck stop food."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "G47.33",
+        "display": "Obstructive sleep apnea"
+      },
+      "status": "active",
+      "onsetDate": "2021-08-20",
+      "notes": "Diagnosed via home sleep study. AHI 28 events/hour (moderate-severe). CPAP prescribed at 12 cmH2O. Patient admits to not using CPAP \u2014 reports it is uncomfortable and he cannot use it in the truck cab. Concern for CDL fitness if untreated."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "I10",
+        "display": "Essential (primary) hypertension"
+      },
+      "status": "active",
+      "onsetDate": "2020-03-10",
+      "notes": "Consistently elevated BP 145-155/90-95 despite losartan 100mg daily. Previously on lisinopril \u2014 discontinued due to persistent cough (see allergy list). Dietary sodium likely very high given reported diet."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "861007",
+        "display": "Metformin hydrochloride 1000 MG Oral Tablet"
+      },
+      "dosage": "1000 mg",
+      "frequency": "Twice daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2020-03-10",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "310488",
+        "display": "Glipizide 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily before breakfast",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2024-09-20",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "1991302",
+        "display": "Semaglutide 0.5 MG/0.37 ML Pen Injector"
+      },
+      "dosage": "0.25 mg titrating to 0.5 mg",
+      "frequency": "Once weekly",
+      "route": "subcutaneous",
+      "status": "stopped",
+      "prescribedDate": "2024-03-18",
+      "endDate": "2024-06-10",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Persistent nausea and vomiting. Patient reported he could not tolerate injections while on the road. Tried for approximately 12 weeks, unable to advance past 0.5 mg dose. Discontinued per patient request."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "979480",
+        "display": "Losartan potassium 100 MG Oral Tablet"
+      },
+      "dosage": "100 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2022-11-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "311354",
+        "display": "Lisinopril 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2020-03-10",
+      "endDate": "2022-10-15",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Persistent dry cough developing within 2 weeks of initiation. Switched to losartan. Lisinopril added to allergy list per patient preference."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "310489",
+        "display": "Glipizide 5 MG Oral Tablet"
+      },
+      "dosage": "5 mg",
+      "frequency": "Once daily before breakfast",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-09-15",
+      "endDate": "2024-03-18",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Dose increased and formulation changed \u2014 transitioned to semaglutide trial. Later restarted at 10 mg after semaglutide failure."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "261551",
+        "display": "Insulin Glargine 100 UNT/ML Injectable Solution"
+      },
+      "dosage": "10 units",
+      "frequency": "Once daily at bedtime",
+      "route": "Subcutaneous injection",
+      "status": "active",
+      "prescribedDate": "2026-01-22",
+      "prescriber": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, inactivated, quadrivalent, adjuvanted"
+      },
+      "date": "2023-10-05",
+      "site": "Left deltoid",
+      "lotNumber": "FK8823AA",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, bivalent"
+      },
+      "date": "2023-10-05",
+      "site": "Right deltoid",
+      "lotNumber": "GN1497B",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tetanus toxoid, reduced diphtheria toxoid and acellular pertussis vaccine (Tdap)"
+      },
+      "date": "2020-03-10",
+      "site": "Left deltoid",
+      "lotNumber": "AC33G218",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-004-001",
+      "date": "2023-06-15",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes follow-up, hypertension management",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 148,
+          "diastolic": 92,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 82,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 267,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
+        "bmi": 38.3,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for diabetes follow-up. Reports checking blood sugar 'sometimes' \u2014 approximately 1-2 times per week. States he is taking metformin 1000mg BID and glipizide 5mg daily. Diet remains poor \u2014 patient reports eating mostly at truck stops and fast food restaurants while on the road. Denies polyuria, polydipsia, or blurred vision. Reports snoring per wife. Admits to smoking 1 PPD. When asked about alcohol, patient reports '2-3 beers most nights to wind down.' Exercise: none. States job does not allow time for physical activity.",
+        "objective": "A1C 7.8% (up from 7.2% last year). Fasting glucose 188 mg/dL. BP 148/92. BMI 38.3. Foot exam: intact sensation bilaterally, no ulcers, pedal pulses 2+ bilaterally. Lungs clear. Cardiovascular: RRR, no murmurs.",
+        "assessment": "1. Type 2 diabetes mellitus \u2014 suboptimally controlled, A1C 7.8% and trending upward. Patient non-adherent with dietary recommendations and inconsistent with glucose monitoring. 2. Hypertension \u2014 above goal on current regimen. 3. Obesity \u2014 BMI 38.3, no change. 4. OSA \u2014 patient reports not using CPAP. 5. Tobacco use disorder.",
+        "plan": "1. Continue metformin 1000mg BID, continue glipizide 5mg daily. Reinforce dietary counseling \u2014 provided handout on healthy eating options while traveling. 2. Continue losartan 100mg daily. Consider adding amlodipine if BP not at goal at next visit. 3. Strongly counseled on CPAP compliance \u2014 explained cardiovascular risks of untreated OSA and implications for CDL medical certification. 4. Smoking cessation counseled \u2014 patient declined NRT at this time. 5. Recheck A1C and metabolic panel in 3 months. Referral to diabetes educator \u2014 patient agreed but expressed skepticism about scheduling. Follow up in 3 months."
+      },
+      "labOrders": [
+        "lab-004-001"
+      ],
+      "referrals": [
+        {
+          "to": "Certified Diabetes Educator",
+          "reason": "Diabetes self-management education for poorly controlled T2DM",
+          "status": "declined"
+        }
+      ]
+    },
+    {
+      "id": "enc-004-noshow-1",
+      "date": "2023-09-14",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes follow-up (3-month recheck) \u2014 NO SHOW",
+      "vitals": {},
+      "notes": {
+        "subjective": "Patient did not present for scheduled appointment. No call, no show. Wife called the following day and reported patient was on a haul to Laredo, TX and could not make it back in time.",
+        "objective": "No encounter \u2014 patient no-show.",
+        "assessment": "No-show. This is a concern given worsening glycemic control and need for medication adjustment.",
+        "plan": "Rescheduled for 2023-10-05. Phone message left with wife to reinforce importance of follow-up. Labs ordered for day of rescheduled visit."
+      }
+    },
+    {
+      "id": "enc-004-002",
+      "date": "2023-10-05",
+      "type": "office-visit",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Diabetes follow-up (rescheduled from September no-show)",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 152,
+          "diastolic": 94,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 270,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
+        "bmi": 38.7,
+        "respiratoryRate": {
+          "value": 18,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 95,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for rescheduled diabetes follow-up. Missed September appointment due to work travel. Reports he has been 'trying' with diet but admits to frequent fast food. States he ran out of glipizide for approximately 2 weeks and did not call for a refill. Checking blood glucose rarely \u2014 'maybe once a week if I remember.' Denies chest pain, SOB, vision changes. Still not using CPAP. When asked about alcohol use, patient now states 'I don't really drink.' (Note: June 2023 visit documented 2-3 beers most nights \u2014 discrepancy noted but not confronted at this visit.) Administered flu vaccine and COVID bivalent booster today.",
+        "objective": "A1C now 8.4% \u2014 significant increase from 7.8% in June. Fasting glucose 212 mg/dL. BP 152/94 \u2014 above goal. Weight 270 lbs, up 3 lbs. BMI 38.7. Foot exam: sensation intact to monofilament bilaterally, no lesions. Skin: acanthosis nigricans noted at posterior neck.",
+        "assessment": "1. Type 2 diabetes \u2014 worsening control, A1C 8.4%. Medication non-adherence (ran out of glipizide and did not refill). Dietary non-adherence. 2. Hypertension \u2014 uncontrolled at 152/94 despite losartan 100mg. 3. Obesity \u2014 BMI 38.7, weight trending up. 4. OSA \u2014 continued CPAP non-compliance. 5. Tobacco use disorder \u2014 continued 1 PPD. 6. Inconsistent alcohol history \u2014 prior visit documented 2-3 beers nightly, now denies.",
+        "plan": "1. Increase glipizide from 5mg to 10mg daily. Explained importance of not letting medications lapse. Provided 90-day supply to reduce refill frequency given his travel schedule. 2. Discussed adding GLP-1 receptor agonist (semaglutide) at next visit if A1C does not improve \u2014 would address both diabetes and weight. 3. Continue losartan 100mg daily. Adding amlodipine 5mg daily for improved BP control \u2014 patient declined, states he does not want another pill. Will revisit. 4. Counseled extensively on CPAP use and smoking cessation. Patient receptive to discussion but noncommittal. 5. Repeat labs in 3 months. Follow-up in 3 months \u2014 STRESSED IMPORTANCE of keeping appointment."
+      },
+      "labOrders": [
+        "lab-004-002"
+      ]
+    },
+    {
+      "id": "enc-004-noshow-2",
+      "date": "2024-01-11",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes/hypertension follow-up \u2014 NO SHOW",
+      "vitals": {},
+      "notes": {
+        "subjective": "Patient did not present for scheduled appointment. No call received. This is the second no-show in 4 months.",
+        "objective": "No encounter \u2014 patient no-show.",
+        "assessment": "Second no-show. Given worsening A1C trajectory (7.8 -> 8.4) and uncontrolled hypertension, this is clinically concerning. Patient is at elevated cardiovascular risk with uncontrolled diabetes, hypertension, obesity, OSA non-compliance, and active smoking.",
+        "plan": "Certified letter to be sent regarding importance of follow-up. Wife contacted by phone \u2014 states patient is on a long haul and will call when he returns. Documented in chart that patient is at risk for complications if current trajectory continues."
+      }
+    },
+    {
+      "id": "enc-004-003",
+      "date": "2024-03-18",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes management \u2014 overdue follow-up",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 150,
+          "diastolic": 93,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 80,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 272,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
+        "bmi": 39.0,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents 5 months after last visit (missed January appointment). Wife accompanied patient today and expressed frustration with his compliance. Patient states he has been taking metformin 'most days' and glipizide 10mg daily. Reports occasional blurred vision in the mornings that resolves. Checking blood sugar 'when I think about it' \u2014 reports readings in the 200s-250s range when he does check. Still smoking 1 PPD. Denies alcohol. Still not using CPAP \u2014 states 'I tried it for a couple nights but I just can't sleep with it.' Reports fatigue and daytime sleepiness but attributes this to his work schedule.",
+        "objective": "A1C not checked today \u2014 labs ordered, will result in 2 days. BP 150/93. Weight 272, up 2 lbs from October. BMI 39.0. Foot exam: sensation intact to monofilament, no ulcers or calluses. Pedal pulses 2+ bilaterally. Eyes: no obvious retinopathy on fundoscopic exam but formal ophthalmology referral needed. Acanthosis nigricans at neck unchanged.",
+        "assessment": "1. Type 2 diabetes \u2014 poorly controlled, A1C pending but likely elevated given self-reported glucose readings of 200-250. Patient with significant non-adherence to both medication and lifestyle modifications. Reports blurred vision \u2014 concerning for retinopathy given poor control. 2. Hypertension \u2014 persistently uncontrolled. 3. Obesity \u2014 BMI 39, weight continues upward trend. 4. OSA \u2014 non-compliant with CPAP. 5. Tobacco use disorder. 6. I had a frank conversation with Mr. Patel about the seriousness of his condition. Explained that uncontrolled diabetes with his risk factors (family history of MI, smoking, obesity, HTN) places him at very high cardiovascular risk. He appeared to understand but made no firm commitments regarding lifestyle changes.",
+        "plan": "1. Start semaglutide 0.25 mg SC weekly, titrate to 0.5 mg after 4 weeks. This addresses both glycemic control and weight. Discontinue glipizide while starting semaglutide. Continue metformin 1000mg BID. 2. Continue losartan 100mg. Patient again declined additional antihypertensive. Will continue to monitor. 3. Ophthalmology referral for dilated eye exam \u2014 given symptom of intermittent blurred vision and A1C trajectory. 4. Repeat labs including A1C, CMP, lipid panel in 1 week (fasting). 5. Smoking cessation: offered varenicline \u2014 patient states he 'might try it next time.' 6. Follow-up in 6 weeks to assess semaglutide tolerance. Wife given appointment reminder card and encouraged to help with scheduling."
+      },
+      "labOrders": [
+        "lab-004-003"
+      ],
+      "referrals": [
+        {
+          "to": "Ophthalmology",
+          "reason": "Dilated eye exam \u2014 poorly controlled T2DM with intermittent blurred vision, family history of diabetic retinopathy",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-004-noshow-3",
+      "date": "2024-05-02",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Semaglutide 6-week follow-up \u2014 NO SHOW",
+      "vitals": {},
+      "notes": {
+        "subjective": "Patient did not present for scheduled semaglutide follow-up. Wife called same day and reported patient stopped the semaglutide 'a few weeks ago' due to severe nausea and vomiting. States he went back to taking glipizide on his own from leftover supply. Third no-show in the past year.",
+        "objective": "No encounter \u2014 patient no-show. Phone call with wife documented.",
+        "assessment": "Third no-show. Patient self-discontinued semaglutide and self-restarted glipizide without medical guidance. Significant concern for patient safety with self-medication adjustments. Semaglutide failure limits treatment options.",
+        "plan": "1. Documented semaglutide discontinuation \u2014 stopped due to nausea/vomiting, patient intolerance. 2. Called in glipizide 10mg daily to pharmacy to formalize what patient is already taking. Continue metformin 1000mg BID. 3. Sent patient portal message emphasizing need for follow-up visit. 4. Next available appointment scheduled for 2024-09-20."
+      }
+    },
+    {
+      "id": "enc-004-004",
+      "date": "2024-09-20",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes management, hypertension follow-up, medication reconciliation",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 155,
+          "diastolic": 95,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 84,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.5,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 275,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
+        "bmi": 39.5,
+        "respiratoryRate": {
+          "value": 18,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 95,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for overdue follow-up. Has not been seen since March (missed May follow-up). Reports he self-discontinued semaglutide in April due to nausea and vomiting \u2014 'I couldn't keep anything down, especially on the road.' Has been taking metformin 1000mg BID and glipizide 10mg daily since. States blood sugars 'usually in the 200s.' Reports he never scheduled the ophthalmology referral. Still smoking 1 PPD. Denies alcohol. Still not using CPAP. Reports occasional headaches, attributes to 'stress.' Denies chest pain, SOB, vision changes (though reported blurred vision in March). Wife present, visibly frustrated, states 'He doesn't listen to anyone.'",
+        "objective": "A1C pending (drawn today). BP 155/95 \u2014 highest recorded. Weight 275 lbs, up 3 lbs. BMI 39.5. Foot exam: sensation decreased to light touch on plantar surface of right foot compared to left \u2014 monofilament testing shows 7/10 sites on right vs 10/10 left. No ulcers, skin intact, but dryness noted. Pedal pulses 2+ bilaterally. Acanthosis nigricans at neck prominent.",
+        "assessment": "1. Type 2 diabetes \u2014 poorly controlled. A1C pending, expect significant elevation. New finding: decreased sensation right foot on monofilament testing \u2014 early diabetic peripheral neuropathy suspected. 2. Hypertension \u2014 worsening, 155/95 despite losartan 100mg. Patient continues to decline additional antihypertensive medication. 3. Obesity \u2014 BMI 39.5, steady weight gain over past year. 4. OSA \u2014 persistent CPAP non-compliance. 5. Tobacco use disorder \u2014 1 PPD unchanged. 6. Suspected diabetic neuropathy \u2014 new onset, requires further evaluation. This is a direct consequence of his poorly controlled diabetes and I communicated this clearly to the patient.",
+        "plan": "1. Continue metformin 1000mg BID + glipizide 10mg daily. A1C pending \u2014 if >9%, will need to discuss insulin initiation at next visit. 2. Continue losartan 100mg. Strongly recommended adding amlodipine \u2014 patient reluctantly agreed to 'think about it.' If BP still elevated at next visit, will insist on additional agent. 3. Re-referred to ophthalmology \u2014 printed referral, gave to wife. 4. Ordered nerve conduction study/EMG for right lower extremity to evaluate neuropathy. 5. Labs: A1C, comprehensive metabolic panel, lipid panel, urine microalbumin/creatinine ratio. 6. Follow-up in 8 weeks \u2014 I asked wife to ensure he keeps this appointment. Documented that I have counseled patient at length about his cardiovascular and microvascular complication risk."
+      },
+      "labOrders": [
+        "lab-004-004"
+      ],
+      "referrals": [
+        {
+          "to": "Ophthalmology",
+          "reason": "Dilated eye exam for poorly controlled T2DM \u2014 re-referral, patient did not schedule initial referral",
+          "status": "pending"
+        },
+        {
+          "to": "Neurology",
+          "reason": "Nerve conduction study/EMG right lower extremity \u2014 suspected diabetic peripheral neuropathy",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-004-005",
+      "date": "2026-01-22",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Diabetes management, A1C recheck, neuropathy follow-up",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 148,
+          "diastolic": 91,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 80,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.3,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 278,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
+        "bmi": 39.9,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for follow-up. Has not been seen since September 2024 \u2014 over 15 months gap. Reports he 'couldn't get time off' and was doing long hauls through most of 2025. States he has been taking his medications 'pretty regularly.' Reports blood sugars are 'higher than they should be' \u2014 checks sporadically, recent readings 240-280 per patient report. Never completed ophthalmology referral. Never completed nerve conduction study. Reports intermittent numbness and tingling in right foot that has been present 'off and on for a while.' Denies left foot symptoms. Denies foot wounds. Still smoking 1 PPD. Denies alcohol use. Still not using CPAP. Reports wife made this appointment and 'wouldn't let me cancel it.'",
+        "objective": "A1C 9.1% \u2014 highest recorded, consistent with continued upward trend (7.8 -> 8.4 -> 9.1 over 3 years). Fasting glucose 262 mg/dL. BP 148/91 on losartan 100mg. Weight 278 lbs, BMI 39.9 \u2014 approaching 40. Foot exam: decreased sensation to monofilament right foot 5/10 sites (worsened from 7/10 in Sept 2024). Left foot now 8/10 (new decrease). No ulcers. Skin dry and cracked on heels bilaterally. Pedal pulses 2+ bilaterally. Ankle reflexes diminished bilaterally, right worse than left.",
+        "assessment": "1. Type 2 diabetes \u2014 poorly controlled, A1C 9.1% and rising. Three-year trend is clearly worsening: 7.8% (2023) -> 8.4% (2024) -> 9.1% (2026). Patient has failed multiple oral regimens and was intolerant of GLP-1 agonist. Must discuss insulin initiation. 2. Diabetic peripheral neuropathy \u2014 progressive. Right foot worsening on monofilament (5/10 from 7/10). Left foot now showing early involvement (8/10). Diminished ankle reflexes bilaterally. Patient at risk for foot ulceration and amputation if glycemic control does not improve. 3. Hypertension \u2014 persistently uncontrolled. 4. Obesity \u2014 BMI 39.9. 5. OSA \u2014 non-compliant with CPAP. 6. Tobacco use disorder \u2014 30+ pack-years, current smoker. 7. Outstanding referrals never completed (ophthalmology, neurology).",
+        "plan": "1. Discussed insulin initiation at length. Patient resistant \u2014 'my mother was on insulin and she still went blind.' Explained that insulin is necessary given A1C trajectory and failure of oral agents + GLP-1. Agreed to start basal insulin glargine 10 units SC at bedtime, continue metformin 1000mg BID and glipizide 10mg daily. Provided insulin injection teaching \u2014 wife participated and will assist. 2. Adding amlodipine 5mg daily \u2014 patient finally agreed after frank discussion about stroke and MI risk. Continue losartan 100mg. 3. URGENT: Re-referred ophthalmology AND neurology. Explained in direct terms that the numbness in his feet is nerve damage from his diabetes and it will get worse without treatment. 4. Diabetic foot care education provided. Instructed to inspect feet daily, wear proper footwear, moisturize heels. 5. Labs today: A1C, CMP, lipid panel, urine microalbumin/creatinine. 6. Follow-up in 4 weeks for insulin titration. Told patient and wife this appointment is non-negotiable."
+      },
+      "labOrders": [
+        "lab-004-005"
+      ],
+      "referrals": [
+        {
+          "to": "Ophthalmology",
+          "reason": "Dilated eye exam \u2014 URGENT. Poorly controlled T2DM (A1C 9.1%), third referral attempt. Family history of diabetic retinopathy.",
+          "status": "pending"
+        },
+        {
+          "to": "Neurology",
+          "reason": "NCS/EMG bilateral lower extremities \u2014 progressive diabetic peripheral neuropathy, worsening monofilament exam",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-004-001",
+      "date": "2023-06-15",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 7.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 5.6,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 188,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 18,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.0,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.3,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 42,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 35,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks"
+              },
+              "value": 88,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">=60 normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 224,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 138,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 optimal for diabetics"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 34,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 60,
+                "text": ">40 desirable for men"
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 262,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 normal"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-004-002",
+      "date": "2023-10-05",
+      "status": "final",
+      "orderedBy": "Rachel Torres, NP",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 8.4,
+              "unit": "%",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 5.6,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 212,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 20,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.1,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 139,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.5,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 48,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 38,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks"
+              },
+              "value": 82,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">=60 normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-004-003",
+      "date": "2024-03-25",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 8.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 5.6,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 234,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 19,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.1,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks"
+              },
+              "value": 80,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">=60 normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 231,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 142,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 optimal for diabetics"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 32,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 60,
+                "text": ">40 desirable for men"
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 288,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 normal"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-004-004",
+      "date": "2024-09-20",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 8.9,
+              "unit": "%",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 5.6,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 248,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 21,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.2,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.6,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 52,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 40,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks"
+              },
+              "value": 76,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">=60 normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 238,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 148,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 optimal for diabetics"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 31,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 60,
+                "text": ">40 desirable for men"
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 310,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 normal"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Urine Microalbumin/Creatinine Ratio",
+          "code": {
+            "system": "LOINC",
+            "code": "14959-1",
+            "display": "Microalbumin/Creatinine [Mass Ratio] in Urine"
+          },
+          "results": [
+            {
+              "test": "Urine Albumin/Creatinine Ratio",
+              "code": {
+                "system": "LOINC",
+                "code": "14959-1",
+                "display": "Microalbumin/Creatinine [Mass Ratio] in Urine"
+              },
+              "value": 45,
+              "unit": "mg/g",
+              "referenceRange": {
+                "low": 0,
+                "high": 30,
+                "text": "<30 normal, 30-300 microalbuminuria"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-004-005",
+      "date": "2026-01-22",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 9.1,
+              "unit": "%",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 5.6,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 262,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 22,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.3,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 138,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.8,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 55,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 43,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks"
+              },
+              "value": 68,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">=60 normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 245,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 155,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 optimal for diabetics"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 29,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 60,
+                "text": ">40 desirable for men"
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 334,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 normal"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Urine Microalbumin/Creatinine Ratio",
+          "code": {
+            "system": "LOINC",
+            "code": "14959-1",
+            "display": "Microalbumin/Creatinine [Mass Ratio] in Urine"
+          },
+          "results": [
+            {
+              "test": "Urine Albumin/Creatinine Ratio",
+              "code": {
+                "system": "LOINC",
+                "code": "14959-1",
+                "display": "Microalbumin/Creatinine [Mass Ratio] in Urine"
+              },
+              "value": 68,
+              "unit": "mg/g",
+              "referenceRange": {
+                "low": 0,
+                "high": 30,
+                "text": "<30 normal, 30-300 microalbuminuria"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-004-001",
+      "date": "2025-06-12T19:43:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Maria Gonzalez",
+        "role": "staff"
+      },
+      "category": "scheduling",
+      "priority": "routine",
+      "subject": "need to reschedule my appt sorry",
+      "body": "Hi there this is Raj Patel I'm writing because I had that appointment on Thursday the 19th I think it was but the thing is my dispatcher just called and I got a load going to El Paso and then I have to deadhead back to Dallas to pick up another one and I won't be back in Chicago until maybe the 25th or 26th but honestly it could be later because you never know with these routes sometimes they add stops and last time I went through Texas they had me do a drop in San Antonio too so I really can't say for sure when I'll be back. I know this is the third time and I'm sorry about that Sunita is pretty mad at me about it too she says I need to take care of this but I can't just tell my dispatcher no you know how it is I got to work. Anyway can you reschedule me for sometime after the 26th, maybe the week after that? I'm flexible on the day as long as it's not too early in the morning because when I get back from a long haul I need to sleep in a little. Just let me know what you have and my wife can confirm it. Thanks",
+      "thread": [
+        {
+          "date": "2025-06-13T14:22:00Z",
+          "sender": {
+            "name": "Maria Gonzalez",
+            "role": "staff"
+          },
+          "body": "Hi Mr. Patel, I understand work schedules can be unpredictable. I've rescheduled your appointment to Thursday, July 3rd at 10:30 AM with Dr. Kim. Please note that this is your third missed appointment this year. Dr. Kim has asked me to let you know that it's very important you keep this appointment, as she needs to review your blood sugar management and recent lab work. I've also sent a reminder to your wife's phone number on file. Please call us at 773-555-1200 if you need to make any changes. Thank you."
+        }
+      ]
+    },
+    {
+      "id": "msg-004-002",
+      "date": "2025-08-18T21:15:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "blood sugar question",
+      "body": "Hey Dr Kim so I'm writing because I was at this truck stop outside of Joplin Missouri today and they had one of those pharmacy kiosks where you can check your blood sugar I don't usually do it on the road but I hadn't eaten since breakfast and I figured why not so I did it and it said 268 which I know is probably a little high but I had a pretty big breakfast this morning at the Waffle House, I had the eggs and hash browns and sausage and biscuits and gravy so that might be why. I've been taking my metformin pretty regular except I think I missed yesterday's evening dose because I was driving straight through to make a delivery time. The glipizide I take in the morning. Anyway I just wanted to mention it because you always ask me about my numbers so there you go. How high is too high? I'm not feeling bad or anything maybe a little tired but I'm always tired that's just the job. Let me know if I should be worried or if it's just from the big breakfast. Also unrelated but do you know if I need to do anything special for my CDL physical coming up in October, my company is asking about it.",
+      "thread": [
+        {
+          "date": "2025-08-19T10:48:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Mr. Patel, thank you for checking your blood sugar and letting me know. A reading of 268 mg/dL is significantly elevated, even after a meal -- a normal post-meal reading should be under 180 mg/dL. This is consistent with the trend we've been seeing with your A1C levels and tells me your diabetes is not well controlled on your current medications.\n\nPlease do not skip doses of your metformin. I understand it's difficult on the road, but consistency is essential. If you're having trouble remembering, try setting an alarm on your phone for your evening dose.\n\nI need to see you in the office as soon as possible -- not just for a routine follow-up, but because we need to discuss whether your current medication plan is adequate. Your last A1C was 9.1% and this blood sugar reading confirms we need to make changes.\n\nRegarding your CDL physical: given your diabetes, blood pressure, and sleep apnea, the examiner will need documentation of your treatment. This is another reason we need to get you in soon. Please call Maria to schedule an appointment within the next 2 weeks.\n\nPlease also try to make healthier breakfast choices -- the meal you described is very high in carbohydrates and fat, which will significantly raise your blood sugar."
+        }
+      ]
+    },
+    {
+      "id": "msg-004-003",
+      "date": "2025-11-03T16:28:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "refill_request",
+      "priority": "routine",
+      "subject": "metformin ran out need refill",
+      "body": "Dr Kim I need a refill on my metformin I ran out a few days ago, the pharmacy said I don't have any refills left and they need you to call it in. Here's the thing and don't be mad but my sugar was running really high like in the 300s a couple weeks ago and I remembered you said the metformin was important so I started taking it three times a day instead of two, I figured if two is good three is better right? So I ran out about a week and a half early. I know you're probably going to say I shouldn't have done that but I was trying to get the numbers down and it seemed like it was working a little bit, they went down to like 250 or so. Anyway I also ran low on the glipizide but I still have a few of those left. I'm on the road until Friday but Sunita can pick up the prescription if you send it to the Walgreens on Pulaski. Thanks doc.",
+      "thread": [
+        {
+          "date": "2025-11-04T09:15:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Mr. Patel, I'm sending a refill for your metformin to the Walgreens on Pulaski -- your wife can pick it up today.\n\nI need to be very clear: please do NOT adjust your medication doses on your own. Taking extra metformin can cause side effects including severe diarrhea, nausea, and in rare cases a dangerous condition called lactic acidosis. The dose is 1000 mg TWICE daily -- morning and evening. No more than that.\n\nThe fact that your blood sugars were in the 300s is very concerning and tells me we urgently need to revisit your treatment plan. This is exactly why we discussed starting insulin at your last visit. Blood sugars consistently above 250-300 put you at risk for diabetic ketoacidosis and accelerate damage to your kidneys, eyes, and nerves.\n\nI am scheduling you for an appointment the week you return. Maria will send the details. This is not optional, Mr. Patel -- we need to get your diabetes under control before something serious happens. Please bring your glucometer with you so we can review your readings."
+        }
+      ]
+    },
+    {
+      "id": "msg-004-004",
+      "date": "2026-04-14T22:07:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "urgent_symptom",
+      "priority": "routine",
+      "subject": "doing ok just tired and a question",
+      "body": "Hi Dr Kim hope you're doing well I just wanted to check in and let you know I've been taking the insulin like you showed me, well most nights anyway sometimes I forget when I get in late from a run but I'd say I'm doing it maybe 5 out of 7 nights which isn't bad right? Sunita helps me when I'm home she's good about reminding me. The metformin and glipizide I'm taking regular too. Work has been crazy busy they've got me doing these runs to Memphis and back twice a week and by the time I get home I'm just wiped out, I mean really exhausted like I can barely keep my eyes open sometimes on the road which is probably the sleep apnea thing I know you want me to use that CPAP machine but it's just so uncomfortable and I can't figure out how to use it in the sleeper cab of the truck, maybe if they made a different kind of mask I could try it again I don't know. Anyway Sunita says I should mention this but I've been having trouble with my feet lately, well my right foot mostly, it's been kind of numb and tingly for I don't know a couple weeks maybe three, it comes and goes but lately it's more like it's there all the time especially at night, and last week I stepped on something in the garage and didn't even feel it until Sunita noticed I was bleeding a little. Is that something I should worry about or is it just from sitting in the truck all day?",
+      "thread": [
+        {
+          "date": "2026-04-15T08:32:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Mr. Patel, I need you to read this carefully.\n\nThe numbness and tingling in your right foot, and especially the fact that you stepped on something and did not feel it, is a SERIOUS symptom. This is very likely diabetic neuropathy -- nerve damage caused by high blood sugar levels over time. We noted decreased sensation in your foot at your last exam, and what you're describing tells me it has gotten worse.\n\nThis is NOT from sitting in the truck. This is a complication of your diabetes.\n\nWhen you lose sensation in your feet, you can injure yourself without knowing it, and those injuries can become infected. For someone with diabetes, foot infections can become very serious very quickly and in the worst cases can lead to amputation. I do not say this to scare you but because I need you to understand the urgency.\n\nI need you to do the following:\n1. Examine the cut on your foot RIGHT NOW -- if there is any redness, swelling, warmth, drainage, or if it has not healed, go to urgent care immediately.\n2. Call our office FIRST THING TOMORROW MORNING to schedule an appointment this week. Tell Maria I said it's urgent.\n3. Do NOT walk barefoot -- wear shoes at all times, even in the house.\n4. Check your feet every night for cuts, blisters, or sores.\n\nI also want to be honest with you: the fatigue and difficulty staying awake while driving is extremely dangerous, both for you and for others on the road. You MUST use your CPAP. I can order a different mask style if that would help.\n\nPlease call tomorrow. This cannot wait."
+        }
+      ]
+    },
+    {
+      "id": "msg-004-005",
+      "date": "2026-04-20T09:14:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "feeling kind of off lately",
+      "body": "Hi Dr Kim so my cousin Deepak came in from Detroit last week and we had a big family thing at the house, Sunita cooked a ton of food and I mean a ton like biryani and samosas and gulab jamun and all that and I know I probably shouldn't have eaten so much but you can't just not eat when family is over you know how it is. Anyway I checked my sugar after that and it was like 280 which is a little high I know but I think it was just from all the food and it'll probably come back down on its own. I've been feeling kind of dizzy though like when I stand up from sitting for a while everything goes a little black for a second and I have to grab onto something, it's been happening maybe four or five times a day for the last week or so. Also I wanted to ask you about my CPAP because the mask they gave me hurts the bridge of my nose and leaves red marks so I haven't really been wearing it much lately, maybe once or twice a week if that, I know you said it was important but I just can't sleep with that thing on my face. Oh and one more thing I almost forgot my feet have been more numb than usual especially the right one, like I can barely feel the floor when I walk to the bathroom at night and the tingling is pretty much constant now instead of coming and going like before, I don't know if that means anything or if it's just because I've been sitting a lot more with the long hauls lately. Anyway just wanted to give you an update hope everything is good.",
+      "thread": []
+    },
+    {
+      "id": "msg-004-006",
+      "date": "2026-04-24T11:32:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "one more thing",
+      "body": "Hey Dr Kim sorry to bother you again I forgot to mention this in my last message but my vision has been kind of blurry the last few days, like when I'm reading the signs on the highway I have to squint a lot more than I used to and the GPS screen in the truck looks fuzzy. I'm pretty sure I just need new glasses its probably been three or four years since I got these ones so that's probably all it is. Does your office know a good eye doctor you could recommend? I've been meaning to go to one anyway. Thanks.",
+      "thread": []
+    }
+  ]
+}

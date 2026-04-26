@@ -1,0 +1,725 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-008",
+  "demographics": {
+    "name": {
+      "given": "James",
+      "family": "Hartley"
+    },
+    "birthDate": "1974-10-28",
+    "gender": "male",
+    "phone": "773-555-0776",
+    "email": "jhartley74@gmail.com",
+    "address": {
+      "line": "6200 N Nagle Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60646"
+    },
+    "emergencyContact": {
+      "name": "Karen Hartley",
+      "relationship": "Wife",
+      "phone": "773-555-0777"
+    },
+    "insurance": {
+      "type": "Commercial",
+      "planName": "Cigna HMO",
+      "memberId": "CIG-8834172"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Former smoker, quit 10 years ago (smoked 15 years, 1 pack/day \u2014 15 pack-year history)",
+    "alcohol": "Moderate \u2014 2-3 beers most evenings",
+    "exercise": "Physically active at work (commercial electrician). No formal exercise routine.",
+    "notes": "Married, two teenage kids. Avoids doctors \u2014 'I don't go unless something's really wrong.' Wife Karen pushed him to come in for current symptoms. Works full-time as a commercial electrician."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Father",
+      "condition": "Myocardial infarction at age 53, fatal",
+      "deceased": true
+    },
+    {
+      "relationship": "Mother",
+      "condition": "Hypertension, alive at 78",
+      "deceased": false
+    },
+    {
+      "relationship": "Brother",
+      "condition": "Coronary artery disease \u2014 triple coronary artery bypass graft at age 49",
+      "deceased": false
+    }
+  ],
+  "allergies": [],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "R07.9",
+        "display": "Chest pain, unspecified"
+      },
+      "status": "active",
+      "onsetDate": "2026-04-10",
+      "notes": "New-onset exertional chest tightness. Reproduces with climbing stairs and heavy lifting. Relieved with rest within 5 minutes. Concerning pattern given strong family history of premature CAD. Stress test ordered."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "E78.5",
+        "display": "Hyperlipidemia, unspecified"
+      },
+      "status": "active",
+      "onsetDate": "2026-04-10",
+      "notes": "Newly diagnosed. TC 278, LDL 189, HDL 38, TG 210. Never previously screened. Started atorvastatin 40 mg."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "I25.10",
+        "display": "Atherosclerotic heart disease of native coronary artery without angina pectoris"
+      },
+      "status": "suspected",
+      "onsetDate": "2026-04-10",
+      "notes": "Suspected coronary artery disease given exertional chest pain, significant family history (father MI at 53, brother CABG at 49), newly diagnosed dyslipidemia, former smoker, and nonspecific ST changes on EKG. Stress test scheduled 2026-04-24 to further evaluate."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "259255",
+        "display": "Atorvastatin 40 MG Oral Tablet"
+      },
+      "dosage": "40 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2026-04-10",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "243670",
+        "display": "Aspirin 81 MG Delayed Release Oral Tablet"
+      },
+      "dosage": "81 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2026-04-10",
+      "prescriber": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap (tetanus, diphtheria, pertussis)"
+      },
+      "date": "2023-05-15",
+      "site": "Left deltoid",
+      "lotNumber": "TD-8827A",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-008-001",
+      "date": "2023-05-15",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Required physical for IBEW union clearance",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 126,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 72,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 211,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 29.4,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "51 yo male presenting for required union physical. No complaints. States he feels fine. Last physical was 'years ago, can't remember.' Denies chest pain, shortness of breath, dizziness. Former smoker, quit about 7 years ago. Reports 2-3 beers most evenings. Physically active at work.",
+        "objective": "Well-appearing male in no acute distress. HEENT: normocephalic, oropharynx clear. Neck: supple, no lymphadenopathy, no thyromegaly. Lungs: clear to auscultation bilaterally. Heart: regular rate and rhythm, no murmurs, rubs, or gallops. Abdomen: soft, non-tender, non-distended. Extremities: no edema. Neurologic: grossly intact. Skin: no suspicious lesions.",
+        "assessment": "Healthy male presenting for occupational physical. BMI 29.4 (overweight). Former smoker with 15 pack-year history. No acute issues identified. Note: lipid panel not ordered at this visit \u2014 patient was here strictly for union clearance form and declined additional labs. Counseled on importance of screening given family history but patient declined. Tdap updated.",
+        "plan": "1. Union physical form completed and signed. 2. Counseled on weight management and cardiovascular risk given family history. 3. Strongly encouraged lipid screening and follow-up \u2014 patient states he'll 'think about it.' 4. Tdap administered (was overdue). 5. Return as needed or for routine screening."
+      },
+      "labOrders": [],
+      "referrals": []
+    },
+    {
+      "id": "enc-008-002",
+      "date": "2026-04-10",
+      "type": "urgent",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "New-onset exertional chest tightness",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 142,
+          "diastolic": 88,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 88,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 218,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 30.4,
+        "respiratoryRate": {
+          "value": 18,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "51 yo male presenting urgently at wife's insistence for chest tightness with exertion over the past 2-3 weeks. Describes a 'tight, heavy feeling' across his chest when climbing stairs or carrying heavy loads at work. Episodes last 3-5 minutes and resolve with rest. Denies radiation to arm or jaw. Denies nausea, diaphoresis, syncope. Has been ignoring symptoms \u2014 'figured it was just being out of shape.' Wife Karen present and reports he has been winded more easily and clutching his chest, which he minimizes. No prior cardiac history. CRITICAL family history: father died of MI at age 53, brother had triple bypass at age 49. Patient is currently 51. Former smoker, 15 pack-year history. Has not seen a doctor since 2023 union physical.",
+        "objective": "Alert, appears mildly anxious though minimizes concern. BP 142/88 (elevated \u2014 may be white coat vs. true hypertension, will need repeat). HR 88, regular. Lungs: clear bilaterally. Heart: regular rate and rhythm, no murmurs, no S3 or S4. No JVD. Peripheral pulses intact bilaterally. No lower extremity edema. EKG performed in office: normal sinus rhythm, rate 86, nonspecific ST-T wave changes in leads V4-V6. No ST elevation or depression meeting acute criteria. No prior EKG for comparison.",
+        "assessment": "1. New-onset exertional chest pain \u2014 highly concerning for angina given classic pattern (exertional onset, relief with rest) and significant risk factors: strong family history of premature CAD (father fatal MI at 53, brother CABG at 49), former smoker (15 pack-years), age 51, male sex, newly discovered hyperlipidemia, BMI 30.4. Nonspecific ST changes on EKG add to concern. Troponin negative x1 (reassuring for acute event but does not rule out stable angina/CAD). 2. Hyperlipidemia, newly diagnosed \u2014 TC 278, LDL 189, HDL 38, TG 210. Significantly elevated LDL with low HDL. Has never been screened. 3. Elevated blood pressure 142/88 \u2014 unclear if white coat effect or true hypertension. Will reassess at follow-up. 4. Possible coronary artery disease \u2014 stress test ordered for definitive evaluation.",
+        "plan": "1. STAT labs: lipid panel, troponin I, BMP, CBC \u2014 resulted today (see lab orders). 2. Exercise stress test ordered \u2014 scheduled 2026-04-24 at Lakeview Cardiology. 3. Start atorvastatin 40 mg daily for aggressive lipid management given risk profile. 4. Start aspirin 81 mg daily. 5. Strict return precautions reviewed in detail with patient AND wife: go to ER immediately for chest pain at rest, lasting >10 min, with radiation, diaphoresis, or shortness of breath. 6. Activity modification: avoid heavy exertion until stress test completed. Discussed limitations at work \u2014 patient reluctant but wife will reinforce. 7. Follow-up in 1 week to review labs and check BP. 8. Long discussion with patient about his risk profile. Emphasized that his family history puts him at significantly elevated risk. He appeared to understand the gravity. Wife Karen is highly engaged and will help ensure compliance."
+      },
+      "labOrders": [
+        "lab-008-001",
+        "lab-008-002",
+        "lab-008-003",
+        "lab-008-004"
+      ],
+      "referrals": [
+        {
+          "to": "Lakeview Cardiology \u2014 Exercise Stress Test",
+          "reason": "New-onset exertional chest pain with high-risk features: strong family history of premature CAD, newly diagnosed hyperlipidemia, nonspecific ST changes on EKG",
+          "status": "scheduled"
+        }
+      ]
+    },
+    {
+      "id": "enc-008-003",
+      "date": "2026-04-18",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Follow-up: chest pain evaluation, lab review, pre-stress test check-in",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 138,
+          "diastolic": 86,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.5,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 217,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 30.3,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Returns for 1-week follow-up. Reports one additional episode of chest tightness while climbing stairs at a job site 3 days ago \u2014 lasted about 5 minutes, resolved with rest. Has been trying to avoid heavy exertion as instructed but states 'it's hard with my job.' Taking atorvastatin and aspirin daily as prescribed. No chest pain at rest. No shortness of breath at rest. No edema. Wife Karen present again. She reports he is sleeping fine and eating normally. She has been monitoring his activity. Stress test is scheduled for April 24.",
+        "objective": "Appears well, less anxious than initial visit. BP 138/86 (still mildly elevated \u2014 trending pattern suggests this may be genuine hypertension rather than white coat effect; will continue monitoring). HR 78, regular. Lungs clear. Heart RRR, no murmurs. No peripheral edema. Reviewed labs from April 10 visit with patient.",
+        "assessment": "1. Exertional chest pain \u2014 ongoing, consistent with anginal pattern. One additional episode since last visit. Stress test scheduled in 6 days. 2. Hyperlipidemia \u2014 on atorvastatin 40 mg, tolerating well. Repeat lipids in 6-8 weeks. 3. Borderline hypertension \u2014 142/88 at urgent visit, 138/86 today. Concerning trend. Will reassess after stress test; may need antihypertensive if pattern continues. 4. Suspected CAD \u2014 awaiting stress test results for risk stratification.",
+        "plan": "1. Continue atorvastatin 40 mg daily and aspirin 81 mg daily. 2. Stress test confirmed for April 24 at Lakeview Cardiology. Reviewed preparation instructions: no food or caffeine for 4 hours prior, wear comfortable clothing and walking shoes, continue all medications unless otherwise directed. 3. Activity restriction reinforced: no heavy lifting, take breaks on stairs, stop immediately if chest tightness occurs. 4. ER precautions re-reviewed with patient and wife. 5. Will call patient with stress test results as soon as available. If stress test is abnormal, will expedite cardiology consultation. 6. BP recheck at next visit \u2014 if persistently elevated, will start antihypertensive (likely ACE inhibitor given cardiac risk profile). 7. Discussed smoking history and cardiovascular risk at length. Patient engaged and asking more questions than at initial visit \u2014 appears to be taking this seriously."
+      },
+      "labOrders": [],
+      "referrals": []
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-008-001",
+      "date": "2026-04-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid panel with direct LDL"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 278,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 mg/dL desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "18262-6",
+                "display": "LDL Cholesterol (Direct)"
+              },
+              "value": 198,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 mg/dL optimal"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "HDL Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 38,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 60,
+                "text": ">40 mg/dL desirable for males"
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglycerides [Mass/volume] in Serum or Plasma"
+              },
+              "value": 210,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 mg/dL normal"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-008-002",
+      "date": "2026-04-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Troponin I",
+          "code": {
+            "system": "LOINC",
+            "code": "10839-9",
+            "display": "Troponin I.cardiac [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Troponin I, High Sensitivity",
+              "code": {
+                "system": "LOINC",
+                "code": "89579-7",
+                "display": "Troponin I.cardiac [Mass/volume] in Serum or Plasma by High sensitivity method"
+              },
+              "value": "<0.01",
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 0,
+                "high": 0.04,
+                "text": "<0.04 ng/mL normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-008-003",
+      "date": "2026-04-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Basic Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 94,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "70-100 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 16,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20,
+                "text": "7-20 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.0,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3,
+                "text": "0.7-1.3 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145,
+                "text": "136-145 mEq/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.2,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0,
+                "text": "3.5-5.0 mEq/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Chloride",
+              "code": {
+                "system": "LOINC",
+                "code": "2075-0",
+                "display": "Chloride [Moles/volume] in Serum or Plasma"
+              },
+              "value": 102,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 98,
+                "high": 106,
+                "text": "98-106 mEq/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "CO2 (Bicarbonate)",
+              "code": {
+                "system": "LOINC",
+                "code": "2028-9",
+                "display": "Carbon dioxide [Moles/volume] in Serum or Plasma"
+              },
+              "value": 25,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 22,
+                "high": 29,
+                "text": "22-29 mEq/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5,
+                "text": "8.5-10.5 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-008-004",
+      "date": "2026-04-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count with Differential",
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel in Blood"
+          },
+          "results": [
+            {
+              "test": "White Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood"
+              },
+              "value": 7.2,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0,
+                "text": "4.5-11.0 x10^3/uL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 15.1,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5,
+                "text": "13.5-17.5 g/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood"
+              },
+              "value": 44.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6,
+                "text": "38.3-48.6%"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood"
+              },
+              "value": 234,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400,
+                "text": "150-400 x10^3/uL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-008-005",
+      "date": "2026-04-24",
+      "status": "pending",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Exercise Stress Test",
+          "code": {
+            "system": "LOINC",
+            "code": "18752-6",
+            "display": "Exercise stress test study"
+          },
+          "results": []
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-008-001",
+      "date": "2026-04-14T19:42:00Z",
+      "sender": {
+        "name": "James Hartley",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "urgent",
+      "subject": "Chest tightness",
+      "body": "Hi I was in last week for the chest thing. Had another episode yesterday going up stairs at a job site. Lasted about 5 min then went away when I sat down. Is that normal or should I be worried.",
+      "thread": [
+        {
+          "date": "2026-04-15T08:15:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "James, thank you for reporting this. Any episode of exertional chest tightness needs to be taken seriously, especially with your family history. This is consistent with what we discussed at your visit. Please follow these instructions carefully: (1) Stop what you are doing immediately if the tightness comes on. Sit down and rest. (2) If it does not resolve within 5 minutes, or if it occurs at rest, call 911 \u2014 do not drive yourself. (3) Avoid heavy lifting and strenuous stair climbing until after your stress test on April 24. I know this is difficult with your work. We discussed activity restrictions at your visit, and I want to re-emphasize how important they are. Your stress test is in 9 days and we need you to get there safely. If episodes become more frequent or more intense before then, call our office immediately or go to the ER. Do not wait."
+        }
+      ]
+    },
+    {
+      "id": "msg-008-002",
+      "date": "2026-04-20T10:08:00Z",
+      "sender": {
+        "name": "Karen Hartley",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "scheduling",
+      "priority": "routine",
+      "subject": "Stress test prep question - James Hartley",
+      "body": "Hi Dr. Kim, this is Karen, James's wife. He has the stress test this Thursday at Lakeview Cardiology. I know he's not supposed to eat or drink coffee before \u2014 is there anything else he needs to know or do to prepare? Also, is it ok that he's still working full days? He won't listen to me about taking it easy. I've been worried sick since his dad passed at 53 from a heart attack and James is 51 now. His brother had bypass surgery two years ago. I just want to make sure we're not missing anything. Thank you for fitting him in so quickly last week.",
+      "thread": [
+        {
+          "date": "2026-04-21T09:30:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Karen, thank you for reaching out and for being so involved in James's care \u2014 it makes a real difference. For the stress test: no food, caffeine, or tobacco for at least 4 hours before the appointment. He should wear comfortable clothes and walking shoes. He should continue taking his atorvastatin and aspirin as normal. Regarding work: I share your concern. I advised James to avoid heavy physical exertion until we have the stress test results, and I documented that recommendation. He should not be doing heavy lifting or climbing multiple flights of stairs with loads. If his employer needs a work restriction note, please have him call our office and we will provide one. I understand your worry given the family history \u2014 it is exactly why we are moving quickly with this workup. We should have results within a few days of the test. Please don't hesitate to reach out with any other questions."
+        }
+      ]
+    },
+    {
+      "id": "msg-008-003",
+      "date": "2026-04-25T17:22:00Z",
+      "sender": {
+        "name": "James Hartley",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "results_inquiry",
+      "priority": "routine",
+      "subject": "Stress test results",
+      "body": "Test was Thursday. When will results be ready. Thanks.",
+      "thread": [
+        {
+          "date": "2026-04-26T08:45:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "James, the cardiologist's office is finalizing the report. I expect to have the results within 1-2 business days. As soon as I receive them, I will call you directly to discuss \u2014 I will not leave results like these in a voicemail. Please keep my office number handy. In the meantime, continue your medications and activity precautions. If you experience any chest tightness at rest or episodes that last longer than 5 minutes, go to the emergency room immediately."
+        }
+      ]
+    }
+  ]
+}

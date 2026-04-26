@@ -1,0 +1,1881 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-003",
+  "demographics": {
+    "name": {
+      "given": "Susan",
+      "family": "Thornton"
+    },
+    "birthDate": "1980-09-03",
+    "gender": "female",
+    "phone": "773-555-0462",
+    "email": "s.thornton@protonmail.com",
+    "address": {
+      "line": "2200 N Lakewood Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60614"
+    },
+    "emergencyContact": {
+      "name": "David Thornton",
+      "relationship": "Husband",
+      "phone": "773-555-0463"
+    },
+    "insurance": {
+      "type": "Commercial",
+      "planName": "Aetna PPO",
+      "memberId": "AET-W882145603"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker",
+    "alcohol": "Rare, 1-2 drinks/month",
+    "exercise": "Runs 4x/week (tracks with Garmin), yoga 2x/week. Averages 35-40 miles/week running.",
+    "notes": "Married, no children. Works remotely as a software engineer. Describes herself as a 'health optimizer.' Follows several medical podcasts including Huberman Lab and Peter Attia. Tracks HRV, sleep, and resting heart rate daily via smartwatch. Brings spreadsheets to appointments."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Hashimoto's thyroiditis, diagnosed at 50",
+      "deceased": false
+    },
+    {
+      "relationship": "Father",
+      "condition": "Healthy, age 74",
+      "deceased": false
+    },
+    {
+      "relationship": "Sister",
+      "condition": "Anxiety disorder",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Amoxicillin",
+      "category": "medication",
+      "reaction": "Hives",
+      "criticality": "low",
+      "status": "active",
+      "note": "Developed urticaria within 2 hours of first dose, age 22. Penicillin cross-reactivity not formally tested."
+    },
+    {
+      "substance": "Shellfish",
+      "category": "food",
+      "reaction": "Throat tightness",
+      "criticality": "high",
+      "status": "active",
+      "note": "Carries EpiPen. Reaction to shrimp at age 30 \u2014 throat tightness and lip swelling within 15 minutes. Treated in ER with epinephrine."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "E03.9",
+        "display": "Hypothyroidism, unspecified"
+      },
+      "status": "active",
+      "onsetDate": "2023-06-15",
+      "notes": "TSH borderline elevated on routine screening (4.1 mIU/L). Free T4 normal. Mother has Hashimoto's. Patient monitors closely. Repeat TSH values have fluctuated between 2.5-4.2, all within normal limits. No treatment initiated \u2014 watchful waiting per guidelines. Patient requests more frequent monitoring than clinically indicated."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "F41.1",
+        "display": "Generalized anxiety disorder"
+      },
+      "status": "active",
+      "onsetDate": "2021-03-10",
+      "notes": "Well-managed on sertraline 50mg daily. GAD-7 scores consistently 4-6 (mild). Patient reports significant improvement since starting medication. Anxiety partially manifests as health monitoring behavior."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "312940",
+        "display": "Sertraline 50 mg oral tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2021-03-10",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "315966",
+        "display": "Cholecalciferol 2000 UNT oral capsule"
+      },
+      "dosage": "2000 IU",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2025-05-20",
+      "prescriber": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, bivalent"
+      },
+      "date": "2023-10-12",
+      "site": "Left deltoid",
+      "lotNumber": "FN4832",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, inactivated, quadrivalent"
+      },
+      "date": "2025-10-08",
+      "site": "Left deltoid",
+      "lotNumber": "UJ8841",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap"
+      },
+      "date": "2023-04-18",
+      "site": "Right deltoid",
+      "lotNumber": "AC3291",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, inactivated, quadrivalent"
+      },
+      "date": "2024-09-25",
+      "site": "Left deltoid",
+      "lotNumber": "KP7712",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-003-001",
+      "date": "2023-04-18",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 112,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 54,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 132,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 22.0,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for annual physical. Feels well overall. Reports running 35 miles/week and practicing yoga. Tracks resting heart rate with Garmin watch \u2014 averages 52 bpm. Reports occasional mild anxiety but feels well-managed on current sertraline dose. No new complaints. Asks about comprehensive thyroid panel given family history of Hashimoto's in mother.",
+        "objective": "Well-appearing female in no distress. HEENT normal. Lungs clear. Heart regular rate and rhythm, no murmurs. Abdomen soft, non-tender. Thyroid non-enlarged, no nodules palpable. Skin clear. Athletic build consistent with reported exercise.",
+        "assessment": "Healthy 42-year-old female. Generalized anxiety disorder, well-managed on sertraline. Patient requests baseline thyroid panel given family history of Hashimoto's \u2014 reasonable given first-degree relative with autoimmune thyroid disease.",
+        "plan": "1. Order TSH and free T4 as baseline thyroid screen. 2. Routine labs: CBC, CMP, lipid panel. 3. Tdap booster administered today. 4. Continue sertraline 50mg daily. 5. Return in 1 year or sooner if concerns."
+      },
+      "labOrders": [
+        "lab-003-001"
+      ]
+    },
+    {
+      "id": "enc-003-002",
+      "date": "2023-06-15",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Follow-up on thyroid labs \u2014 TSH 4.1",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 56,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 131,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 21.8,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient returns to discuss thyroid labs. TSH was 4.1 mIU/L (ref 0.4-4.5), free T4 1.1 ng/dL (ref 0.8-1.8). Patient has researched subclinical hypothyroidism extensively and is concerned the TSH is 'suboptimal' even though within reference range. Reports no hypothyroid symptoms \u2014 energy is good, weight stable, no cold intolerance, no constipation, no hair changes. Brought a printed spreadsheet of her resting heart rate, sleep quality, and energy levels over the past 3 months. References a study suggesting TSH above 2.5 may indicate early thyroid dysfunction in patients with family history.",
+        "objective": "Well-appearing, in no distress. Thyroid non-enlarged, non-tender, no nodules. No periorbital edema. Skin warm and dry. Reflexes normal. No signs consistent with hypothyroidism.",
+        "assessment": "Subclinical hypothyroidism \u2014 TSH 4.1, within normal range but upper quartile. Free T4 normal. Asymptomatic. Family history of Hashimoto's noted. No indication for treatment at this time per ATA guidelines. Patient's health anxiety may be contributing to over-monitoring concern.",
+        "plan": "1. Reassured patient that TSH 4.1 with normal free T4 does not warrant treatment. 2. Discussed ATA guidelines \u2014 treatment considered when TSH >10 or TSH 4.5-10 with symptoms. 3. Agreed to recheck TSH in 6 months as monitoring given family history. 4. Ordered TPO antibodies to assess autoimmune risk. 5. Patient requested 3-month recheck \u2014 discussed that 6-month interval is appropriate for asymptomatic subclinical hypothyroidism. Compromised on initial 4-month follow-up, then transition to 6-month."
+      },
+      "labOrders": [
+        "lab-003-002"
+      ]
+    },
+    {
+      "id": "enc-003-003",
+      "date": "2024-01-09",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Patient-requested thyroid recheck and vitamin D level",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 108,
+          "diastolic": 66,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 52,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.1,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 130,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 21.6,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient requests thyroid recheck. Last TSH was 3.8 in October (patient-requested, drawn at Quest). Reports feeling well but notes her resting HR has been 'trending up by 2-3 bpm' on her Garmin and wonders if it correlates with thyroid function. Also requests vitamin D level \u2014 states she read that levels above 50 ng/mL are associated with improved immune function and athletic performance. No symptoms of hypothyroidism. Anxiety well-managed.",
+        "objective": "Healthy-appearing female. Vitals excellent. Thyroid exam normal. No clinical signs of hypothyroidism or vitamin D deficiency.",
+        "assessment": "1. Subclinical hypothyroidism \u2014 stable, asymptomatic. Previous TSH values 4.1, 3.8 \u2014 both within normal limits. 2. Vitamin D status unknown \u2014 reasonable to check once given patient request. 3. GAD \u2014 stable on sertraline.",
+        "plan": "1. TSH and free T4 ordered. 2. 25-hydroxyvitamin D level ordered. 3. Discussed with patient that minor fluctuations in resting heart rate (2-3 bpm) are normal physiologic variation and not likely related to thyroid function at these TSH levels. 4. Will review results via portal. 5. Next thyroid recheck in 6 months \u2014 reiterated that more frequent testing is not likely to change management."
+      },
+      "labOrders": [
+        "lab-003-003"
+      ]
+    },
+    {
+      "id": "enc-003-004",
+      "date": "2024-04-23",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 114,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 55,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.3,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 133,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 22.1,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Annual physical. Patient feels well. Running a half marathon next month. Sertraline continues to work well \u2014 GAD-7 score today is 5. Reports taking vitamin D 2000 IU daily (OTC) since January labs showed level of 22 ng/mL. Also taking magnesium glycinate 400mg, omega-3 fish oil 2g, and CoQ10 200mg \u2014 all self-initiated based on podcast recommendations. No hypothyroid symptoms. Requests comprehensive thyroid panel including free T3 and reverse T3. Brought a 4-page printout of her health metrics from the past year.",
+        "objective": "Well-appearing athletic female. Vitals excellent \u2014 resting HR 55 consistent with endurance athlete. All systems exam unremarkable. Thyroid normal on palpation.",
+        "assessment": "Healthy 43-year-old female. 1. Subclinical hypothyroidism \u2014 stable, TSH bouncing in 2.5-4.2 range, asymptomatic. 2. GAD \u2014 well-managed. 3. Vitamin D deficiency \u2014 was 22 ng/mL in January, supplementing with 2000 IU daily. 4. Patient taking multiple OTC supplements without clear indication.",
+        "plan": "1. Annual labs: CBC, CMP, lipid panel, TSH, free T4. 2. Recheck vitamin D level. 3. Discussed free T3 and reverse T3 testing \u2014 explained that these are not recommended for routine monitoring of subclinical hypothyroidism per ATA and Endocrine Society guidelines. TSH and free T4 are sufficient. Patient accepted after discussion but noted she may request in future. 4. Reviewed supplements \u2014 no contraindications with current medications but discussed limited evidence for CoQ10 and reverse T3 testing in her clinical context. 5. Continue sertraline 50mg. 6. Flu vaccine in fall."
+      },
+      "labOrders": [
+        "lab-003-004"
+      ]
+    },
+    {
+      "id": "enc-003-005",
+      "date": "2024-10-15",
+      "type": "office-visit",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Patient-requested thyroid recheck and follow-up on vitamin D",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 53,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 131,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 21.8,
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for thyroid recheck and vitamin D follow-up. Last TSH was 3.4 in April. Vitamin D was up to 38 ng/mL from 22 in January on 2000 IU daily supplementation. Patient feels this is 'still suboptimal' and asks about increasing to 5000 IU daily. Reports she read that functional medicine practitioners target 50-80 ng/mL. No hypothyroid symptoms. Anxiety stable. Running a PR in her recent half marathon (1:42). Sertraline refill needed.",
+        "objective": "Healthy-appearing athletic female. Vitals excellent. Exam unremarkable.",
+        "assessment": "1. Subclinical hypothyroidism \u2014 stable, monitoring per schedule. 2. Vitamin D \u2014 improved from 22 to 38 ng/mL on supplementation. 30-50 ng/mL is considered sufficient per Endocrine Society. 3. GAD \u2014 well controlled.",
+        "plan": "1. TSH and free T4 ordered. 2. Discussed vitamin D targets \u2014 30 ng/mL is sufficient per Endocrine Society guidelines. Levels above 50 are not supported by evidence for additional benefit and may increase risk. Recommend continuing 2000 IU daily. Patient expressed disagreement but accepted plan for now. 3. Sertraline 50mg refill \u2014 90 days with 3 refills. 4. Next thyroid check in 6 months."
+      },
+      "labOrders": [
+        "lab-003-005"
+      ]
+    },
+    {
+      "id": "enc-003-006",
+      "date": "2025-04-15",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 66,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 51,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 132,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 22.0,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Annual physical. Patient feels excellent. Running consistently, training for a marathon. GAD-7 score 4. Reports sertraline continues to be effective. Requests thyroid panel, comprehensive metabolic, lipid panel, and vitamin D recheck. Mentions she had 23andMe testing done and found she has an MTHFR C677T heterozygous variant \u2014 asks whether she should switch to methylfolate supplementation. Also asks about ordering a full thyroid panel with antibodies again. No new symptoms.",
+        "objective": "Well-appearing athletic female in excellent condition. Vitals optimal \u2014 resting HR 51 consistent with high-level endurance training. Complete physical exam unremarkable. Thyroid non-enlarged, no nodules.",
+        "assessment": "Healthy 44-year-old female in excellent overall health. 1. Subclinical hypothyroidism \u2014 stable over 2 years, no progression, no symptoms. 2. GAD \u2014 well-controlled on sertraline. 3. MTHFR variant \u2014 heterozygous C677T, clinically insignificant in absence of elevated homocysteine or other indications. 4. Patient continues to request testing at intervals more frequent than clinically indicated.",
+        "plan": "1. Annual labs: CBC, CMP, lipid panel, TSH, free T4, vitamin D. 2. TPO antibodies \u2014 agreed to recheck since last drawn 2 years ago, reasonable surveillance given family history. 3. Discussed MTHFR \u2014 heterozygous C677T variant is very common (present in ~30-40% of population) and not clinically actionable in most cases. No indication for methylfolate in absence of elevated homocysteine, neural tube defect history, or B12/folate deficiency. Ordered homocysteine level to provide reassurance. 4. Gently discussed frequency of lab monitoring \u2014 emphasized that her thyroid function has been stable over 2 years with all values within normal limits. Recommended annual thyroid check going forward rather than every 6 months. Discussed that excessive monitoring can paradoxically increase anxiety. Patient was receptive. 5. Continue sertraline 50mg daily. 6. Continue vitamin D 2000 IU daily."
+      },
+      "labOrders": [
+        "lab-003-006"
+      ]
+    },
+    {
+      "id": "enc-003-007",
+      "date": "2026-01-20",
+      "type": "telehealth",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Patient-requested thyroid recheck \u2014 concerned about fatigue during marathon training block",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 112,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 54,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 130,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 21.6,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Telehealth visit. Patient reports increased fatigue over past 3 weeks during a heavy marathon training block (50-55 miles/week). Concerned this could indicate worsening thyroid function. Reports checking her HRV daily and notes a 'downward trend' over 2 weeks. Sleep has been 7 hours/night. No weight gain, no cold intolerance, no constipation, no hair changes. Mood is good. Wants TSH rechecked.",
+        "objective": "Telehealth \u2014 patient appears well via video. Alert, conversational, in no acute distress. Self-reported vitals from home devices included above.",
+        "assessment": "1. Fatigue \u2014 most likely related to training volume and relative energy availability during peak marathon training. Not consistent with hypothyroid presentation. 2. Subclinical hypothyroidism \u2014 stable, last TSH 2.8 in April 2025. 3. GAD \u2014 stable.",
+        "plan": "1. Ordered TSH and free T4 to address patient concern, as it has been 9 months since last check. Also ordered ferritin and CBC to evaluate for iron deficiency, which is common in female endurance athletes and more likely cause of fatigue. 2. Discussed that training fatigue at 50+ miles/week is expected and that HRV dips are a normal physiologic response to training load, not necessarily pathologic. 3. Recommended relative rest week and ensuring adequate caloric intake during heavy training. 4. Follow-up on results via portal."
+      },
+      "labOrders": [
+        "lab-003-007"
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-003-001",
+      "date": "2023-04-18",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.1,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.8,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0,
+                "text": "4.0-11.0 x10^3/uL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0,
+                "text": "12.0-16.0 g/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 41.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0,
+                "text": "36.0-46.0%"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 245,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400,
+                "text": "150-400 x10^3/uL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 86,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "70-100 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.82,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2,
+                "text": "0.6-1.2 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20,
+                "text": "7-20 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145,
+                "text": "136-145 mEq/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0,
+                "text": "3.5-5.0 mEq/L"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 188,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 mg/dL desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 105,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 130,
+                "text": "<130 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 72,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 999,
+                "text": ">40 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 68,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-002",
+      "date": "2023-06-15",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 3.6,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.2,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Thyroid Peroxidase Antibodies",
+          "code": {
+            "system": "LOINC",
+            "code": "5382-1",
+            "display": "Thyroid peroxidase Ab [Units/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "TPO Antibodies",
+              "code": {
+                "system": "LOINC",
+                "code": "5382-1",
+                "display": "Thyroid peroxidase Ab [Units/volume] in Serum or Plasma"
+              },
+              "value": 18,
+              "unit": "IU/mL",
+              "referenceRange": {
+                "low": 0,
+                "high": 35,
+                "text": "<35 IU/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-003",
+      "date": "2024-01-09",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 3.2,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.1,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Vitamin D",
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "25-Hydroxyvitamin D"
+          },
+          "results": [
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "Vitamin D, 25-Hydroxy [Mass/volume] in Serum or Plasma"
+              },
+              "value": 22,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "30-100 ng/mL"
+              },
+              "interpretation": "low"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-004",
+      "date": "2024-04-23",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 3.4,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.2,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Vitamin D",
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "25-Hydroxyvitamin D"
+          },
+          "results": [
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "Vitamin D, 25-Hydroxy [Mass/volume] in Serum or Plasma"
+              },
+              "value": 38,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "30-100 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.4,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0,
+                "text": "4.0-11.0 x10^3/uL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.5,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0,
+                "text": "12.0-16.0 g/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 40.5,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0,
+                "text": "36.0-46.0%"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 238,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400,
+                "text": "150-400 x10^3/uL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 84,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "70-100 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.79,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2,
+                "text": "0.6-1.2 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 13,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20,
+                "text": "7-20 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 192,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 mg/dL desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 108,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 130,
+                "text": "<130 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 68,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 999,
+                "text": ">40 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 72,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-005",
+      "date": "2024-10-15",
+      "status": "final",
+      "orderedBy": "Rachel Torres, NP",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 3.9,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.0,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-006",
+      "date": "2025-04-15",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 2.8,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.2,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Thyroid Peroxidase Antibodies",
+          "code": {
+            "system": "LOINC",
+            "code": "5382-1",
+            "display": "Thyroid peroxidase Ab [Units/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "TPO Antibodies",
+              "code": {
+                "system": "LOINC",
+                "code": "5382-1",
+                "display": "Thyroid peroxidase Ab [Units/volume] in Serum or Plasma"
+              },
+              "value": 21,
+              "unit": "IU/mL",
+              "referenceRange": {
+                "low": 0,
+                "high": 35,
+                "text": "<35 IU/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Vitamin D",
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "25-Hydroxyvitamin D"
+          },
+          "results": [
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "Vitamin D, 25-Hydroxy [Mass/volume] in Serum or Plasma"
+              },
+              "value": 32,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "30-100 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Homocysteine",
+          "code": {
+            "system": "LOINC",
+            "code": "13965-9",
+            "display": "Homocysteine [Moles/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Homocysteine",
+              "code": {
+                "system": "LOINC",
+                "code": "13965-9",
+                "display": "Homocysteine [Moles/volume] in Serum or Plasma"
+              },
+              "value": 7.2,
+              "unit": "umol/L",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 15.0,
+                "text": "4.0-15.0 umol/L"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.6,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0,
+                "text": "4.0-11.0 x10^3/uL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.6,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0,
+                "text": "12.0-16.0 g/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 40.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0,
+                "text": "36.0-46.0%"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 251,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400,
+                "text": "150-400 x10^3/uL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 82,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "70-100 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.81,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2,
+                "text": "0.6-1.2 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 185,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 mg/dL desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 102,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 130,
+                "text": "<130 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 74,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 999,
+                "text": ">40 mg/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 65,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 mg/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-003-007",
+      "date": "2026-01-22",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "10378-8",
+            "display": "Thyroid panel"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 2.6,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.5,
+                "text": "0.4-4.5 mIU/L"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.3,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8,
+                "text": "0.8-1.8 ng/dL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.2,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0,
+                "text": "4.0-11.0 x10^3/uL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0,
+                "text": "12.0-16.0 g/dL"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 39.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0,
+                "text": "36.0-46.0%"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Ferritin",
+          "code": {
+            "system": "LOINC",
+            "code": "2276-4",
+            "display": "Ferritin [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Ferritin",
+              "code": {
+                "system": "LOINC",
+                "code": "2276-4",
+                "display": "Ferritin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 28,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 12,
+                "high": 150,
+                "text": "12-150 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-003-001",
+      "date": "2025-09-14T10:23:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "Requesting thyroid labs - TSH recheck",
+      "body": "Hi Dr. Kim,\n\nI know we discussed moving to annual thyroid monitoring at my last visit, but I wanted to ask about getting my TSH and free T4 rechecked. My last TSH was 2.8 in April, which was the lowest it's been since we started tracking (range has been 2.6-4.1 over 2 years). I've been logging my resting heart rate and HRV daily, and over the past 6 weeks my RHR has trended up from 51 to 55 bpm, with HRV dropping from 62ms to 48ms.\n\nI realize these could be training-related variables, but given my mother's Hashimoto's diagnosis at 50 and the fact that my TPO antibodies were 21 IU/mL last time (within range but not negligible), I'd feel more comfortable with a 6-month check rather than waiting a full year. A 2017 study in the European Thyroid Journal (Biondi et al.) suggested that patients with family history of autoimmune thyroid disease and TSH in the upper-normal range may benefit from closer surveillance.\n\nWould you be willing to order TSH and free T4? I can go to the Quest on Diversey at my convenience.\n\nThank you,\nSusan",
+      "thread": [
+        {
+          "date": "2025-09-15T14:45:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Susan,\n\nThank you for the thoughtful message. I appreciate you tracking your data so carefully.\n\nI'm comfortable ordering a TSH and free T4 given that it's been about 5 months since your last check. I've placed the order \u2014 you can go to any Quest location at your convenience.\n\nThat said, I want to gently reiterate what we discussed at your last visit: your thyroid function has been remarkably stable over 2+ years. All TSH values have been within normal limits, your TPO antibodies are negative, and you have zero symptoms of hypothyroidism. The RHR and HRV changes you're describing are well within normal physiologic variation, especially for someone training at your volume.\n\nI know the family history creates understandable concern, but I don't want frequent monitoring to become a source of anxiety rather than reassurance. Let's review the results when they're back and discuss the monitoring schedule at your next annual.\n\nBest,\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-003-002",
+      "date": "2025-11-02T19:48:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "Question about levothyroxine for subclinical hypothyroidism",
+      "body": "Hi Dr. Kim,\n\nI've been reading a recent meta-analysis in Thyroid (Feller et al., 2018) about levothyroxine treatment in subclinical hypothyroidism. The data seemed mixed, but one subgroup analysis suggested possible benefit for patients under 65 with TSH consistently above 3.0 in terms of lipid profiles and cardiovascular risk reduction.\n\nMy TSH has averaged approximately 3.4 across 7 measurements over 2.5 years (range 2.6-4.1). I know this is within the reference range, but the ATA's own statement notes that the upper limit of normal is debated, with some endocrinologists advocating for a range of 0.4-2.5.\n\nI'm not asking to start treatment \u2014 I just want to understand your clinical reasoning for watchful waiting vs. a trial of low-dose levothyroxine (e.g., 25mcg). Is there a TSH threshold or symptom profile that would change your recommendation?\n\nI respect your judgment on this \u2014 I just want to make sure I understand the decision framework.\n\nThank you,\nSusan",
+      "thread": [
+        {
+          "date": "2025-11-04T11:20:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Susan,\n\nGreat question, and I'm glad you're engaging with the literature.\n\nYou're right that there's ongoing debate about the upper limit of normal for TSH. However, the preponderance of evidence \u2014 including the large TRUST trial (2017) and subsequent Cochrane reviews \u2014 has not shown meaningful clinical benefit from treating subclinical hypothyroidism when TSH is below 10, particularly in asymptomatic patients like you.\n\nThe Feller meta-analysis you referenced is well-designed, but the subgroup showing benefit had important limitations: small sample size, heterogeneous populations, and the cardiovascular benefit was modest and not replicated in larger trials.\n\nHere's my clinical reasoning for your case:\n1. Your TSH has never exceeded the standard reference range (0.4-4.5)\n2. Your free T4 has always been normal\n3. Your TPO antibodies are negative (reducing Hashimoto's progression risk)\n4. You have zero hypothyroid symptoms \u2014 in fact, your athletic performance is excellent\n5. Your lipid panels have been consistently optimal\n\nStarting levothyroxine in this context carries risk of overtreatment (palpitations, anxiety exacerbation, bone density effects) without clear expected benefit.\n\nI would reconsider if: TSH rises above 4.5 on two consecutive tests, you develop clear hypothyroid symptoms, or your TPO antibodies convert to positive.\n\nHappy to discuss further at your next visit.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-003-003",
+      "date": "2026-01-08T08:15:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "refill_request",
+      "priority": "routine",
+      "subject": "Sertraline refill request",
+      "body": "Hi Dr. Kim,\n\nI'm running low on sertraline 50mg \u2014 I have about a week's supply left. Could you send a refill to Walgreens on Clark & Diversey?\n\nQuick update since you'll probably ask: I've been tracking my mood and anxiety with the Daylio app for the past 14 months. My average daily mood score has been 3.8/5 (range 3.2-4.5), and I've had zero days rated below 3 in the past 6 months. GAD-7 self-scored last week was 4. The sertraline is doing its job \u2014 no side effects, no desire to change the dose.\n\nI'm also still on vitamin D 2000 IU, magnesium glycinate 400mg, omega-3 2g, and CoQ10 200mg daily. No changes to the supplement stack.\n\nThank you,\nSusan",
+      "thread": [
+        {
+          "date": "2026-01-08T15:30:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Hi Susan,\n\nDr. Kim asked me to let you know your sertraline refill has been sent to Walgreens on Clark & Diversey. It should be ready for pickup by tomorrow.\n\nGlad to hear you're doing well \u2014 those mood scores look great. Keep it up!\n\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-003-004",
+      "date": "2026-02-18T16:42:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "results_inquiry",
+      "priority": "routine",
+      "subject": "Vitamin D result - 32 ng/mL - is this really optimal?",
+      "body": "Hi Dr. Kim,\n\nI just reviewed my lab results from the April panel and wanted to follow up on my vitamin D level. It came back at 32 ng/mL, which I know falls within your reference range of 30-100. However, I have a few concerns:\n\n1. This is down from 38 ng/mL in April 2024, despite consistent supplementation with 2000 IU daily for over a year\n2. The Endocrine Society's 2024 updated guidelines suggest that levels of 40-60 ng/mL may be more appropriate for optimal musculoskeletal health and immune function\n3. As a distance runner logging 40+ miles/week, I have higher demands on bone mineral density and immune recovery\n4. My level was 22 ng/mL before supplementation \u2014 so 2000 IU is barely keeping me above the floor of the reference range\n\nWould you consider increasing my dose to 4000-5000 IU daily? Or alternatively, could we try a loading protocol \u2014 50,000 IU weekly for 8 weeks \u2014 and then recheck? I've seen this approach recommended in several sports medicine contexts.\n\nI realize I may be overthinking this, but 32 feels like we're settling for 'not deficient' rather than 'optimal.'\n\nThank you,\nSusan",
+      "thread": [
+        {
+          "date": "2026-02-20T09:55:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Susan,\n\nI understand the concern, and you make a fair point about the downward trend. Let me address your questions:\n\nYour level of 32 ng/mL is sufficient per Endocrine Society and USPSTF guidelines. The 40-60 range you're referencing comes from some sports medicine literature, but high-quality RCTs have not demonstrated consistent benefit from pushing levels above 30 in asymptomatic individuals \u2014 including athletes.\n\nThat said, the drop from 38 to 32 despite consistent supplementation is worth noting. Seasonal variation is the most likely explanation (your April 2024 draw was post-summer, while the recent one reflects winter levels when UVB synthesis is minimal in Chicago).\n\nHere's what I'd recommend:\n- Continue 2000 IU daily through winter\n- We can increase to 3000 IU daily October-March if you'd prefer a seasonal adjustment \u2014 this is a reasonable compromise\n- Recheck in late summer to get a peak-season baseline\n- I would not recommend 50,000 IU loading doses \u2014 your level is not deficient, and high-dose protocols carry toxicity risk (hypercalcemia, kidney stones)\n\nYour DEXA scan at your next annual would be more informative for bone health than chasing a specific vitamin D number.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-003-005",
+      "date": "2026-03-25T11:05:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "MTHFR variant and methylfolate - follow-up question",
+      "body": "Hi Dr. Kim,\n\nThank you for ordering the homocysteine level at my last annual \u2014 the result of 7.2 umol/L was reassuring. I wanted to follow up on the MTHFR discussion we started at that visit.\n\nI know you said the heterozygous C677T variant is common and not clinically actionable with a normal homocysteine. I accept that. However, I've been reading about potential implications beyond homocysteine metabolism:\n\n1. A 2019 paper in Nutrients (Hiraoka & Kagawa) discussed MTHFR variants in the context of folate-dependent neurotransmitter synthesis, specifically serotonin and dopamine precursors\n2. Given that I'm on sertraline (which modulates serotonin reuptake), I'm wondering whether methylfolate supplementation (e.g., L-methylfolate 15mg, like Deplin) could have an adjunctive benefit for my anxiety management\n3. Some integrative psychiatrists recommend methylfolate as an SSRI augmentation strategy regardless of MTHFR status (Papakostas et al., 2012, Am J Psychiatry)\n\nI want to be clear \u2014 my anxiety is well-managed and I'm not looking to change my sertraline dose. I'm just curious whether adding methylfolate could provide additional benefit, or whether this falls into the category of 'not harmful but not evidence-based enough to recommend.'\n\nAlso \u2014 would it be worth checking my serum folate and B12 levels to round out the picture?\n\nThank you for always being patient with my questions.\n\nSusan",
+      "thread": [
+        {
+          "date": "2026-03-27T14:10:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Susan,\n\nYou're asking all the right questions, and I appreciate your thoroughness.\n\nYou're correct that the Papakostas study showed L-methylfolate 15mg had some benefit as SSRI augmentation \u2014 but importantly, that study enrolled patients with major depressive disorder who had inadequate response to SSRIs. Your situation is quite different: you have GAD (not MDD), you're responding well to sertraline, and your GAD-7 scores are consistently in the mild range.\n\nRegarding the MTHFR-neurotransmitter connection: the evidence is largely mechanistic (cell studies, theoretical pathways) rather than clinical. There are no RCTs demonstrating that methylfolate supplementation improves anxiety outcomes in well-managed GAD patients with heterozygous C677T and normal homocysteine.\n\nMy recommendation:\n- I don't think L-methylfolate 15mg (Deplin) is indicated in your case. It's expensive (~$75-100/month even with coupons), and the expected benefit is very low given your clinical profile\n- I'm happy to order folate and B12 levels \u2014 this is reasonable and inexpensive, and will definitively answer whether there's any nutritional gap to address\n- If folate or B12 are low, we can supplement appropriately. A standard methylfolate/B12 complex at OTC doses would be reasonable in that scenario\n\nI'll add the folate and B12 to your next lab order. No need for a separate visit.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-003-006",
+      "date": "2026-04-23T20:05:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "Multiple items to discuss - need appointment?",
+      "body": "Hi Dr. Kim,\n\nI have several items I'd like to discuss with you, and I want to be respectful of your time, so I've organized them. I'm not sure if these can be handled via the portal or if I need to schedule an appointment — happy to do whatever makes sense.\n\n1. TSH TREND: My most recent TSH was 4.8 mIU/L (up from 5.2 at an outside draw I had done in February — I realize I should have mentioned that sooner). I came across a 2024 meta-analysis in Thyroid Research (Razvi et al.) suggesting that age- and sex-specific TSH thresholds may be more appropriate than universal reference ranges, and that a cutoff of 4.0 mIU/L for women aged 40-50 better predicts progression to overt hypothyroidism. Given my family history and this upward trend, I'd like to have a real conversation about whether a trial of low-dose levothyroxine (25mcg) is now warranted.\n\n2. PHARMACOGENOMIC TESTING: I've been reading about CYP2D6 polymorphisms and SSRI metabolism (Hicks et al., 2015, Clinical Pharmacology & Therapeutics). As you know, I tried escitalopram before sertraline and had significant side effects. I'm wondering whether pharmacogenomic testing could retroactively explain that experience and whether it has any implications for my current dosing. Is this something you can order, or would I need a referral?\n\n3. RESTING HEART RATE CHANGE: My Apple Watch data shows my resting heart rate has averaged 62 bpm over the past 30 days, up from my usual baseline of 52 bpm. I've exported the data to a CSV and can share it. This is a sustained 10 bpm increase that doesn't correlate with changes in training volume, sleep, or stress. I want to make sure this isn't clinically significant — especially in the context of the TSH increase.\n\n4. Given all of the above, should I schedule a dedicated appointment to go through everything? I know this is a lot for a portal message, and I'd rather have a thorough conversation than try to handle it piecemeal.\n\nThank you as always for your patience with my data-driven approach.\n\nSusan",
+      "thread": []
+    }
+  ]
+}
