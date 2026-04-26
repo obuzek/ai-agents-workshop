@@ -27,16 +27,16 @@ Can we use an AI agent to help? And can we do it **responsibly** — keeping the
 
 ## Workshop Structure
 
-### Lab 1: The Naive Agent
+### [Lab 1: The Naive Agent](./lab-1.md)
 Build a background agent that reads patient records and portal messages, identifies concerns, and surfaces them in the inbox UI. No guardrails, no access controls — intentionally problematic.
 
-### Lab 2: Observability
+### [Lab 2: Observability](./lab-2.md)
 The naive agent is a black box. Add tracing and structured logging so you can see every decision it makes and inspect its reasoning.
 
-### Lab 3: Improving Your Agent
+### [Lab 3: Improving Your Agent](./lab-3.md)
 Use observability data to identify failure modes. Add a critic agent to evaluate the primary agent's output, and Granite Guardian for content safety.
 
-### Lab 4: Securing Data Used By The Agent
+### [Lab 4: Securing Data Used By The Agent](./lab-4.md)
 Move from "trust the code" to database-enforced access control with Postgres Row-Level Security. Map the threat model, apply least-privilege, and test against adversarial inputs.
 
 ---
