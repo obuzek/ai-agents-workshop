@@ -2,8 +2,8 @@
 Streamlit UI for the EHR inbox system.
 
 Start the backend and UI in two terminals:
-    uvicorn app.api:app --reload --port 8000
-    streamlit run app/ui.py --server.port 8501
+    uv run uvicorn app.api:app --reload --port 8000
+    uv run streamlit run app/ui.py --server.port 8501
 
 Set API_URL to point the UI at a different backend (default: http://localhost:8000).
 """

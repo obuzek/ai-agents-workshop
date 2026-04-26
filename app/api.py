@@ -2,7 +2,7 @@
 FastAPI backend for the EHR inbox system.
 
 Serves patient data from the JSON files in data/patients/.
-Run with: uvicorn app.api:app --reload
+Run with: uv run uvicorn app.api:app --reload
 """
 
 import os

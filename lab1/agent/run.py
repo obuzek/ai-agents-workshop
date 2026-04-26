@@ -5,7 +5,7 @@ Processes all patients, writes concerns to the store, then polls for changes.
 When a pass produces no new or changed concerns, the agent announces DONE.
 
 Usage:
-    python -m lab1.agent.run
+    uv run python -m lab1.agent.run
 """
 
 import logging

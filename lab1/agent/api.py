@@ -5,7 +5,7 @@ This is the agent's side of the contract. The main API proxies
 /patients/{id}/concerns here. Each lab can reimplement this API
 however it wants, as long as it serves the same Concern schema.
 
-Run with: uvicorn lab1.agent.api:app --port 8001
+Run with: uv run uvicorn lab1.agent.api:app --port 8001
 """
 
 import threading
