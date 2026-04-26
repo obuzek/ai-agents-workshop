@@ -1,8 +1,7 @@
 nav:
   - Home: index.md
-  - Getting Started:
+  - Prework:
     - "📋 Prerequisites": prerequisites.md
-    - "🚀 Getting Started": getting-started.md
   - Presentation:
     - "📽️ Slides": slides.md
   - Workshop Labs:
