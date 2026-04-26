@@ -16,7 +16,7 @@
 1. [Prerequisites](./prerequisites.md) — Set up your development environment
 2. [Getting Started](./getting-started.md) — Introduction to AI agents and core concepts
 3. [Slides](./slides.md) — AI Development Lifecycle + Opportunities, Risks & Mitigation
-4. [Lab 1: Naive Agent Implementation](./lab-1.md) — Build your first simple agent
+4. [Lab 1: The Naive Agent](./lab-1.md) — Build a naive doctor inbox agent and see where it breaks
 5. [Lab 2: Observability](./lab-2.md) — Instrument and trace your agent
 6. [Lab 3: Improving Your Agent](./lab-3.md) — Fix failure modes, add guardrails
 7. [Lab 4: Securing Data Used By The Agent](./lab-4.md) — Harden against injection and leakage
@@ -83,8 +83,8 @@ See the [Prerequisites](./prerequisites.md) page for detailed setup instructions
 
 ## Workshop Structure
 
-### Lab 1: Naive Agent Implementation
-Build the core agent loop from scratch — no frameworks, no guardrails.
+### Lab 1: The Naive Agent
+Build a doctor inbox triage agent from scratch — no frameworks, no guardrails, no access controls. See why that's a problem.
 
 ### Lab 2: Observability
 Instrument your agent with tracing and logging so you can see what it's doing.

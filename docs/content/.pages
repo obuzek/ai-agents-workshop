@@ -6,7 +6,7 @@ nav:
   - Presentation:
     - "📽️ Slides": slides.md
   - Workshop Labs:
-    - "🧪 Lab 1: Naive Agent Implementation": lab-1.md
+    - "🧪 Lab 1: The Naive Agent": lab-1.md
     - "📊 Lab 2: Observability": lab-2.md
     - "🔧 Lab 3: Improving Your Agent": lab-3.md
     - "🔒 Lab 4: Securing Data Used By The Agent": lab-4.md

@@ -174,7 +174,7 @@ Agents should gracefully handle failures:
 
 Now that you understand the fundamentals, let's build your first agent!
 
-Proceed to [Lab 1: Introduction to AI Agents](./lab-1.md) to start coding.
+Proceed to [Lab 1: The Naive Agent](./lab-1.md) to start building.
 
 ---
 
