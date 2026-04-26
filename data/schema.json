@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Patient EHR Record",
+  "description": "FHIR-inspired simplified patient record for the AI Agents Workshop EHR simulation",
+  "type": "object",
+  "required": ["resourceType", "id", "demographics", "socialHistory", "familyHistory", "allergies", "conditions", "medications", "immunizations", "encounters", "labs", "messages"],
+  "properties": {
+    "resourceType": {
+      "const": "Patient"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^patient-\\d{3}$"
+    },
+    "demographics": {
+      "type": "object",
+      "required": ["name", "birthDate", "gender", "phone", "email", "address", "emergencyContact", "insurance"],
+      "properties": {
+        "name": {
+          "type": "object",
+          "required": ["given", "family"],
+          "properties": {
+            "given": { "type": "string" },
+            "family": { "type": "string" },
+            "nickname": { "type": "string" }
+          }
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "description": "ISO 8601 date (YYYY-MM-DD)"
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["male", "female", "non-binary", "other"]
+        },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "address": {
+          "type": "object",
+          "required": ["line", "city", "state", "postalCode"],
+          "properties": {
+            "line": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" }
+          }
+        },
+        "emergencyContact": {
+          "type": "object",
+          "required": ["name", "relationship", "phone"],
+          "properties": {
+            "name": { "type": "string" },
+            "relationship": { "type": "string" },
+            "phone": { "type": "string" }
+          }
+        },
+        "insurance": {
+          "type": "object",
+          "required": ["type", "planName", "memberId"],
+          "properties": {
+            "type": { "type": "string" },
+            "planName": { "type": "string" },
+            "memberId": { "type": "string" }
+          }
+        },
+        "preferredLanguage": { "type": "string" }
+      }
+    },
+    "socialHistory": {
+      "type": "object",
+      "required": ["smoking", "alcohol", "exercise"],
+      "properties": {
+        "smoking": { "type": "string" },
+        "alcohol": { "type": "string" },
+        "exercise": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "familyHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relationship", "condition"],
+        "properties": {
+          "relationship": { "type": "string" },
+          "condition": { "type": "string" },
+          "deceased": { "type": "boolean" }
+        }
+      }
+    },
+    "allergies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["substance", "category", "reaction", "criticality"],
+        "properties": {
+          "substance": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["medication", "food", "environment", "biologic"]
+          },
+          "reaction": { "type": "string" },
+          "criticality": {
+            "type": "string",
+            "enum": ["low", "high", "unable-to-assess"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "inactive", "resolved"],
+            "default": "active"
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "status", "onsetDate"],
+        "properties": {
+          "code": { "$ref": "#/$defs/codedConcept" },
+          "status": {
+            "type": "string",
+            "enum": ["active", "resolved", "inactive", "suspected"]
+          },
+          "onsetDate": { "type": "string", "format": "date" },
+          "resolvedDate": { "type": "string", "format": "date" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "dosage", "frequency", "status", "prescribedDate", "prescriber"],
+        "properties": {
+          "code": { "$ref": "#/$defs/codedConcept" },
+          "dosage": { "type": "string" },
+          "frequency": { "type": "string" },
+          "route": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["active", "stopped", "completed", "on-hold"]
+          },
+          "prescribedDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "prescriber": { "type": "string" },
+          "stopReason": { "type": "string" }
+        }
+      }
+    },
+    "immunizations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "date", "provider"],
+        "properties": {
+          "code": { "$ref": "#/$defs/codedConcept" },
+          "date": { "type": "string", "format": "date" },
+          "site": { "type": "string" },
+          "lotNumber": { "type": "string" },
+          "provider": { "type": "string" }
+        }
+      }
+    },
+    "encounters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "provider", "reasonForVisit", "vitals", "notes"],
+        "properties": {
+          "id": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "type": {
+            "type": "string",
+            "enum": ["office-visit", "annual-physical", "urgent", "follow-up", "telehealth", "er-visit", "procedure"],
+            "default": "office-visit"
+          },
+          "provider": { "type": "string" },
+          "reasonForVisit": { "type": "string" },
+          "vitals": {
+            "type": "object",
+            "properties": {
+              "bloodPressure": {
+                "type": "object",
+                "properties": {
+                  "systolic": { "type": "number" },
+                  "diastolic": { "type": "number" },
+                  "unit": { "const": "mmHg" }
+                }
+              },
+              "heartRate": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "bpm" }
+                }
+              },
+              "temperature": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "°F" }
+                }
+              },
+              "weight": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "lbs" }
+                }
+              },
+              "height": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "in" }
+                }
+              },
+              "bmi": { "type": "number" },
+              "respiratoryRate": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "breaths/min" }
+                }
+              },
+              "oxygenSaturation": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": "number" },
+                  "unit": { "const": "%" }
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "object",
+            "required": ["subjective", "objective", "assessment", "plan"],
+            "properties": {
+              "subjective": { "type": "string" },
+              "objective": { "type": "string" },
+              "assessment": { "type": "string" },
+              "plan": { "type": "string" }
+            },
+            "description": "SOAP note format"
+          },
+          "labOrders": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "References to lab IDs in the labs array"
+          },
+          "referrals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "to": { "type": "string" },
+                "reason": { "type": "string" },
+                "status": {
+                  "type": "string",
+                  "enum": ["pending", "scheduled", "completed", "declined"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "labs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "status", "orderedBy", "panels"],
+        "properties": {
+          "id": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "status": {
+            "type": "string",
+            "enum": ["final", "preliminary", "pending", "cancelled"]
+          },
+          "orderedBy": { "type": "string" },
+          "panels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "code", "results"],
+              "properties": {
+                "name": { "type": "string" },
+                "code": { "$ref": "#/$defs/codedConcept" },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["test", "code", "value", "unit", "referenceRange", "interpretation"],
+                    "properties": {
+                      "test": { "type": "string" },
+                      "code": { "$ref": "#/$defs/codedConcept" },
+                      "value": {
+                        "oneOf": [
+                          { "type": "number" },
+                          { "type": "string" }
+                        ]
+                      },
+                      "unit": { "type": "string" },
+                      "referenceRange": {
+                        "type": "object",
+                        "properties": {
+                          "low": { "type": "number" },
+                          "high": { "type": "number" },
+                          "text": { "type": "string" }
+                        }
+                      },
+                      "interpretation": {
+                        "type": "string",
+                        "enum": ["normal", "high", "low", "critical-high", "critical-low", "abnormal", "pending"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "description": "Patient portal messages (FHIR Communication-inspired)",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "sender", "recipient", "category", "priority", "subject", "body"],
+        "properties": {
+          "id": { "type": "string" },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 datetime"
+          },
+          "sender": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": { "type": "string" },
+              "role": {
+                "type": "string",
+                "enum": ["patient", "family", "provider", "nurse", "staff"]
+              }
+            }
+          },
+          "recipient": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": { "type": "string" },
+              "role": {
+                "type": "string",
+                "enum": ["patient", "family", "provider", "nurse", "staff"]
+              }
+            }
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "refill_request",
+              "results_inquiry",
+              "symptom_report",
+              "clinical_question",
+              "scheduling",
+              "referral_request",
+              "administrative",
+              "complaint",
+              "followup",
+              "gratitude",
+              "urgent_symptom",
+              "medication_concern",
+              "side_effects",
+              "equipment"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["routine", "urgent", "asap"],
+            "default": "routine"
+          },
+          "subject": { "type": "string" },
+          "body": { "type": "string" },
+          "thread": {
+            "type": "array",
+            "description": "Replies in this message thread",
+            "items": {
+              "type": "object",
+              "required": ["date", "sender", "body"],
+              "properties": {
+                "date": { "type": "string", "format": "date-time" },
+                "sender": {
+                  "type": "object",
+                  "required": ["name", "role"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "role": {
+                      "type": "string",
+                      "enum": ["patient", "family", "provider", "nurse", "staff"]
+                    }
+                  }
+                },
+                "body": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "codedConcept": {
+      "type": "object",
+      "required": ["system", "code", "display"],
+      "properties": {
+        "system": {
+          "type": "string",
+          "enum": ["ICD-10", "LOINC", "RxNorm", "CVX", "CPT", "SNOMED-CT"]
+        },
+        "code": { "type": "string" },
+        "display": { "type": "string" }
+      }
+    }
+  }
+}

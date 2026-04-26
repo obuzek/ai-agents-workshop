@@ -1,0 +1,970 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-011",
+  "demographics": {
+    "name": {
+      "given": "Carmen",
+      "family": "Washington"
+    },
+    "birthDate": "1982-07-19",
+    "gender": "female",
+    "phone": "312-555-0394",
+    "email": "carmen.washington@protonmail.com",
+    "address": {
+      "line": "1850 N Halsted St, Unit 3",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60614"
+    },
+    "emergencyContact": {
+      "name": "Diane Washington",
+      "relationship": "Mother",
+      "phone": "312-555-0395"
+    },
+    "insurance": {
+      "type": "Commercial",
+      "planName": "Employer self-funded (Optum network)",
+      "memberId": "OPT-SF-4482910"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker",
+    "alcohol": "Moderate — 3-4 glasses of wine per week",
+    "exercise": "Pilates 3x/week, walks daily",
+    "notes": "HR Director. Single, no children. Close with mother (breast cancer survivor, BRCA2+). Handles her health with a project-management approach. Emotionally composed but BRCA2 status is a source of underlying anxiety."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Breast cancer diagnosed at age 47, BRCA2 positive, bilateral mastectomy, currently in remission",
+      "deceased": false
+    },
+    {
+      "relationship": "Maternal grandmother",
+      "condition": "Breast cancer at age 52, ovarian cancer at age 61, deceased at age 63",
+      "deceased": true
+    },
+    {
+      "relationship": "Father",
+      "condition": "Hypertension, otherwise healthy",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Erythromycin",
+      "category": "medication",
+      "reaction": "Severe GI distress",
+      "criticality": "low",
+      "status": "active"
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "Z15.01",
+        "display": "Genetic susceptibility to malignant neoplasm of breast"
+      },
+      "status": "active",
+      "onsetDate": "2019-03-12",
+      "notes": "BRCA2 pathogenic variant confirmed via genetic testing (March 2019). Patient referred to genetic counseling at Northwestern; initial counseling completed April 2019. Enhanced screening protocol initiated: annual mammogram since age 30, alternating breast MRI every 6 months. Discussed risk-reducing surgical options; patient currently elects enhanced surveillance. Annual CA-125 for ovarian cancer screening given family history."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "G43.109",
+        "display": "Migraine with aura, not intractable, without status migrainosus"
+      },
+      "status": "active",
+      "onsetDate": "2017-09-05",
+      "notes": "Episodic migraines with visual aura (scintillating scotoma, ~20 min prodrome). Initially 4 episodes per month. Started topiramate prophylaxis in 2023, reduced frequency to approximately 1 per month. Uses sumatriptan 50mg PRN for breakthrough. Common triggers: stress, disrupted sleep, red wine. Aura presence noted — oral contraceptives with estrogen contraindicated due to stroke risk."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "313820",
+        "display": "Sumatriptan 50 MG Oral Tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "As needed for acute migraine, max 200 mg/day",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2017-09-05",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "845466",
+        "display": "Topiramate 50 MG Oral Tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2023-08-14",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "notes": "Started for migraine prophylaxis. Titrated from 25 mg to 50 mg over 4 weeks. Reduced migraine frequency from ~4/month to ~1/month. Patient tolerating well; mild paresthesias in fingertips reported initially, resolved."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "748796",
+        "display": "Norgestimate 0.25 MG / Ethinyl Estradiol 0.035 MG Oral Tablet"
+      },
+      "dosage": "1 tablet daily",
+      "frequency": "Once daily (cyclical, 21/7)",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2015-03-10",
+      "endDate": "2017-10-01",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Discontinued due to migraine with aura diagnosis. Estrogen-containing oral contraceptives contraindicated per WHO category 4 (increased stroke risk with migraine with aura). Switched to norethindrone 0.35 mg progestin-only pill."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "748797",
+        "display": "Norethindrone 0.35 MG Oral Tablet"
+      },
+      "dosage": "0.35 mg",
+      "frequency": "Once daily, continuous",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2017-10-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, high-dose, quadrivalent"
+      },
+      "date": "2025-10-08",
+      "site": "Left deltoid",
+      "lotNumber": "FL8834A",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, bivalent"
+      },
+      "date": "2025-10-08",
+      "site": "Right deltoid",
+      "lotNumber": "CV2209B",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap"
+      },
+      "date": "2024-04-22",
+      "site": "Left deltoid",
+      "lotNumber": "TD7721C",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-011-001",
+      "date": "2023-06-15",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam and BRCA2 screening protocol review",
+      "vitals": {
+        "bloodPressure": { "systolic": 118, "diastolic": 72, "unit": "mmHg" },
+        "heartRate": { "value": 68, "unit": "bpm" },
+        "temperature": { "value": 98.4, "unit": "°F" },
+        "weight": { "value": 142, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.6,
+        "respiratoryRate": { "value": 14, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 99, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient presents for annual physical. Reports feeling well overall. Migraines currently averaging 3-4 per month with visual aura, lasting 4-6 hours. Triggers include work stress and disrupted sleep. Using sumatriptan PRN with good relief. Interested in discussing prophylactic medication. No breast complaints. Adherent to screening protocol.",
+        "objective": "Well-appearing 40-year-old female in no acute distress. HEENT normal. Heart regular rate and rhythm, no murmurs. Lungs clear bilaterally. Breast exam: no masses, no skin changes, no axillary lymphadenopathy. Abdomen soft, non-tender. Skin: no concerning lesions. Neurological exam normal.",
+        "assessment": "1. BRCA2 carrier (Z15.01) — adherent to enhanced screening protocol. Annual mammogram completed May 2023, BIRADS 1 (negative). Next breast MRI due November 2023. 2. Migraine with aura (G43.109) — frequency increasing, 3-4/month. Candidate for prophylactic therapy. 3. Health maintenance: up to date on immunizations, routine labs ordered.",
+        "plan": "1. Continue enhanced breast cancer screening: mammogram annually, breast MRI alternating every 6 months. CA-125 annually for ovarian screening. 2. Discuss migraine prophylaxis options — recommend starting topiramate 25 mg daily, titrate to 50 mg in 2 weeks. Continue sumatriptan 50 mg PRN for breakthrough. 3. Order annual labs: CBC, CMP, lipid panel. 4. Follow up in 2 months to assess topiramate response."
+      },
+      "labOrders": ["lab-011-001"],
+      "referrals": [
+        {
+          "to": "Radiology — Breast MRI",
+          "reason": "BRCA2 enhanced screening protocol, alternating with mammogram every 6 months",
+          "status": "scheduled"
+        }
+      ]
+    },
+    {
+      "id": "enc-011-002",
+      "date": "2023-08-14",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Migraine prophylaxis follow-up and topiramate initiation",
+      "vitals": {
+        "bloodPressure": { "systolic": 116, "diastolic": 70, "unit": "mmHg" },
+        "heartRate": { "value": 72, "unit": "bpm" },
+        "temperature": { "value": 98.6, "unit": "°F" },
+        "weight": { "value": 140, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.3,
+        "respiratoryRate": { "value": 15, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 99, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient reports migraines have continued at 3-4 per month since last visit. She has been tracking them in a spreadsheet: 3 in July, 4 in August so far. Most associated with visual aura (scintillating scotoma lasting ~20 min), followed by unilateral throbbing headache, photophobia, and nausea. Sumatriptan provides relief within 1-2 hours. She is ready to start prophylactic medication. Reports mild fingertip tingling she read about as a topiramate side effect — wants to discuss before starting.",
+        "objective": "Well-appearing, alert, in no distress. Vital signs within normal limits. Neurological exam: cranial nerves II-XII intact, no focal deficits, no papilledema on fundoscopic exam. No signs of medication adverse effects (not yet started).",
+        "assessment": "Migraine with aura (G43.109) — frequency 3-4/month, significantly impacting quality of life and work productivity. Initiating prophylactic therapy.",
+        "plan": "1. Start topiramate 25 mg PO daily at bedtime for 2 weeks, then increase to 50 mg daily. Counseled on common side effects: paresthesias, weight changes, cognitive slowing, kidney stones (increase fluid intake). 2. Continue sumatriptan 50 mg PRN for breakthrough migraines. 3. Migraine diary: patient to continue tracking frequency, triggers, and severity. 4. Follow up in 3 months to assess prophylaxis response. 5. Reminded: estrogen-containing contraceptives remain contraindicated; continue norethindrone."
+      },
+      "labOrders": [],
+      "referrals": []
+    },
+    {
+      "id": "enc-011-003",
+      "date": "2024-01-22",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Migraine prophylaxis 5-month check and breast MRI results review",
+      "vitals": {
+        "bloodPressure": { "systolic": 114, "diastolic": 68, "unit": "mmHg" },
+        "heartRate": { "value": 66, "unit": "bpm" },
+        "temperature": { "value": 98.2, "unit": "°F" },
+        "weight": { "value": 138, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.0,
+        "respiratoryRate": { "value": 14, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 99, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient reports significant improvement in migraine frequency since starting topiramate 50 mg daily. Migraines reduced from 3-4/month to approximately 1/month. Mild paresthesias in fingertips during first month, now resolved. No cognitive side effects. Weight stable. Breast MRI (November 2023) returned negative — patient reviewed results online and wants to confirm. Emotionally doing well. Inquiring about genetic counselor follow-up to discuss prophylactic surgery options 'when the time comes.'",
+        "objective": "Well-appearing 41-year-old female. Vital signs normal. Breast exam unremarkable. Neurological exam normal. Reviewed breast MRI report: BIRADS 1, no suspicious enhancement, no masses.",
+        "assessment": "1. Migraine with aura — excellent response to topiramate 50 mg daily. Frequency reduced to ~1/month. 2. BRCA2 carrier — breast MRI (Nov 2023) negative. Mammogram due May 2024. Screening protocol on track. 3. Patient interested in genetic counseling follow-up regarding risk-reducing surgical options.",
+        "plan": "1. Continue topiramate 50 mg daily — effective and well-tolerated. Continue sumatriptan PRN. 2. Schedule mammogram for May 2024. 3. Referral to Dr. Angela Torres, Genetic Counselor, Northwestern, for follow-up discussion on risk-reducing surgery vs continued surveillance. 4. Next annual physical June 2024."
+      },
+      "labOrders": [],
+      "referrals": [
+        {
+          "to": "Dr. Angela Torres, Genetic Counselor — Northwestern Medicine",
+          "reason": "BRCA2 carrier follow-up: discussion of risk-reducing surgery options vs enhanced surveillance",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "enc-011-004",
+      "date": "2024-06-10",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam, BRCA2 screening protocol, annual labs",
+      "vitals": {
+        "bloodPressure": { "systolic": 120, "diastolic": 74, "unit": "mmHg" },
+        "heartRate": { "value": 70, "unit": "bpm" },
+        "temperature": { "value": 98.5, "unit": "°F" },
+        "weight": { "value": 141, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.5,
+        "respiratoryRate": { "value": 14, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 98, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient presents for annual physical. Feeling well. Migraines stable at approximately 1 per month on topiramate — excellent control. Reports she completed genetic counseling follow-up at Northwestern in March; discussed risk-reducing bilateral mastectomy and risk-reducing bilateral salpingo-oophorectomy. She is 'still processing' and not ready to make a decision yet but found the session very informative. Mammogram May 2024 was negative. No new complaints. Sleeping well, exercising regularly, managing work stress through Pilates.",
+        "objective": "Well-appearing 41-year-old female in excellent overall health. HEENT normal. Heart RRR, no murmurs. Lungs CTA bilaterally. Breast exam: no masses, no skin changes, no nipple discharge, no lymphadenopathy. Abdomen soft, NT/ND. Skin exam: no concerning lesions. Neurological exam intact.",
+        "assessment": "1. BRCA2 carrier — screening protocol adherent. Mammogram May 2024 BIRADS 1 (negative). Breast MRI due November 2024. Genetic counseling completed; patient considering risk-reducing options. 2. Migraine with aura — well controlled on topiramate 50 mg daily, ~1/month frequency. 3. Health maintenance: all screening up to date. Healthy BMI, excellent lifestyle habits.",
+        "plan": "1. Continue enhanced screening: breast MRI November 2024, next mammogram May 2025. CA-125 ordered today. 2. Continue topiramate 50 mg daily and sumatriptan PRN. 3. Annual labs: CBC, CMP, lipid panel, CA-125. 4. Patient to continue considering risk-reducing surgery options; will revisit at next annual or sooner if desired. 5. Flu shot and COVID booster in fall. 6. Follow up 1 year or sooner as needed."
+      },
+      "labOrders": ["lab-011-002"],
+      "referrals": [
+        {
+          "to": "Radiology — Breast MRI",
+          "reason": "BRCA2 enhanced screening, 6-month alternating protocol",
+          "status": "scheduled"
+        }
+      ]
+    },
+    {
+      "id": "enc-011-005",
+      "date": "2025-01-13",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Breast MRI results review, migraine check-in",
+      "vitals": {
+        "bloodPressure": { "systolic": 116, "diastolic": 70, "unit": "mmHg" },
+        "heartRate": { "value": 64, "unit": "bpm" },
+        "temperature": { "value": 98.4, "unit": "°F" },
+        "weight": { "value": 140, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.3,
+        "respiratoryRate": { "value": 15, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 99, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient here to review breast MRI results (November 2024) and for migraine check. She reports the MRI was 'nerve-wracking as always' but she checked her portal and saw the results were normal. Migraines stable at 1/month. She mentions that her mother's 5-year remission anniversary is coming up in March and it has prompted her to think more seriously about prophylactic mastectomy. She is asking more specific questions about reconstruction options and recovery timelines. 'I need to understand what I'd be looking at in terms of time off work.'",
+        "objective": "Well-appearing, calm and composed. Vitals normal. Breast exam unremarkable. Reviewed breast MRI report: BIRADS 1, no suspicious findings.",
+        "assessment": "1. BRCA2 carrier — breast MRI (Nov 2024) negative. All screening normal to date. Patient increasingly interested in risk-reducing surgery. 2. Migraine with aura — stable, well controlled.",
+        "plan": "1. Breast MRI results reviewed and reassuring — BIRADS 1. Next mammogram May 2025. 2. Discussed risk-reducing mastectomy in more detail: reviewed lifetime risk (~45-55% for BRCA2), risk reduction with bilateral mastectomy (>95%), reconstruction options (implant-based vs autologous tissue), typical recovery 4-6 weeks. 3. Referred to Dr. Michelle Park, Breast Surgical Oncology, Northwestern, for surgical consultation if patient wishes to proceed. No pressure on timeline. 4. Continue current medications. 5. Follow up at annual physical June 2025."
+      },
+      "labOrders": [],
+      "referrals": [
+        {
+          "to": "Dr. Michelle Park, Breast Surgical Oncology — Northwestern Medicine",
+          "reason": "BRCA2 carrier considering risk-reducing bilateral mastectomy; surgical consultation",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-011-006",
+      "date": "2025-06-09",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam, BRCA2 screening review, annual labs",
+      "vitals": {
+        "bloodPressure": { "systolic": 118, "diastolic": 72, "unit": "mmHg" },
+        "heartRate": { "value": 68, "unit": "bpm" },
+        "temperature": { "value": 98.6, "unit": "°F" },
+        "weight": { "value": 142, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.6,
+        "respiratoryRate": { "value": 14, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 99, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Annual physical. Patient reports feeling well overall. Migraines remain at approximately 1/month — well controlled. She completed consultation with Dr. Park at Northwestern in April. She describes the meeting as 'really helpful' but says she is not ready to schedule surgery yet. She wants to continue surveillance for now and revisit the decision after turning 44. 'I want to make this decision from a place of clarity, not fear.' She completed her mammogram last week (May 2025), awaiting results. No new symptoms or complaints.",
+        "objective": "Well-appearing 42-year-old female in excellent health. HEENT normal. Thyroid non-palpable, no nodules. Heart RRR, no murmurs. Lungs CTA. Breast exam: no masses, no skin changes, no axillary lymphadenopathy. Abdomen soft, NT/ND. Extremities: no edema. Neurological exam normal. Skin: no concerning lesions. Mammogram (May 2025): BIRADS 1, negative.",
+        "assessment": "1. BRCA2 carrier — mammogram May 2025 negative, BIRADS 1. All screening remains normal. Surgical consultation completed; patient electing continued surveillance with plan to reconsider after age 44. Next breast MRI November 2025. 2. Migraine with aura — well controlled on topiramate 50 mg daily, ~1/month. 3. Health maintenance: excellent. Healthy BMI, active lifestyle, no chronic disease.",
+        "plan": "1. Continue enhanced screening protocol: breast MRI November 2025, mammogram May 2026. CA-125 ordered today for annual ovarian screening. 2. Continue topiramate 50 mg daily, sumatriptan 50 mg PRN. 3. Annual labs: CBC, CMP, lipid panel, CA-125. 4. Flu and COVID vaccines in fall. Tdap up to date. 5. Support patient's decision-making process regarding risk-reducing surgery — revisit at next annual or sooner. 6. Follow up 1 year or sooner as needed."
+      },
+      "labOrders": ["lab-011-003"],
+      "referrals": [
+        {
+          "to": "Radiology — Breast MRI",
+          "reason": "BRCA2 enhanced screening, 6-month alternating protocol",
+          "status": "scheduled"
+        }
+      ]
+    },
+    {
+      "id": "enc-011-007",
+      "date": "2026-02-10",
+      "type": "follow-up",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Migraine frequency increase — reported via portal message",
+      "vitals": {
+        "bloodPressure": { "systolic": 122, "diastolic": 76, "unit": "mmHg" },
+        "heartRate": { "value": 74, "unit": "bpm" },
+        "temperature": { "value": 98.4, "unit": "°F" },
+        "weight": { "value": 143, "unit": "lbs" },
+        "height": { "value": 65, "unit": "in" },
+        "bmi": 23.8,
+        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
+        "oxygenSaturation": { "value": 98, "unit": "%" }
+      },
+      "notes": {
+        "subjective": "Patient presents after reporting increased migraine frequency via portal. Per her tracking, migraines increased from 1/month to 3/month over the past 2 months (December 2025 and January 2026). She has identified potential triggers: increased work stress (organizational restructuring at her company), disrupted sleep pattern, and possibly increased wine consumption over the holidays. Sumatriptan still effective for acute episodes. She is concerned about the regression and asks whether topiramate dose should be increased.",
+        "objective": "Alert, well-appearing, in no distress. BP slightly higher than baseline but within normal limits — likely stress-related. Neurological exam: normal cranial nerve function, no focal deficits, no papilledema. No signs of medication toxicity.",
+        "assessment": "Migraine with aura — frequency increased from 1/month to 3/month over past 2 months. Likely multifactorial: stress, sleep disruption, dietary triggers. Topiramate dose currently at 50 mg daily. No red flags on neurological exam.",
+        "plan": "1. Reassurance: increased frequency likely related to identifiable stressors. 2. Optimize lifestyle triggers before medication adjustment: sleep hygiene counseling provided, discussed limiting red wine, stress management strategies. 3. Maintain topiramate at 50 mg daily for now — will reassess in 6-8 weeks. If frequency does not return to baseline, consider increasing to 75 mg. 4. Continue sumatriptan 50 mg PRN. 5. Patient to continue migraine diary. 6. Follow up in 6-8 weeks or sooner if worsening. Discussed with Dr. Kim."
+      },
+      "labOrders": [],
+      "referrals": []
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-011-001",
+      "date": "2023-06-15",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC)",
+          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "results": [
+            {
+              "test": "White Blood Cells (WBC)",
+              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "value": 6.2,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 4.0, "high": 11.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells (RBC)",
+              "code": { "system": "LOINC", "code": "789-8", "display": "Erythrocytes [#/volume] in Blood by Automated count" },
+              "value": 4.5,
+              "unit": "x10^6/uL",
+              "referenceRange": { "low": 3.8, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "value": 13.8,
+              "unit": "g/dL",
+              "referenceRange": { "low": 12.0, "high": 16.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "value": 40.2,
+              "unit": "%",
+              "referenceRange": { "low": 36.0, "high": 46.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "value": 238,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 150, "high": 400 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "value": 88,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 70, "high": 100 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 7, "high": 20 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "value": 0.82,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 0.6, "high": 1.2 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 136, "high": 145 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 3.5, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 8.5, "high": 10.5 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": { "system": "LOINC", "code": "1742-6", "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 22,
+              "unit": "U/L",
+              "referenceRange": { "low": 7, "high": 56 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": { "system": "LOINC", "code": "1920-8", "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 20,
+              "unit": "U/L",
+              "referenceRange": { "low": 10, "high": 40 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" },
+              "value": 192,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 200, "text": "Desirable: <200" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" },
+              "value": 110,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 130, "text": "Near optimal: 100-129" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" },
+              "value": 62,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 40, "text": "Desirable: >40" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" },
+              "value": 98,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 150, "text": "Normal: <150" },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-011-002",
+      "date": "2024-06-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC)",
+          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "results": [
+            {
+              "test": "White Blood Cells (WBC)",
+              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "value": 5.8,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 4.0, "high": 11.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells (RBC)",
+              "code": { "system": "LOINC", "code": "789-8", "display": "Erythrocytes [#/volume] in Blood by Automated count" },
+              "value": 4.4,
+              "unit": "x10^6/uL",
+              "referenceRange": { "low": 3.8, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "value": 13.5,
+              "unit": "g/dL",
+              "referenceRange": { "low": 12.0, "high": 16.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "value": 39.8,
+              "unit": "%",
+              "referenceRange": { "low": 36.0, "high": 46.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "value": 245,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 150, "high": 400 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "value": 91,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 70, "high": 100 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "value": 12,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 7, "high": 20 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "value": 0.79,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 0.6, "high": 1.2 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 136, "high": 145 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "value": 4.3,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 3.5, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" },
+              "value": 9.6,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 8.5, "high": 10.5 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": { "system": "LOINC", "code": "1742-6", "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 19,
+              "unit": "U/L",
+              "referenceRange": { "low": 7, "high": 56 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": { "system": "LOINC", "code": "1920-8", "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 18,
+              "unit": "U/L",
+              "referenceRange": { "low": 10, "high": 40 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" },
+              "value": 188,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 200, "text": "Desirable: <200" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" },
+              "value": 105,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 130, "text": "Near optimal: 100-129" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" },
+              "value": 65,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 40, "text": "Desirable: >40" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" },
+              "value": 90,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 150, "text": "Normal: <150" },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Cancer Antigen 125 (CA-125)",
+          "code": { "system": "LOINC", "code": "10334-1", "display": "Cancer Ag 125 [Units/volume] in Serum or Plasma" },
+          "results": [
+            {
+              "test": "CA-125",
+              "code": { "system": "LOINC", "code": "10334-1", "display": "Cancer Ag 125 [Units/volume] in Serum or Plasma" },
+              "value": 12,
+              "unit": "U/mL",
+              "referenceRange": { "high": 35, "text": "Normal: <35 U/mL" },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-011-003",
+      "date": "2025-06-09",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC)",
+          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "results": [
+            {
+              "test": "White Blood Cells (WBC)",
+              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "value": 6.0,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 4.0, "high": 11.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells (RBC)",
+              "code": { "system": "LOINC", "code": "789-8", "display": "Erythrocytes [#/volume] in Blood by Automated count" },
+              "value": 4.6,
+              "unit": "x10^6/uL",
+              "referenceRange": { "low": 3.8, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "value": 14.0,
+              "unit": "g/dL",
+              "referenceRange": { "low": 12.0, "high": 16.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "value": 41.0,
+              "unit": "%",
+              "referenceRange": { "low": 36.0, "high": 46.0 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "value": 230,
+              "unit": "x10^3/uL",
+              "referenceRange": { "low": 150, "high": 400 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "value": 86,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 70, "high": 100 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "value": 15,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 7, "high": 20 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "value": 0.84,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 0.6, "high": 1.2 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "value": 139,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 136, "high": 145 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "value": 4.0,
+              "unit": "mEq/L",
+              "referenceRange": { "low": 3.5, "high": 5.1 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" },
+              "value": 9.5,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 8.5, "high": 10.5 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": { "system": "LOINC", "code": "1742-6", "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 21,
+              "unit": "U/L",
+              "referenceRange": { "low": 7, "high": 56 },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": { "system": "LOINC", "code": "1920-8", "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma" },
+              "value": 19,
+              "unit": "U/L",
+              "referenceRange": { "low": 10, "high": 40 },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" },
+              "value": 195,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 200, "text": "Desirable: <200" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" },
+              "value": 112,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 130, "text": "Near optimal: 100-129" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" },
+              "value": 64,
+              "unit": "mg/dL",
+              "referenceRange": { "low": 40, "text": "Desirable: >40" },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" },
+              "value": 95,
+              "unit": "mg/dL",
+              "referenceRange": { "high": 150, "text": "Normal: <150" },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Cancer Antigen 125 (CA-125)",
+          "code": { "system": "LOINC", "code": "10334-1", "display": "Cancer Ag 125 [Units/volume] in Serum or Plasma" },
+          "results": [
+            {
+              "test": "CA-125",
+              "code": { "system": "LOINC", "code": "10334-1", "display": "Cancer Ag 125 [Units/volume] in Serum or Plasma" },
+              "value": 14,
+              "unit": "U/mL",
+              "referenceRange": { "high": 35, "text": "Normal: <35 U/mL" },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-011-001",
+      "date": "2025-09-15T09:22:00Z",
+      "sender": { "name": "Carmen Washington", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "scheduling",
+      "priority": "routine",
+      "subject": "BRCA2 screening schedule confirmation for 2025-2026",
+      "body": "Dr. Kim,\n\nI want to confirm my upcoming screening schedule is correct. Per our last conversation, I have the following on the calendar:\n\n1. Breast MRI — November 2025 (referral to Northwestern Radiology)\n2. Mammogram — May 2026 (annual)\n3. CA-125 — completed June 2025 (normal, per my results)\n\nAction items I need from your office:\n- Please confirm the breast MRI referral is in place for November\n- Please send the mammogram order to Northwestern Radiology when it's time (I'll schedule directly)\n\nI also want to note that I have Dr. Park's surgical consultation on my calendar for a follow-up in early 2026, but that's a separate referral through Northwestern.\n\nThank you for keeping this organized with me.\n\nCarmen Washington",
+      "thread": [
+        {
+          "date": "2025-09-16T14:05:00Z",
+          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "body": "Carmen,\n\nYour screening schedule is exactly right. I've confirmed with our referral coordinator:\n\n1. Breast MRI — referral is active with Northwestern Radiology for November 2025. You can call them directly to schedule: (312) 926-2000.\n2. Mammogram — we'll send the order to Northwestern Radiology in April 2026 so you have time to schedule for May.\n3. CA-125 — confirmed normal at 14 U/mL (June 2025). Next one due at your annual physical in June 2026.\n\nYour follow-up with Dr. Park is a separate referral and still active — no action needed on our end.\n\nYou're doing an excellent job staying on top of this. Please don't hesitate to reach out if anything changes.\n\nBest,\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-011-002",
+      "date": "2026-01-20T11:48:00Z",
+      "sender": { "name": "Carmen Washington", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "Migraine frequency increase — requesting appointment",
+      "body": "Dr. Kim,\n\nI'm writing to report a change in my migraine pattern and request an appointment to discuss.\n\nSummary:\n- Previous frequency: ~1 migraine/month (stable since starting topiramate Aug 2023)\n- Current frequency: 3 migraines in December, 2 so far in January (as of 1/20)\n- All episodes included visual aura followed by unilateral headache, consistent with my usual pattern\n\nPotential triggers I've identified:\n- Significant work stress (we're going through a company restructuring — I'm leading the HR side)\n- Sleep disrupted: averaging 5-6 hours vs my usual 7-8\n- Holiday period: increased wine consumption in December (more than my usual 3-4 glasses/week)\n\nCurrent management:\n- Sumatriptan 50mg still effective for acute episodes (relief within 60-90 min)\n- Topiramate 50mg daily — taking consistently, no missed doses\n- I've already cut wine back to 1 glass/week and am working on sleep hygiene\n\nQuestions:\n1. Should we increase topiramate to 75mg?\n2. At what point should I be concerned about this pattern?\n3. Any other prophylactic strategies I should consider?\n\nI'm available for an appointment any weekday before 9am or after 4pm. Please let me know what's available.\n\nThank you,\nCarmen",
+      "thread": [
+        {
+          "date": "2026-01-21T09:30:00Z",
+          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "body": "Carmen,\n\nThank you for the detailed report — this is very helpful.\n\nGiven the clear trigger pattern (stress, sleep disruption, dietary), I think it's reasonable to address those factors first before adjusting medication. That said, I do want to see you to examine you and discuss this in person.\n\nI've asked the front desk to schedule you for a follow-up. Rachel Torres, NP, has availability on February 10 at 8:00 AM — would that work? She and I work closely together and she'll consult me on any medication changes.\n\nIn the meantime:\n- Continue topiramate 50mg daily\n- Continue sumatriptan PRN\n- Prioritize sleep — even 30 extra minutes can make a difference for migraine threshold\n- You're smart to cut back on wine\n\nTo answer your questions briefly: I'd like to give lifestyle modification 6-8 weeks before increasing topiramate. The increase in frequency is concerning enough to monitor but not alarming given the identifiable triggers. We can discuss additional strategies at your visit.\n\nHang in there with the restructuring.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-011-003",
+      "date": "2026-03-02T10:15:00Z",
+      "sender": { "name": "Carmen Washington", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "referral_request",
+      "priority": "routine",
+      "subject": "Referral request: genetic counselor follow-up (risk-reducing options)",
+      "body": "Dr. Kim,\n\nI'd like to request a follow-up referral to genetic counseling to discuss updated risk-reducing options. Here's my rationale:\n\n- My last genetic counseling session was March 2024 (over a year ago)\n- I've since completed my surgical consultation with Dr. Park (April 2025)\n- New NCCN guidelines were published in January 2026 and I want to discuss any changes relevant to BRCA2 carriers\n- My mother's oncologist recently recommended she have a conversation with me about risk-reducing salpingo-oophorectomy timing (she mentioned the recommended window is 35-45 for BRCA2)\n\nI'm 43 now, so this feels time-sensitive — particularly the ovarian cancer risk discussion. I'd like to see someone at Northwestern if possible, ideally Dr. Torres (the genetic counselor I saw previously).\n\nRequested action items:\n1. Please submit referral to Dr. Angela Torres, Genetic Counseling, Northwestern\n2. Please include my most recent screening results (mammogram, MRI, CA-125) with the referral\n3. If there's a wait, I'd appreciate being put on a cancellation list\n\nThank you,\nCarmen",
+      "thread": [
+        {
+          "date": "2026-03-03T11:42:00Z",
+          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "body": "Carmen,\n\nAbsolutely — this is a well-timed request. I agree that revisiting the conversation about risk-reducing options, particularly regarding ovarian cancer risk and the recommended timing for salpingo-oophorectomy in BRCA2 carriers, is important at your age.\n\nI've submitted the referral today:\n- Referral to: Dr. Angela Torres, Genetic Counseling, Northwestern Medicine\n- Included: your full screening history (mammograms, breast MRIs, CA-125 results), genetic testing results, family history, and Dr. Park's surgical consultation notes\n- I've noted your preference for the cancellation list if there's a wait\n\nYou should hear from Northwestern's scheduling office within 5-7 business days. If you don't, please call them directly at (312) 926-4500 and reference the referral.\n\nYour mother's oncologist is right — the conversation about timing for risk-reducing BSO is important for BRCA2 carriers in your age range. I'm glad you're being proactive about this.\n\nPlease keep me posted on how the appointment goes.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-011-004",
+      "date": "2026-04-14T22:37:00Z",
+      "sender": { "name": "Carmen Washington", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "Prophylactic mastectomy vs. surveillance — need your honest opinion",
+      "body": "Dr. Kim,\n\nI know this isn't really a portal question and I'm sorry for the length. I just got back from my genetic counseling follow-up and I need to process this with someone who knows my full picture.\n\nDr. Torres was wonderful. We went through everything — the updated risk models, the screening data, the surgical options, recovery timelines. I took notes. I made a spreadsheet. I did all the things I always do.\n\nBut here's the thing I can't put in a spreadsheet.\n\nMy grandmother was 52 when they found her breast cancer. She thought she was fine. She did her mammograms. And then at 61 it was ovarian, and by 63 she was gone. I was 17 when she died and I remember my mother — who was already going through her own treatment at that point — trying to hold it together at the funeral. I remember thinking: this is going to happen to me too.\n\nI've been telling myself for years that I'm making this decision from a place of data and logic. But I'm 43 now. My grandmother was 52. That's nine years. And I keep doing the math.\n\nI know the surveillance protocol is working. Everything has been negative. I know the data supports either approach. But I also know that my grandmother's screenings were \"normal\" too, until they weren't.\n\nI'm not asking you to make this decision for me. But I need you to be honest with me — not as a doctor going through a checklist, but as someone who's been taking care of me for years. If I were your sister, what would you tell me?\n\nI'm sorry this isn't my usual bullet-pointed message. I'll be more organized at my next appointment.\n\nCarmen",
+      "thread": [
+        {
+          "date": "2026-04-15T16:20:00Z",
+          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "body": "Carmen,\n\nPlease don't apologize. This is exactly the kind of message I want you to feel comfortable sending me. The spreadsheets and bullet points are great — I mean that — but so is this.\n\nFirst: you are not your grandmother. I know that's easy for me to say and harder for you to feel, but it matters. You've been in an enhanced screening program since age 30. You've had 13 years of normal mammograms and MRIs. Your grandmother didn't have access to BRCA2 testing, didn't have MRI screening, and wasn't being followed the way you are. The landscape is completely different.\n\nBut I also hear what you're saying, and you're not wrong to feel the urgency. So let me answer your actual question as honestly as I can.\n\nIf you were my sister, here's what I'd say:\n\n1. The data supports both surveillance and risk-reducing surgery for BRCA2 carriers. Neither choice is wrong.\n\n2. For the breasts: your current screening protocol is catching things early — that's what it's designed to do. Prophylactic bilateral mastectomy reduces breast cancer risk by over 95%. It's a significant surgery with real recovery, but many women in your situation find profound peace of mind afterward. If the anxiety of every screening cycle is eroding your quality of life, that matters too — it's not just about the numbers.\n\n3. For the ovaries: this is where I'd be more direct. The data for risk-reducing salpingo-oophorectomy in BRCA2 carriers is strong, and the recommended window is 35-45. You're 43. Ovarian cancer screening (CA-125, even with ultrasound) is not as reliable as breast screening. Your grandmother's ovarian cancer is the part of your family history that concerns me most. I would encourage you to seriously consider BSO in the near term — not from fear, but because the risk-benefit profile is favorable and the window matters.\n\n4. You don't have to do everything at once. Some patients do BSO first and continue breast surveillance. Some do both. There's no single right sequence.\n\nCarmen, you have been one of the most thoughtful, proactive patients I've ever worked with. You've done everything right. Whatever you decide, you'll be making an informed choice — and I'll support you completely.\n\nLet's schedule a longer appointment to talk this through in person. I'll have Maria block extra time. No bullet points required.\n\nWith care,\nDr. Kim"
+        }
+      ]
+    }
+  ]
+}
