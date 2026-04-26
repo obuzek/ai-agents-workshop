@@ -13,9 +13,23 @@ later labs will fix this.
 
 import os
 import requests
+
+# The @tool decorator does three things:
+#   1. Registers the function as a LangChain tool
+#   2. Generates a JSON schema from the type hints + docstring
+#   3. Makes the function callable by the LLM via tool-calling
+# Compare this to the manual approach (see docs/content/reference/manual-agent.md)
+# where you'd write both the function AND a separate JSON schema by hand.
 from langchain_core.tools import tool
 
+# Tools call the main EHR API to fetch patient data.
+# The agent API and main API are separate services — tools bridge the gap.
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
+
+
+# --- Tools the LLM can call ---
+# The docstring becomes the tool description the LLM sees.
+# Good docstrings = better tool selection by the model.
 
 
 @tool
@@ -49,9 +63,14 @@ def search_labs(patient_id: str, test_name: str) -> list[dict]:
     Useful for tracking trends (e.g., 'potassium', 'eGFR', 'hemoglobin').
     Returns results sorted newest first with date, value, unit, and interpretation.
     """
+    # Naive implementation: fetch the entire record and filter client-side.
+    # A real system would have a dedicated search endpoint or query the DB.
+    # This is fine for Lab 1 — later labs can optimize.
     resp = requests.get(f"{API_URL}/patients/{patient_id}")
     resp.raise_for_status()
     record = resp.json()
+
+    # Walk through every lab panel and collect matching results
     matches = []
     for lab in record.get("labs", []):
         for panel in lab.get("panels", []):
@@ -76,4 +95,6 @@ def get_inbox() -> list[dict]:
     return resp.json()
 
 
+# ALL_TOOLS is what we pass to create_react_agent(). LangGraph inspects each
+# tool's schema and makes them available to the LLM as callable functions.
 ALL_TOOLS = [list_patients, get_patient_record, get_messages, search_labs, get_inbox]
