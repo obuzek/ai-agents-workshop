@@ -654,7 +654,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "symptom_report",
+      "category": "medical question",
       "priority": "urgent",
       "subject": "Chest tightness",
       "body": "Hi I was in last week for the chest thing. Had another episode yesterday going up stairs at a job site. Lasted about 5 min then went away when I sat down. Is that normal or should I be worried.",
@@ -680,7 +680,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "scheduling",
+      "category": "appointment request",
       "priority": "routine",
       "subject": "Stress test prep question - James Hartley",
       "body": "Hi Dr. Kim, this is Karen, James's wife. He has the stress test this Thursday at Lakeview Cardiology. I know he's not supposed to eat or drink coffee before \u2014 is there anything else he needs to know or do to prepare? Also, is it ok that he's still working full days? He won't listen to me about taking it easy. I've been worried sick since his dad passed at 53 from a heart attack and James is 51 now. His brother had bypass surgery two years ago. I just want to make sure we're not missing anything. Thank you for fitting him in so quickly last week.",
@@ -706,7 +706,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "results_inquiry",
+      "category": "test results",
       "priority": "routine",
       "subject": "Stress test results",
       "body": "Test was Thursday. When will results be ready. Thanks.",

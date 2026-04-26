@@ -30,9 +30,9 @@
     "preferredLanguage": "English"
   },
   "socialHistory": {
-    "smoking": "Former smoker — quit 8 years ago. 45 pack-year history (1.5 packs/day from age 18 to 62).",
+    "smoking": "Former smoker \u2014 quit 8 years ago. 45 pack-year history (1.5 packs/day from age 18 to 62).",
     "alcohol": "Rare now. Previously moderate.",
-    "exercise": "Unable — limited by dyspnea. Can walk to mailbox with rest breaks. Uses mobility scooter for longer distances.",
+    "exercise": "Unable \u2014 limited by dyspnea. Can walk to mailbox with rest breaks. Uses mobility scooter for longer distances.",
     "notes": "Retired corn and soybean farmer. Married 54 years to Dorothy. Lives on the family farm, now leased to a neighbor. Daughter lives 2 hours away in Springfield. Fiercely independent, resists help. Dorothy is primary caregiver and advocate."
   },
   "familyHistory": [
@@ -311,22 +311,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "COPD management, CHF follow-up, medication review",
       "vitals": {
-        "bloodPressure": { "systolic": 132, "diastolic": 78, "unit": "mmHg" },
-        "heartRate": { "value": 82, "unit": "bpm" },
-        "temperature": { "value": 98.1, "unit": "\u00b0F" },
-        "weight": { "value": 182, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 132,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 82,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.1,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 182,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 26.1,
-        "respiratoryRate": { "value": 20, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 95, "unit": "%" }
+        "respiratoryRate": {
+          "value": 20,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 95,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Patient here for routine follow-up of COPD and CHF. Reports stable shortness of breath with moderate exertion — can walk about 200 feet on flat ground before needing to rest. Using home oxygen at 2L/min continuously. Denies chest pain. Reports mild ankle swelling in evenings, improves with elevation. Wife Dorothy accompanies him, reports he has been 'slowing down' over the past 6 months. Sleeping on two pillows. Appetite fair.",
+        "subjective": "Patient here for routine follow-up of COPD and CHF. Reports stable shortness of breath with moderate exertion \u2014 can walk about 200 feet on flat ground before needing to rest. Using home oxygen at 2L/min continuously. Denies chest pain. Reports mild ankle swelling in evenings, improves with elevation. Wife Dorothy accompanies him, reports he has been 'slowing down' over the past 6 months. Sleeping on two pillows. Appetite fair.",
         "objective": "Alert, cooperative, appears older than stated age. Mild barrel chest. Breath sounds diminished bilaterally with scattered expiratory wheezes. No crackles today. Heart regular rate and rhythm, S1/S2 present, grade II/VI systolic murmur at apex. 1+ pitting edema bilateral ankles. Clubbing of fingers noted. O2 sat 95% on 2L NC. FEV1 42% predicted (down from 48% in 2022).",
-        "assessment": "1. COPD GOLD stage III — stable but showing gradual decline in FEV1. Spirometry confirms progression. 2. CHF NYHA class III — volume status fair on current diuretic regimen. 3. CKD 3a — eGFR 52, stable. Need to balance diuresis with renal preservation. 4. Former smoker — cessation maintained. Given family history (father: emphysema, brother: lung cancer), continued vigilance warranted. Overall trajectory concerning for slow but steady decline.",
-        "plan": "1. Continue tiotropium (Spiriva) 2.5 mcg daily. 2. Continue fluticasone/salmeterol (Advair) 250/50 twice daily. 3. Continue albuterol PRN via nebulizer. 4. Continue furosemide 20 mg daily, lisinopril 10 mg daily. 5. Discontinue metoprolol per pulmonology recommendation — concern about worsening bronchospasm. 6. Labs: BMP, BNP, CBC in 2 weeks. 7. Pulmonology follow-up with Dr. Hensley in 8 weeks. 8. Cardiology follow-up with Dr. Lichter in 12 weeks. 9. Discussed importance of pulmonary rehabilitation — patient resistant but will consider."
+        "assessment": "1. COPD GOLD stage III \u2014 stable but showing gradual decline in FEV1. Spirometry confirms progression. 2. CHF NYHA class III \u2014 volume status fair on current diuretic regimen. 3. CKD 3a \u2014 eGFR 52, stable. Need to balance diuresis with renal preservation. 4. Former smoker \u2014 cessation maintained. Given family history (father: emphysema, brother: lung cancer), continued vigilance warranted. Overall trajectory concerning for slow but steady decline.",
+        "plan": "1. Continue tiotropium (Spiriva) 2.5 mcg daily. 2. Continue fluticasone/salmeterol (Advair) 250/50 twice daily. 3. Continue albuterol PRN via nebulizer. 4. Continue furosemide 20 mg daily, lisinopril 10 mg daily. 5. Discontinue metoprolol per pulmonology recommendation \u2014 concern about worsening bronchospasm. 6. Labs: BMP, BNP, CBC in 2 weeks. 7. Pulmonology follow-up with Dr. Hensley in 8 weeks. 8. Cardiology follow-up with Dr. Lichter in 12 weeks. 9. Discussed importance of pulmonary rehabilitation \u2014 patient resistant but will consider."
       },
-      "labOrders": ["lab-010-001"],
+      "labOrders": [
+        "lab-010-001"
+      ],
       "referrals": [
         {
           "to": "Dr. Robert Hensley, Pulmonology",
@@ -347,22 +371,46 @@
       "provider": "Dr. Mark Rivera, MD (ER)",
       "reasonForVisit": "Acute COPD exacerbation with increased dyspnea and productive cough",
       "vitals": {
-        "bloodPressure": { "systolic": 148, "diastolic": 88, "unit": "mmHg" },
-        "heartRate": { "value": 108, "unit": "bpm" },
-        "temperature": { "value": 100.2, "unit": "\u00b0F" },
-        "weight": { "value": 179, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 148,
+          "diastolic": 88,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 108,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 100.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 179,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 25.7,
-        "respiratoryRate": { "value": 28, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 86, "unit": "%" }
+        "respiratoryRate": {
+          "value": 28,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 86,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Wife called 911 when patient became severely dyspneic at rest this morning. 3-day history of worsening productive cough with yellow-green sputum. Increased use of albuterol nebulizer over the past 48 hours with minimal relief. Wife reports he has been sleeping in his recliner for the past week because he cannot lie flat. Low-grade fevers for 2 days. Denies chest pain. Poor oral intake for 3 days.",
         "objective": "Acutely ill-appearing elderly male in moderate respiratory distress. Using accessory muscles. Diffuse expiratory wheezes and rhonchi bilaterally. Decreased breath sounds at bilateral bases. Tachycardic, irregular. 2+ pitting edema bilateral lower extremities to mid-shins. O2 sat 86% on 2L, improved to 91% on 4L via NC. Chest X-ray: hyperinflated lungs, bilateral peribronchial thickening, small bilateral pleural effusions. No focal consolidation.",
-        "assessment": "1. Acute COPD exacerbation, likely infectious trigger. 2. Acute on chronic CHF exacerbation with volume overload. 3. CKD 3a — monitor with IV diuresis.",
-        "plan": "1. IV methylprednisolone 125 mg, then transition to prednisone taper. 2. Azithromycin 500 mg IV (penicillin allergy — avoid beta-lactams). 3. Continuous nebulized albuterol/ipratropium. 4. IV furosemide 40 mg x1 for volume overload. 5. Supplemental O2 titrated to maintain sat > 90%. 6. Admit to telemetry for monitoring. 7. Notify PCP Dr. Kim and cardiologist Dr. Lichter. 8. BMP, BNP, CBC, blood cultures drawn."
+        "assessment": "1. Acute COPD exacerbation, likely infectious trigger. 2. Acute on chronic CHF exacerbation with volume overload. 3. CKD 3a \u2014 monitor with IV diuresis.",
+        "plan": "1. IV methylprednisolone 125 mg, then transition to prednisone taper. 2. Azithromycin 500 mg IV (penicillin allergy \u2014 avoid beta-lactams). 3. Continuous nebulized albuterol/ipratropium. 4. IV furosemide 40 mg x1 for volume overload. 5. Supplemental O2 titrated to maintain sat > 90%. 6. Admit to telemetry for monitoring. 7. Notify PCP Dr. Kim and cardiologist Dr. Lichter. 8. BMP, BNP, CBC, blood cultures drawn."
       },
-      "labOrders": ["lab-010-002"]
+      "labOrders": [
+        "lab-010-002"
+      ]
     },
     {
       "id": "enc-010-003",
@@ -371,22 +419,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Post-hospitalization follow-up, COPD and CHF management",
       "vitals": {
-        "bloodPressure": { "systolic": 124, "diastolic": 72, "unit": "mmHg" },
-        "heartRate": { "value": 88, "unit": "bpm" },
-        "temperature": { "value": 97.8, "unit": "\u00b0F" },
-        "weight": { "value": 177, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 124,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 88,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.8,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 177,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 25.4,
-        "respiratoryRate": { "value": 22, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 93, "unit": "%" }
+        "respiratoryRate": {
+          "value": 22,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 93,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Seen 6 weeks post-discharge from January ER visit and 5-day hospitalization. Patient reports he is 'back to where he was before, more or less.' Dorothy disagrees — says he is noticeably weaker and his activity radius has shrunk. Can no longer walk to the barn without stopping twice. Sleeping propped up on 3 pillows. Appetite poor but eating. Completing prednisone taper this week. Still using albuterol nebulizer 3-4 times daily.",
-        "objective": "Appears fatigued, thin. Chronic dyspneic appearance at rest, mild. Diminished breath sounds bilaterally, faint wheezes at end-expiration. Heart irregularly irregular (new since last office visit — possible intermittent AFib). JVP slightly elevated. 1+ edema bilateral ankles. O2 sat 93% on 2L NC. Weight down 5 lbs from pre-hospitalization baseline.",
-        "assessment": "1. COPD GOLD III — post-exacerbation, not back to pre-exacerbation baseline. FEV1 likely declined further; will recheck in 6 weeks. 2. CHF class III — borderline volume status. New irregular rhythm concerning for intermittent atrial fibrillation. 3. CKD 3a — eGFR 49, slight decline, likely related to hospitalization. 4. Weight loss — 5 lbs since June. Monitoring. Early cachexia possible. I am concerned about this patient's overall trajectory. He is declining and each exacerbation takes more out of him. Will need to have advance care planning discussion soon.",
-        "plan": "1. Increase home oxygen to 3L/min continuous — he is desaturating on 2L with any activity. 2. Continue current inhalers. 3. Continue furosemide 20 mg daily. 4. Order EKG and Holter monitor for new irregular rhythm. 5. Echocardiogram — recheck EF. 6. Labs: BMP, BNP, CBC. 7. Refer to palliative care for symptom management discussion (will broach gently). 8. Cardiology follow-up with Dr. Lichter — expedite given new arrhythmia. 9. Nutritional counseling referral — early signs of malnutrition."
+        "subjective": "Seen 6 weeks post-discharge from January ER visit and 5-day hospitalization. Patient reports he is 'back to where he was before, more or less.' Dorothy disagrees \u2014 says he is noticeably weaker and his activity radius has shrunk. Can no longer walk to the barn without stopping twice. Sleeping propped up on 3 pillows. Appetite poor but eating. Completing prednisone taper this week. Still using albuterol nebulizer 3-4 times daily.",
+        "objective": "Appears fatigued, thin. Chronic dyspneic appearance at rest, mild. Diminished breath sounds bilaterally, faint wheezes at end-expiration. Heart irregularly irregular (new since last office visit \u2014 possible intermittent AFib). JVP slightly elevated. 1+ edema bilateral ankles. O2 sat 93% on 2L NC. Weight down 5 lbs from pre-hospitalization baseline.",
+        "assessment": "1. COPD GOLD III \u2014 post-exacerbation, not back to pre-exacerbation baseline. FEV1 likely declined further; will recheck in 6 weeks. 2. CHF class III \u2014 borderline volume status. New irregular rhythm concerning for intermittent atrial fibrillation. 3. CKD 3a \u2014 eGFR 49, slight decline, likely related to hospitalization. 4. Weight loss \u2014 5 lbs since June. Monitoring. Early cachexia possible. I am concerned about this patient's overall trajectory. He is declining and each exacerbation takes more out of him. Will need to have advance care planning discussion soon.",
+        "plan": "1. Increase home oxygen to 3L/min continuous \u2014 he is desaturating on 2L with any activity. 2. Continue current inhalers. 3. Continue furosemide 20 mg daily. 4. Order EKG and Holter monitor for new irregular rhythm. 5. Echocardiogram \u2014 recheck EF. 6. Labs: BMP, BNP, CBC. 7. Refer to palliative care for symptom management discussion (will broach gently). 8. Cardiology follow-up with Dr. Lichter \u2014 expedite given new arrhythmia. 9. Nutritional counseling referral \u2014 early signs of malnutrition."
       },
-      "labOrders": ["lab-010-003"],
+      "labOrders": [
+        "lab-010-003"
+      ],
       "referrals": [
         {
           "to": "Dr. Anne Lichter, Cardiology",
@@ -412,22 +484,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Routine follow-up, COPD/CHF management, lab review",
       "vitals": {
-        "bloodPressure": { "systolic": 118, "diastolic": 68, "unit": "mmHg" },
-        "heartRate": { "value": 92, "unit": "bpm" },
-        "temperature": { "value": 97.6, "unit": "\u00b0F" },
-        "weight": { "value": 175, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 118,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 92,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 175,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 25.1,
-        "respiratoryRate": { "value": 22, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 92, "unit": "%" }
+        "respiratoryRate": {
+          "value": 22,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 92,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Patient here with Dorothy for routine follow-up. States he is 'doing alright' but Dorothy reports he barely leaves the house anymore. Gets winded walking to the kitchen. Using nebulizer 4-5 times daily. Has been on 3L oxygen since March. Sleeps in recliner most nights. Appetite remains poor — Dorothy says he picks at meals. Denies chest pain or hemoptysis. Reports occasional dizziness when standing, which he attributes to 'getting old.' Daughter visited last month and was alarmed by his appearance.",
+        "subjective": "Patient here with Dorothy for routine follow-up. States he is 'doing alright' but Dorothy reports he barely leaves the house anymore. Gets winded walking to the kitchen. Using nebulizer 4-5 times daily. Has been on 3L oxygen since March. Sleeps in recliner most nights. Appetite remains poor \u2014 Dorothy says he picks at meals. Denies chest pain or hemoptysis. Reports occasional dizziness when standing, which he attributes to 'getting old.' Daughter visited last month and was alarmed by his appearance.",
         "objective": "Cachectic-appearing elderly male. Temporal wasting noted. Dyspneic with minimal exertion (walking from waiting room). Barrel chest, diminished breath sounds diffusely, scattered wheezes. Heart tachycardic, irregularly irregular. JVP 10 cm. 2+ pitting edema bilateral LE. O2 sat 92% on 3L, drops to 87% with ambulation. FEV1 38% predicted (down from 42% in June 2023). Recent echo: EF 35%, moderate diastolic dysfunction.",
-        "assessment": "1. COPD GOLD III — continued decline. FEV1 now 38% predicted. Approaching GOLD IV territory. Increasingly symptomatic. 2. CHF class III — EF 35%. Intermittent atrial fibrillation confirmed on Holter. Volume overloaded despite diuretics. 3. CKD 3a — eGFR 48. Holding steady but limits diuretic intensification. 4. Malnutrition/cachexia — weight trending down. Total loss of 7 lbs over 15 months. This is ominous in the setting of advanced cardiopulmonary disease. 5. Overall prognosis: I believe this patient has a limited life expectancy, likely 1-2 years. Must have advance directive conversation at the next visit.",
-        "plan": "1. Add potassium chloride 20 mEq daily — K+ was 3.3 on last labs, likely from furosemide. 2. Continue all current inhalers and oxygen at 3L. 3. Continue furosemide 20 mg daily — cannot increase yet due to renal function. 4. Continue lisinopril 10 mg. 5. Labs: BMP (check potassium), BNP, CBC, prealbumin. 6. Nutritional supplements — Ensure Plus twice daily recommended. 7. Cardiology follow-up with Dr. Lichter in 6 weeks. 8. Pulmonology follow-up with Dr. Hensley in 8 weeks. 9. Will initiate advance directive discussion at next visit — Dorothy has expressed desire to discuss this."
+        "assessment": "1. COPD GOLD III \u2014 continued decline. FEV1 now 38% predicted. Approaching GOLD IV territory. Increasingly symptomatic. 2. CHF class III \u2014 EF 35%. Intermittent atrial fibrillation confirmed on Holter. Volume overloaded despite diuretics. 3. CKD 3a \u2014 eGFR 48. Holding steady but limits diuretic intensification. 4. Malnutrition/cachexia \u2014 weight trending down. Total loss of 7 lbs over 15 months. This is ominous in the setting of advanced cardiopulmonary disease. 5. Overall prognosis: I believe this patient has a limited life expectancy, likely 1-2 years. Must have advance directive conversation at the next visit.",
+        "plan": "1. Add potassium chloride 20 mEq daily \u2014 K+ was 3.3 on last labs, likely from furosemide. 2. Continue all current inhalers and oxygen at 3L. 3. Continue furosemide 20 mg daily \u2014 cannot increase yet due to renal function. 4. Continue lisinopril 10 mg. 5. Labs: BMP (check potassium), BNP, CBC, prealbumin. 6. Nutritional supplements \u2014 Ensure Plus twice daily recommended. 7. Cardiology follow-up with Dr. Lichter in 6 weeks. 8. Pulmonology follow-up with Dr. Hensley in 8 weeks. 9. Will initiate advance directive discussion at next visit \u2014 Dorothy has expressed desire to discuss this."
       },
-      "labOrders": ["lab-010-004"],
+      "labOrders": [
+        "lab-010-004"
+      ],
       "referrals": [
         {
           "to": "Dr. Robert Hensley, Pulmonology",
@@ -448,22 +544,46 @@
       "provider": "Dr. Lisa Cheng, MD (ER)",
       "reasonForVisit": "Acute COPD exacerbation with respiratory failure",
       "vitals": {
-        "bloodPressure": { "systolic": 140, "diastolic": 82, "unit": "mmHg" },
-        "heartRate": { "value": 112, "unit": "bpm" },
-        "temperature": { "value": 99.8, "unit": "\u00b0F" },
-        "weight": { "value": 170, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 140,
+          "diastolic": 82,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 112,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 99.8,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 170,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 24.4,
-        "respiratoryRate": { "value": 30, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 84, "unit": "%" }
+        "respiratoryRate": {
+          "value": 30,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 84,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Wife drove patient in from rural Yorkville, approximately 45-minute drive. Reports 2-day history of worsening dyspnea, now at rest. Increased sputum production, yellow-green. Patient anxious, speaking in 2-3 word sentences. Unable to eat for 2 days. Wife states he was leaning forward to breathe all night and she 'couldn't wait any longer.' Reports this is worse than the January 2024 episode.",
         "objective": "Elderly male in severe respiratory distress. Tripoding, using accessory muscles, pursed-lip breathing. Cyanotic nail beds. Diffuse wheezes and rhonchi, markedly diminished breath sounds bilateral bases. Tachycardic, irregular. 3+ pitting edema bilateral LE to knees. O2 sat 84% on 3L home oxygen, improved to 90% on 6L high-flow NC. ABG: pH 7.31, pCO2 56, pO2 58 on 3L. Acute on chronic hypercapnic respiratory failure. Chest X-ray: bilateral pleural effusions, increased from prior, cardiomegaly, pulmonary vascular congestion.",
-        "assessment": "1. Acute COPD exacerbation with acute on chronic hypercapnic respiratory failure. 2. Acute decompensated heart failure with bilateral pleural effusions. 3. CKD 3a — will impact fluid management.",
-        "plan": "1. BiPAP initiated — settings 12/5. 2. IV methylprednisolone 125 mg. 3. Levofloxacin 750 mg IV (penicillin allergy). 4. Continuous nebulized ipratropium/albuterol. 5. IV furosemide 80 mg bolus for acute decompensation. 6. Admit to ICU for respiratory monitoring. 7. If no improvement on BiPAP, may need intubation — discuss goals of care urgently. 8. Notify PCP Dr. Kim, cardiologist Dr. Lichter, pulmonologist Dr. Hensley. 9. Social work consult for advance directive — none on file."
+        "assessment": "1. Acute COPD exacerbation with acute on chronic hypercapnic respiratory failure. 2. Acute decompensated heart failure with bilateral pleural effusions. 3. CKD 3a \u2014 will impact fluid management.",
+        "plan": "1. BiPAP initiated \u2014 settings 12/5. 2. IV methylprednisolone 125 mg. 3. Levofloxacin 750 mg IV (penicillin allergy). 4. Continuous nebulized ipratropium/albuterol. 5. IV furosemide 80 mg bolus for acute decompensation. 6. Admit to ICU for respiratory monitoring. 7. If no improvement on BiPAP, may need intubation \u2014 discuss goals of care urgently. 8. Notify PCP Dr. Kim, cardiologist Dr. Lichter, pulmonologist Dr. Hensley. 9. Social work consult for advance directive \u2014 none on file."
       },
-      "labOrders": ["lab-010-005"]
+      "labOrders": [
+        "lab-010-005"
+      ]
     },
     {
       "id": "enc-010-006",
@@ -472,22 +592,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Post-ICU follow-up, advance care planning, medication adjustment",
       "vitals": {
-        "bloodPressure": { "systolic": 110, "diastolic": 64, "unit": "mmHg" },
-        "heartRate": { "value": 94, "unit": "bpm" },
-        "temperature": { "value": 97.4, "unit": "\u00b0F" },
-        "weight": { "value": 168, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 64,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 94,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 168,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 24.1,
-        "respiratoryRate": { "value": 24, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 91, "unit": "%" }
+        "respiratoryRate": {
+          "value": 24,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 91,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Three months post-ICU stay (March 2025, 8 days including 3 days in ICU on BiPAP). Patient reports he is 'getting by.' Dorothy reports he has not recovered to his pre-exacerbation baseline — again. He can now walk about 30 feet before needing to sit. Sleeps exclusively in recliner. Using nebulizer 5-6 times daily. Appetite very poor. Dorothy has been adding Ensure to his meals. She appears exhausted and tearful. Patient deflects when asked about how he's feeling — 'I've had worse.' Dorothy: 'He hasn't had worse, and he won't admit it.'",
+        "subjective": "Three months post-ICU stay (March 2025, 8 days including 3 days in ICU on BiPAP). Patient reports he is 'getting by.' Dorothy reports he has not recovered to his pre-exacerbation baseline \u2014 again. He can now walk about 30 feet before needing to sit. Sleeps exclusively in recliner. Using nebulizer 5-6 times daily. Appetite very poor. Dorothy has been adding Ensure to his meals. She appears exhausted and tearful. Patient deflects when asked about how he's feeling \u2014 'I've had worse.' Dorothy: 'He hasn't had worse, and he won't admit it.'",
         "objective": "Markedly cachectic. Temporal wasting prominent. Dyspneic at rest, mild. Speaking in full sentences but with pauses. Diminished breath sounds diffusely, faint wheezes. Heart irregularly irregular, rate controlled. JVP 12 cm. 2+ bilateral LE edema. O2 sat 91% on 3L at rest, drops to 86% walking 20 feet. Weight down 14 lbs from September 2024.",
-        "assessment": "1. COPD GOLD III/IV — post-second major exacerbation in 14 months. Each episode leaves him weaker. He is not recovering to baseline. FEV1 likely in the low 30s. 2. CHF class III — borderline class IV. Low blood pressure limits ACE inhibitor optimization. Volume status tenuous. 3. CKD 3a — eGFR 46. Worsening cardiorenal syndrome. 4. Malnutrition — progressive cachexia. Down 14 lbs in 9 months. 5. Caregiver burden — Dorothy is visibly stressed and fatigued. This is a patient I am deeply worried about. Advance care planning is now urgent. Attempted to discuss advance directives today — patient deflected, said 'Let's not go there today, Doc.' Dorothy looked at me and said, 'We need to talk about this.' I will try again at next visit and have given Dorothy the forms to review at home.",
-        "plan": "1. Continue all current medications. 2. Increase furosemide to 40 mg twice daily — edema worsening despite current dose. Monitor renal function closely. 3. Increase potassium to 20 mEq twice daily given furosemide increase. 4. Continue O2 at 3L continuous. 5. Labs: BMP in 1 week (monitor K+ and creatinine after furosemide increase), BNP, CBC, prealbumin. 6. Advance directive paperwork given to Dorothy. Strongly encouraged completion. 7. Home health nursing referral — weekly visits for vitals, medication reconciliation, caregiver support. 8. Palliative care re-referral — patient declined previously but Dorothy agrees this time. 9. Return in 4 weeks or sooner if worsening."
+        "assessment": "1. COPD GOLD III/IV \u2014 post-second major exacerbation in 14 months. Each episode leaves him weaker. He is not recovering to baseline. FEV1 likely in the low 30s. 2. CHF class III \u2014 borderline class IV. Low blood pressure limits ACE inhibitor optimization. Volume status tenuous. 3. CKD 3a \u2014 eGFR 46. Worsening cardiorenal syndrome. 4. Malnutrition \u2014 progressive cachexia. Down 14 lbs in 9 months. 5. Caregiver burden \u2014 Dorothy is visibly stressed and fatigued. This is a patient I am deeply worried about. Advance care planning is now urgent. Attempted to discuss advance directives today \u2014 patient deflected, said 'Let's not go there today, Doc.' Dorothy looked at me and said, 'We need to talk about this.' I will try again at next visit and have given Dorothy the forms to review at home.",
+        "plan": "1. Continue all current medications. 2. Increase furosemide to 40 mg twice daily \u2014 edema worsening despite current dose. Monitor renal function closely. 3. Increase potassium to 20 mEq twice daily given furosemide increase. 4. Continue O2 at 3L continuous. 5. Labs: BMP in 1 week (monitor K+ and creatinine after furosemide increase), BNP, CBC, prealbumin. 6. Advance directive paperwork given to Dorothy. Strongly encouraged completion. 7. Home health nursing referral \u2014 weekly visits for vitals, medication reconciliation, caregiver support. 8. Palliative care re-referral \u2014 patient declined previously but Dorothy agrees this time. 9. Return in 4 weeks or sooner if worsening."
       },
-      "labOrders": ["lab-010-006"],
+      "labOrders": [
+        "lab-010-006"
+      ],
       "referrals": [
         {
           "to": "Palliative Care Services",
@@ -508,22 +652,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "COPD/CHF management, weight loss evaluation, medication adjustment",
       "vitals": {
-        "bloodPressure": { "systolic": 108, "diastolic": 62, "unit": "mmHg" },
-        "heartRate": { "value": 96, "unit": "bpm" },
-        "temperature": { "value": 97.2, "unit": "\u00b0F" },
-        "weight": { "value": 165, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 108,
+          "diastolic": 62,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 96,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 165,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 23.7,
-        "respiratoryRate": { "value": 24, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 90, "unit": "%" }
+        "respiratoryRate": {
+          "value": 24,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 90,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Dorothy reports Bill has lost another 3 lbs this month. Eating very little — 'He'll take a few bites and push the plate away.' Dyspnea worsening; now short of breath with any movement. Still using recliner exclusively for sleeping. Dizziness with position changes since furosemide was increased — nearly fell in the bathroom last week. Using nebulizer around the clock. Dorothy reports home health nurse has been coming weekly and has been 'a godsend.' Palliative care team visited twice — Bill was 'polite but didn't say much.' Dorothy found the visits helpful.",
+        "subjective": "Dorothy reports Bill has lost another 3 lbs this month. Eating very little \u2014 'He'll take a few bites and push the plate away.' Dyspnea worsening; now short of breath with any movement. Still using recliner exclusively for sleeping. Dizziness with position changes since furosemide was increased \u2014 nearly fell in the bathroom last week. Using nebulizer around the clock. Dorothy reports home health nurse has been coming weekly and has been 'a godsend.' Palliative care team visited twice \u2014 Bill was 'polite but didn't say much.' Dorothy found the visits helpful.",
         "objective": "Cachectic, frail elderly male. Temporal and thenar wasting. Dyspneic at rest on 3L O2. Speaking in short sentences with pauses. Diffusely diminished breath sounds, rare wheezes. Heart irregularly irregular. JVP 14 cm. 2+ bilateral LE edema. Orthostatic: sitting BP 108/62, standing 92/56 with near-syncope. O2 sat 90% on 3L at rest.",
-        "assessment": "1. COPD — approaching GOLD IV. Progressive decline. 2. CHF class III-IV — elevated JVP, persistent edema despite increased diuretics. BP dropping as cardiac output declines. 3. CKD 3a — eGFR 46, tenuous. The furosemide increase may further compromise renal function. 4. Orthostatic hypotension — likely from furosemide and declining cardiac output. Fall risk is high. 5. Progressive cachexia — 17 lbs lost in 17 months. Prealbumin low. 6. This patient is on a palliative trajectory. Each visit he is thinner, weaker, and more dyspneic. I have documented my concern about prognosis in prior notes and I believe his life expectancy is now measured in months rather than years.",
-        "plan": "1. Adjust furosemide: reduce morning dose to 20 mg, keep evening dose at 40 mg — compromise between volume overload and orthostatic hypotension. 2. Continue lisinopril 10 mg — cannot reduce further without losing renal protection. 3. Continue all inhalers and O2 at 3L. 4. Add megestrol 400 mg daily for appetite stimulation — discussed risks/benefits. 5. Labs: BMP in 1 week post-furosemide adjustment. 6. Continue home health nursing. 7. Continue palliative care — push for goals-of-care conference with family. 8. Fall prevention: grab bars installed, hospital bed recommended (Dorothy to arrange). 9. Return in 4 weeks."
+        "assessment": "1. COPD \u2014 approaching GOLD IV. Progressive decline. 2. CHF class III-IV \u2014 elevated JVP, persistent edema despite increased diuretics. BP dropping as cardiac output declines. 3. CKD 3a \u2014 eGFR 46, tenuous. The furosemide increase may further compromise renal function. 4. Orthostatic hypotension \u2014 likely from furosemide and declining cardiac output. Fall risk is high. 5. Progressive cachexia \u2014 17 lbs lost in 17 months. Prealbumin low. 6. This patient is on a palliative trajectory. Each visit he is thinner, weaker, and more dyspneic. I have documented my concern about prognosis in prior notes and I believe his life expectancy is now measured in months rather than years.",
+        "plan": "1. Adjust furosemide: reduce morning dose to 20 mg, keep evening dose at 40 mg \u2014 compromise between volume overload and orthostatic hypotension. 2. Continue lisinopril 10 mg \u2014 cannot reduce further without losing renal protection. 3. Continue all inhalers and O2 at 3L. 4. Add megestrol 400 mg daily for appetite stimulation \u2014 discussed risks/benefits. 5. Labs: BMP in 1 week post-furosemide adjustment. 6. Continue home health nursing. 7. Continue palliative care \u2014 push for goals-of-care conference with family. 8. Fall prevention: grab bars installed, hospital bed recommended (Dorothy to arrange). 9. Return in 4 weeks."
       },
-      "labOrders": ["lab-010-007"],
+      "labOrders": [
+        "lab-010-007"
+      ],
       "referrals": [
         {
           "to": "Palliative Care Services",
@@ -539,22 +707,46 @@
       "provider": "Dr. Mark Rivera, MD (ER)",
       "reasonForVisit": "Severe dyspnea, near-syncope, acute on chronic CHF exacerbation",
       "vitals": {
-        "bloodPressure": { "systolic": 96, "diastolic": 58, "unit": "mmHg" },
-        "heartRate": { "value": 110, "unit": "bpm" },
-        "temperature": { "value": 98.0, "unit": "\u00b0F" },
-        "weight": { "value": 162, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 96,
+          "diastolic": 58,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 110,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.0,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 162,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 23.2,
-        "respiratoryRate": { "value": 32, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 85, "unit": "%" }
+        "respiratoryRate": {
+          "value": 32,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 85,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Wife called 911 after patient had near-syncopal episode attempting to get out of his recliner. Severe dyspnea at rest for the past 24 hours. Dorothy states he barely ate anything yesterday and today. She reports he has lost 8 lbs this month alone. Legs more swollen than usual. She is visibly distraught. She asks: 'Are we at the point where we need to talk about... what comes next?' Patient is too dyspneic to provide much history.",
         "objective": "Severely cachectic elderly male in significant respiratory distress. Pale, diaphoretic. Speaking in 1-2 word fragments. Diffuse crackles and wheezes bilaterally. Heart tachycardic, irregular. JVP to angle of jaw. 3+ pitting edema bilateral LE to thighs. O2 sat 85% on 3L home O2, improved to 89% on 6L high-flow NC. BP 96/58, MAP 71. Chest X-ray: large bilateral pleural effusions, marked cardiomegaly, diffuse pulmonary edema. BNP 1240 pg/mL. ABG: pH 7.28, pCO2 62, pO2 52.",
-        "assessment": "1. Acute on chronic combined systolic and diastolic heart failure — severe decompensation. BNP 1240. 2. Acute COPD exacerbation with hypercapnic respiratory failure. 3. CKD 3a — eGFR likely declining in this acute setting. 4. Severe malnutrition, cardiac cachexia. 5. This is the third ER visit in 2 years. Patient is clearly in the final phase of his disease. Goals-of-care discussion is critical during this admission.",
-        "plan": "1. BiPAP 14/6, FiO2 50%. 2. IV furosemide 40 mg bolus, then 10 mg/hr drip. 3. IV methylprednisolone 125 mg. 4. Levofloxacin 750 mg IV. 5. Continuous nebulized ipratropium/albuterol. 6. Admit to ICU. 7. Urgent goals-of-care discussion with wife and family — page palliative care for morning. 8. Notify PCP Dr. Kim. 9. If patient cannot be weaned from BiPAP, will need frank discussion about intubation vs. comfort measures. No advance directive on file."
+        "assessment": "1. Acute on chronic combined systolic and diastolic heart failure \u2014 severe decompensation. BNP 1240. 2. Acute COPD exacerbation with hypercapnic respiratory failure. 3. CKD 3a \u2014 eGFR likely declining in this acute setting. 4. Severe malnutrition, cardiac cachexia. 5. This is the third ER visit in 2 years. Patient is clearly in the final phase of his disease. Goals-of-care discussion is critical during this admission.",
+        "plan": "1. BiPAP 14/6, FiO2 50%. 2. IV furosemide 40 mg bolus, then 10 mg/hr drip. 3. IV methylprednisolone 125 mg. 4. Levofloxacin 750 mg IV. 5. Continuous nebulized ipratropium/albuterol. 6. Admit to ICU. 7. Urgent goals-of-care discussion with wife and family \u2014 page palliative care for morning. 8. Notify PCP Dr. Kim. 9. If patient cannot be weaned from BiPAP, will need frank discussion about intubation vs. comfort measures. No advance directive on file."
       },
-      "labOrders": ["lab-010-008"]
+      "labOrders": [
+        "lab-010-008"
+      ]
     },
     {
       "id": "enc-010-009",
@@ -563,22 +755,46 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Post-hospitalization follow-up, goals of care, palliative care coordination",
       "vitals": {
-        "bloodPressure": { "systolic": 102, "diastolic": 60, "unit": "mmHg" },
-        "heartRate": { "value": 98, "unit": "bpm" },
-        "temperature": { "value": 97.0, "unit": "\u00b0F" },
-        "weight": { "value": 160, "unit": "lbs" },
-        "height": { "value": 70, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 102,
+          "diastolic": 60,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 98,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.0,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 160,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 70,
+          "unit": "in"
+        },
         "bmi": 22.9,
-        "respiratoryRate": { "value": 26, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 89, "unit": "%" }
+        "respiratoryRate": {
+          "value": 26,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 89,
+          "unit": "%"
+        }
       },
       "notes": {
-        "subjective": "Two months post-discharge from February ICU admission (10 days total, 5 in ICU). Palliative care team met with Bill and Dorothy and daughter Karen during hospitalization. Bill finally agreed to complete an advance directive — he is DNR/DNI. He told the palliative care doctor, 'I've had a good run.' Dorothy is both relieved they had the conversation and heartbroken about what it means. Bill is home, using O2 at 3L continuously, sometimes needs 4L. He can transfer from bed to recliner and walk to the bathroom with a walker. That is the extent of his mobility. Eating small amounts — Ensure twice daily. Dorothy reports the home health nurse and palliative care nurse have been coming regularly and she 'doesn't know what she'd do without them.' Bill is quiet today. He seems at peace but tired.",
-        "objective": "Profoundly cachectic elderly male. Alert, oriented, calm. Dyspneic at rest on 3L, speaking in short but complete sentences. Breath sounds markedly diminished throughout, rare wheezes. Heart irregularly irregular, S3 gallop present. JVP 12 cm. 2+ bilateral LE edema. O2 sat 89% on 3L. Weight 160 lbs — total loss of 22 lbs from peak of 182 in June 2023. FEV1 not tested today — patient unable to perform spirometry adequately.",
-        "assessment": "1. End-stage COPD/CHF — patient is now DNR/DNI per advance directive completed during February hospitalization. 2. CKD 3a — eGFR 45, slowly declining. 3. Severe malnutrition, cardiac and pulmonary cachexia. 4. Patient has accepted his prognosis with characteristic quiet dignity. Dorothy is the emotional center of this family and she is carrying an enormous burden. 5. Current goals of care: comfort, quality of life, time at home. We are shifting from disease-modifying to comfort-focused care. Hospice referral is appropriate and I will discuss with the family at the next visit or sooner if he declines further.",
-        "plan": "1. Continue all current medications for symptom management. 2. O2 at 3-4L as needed for comfort. 3. Palliative care to continue home visits. 4. Home health nursing to continue weekly. 5. Will discuss hospice referral at next visit — Dorothy is not quite ready but understands it may be soon. 6. Labs: reduce to BMP only, every 4-6 weeks, for safety monitoring of K+ and renal function. 7. Daughter Karen requesting family meeting — will schedule. 8. Ensure all providers (pulmonology, cardiology) aware of DNR/DNI status and comfort-focused goals. 9. Return in 4-6 weeks or sooner as needed. Dorothy has my direct number."
+        "subjective": "Two months post-discharge from February ICU admission (10 days total, 5 in ICU). Palliative care team met with Bill and Dorothy and daughter Karen during hospitalization. Bill finally agreed to complete an advance directive \u2014 he is DNR/DNI. He told the palliative care doctor, 'I've had a good run.' Dorothy is both relieved they had the conversation and heartbroken about what it means. Bill is home, using O2 at 3L continuously, sometimes needs 4L. He can transfer from bed to recliner and walk to the bathroom with a walker. That is the extent of his mobility. Eating small amounts \u2014 Ensure twice daily. Dorothy reports the home health nurse and palliative care nurse have been coming regularly and she 'doesn't know what she'd do without them.' Bill is quiet today. He seems at peace but tired.",
+        "objective": "Profoundly cachectic elderly male. Alert, oriented, calm. Dyspneic at rest on 3L, speaking in short but complete sentences. Breath sounds markedly diminished throughout, rare wheezes. Heart irregularly irregular, S3 gallop present. JVP 12 cm. 2+ bilateral LE edema. O2 sat 89% on 3L. Weight 160 lbs \u2014 total loss of 22 lbs from peak of 182 in June 2023. FEV1 not tested today \u2014 patient unable to perform spirometry adequately.",
+        "assessment": "1. End-stage COPD/CHF \u2014 patient is now DNR/DNI per advance directive completed during February hospitalization. 2. CKD 3a \u2014 eGFR 45, slowly declining. 3. Severe malnutrition, cardiac and pulmonary cachexia. 4. Patient has accepted his prognosis with characteristic quiet dignity. Dorothy is the emotional center of this family and she is carrying an enormous burden. 5. Current goals of care: comfort, quality of life, time at home. We are shifting from disease-modifying to comfort-focused care. Hospice referral is appropriate and I will discuss with the family at the next visit or sooner if he declines further.",
+        "plan": "1. Continue all current medications for symptom management. 2. O2 at 3-4L as needed for comfort. 3. Palliative care to continue home visits. 4. Home health nursing to continue weekly. 5. Will discuss hospice referral at next visit \u2014 Dorothy is not quite ready but understands it may be soon. 6. Labs: reduce to BMP only, every 4-6 weeks, for safety monitoring of K+ and renal function. 7. Daughter Karen requesting family meeting \u2014 will schedule. 8. Ensure all providers (pulmonology, cardiology) aware of DNR/DNI status and comfort-focused goals. 9. Return in 4-6 weeks or sooner as needed. Dorothy has my direct number."
       },
-      "labOrders": ["lab-010-009"],
+      "labOrders": [
+        "lab-010-009"
+      ],
       "referrals": [
         {
           "to": "Dr. Robert Hensley, Pulmonology",
@@ -602,106 +818,197 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 139,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "normal"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.8,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.4,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 52,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 28,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             },
             {
               "test": "Glucose",
-              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
               "value": 98,
               "unit": "mg/dL",
-              "referenceRange": { "low": 70, "high": 100 },
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
               "interpretation": "normal"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 480,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 7.2,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 13.1,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 39.2,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "normal"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 198,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
@@ -716,106 +1023,197 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 136,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "normal"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.4,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "low"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.5,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 48,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 34,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             },
             {
               "test": "Glucose",
-              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
               "value": 112,
               "unit": "mg/dL",
-              "referenceRange": { "low": 70, "high": 100 },
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 680,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 13.8,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "high"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 12.8,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 38.1,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 210,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
@@ -830,98 +1228,182 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 137,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "normal"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.6,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.5,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 49,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 30,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 580,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 8.1,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 12.6,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 37.8,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 185,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
@@ -936,112 +1418,208 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 135,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.3,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "low"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.5,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 48,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 32,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 720,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 6.8,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 12.2,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 36.4,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 178,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
         },
         {
           "name": "Prealbumin",
-          "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "14338-8",
+            "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+          },
           "results": [
             {
               "test": "Prealbumin",
-              "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "14338-8",
+                "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+              },
               "value": 14.2,
               "unit": "mg/dL",
-              "referenceRange": { "low": 20, "high": 40, "text": "20-40 mg/dL normal" },
+              "referenceRange": {
+                "low": 20,
+                "high": 40,
+                "text": "20-40 mg/dL normal"
+              },
               "interpretation": "low"
             }
           ]
@@ -1056,106 +1634,197 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 133,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.2,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "low"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.6,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 45,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 38,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             },
             {
               "test": "Glucose",
-              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
               "value": 108,
               "unit": "mg/dL",
-              "referenceRange": { "low": 70, "high": 100 },
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 890,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 14.2,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "high"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 11.8,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 35.2,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 165,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
@@ -1170,112 +1839,208 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 134,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.5,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.6,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 46,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 35,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 820,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 7.5,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 11.4,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 34.1,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 172,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
         },
         {
           "name": "Prealbumin",
-          "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "14338-8",
+            "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+          },
           "results": [
             {
               "test": "Prealbumin",
-              "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "14338-8",
+                "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+              },
               "value": 11.8,
               "unit": "mg/dL",
-              "referenceRange": { "low": 20, "high": 40, "text": "20-40 mg/dL normal" },
+              "referenceRange": {
+                "low": 20,
+                "high": 40,
+                "text": "20-40 mg/dL normal"
+              },
               "interpretation": "low"
             }
           ]
@@ -1290,112 +2055,208 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 133,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.4,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "low"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.6,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 46,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 36,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 940,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 6.4,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 11.1,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 33.2,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 162,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "normal"
             }
           ]
         },
         {
           "name": "Prealbumin",
-          "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "14338-8",
+            "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+          },
           "results": [
             {
               "test": "Prealbumin",
-              "code": { "system": "LOINC", "code": "14338-8", "display": "Prealbumin [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "14338-8",
+                "display": "Prealbumin [Mass/volume] in Serum or Plasma"
+              },
               "value": 10.1,
               "unit": "mg/dL",
-              "referenceRange": { "low": 20, "high": 40, "text": "20-40 mg/dL normal" },
+              "referenceRange": {
+                "low": 20,
+                "high": 40,
+                "text": "20-40 mg/dL normal"
+              },
               "interpretation": "low"
             }
           ]
@@ -1410,106 +2271,197 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 131,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.1,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "low"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.8,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 39,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 44,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             },
             {
               "test": "Glucose",
-              "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
               "value": 118,
               "unit": "mg/dL",
-              "referenceRange": { "low": 70, "high": 100 },
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 1240,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "critical-high"
             }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "57021-8", "display": "CBC W Auto Differential panel - Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
           "results": [
             {
               "test": "WBC",
-              "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
               "value": 12.1,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 4.5, "high": 11.0 },
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
               "interpretation": "high"
             },
             {
               "test": "Hemoglobin",
-              "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
               "value": 10.6,
               "unit": "g/dL",
-              "referenceRange": { "low": 13.5, "high": 17.5 },
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
               "interpretation": "low"
             },
             {
               "test": "Hematocrit",
-              "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
               "value": 31.8,
               "unit": "%",
-              "referenceRange": { "low": 38.3, "high": 48.6 },
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
               "interpretation": "low"
             },
             {
               "test": "Platelets",
-              "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" },
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
               "value": 148,
               "unit": "x10^3/uL",
-              "referenceRange": { "low": 150, "high": 400 },
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
               "interpretation": "low"
             }
           ]
@@ -1524,60 +2476,112 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "51990-0", "display": "Basic Metabolic Panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "51990-0",
+            "display": "Basic Metabolic Panel"
+          },
           "results": [
             {
               "test": "Sodium",
-              "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
               "value": 132,
               "unit": "mEq/L",
-              "referenceRange": { "low": 136, "high": 145 },
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
               "interpretation": "low"
             },
             {
               "test": "Potassium",
-              "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
               "value": 3.6,
               "unit": "mEq/L",
-              "referenceRange": { "low": 3.5, "high": 5.0 },
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
               "interpretation": "normal"
             },
             {
               "test": "Creatinine",
-              "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
               "value": 1.7,
               "unit": "mg/dL",
-              "referenceRange": { "low": 0.7, "high": 1.3 },
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
               "interpretation": "high"
             },
             {
               "test": "eGFR",
-              "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted" },
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted"
+              },
               "value": 42,
               "unit": "mL/min/1.73m2",
-              "referenceRange": { "low": 60, "high": 120, "text": ">60 normal" },
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 normal"
+              },
               "interpretation": "low"
             },
             {
               "test": "BUN",
-              "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" },
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
               "value": 40,
               "unit": "mg/dL",
-              "referenceRange": { "low": 7, "high": 20 },
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
               "interpretation": "high"
             }
           ]
         },
         {
           "name": "BNP",
-          "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+          "code": {
+            "system": "LOINC",
+            "code": "42637-9",
+            "display": "Natriuretic peptide B [Mass/volume] in Blood"
+          },
           "results": [
             {
               "test": "BNP",
-              "code": { "system": "LOINC", "code": "42637-9", "display": "Natriuretic peptide B [Mass/volume] in Blood" },
+              "code": {
+                "system": "LOINC",
+                "code": "42637-9",
+                "display": "Natriuretic peptide B [Mass/volume] in Blood"
+              },
               "value": 1080,
               "unit": "pg/mL",
-              "referenceRange": { "low": 0, "high": 100, "text": "<100 pg/mL normal" },
+              "referenceRange": {
+                "low": 0,
+                "high": 100,
+                "text": "<100 pg/mL normal"
+              },
               "interpretation": "critical-high"
             }
           ]
@@ -1589,16 +2593,25 @@
     {
       "id": "msg-010-001",
       "date": "2025-07-14T09:22:00Z",
-      "sender": { "name": "Dorothy Novak", "role": "family" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "equipment",
+      "sender": {
+        "name": "Dorothy Novak",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "administrative",
       "priority": "routine",
       "subject": "Oxygen machine making a funny noise",
       "body": "Dr. Kim, this is Dorothy, Bill's wife. I'm writing because Bill's oxygen concentrator has started making a rattling noise, kind of like a lawnmower that needs oil. It still seems to be putting out air but I don't know if it's working right. Also his tubing keeps kinking up where it goes around the bedroom door and I've tried taping it down but it just pulls loose. Bill says it's fine but I don't think he'd notice if the thing quit entirely. Who do I call about this -- the equipment company or do we go through you folks? I've got the paperwork from Apria somewhere. Thank you for your help.",
       "thread": [
         {
           "date": "2025-07-14T14:45:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dorothy, thank you for reaching out -- you're right to take that rattling noise seriously. Please call Apria directly at the number on your paperwork; they should be able to send a technician out to check the concentrator, and if it's malfunctioning they'll replace it, usually within 24 hours. In the meantime, make sure Bill has his backup portable tanks available in case the concentrator fails. For the tubing kinking, ask Apria about tubing swivel connectors -- they're a small clip that prevents kinks at doorways and they should be able to provide those at no extra charge. If the rattling gets louder or Bill seems to be getting less air (more short of breath than his usual, lips or fingertips turning blue), don't wait -- call 911. You're doing a wonderful job keeping an eye on things, Dorothy. Please don't hesitate to call us if you need anything."
         }
       ]
@@ -1606,16 +2619,25 @@
     {
       "id": "msg-010-002",
       "date": "2025-12-03T11:08:00Z",
-      "sender": { "name": "Dorothy Novak", "role": "family" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "side_effects",
+      "sender": {
+        "name": "Dorothy Novak",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "routine",
       "subject": "Bill dizzy from the water pill",
       "body": "Dr. Kim, Dorothy here again. Since you increased Bill's water pill last month he has been real dizzy when he stands up. He about went down in the bathroom Tuesday morning and I had to grab him. He's also going to the bathroom what feels like every 20 minutes and he's worn out from it, especially at night. He says it's no big deal but he's the same man who drove the combine with a broken wrist so his judgment on these things is not what I'd call reliable. Is this amount of dizziness normal or should we be worried? I don't want him falling.",
       "thread": [
         {
           "date": "2025-12-03T16:30:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dorothy, I'm glad you wrote -- the dizziness on standing is likely from a drop in blood pressure when the furosemide (the water pill) pulls off extra fluid. This can be dangerous because of the fall risk, which is my main concern. Here's what I'd like to do: 1) For now, have Bill sit on the edge of the bed for a full minute before standing, and make sure he has something to hold onto. 2) I'm going to adjust his dose -- reduce the morning pill to half (20 mg in the morning, keep the 40 mg in the evening). This should help with the daytime dizziness and the constant bathroom trips. 3) I'd like to get a blood pressure check and lab work this week to make sure his kidneys and potassium are handling the diuretic okay. Can you bring him in Thursday, or would a home health nurse visit be easier? 4) If he falls or the dizziness gets worse before then, please call us right away or go to the ER. You are absolutely right to take this seriously. Bill is lucky to have you watching out for him."
         }
       ]
@@ -1623,16 +2645,25 @@
     {
       "id": "msg-010-003",
       "date": "2026-01-20T15:41:00Z",
-      "sender": { "name": "Dorothy Novak", "role": "family" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "clinical_question",
+      "sender": {
+        "name": "Dorothy Novak",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "routine",
       "subject": "Question about the advance directive papers",
       "body": "Dr. Kim, this is Dorothy. You mentioned the advance directive at Bill's last appointment and he changed the subject like he does. He won't tell you this but he's been talking in his sleep about his brother Ed who passed from the lung cancer and I think it's on his mind more than he lets on. I found the papers you gave us and I've been reading through them but I have some questions. Do we need to come in to fill these out or can we do it at home? Does it need to be notarized? And I want to make sure I understand -- if we say no ventilator, does that mean they won't help him breathe at all, or is there something in between? Our daughter Karen wants to be part of this conversation too. I know this is hard to talk about but I'd rather we did it while we can. Bill is a proud man but he's practical too when you get past the stubbornness.",
       "thread": [
         {
           "date": "2026-01-21T10:15:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dorothy, thank you for bringing this up, and for pushing forward with it even though it's hard. You're showing tremendous love for Bill by making sure his wishes are known. Let me answer your questions: 1) You can fill out the forms at home -- Illinois advance directives do not need to be notarized, but they do need two adult witnesses who are not family members. A neighbor or friend can serve as a witness. 2) Regarding the breathing question -- this is really important and there are options in between. 'No ventilator' (no intubation) means no breathing tube down the throat connected to a machine. But there is something in between: a BiPAP mask that helps him breathe without a tube, which we've used for Bill in the ER before. You can specify in the directive that BiPAP is acceptable but intubation is not, if that's what Bill wants. 3) I would very much like to have this conversation with you, Bill, and Karen together. I can set aside extra time at his next appointment, or if you prefer, our palliative care nurse Diane can come to the house -- sometimes that's more comfortable. Please call Maria at the front desk and she'll help schedule whichever you prefer. There is no rush, but I'm glad you're ready. You are doing the right thing, Dorothy."
         }
       ]
@@ -1640,16 +2671,25 @@
     {
       "id": "msg-010-004",
       "date": "2026-02-06T07:18:00Z",
-      "sender": { "name": "Dorothy Novak", "role": "family" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "urgent_symptom",
+      "sender": {
+        "name": "Dorothy Novak",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "urgent",
       "subject": "Bill is not doing well -- need appointment this week",
       "body": "Dr. Kim, I'm sorry to bother you so early but I'm scared. Bill has lost 8 pounds just this month. He's barely eating -- I make his favorites and he takes two bites and says he's full. And last night was bad. He was so short of breath I almost called 911. He was sitting in his recliner and he couldn't catch his air and his lips looked grayish and I turned his oxygen up to 4 but I don't know if I'm supposed to do that. He settled down after about 20 minutes but I sat up the rest of the night watching him. He won't tell you this but he told me yesterday he doesn't think he's going to see another harvest. He said it like he was talking about the weather. I need to bring him in this week. I don't think we can keep waiting. Please.",
       "thread": [
         {
           "date": "2026-02-06T08:02:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dorothy, don't you ever apologize for reaching out. This is exactly what you should be doing. I'm very concerned about what you're describing. First, the immediate safety plan: You were RIGHT to turn his oxygen up to 4L during that episode. If it happens again and he doesn't improve within 10-15 minutes on 4L, or if his lips turn blue, call 911 immediately. Do not wait. Now for the appointment: I'm having Maria call you this morning to get him in tomorrow (Friday). I want to examine him, check his weight myself, and draw labs. If he's too weak to come in, we can arrange for the home health nurse to come today to check his vitals and oxygen levels. Dorothy, I hear what you're telling me about what Bill said. I want you to know that when you come in, we're going to have an honest conversation about where things stand and what our options are -- including how to keep him comfortable. Please bring Karen if she can come. You have been Bill's rock through all of this, and we are going to make sure you both have the support you need. Call us if anything changes before tomorrow. My nurse Rachel has my direct number if you need me after hours."
         }
       ]
@@ -1657,9 +2697,15 @@
     {
       "id": "msg-010-005",
       "date": "2026-04-24T07:22:00Z",
-      "sender": { "name": "Dorothy Novak", "role": "family" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "urgent_symptom",
+      "sender": {
+        "name": "Dorothy Novak",
+        "role": "family"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "urgent",
       "subject": "Bill not doing well - very worried",
       "body": "Dr. Kim, it's Dorothy. I don't know if I should be taking Bill to the emergency room or not but something is wrong. The last two days he's been confused -- yesterday he called me by his sister Eileen's name and this morning he couldn't tell me what day it was. That's not like him. His ankles are swelled up worse than I've ever seen, I mean I can barely get his shoes on and when I press on them my finger leaves a dent. He hasn't been able to sleep in bed for three nights now because he can't breathe lying down, so he's been in the recliner. I weighed him on the bathroom scale this morning and he's up 6 pounds from last Friday. I've been giving him all his pills like the schedule says. I wrote everything down like you told me to. I'm scared, Dr. Kim. I don't know if this is something his body is just doing now or if we need to do something different. Please call me when you get this. I'll have my phone right next to me.",

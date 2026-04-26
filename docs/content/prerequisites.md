@@ -1,240 +1,110 @@
 # Prerequisites
 
-Before starting the AI Agents Workshop, you'll need to set up your development environment. This page will guide you through the required installations and configurations.
+Complete these steps **before the workshop** to make sure your environment is ready.
 
 ## Required Software
 
 ### Python 3.11+
 
-The workshop requires Python 3.11 or higher.
-
 === "macOS"
     ```bash
-    # Using Homebrew
     brew install python@3.11
-    
-    # Verify installation
     python3 --version
     ```
 
 === "Linux"
     ```bash
-    # Ubuntu/Debian
     sudo apt update
-    sudo apt install python3.11 python3.11-venv python3-pip
-    
-    # Verify installation
+    sudo apt install python3.11 python3.11-venv
     python3 --version
     ```
 
 === "Windows"
-    Download and install Python from [python.org](https://www.python.org/downloads/)
-    
-    Make sure to check "Add Python to PATH" during installation.
+    Download from [python.org](https://www.python.org/downloads/). Check "Add Python to PATH" during installation.
 
 ### Git
 
-Git is required for cloning the workshop repository.
-
 === "macOS"
     ```bash
-    # Using Homebrew
     brew install git
     ```
 
 === "Linux"
     ```bash
-    # Ubuntu/Debian
     sudo apt install git
     ```
 
 === "Windows"
-    Download and install from [git-scm.com](https://git-scm.com/download/win)
+    Download from [git-scm.com](https://git-scm.com/download/win).
 
-### UV (Python Package Manager)
+### uv (Python package manager)
 
-We recommend using `uv` for fast, reliable Python package management.
+=== "macOS/Linux"
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv --version
+    ```
 
-```bash
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+=== "macOS (Homebrew)"
+    ```bash
+    brew install uv
+    uv --version
+    ```
 
-# Verify installation
-uv --version
-```
+=== "Windows"
+    <!-- TODO: verify Windows uv install instructions (see issue) -->
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    uv --version
+    ```
+    Alternatively: `winget install --id=astral-sh.uv -e`
 
-## Optional Tools
-
-### Visual Studio Code
-
-A great IDE for Python development with excellent AI agent development extensions.
-
-- Download from [code.visualstudio.com](https://code.visualstudio.com/)
-- Recommended extensions:
-    - Python
-    - Pylance
-    - Jupyter
-
-### Docker (Optional)
-
-For containerized deployments and testing.
-
-- Download from [docker.com](https://www.docker.com/products/docker-desktop)
-
-## API Keys
-
-You'll need API keys for the LLM providers used in the workshop.
-
-### OpenAI API Key (Recommended)
-
-1. Sign up at [platform.openai.com](https://platform.openai.com/)
-2. Navigate to API Keys section
-3. Create a new API key
-4. Set the environment variable:
+## Clone and Install
 
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
-```
-
-### Alternative: IBM watsonx.ai
-
-If you prefer to use IBM's watsonx.ai:
-
-1. Sign up at [watsonx.ai](https://www.ibm.com/watsonx)
-2. Get your API key and project ID
-3. Set environment variables:
-
-```bash
-export WATSONX_API_KEY="your-api-key-here"
-export WATSONX_PROJECT_ID="your-project-id"
-```
-
-### Alternative: Local Models with Ollama
-
-For running models locally without API keys:
-
-```bash
-# Install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
-
-# Pull a model
-ollama pull llama3.2
-
-# Verify it's running
-ollama list
-```
-
-## Clone the Workshop Repository
-
-```bash
-# Clone the repository
 git clone https://github.com/obuzek/ai-agents-workshop.git
-
-# Navigate to the workshop directory
 cd ai-agents-workshop
-
-# Create a virtual environment and install lab dependencies
 uv sync
 ```
 
-## Verify Your Setup
+## Start the EHR Inbox
 
-Run this quick verification script to ensure everything is set up correctly:
+The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it by running two commands in separate terminals:
 
-```python
-# verify_setup.py
-import sys
-import os
-
-def check_python_version():
-    version = sys.version_info
-    if version.major == 3 and version.minor >= 11:
-        print(f"✓ Python {version.major}.{version.minor}.{version.micro}")
-        return True
-    else:
-        print(f"✗ Python version {version.major}.{version.minor} is too old")
-        return False
-
-def check_api_keys():
-    keys = {
-        "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
-        "WATSONX_API_KEY": os.getenv("WATSONX_API_KEY"),
-    }
-    
-    has_key = False
-    for key, value in keys.items():
-        if value:
-            print(f"✓ {key} is set")
-            has_key = True
-        else:
-            print(f"○ {key} not set (optional)")
-    
-    return has_key
-
-def main():
-    print("Checking prerequisites...\n")
-    
-    python_ok = check_python_version()
-    api_ok = check_api_keys()
-    
-    print("\n" + "="*50)
-    if python_ok and api_ok:
-        print("✓ All prerequisites met! You're ready to start.")
-    elif python_ok:
-        print("⚠ Python is ready, but no API keys found.")
-        print("  You can use Ollama for local models.")
-    else:
-        print("✗ Please install Python 3.11 or higher.")
-
-if __name__ == "__main__":
-    main()
-```
-
-Run the verification:
+**Terminal 1 — API server:**
 
 ```bash
-python verify_setup.py
+uv run uvicorn app.api:app --reload --port 8000
 ```
 
-## Troubleshooting
-
-### Python Version Issues
-
-If you have multiple Python versions installed:
+**Terminal 2 — Inbox UI:**
 
 ```bash
-# Use python3.11 explicitly
-python3.11 -m venv .venv
+uv run streamlit run app/ui.py --server.port 8501
 ```
 
-### API Key Not Found
+Open [http://localhost:8501](http://localhost:8501) in your browser. You should see the inbox with 12 patients and their portal messages.
 
-Make sure to export the environment variable in your current shell session, or add it to your shell profile:
+??? tip "Changing ports"
+    The API and UI ports are configurable:
 
-```bash
-# Add to ~/.bashrc, ~/.zshrc, or equivalent
-echo 'export OPENAI_API_KEY="your-key"' >> ~/.bashrc
-source ~/.bashrc
-```
+    ```bash
+    # Use different ports
+    uv run uvicorn app.api:app --reload --port 9000
+    API_URL=http://localhost:9000 uv run streamlit run app/ui.py --server.port 9501
+    ```
 
-### Package Installation Errors
+## Verify It Works
 
-If you encounter issues with `uv sync`, ensure you have uv installed and are in the repo root:
+You should see:
 
-```bash
-uv --version
-uv sync
-```
+- A **patient dropdown** at the top (12 patients, some with unread messages)
+- **Medical records** with tabs for Conditions, Medications, Labs, History
+- A **Concerns** panel (empty for now — the agent will populate this)
+- An **Inbox** with patient messages and a conversation viewer
+
+If you can browse patients and read their messages, you're ready.
 
 ## Next Steps
 
-Once your environment is set up, proceed to [Getting Started](./getting-started.md) to learn about AI agents and begin the workshop!
-
----
-
-## Additional Resources
-
-- [Python Documentation](https://docs.python.org/3/)
-- [UV Documentation](https://github.com/astral-sh/uv)
-- [OpenAI API Documentation](https://platform.openai.com/docs)
-- [Ollama Documentation](https://ollama.com/docs)
+Proceed to [Lab 1: The Naive Agent](./lab-1.md) to start building.

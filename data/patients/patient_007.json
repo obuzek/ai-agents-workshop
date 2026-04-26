@@ -1221,7 +1221,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "followup",
+      "category": "medical question",
       "priority": "routine",
       "subject": "Thank you SO much for the ER follow-up!",
       "body": "Hi Dr. Kim!\n\nI just wanted to say THANK YOU for fitting me in so quickly after my ER visit. That whole experience was honestly terrifying \u2014 I've never felt that scared not being able to breathe. Your team was so kind and I felt so much better after seeing you on Tuesday.\n\nI'm being so good about my Advair now, I promise! I set alarms on my phone for morning and night and I haven't missed a single dose. My brother Omar even checks in on me about it (he was really worried that night he drove me to the ER).\n\nI know I let things slip and I'm really sorry about that. It won't happen again. You have my word!\n\nThank you again for everything. I really appreciate you and your whole team!\n\nWarmly,\nFatima",
@@ -1247,7 +1247,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "refill_request",
+      "category": "prescription refill",
       "priority": "routine",
       "subject": "Inhaler refills please! (being good about it this time!)",
       "body": "Hi there!\n\nI'm reaching out because I need refills on both my Advair and my albuterol rescue inhaler. I checked and my Advair has about a week left, and my albuterol is getting low too. Look at me being proactive for once!!\n\nMy pharmacy is Walgreens at 3545 N Broadway, Chicago IL 60613. Phone: 773-555-0290.\n\nI've been SO good about taking everything on schedule. Haven't missed a dose since the ER visit! The alarms on my phone are working perfectly.\n\nThank you so much!\n\nFatima",
@@ -1273,7 +1273,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "clinical_question",
+      "category": "medical question",
       "priority": "routine",
       "subject": "Quick question about diet for pre-diabetes?",
       "body": "Hi Dr. Kim!\n\nSo I know we've talked about this before and I know I should have done the nutrition referral (I'm sorry, I really am!). But I was wondering \u2014 is there anything simple I can start doing on my own right now? I looked at the handout you gave me at my last visit and it makes sense, but it's hard when I'm surrounded by food at work all day!\n\nA few specific questions:\n- Is it really bad if I eat late at night? I usually don't get home until 11:30 and I'm starving\n- Are there certain foods I should absolutely avoid?\n- My mom was just put on metformin and it scared me a little. I don't want to end up there too\n\nAlso, Ramadan starts next week and I'll be fasting during the day. Does that affect my blood sugar in a good way or a bad way? I know the fasting hours are long but I usually eat a lot at iftar to make up for it, which is probably not great...\n\nThank you for being so patient with me (no pun intended!). I really am trying!\n\nFatima",
@@ -1299,7 +1299,7 @@
         "name": "Rachel Torres, NP",
         "role": "nurse"
       },
-      "category": "scheduling",
+      "category": "appointment request",
       "priority": "routine",
       "subject": "I'm SO sorry about missing my follow-up!",
       "body": "Hi Rachel!\n\nOkay, I know I'm the worst. I had my follow-up scheduled for yesterday and I completely forgot because we had a huge catering event at the restaurant and I've been working double shifts all week. I am SO sorry!!\n\nCan I reschedule? I promise I will make the next one \u2014 I'll put it in my calendar AND set three alarms AND tell Omar to remind me. I know you guys probably shake your heads every time you see my name on the missed appointment list!\n\nEverything is going well though! Still taking all my meds on time (that part I'm actually good at now!). Breathing is great. And I've lost another pound \u2014 slowly but surely!\n\nPlease forgive me and let me reschedule? I promise promise promise I'll be there!\n\nThank you for putting up with me!\n\nFatima",
