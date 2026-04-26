@@ -39,10 +39,25 @@ Complete these steps **before the workshop** to make sure your environment is re
 
 ### uv (Python package manager)
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv --version
-```
+=== "macOS/Linux"
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv --version
+    ```
+
+=== "macOS (Homebrew)"
+    ```bash
+    brew install uv
+    uv --version
+    ```
+
+=== "Windows"
+    <!-- TODO: verify Windows uv install instructions (see issue) -->
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    uv --version
+    ```
+    Alternatively: `winget install --id=astral-sh.uv -e`
 
 ## Clone and Install
 

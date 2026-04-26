@@ -128,7 +128,7 @@ def _serialize_patient(patient):
             "preferredLanguage": patient.language,
         },
         "conditions": [
-            {"display": c.display, "status": c.status, "notes": c.notes}
+            {"display": c.display, "status": c.status, "onsetDate": c.onset_date, "notes": c.notes}
             for c in patient.conditions
         ],
         "allergies": [

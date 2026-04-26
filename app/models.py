@@ -65,7 +65,7 @@ class Medication:
 @dataclass
 class LabResult:
     test: str
-    value: object  # str or numeric
+    value: str | int | float
     unit: str
     interpretation: str = ""
 

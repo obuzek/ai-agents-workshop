@@ -40,7 +40,8 @@ def _fetch(endpoint: str):
 
 def _post(endpoint: str, payload: dict):
     """Post JSON to the API and clear the cache so the UI refreshes."""
-    requests.post(f"{API_URL}{endpoint}", json=payload)
+    resp = requests.post(f"{API_URL}{endpoint}", json=payload)
+    resp.raise_for_status()
     st.cache_data.clear()
 
 
@@ -77,7 +78,7 @@ def _parse_patient(data: dict) -> Patient:
         language=demo.get("preferredLanguage", "English"),
         conditions=[
             Condition(display=c["display"], status=c["status"],
-                      notes=c.get("notes", ""), onset_date="")
+                      notes=c.get("notes", ""), onset_date=c.get("onsetDate", ""))
             for c in data.get("conditions", [])
         ],
         allergies=[

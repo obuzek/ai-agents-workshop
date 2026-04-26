@@ -6,7 +6,7 @@ works with the dataclasses in models.py.
 """
 
 import json
-import glob
+import re
 from pathlib import Path
 
 from app.models import (
@@ -128,13 +128,27 @@ def _parse_patient(data: dict) -> Patient:
 # --- Public API ---
 
 
+PATIENT_ID_RE = re.compile(r"^patient-\d{3}$")
+
+
+def _validate_patient_id(patient_id: str):
+    """Validate that a patient ID matches the expected format."""
+    if not PATIENT_ID_RE.match(patient_id):
+        raise ValueError(f"Invalid patient ID: {patient_id}")
+
+
+def _patient_filepath(patient_id: str) -> Path:
+    """Return the JSON file path for a patient ID."""
+    _validate_patient_id(patient_id)
+    return DATA_DIR / (patient_id.replace("-", "_") + ".json")
+
+
 def load_patients() -> dict[str, Patient]:
     """Load all patient records from disk, keyed by patient ID."""
     patients = {}
-    for filepath in sorted(glob.glob(str(DATA_DIR / "*.json"))):
+    for filepath in sorted(DATA_DIR.glob("*.json")):
         with open(filepath) as f:
-            patients_data = json.load(f)
-            patient = _parse_patient(patients_data)
+            patient = _parse_patient(json.load(f))
             patients[patient.id] = patient
     return patients
 
@@ -142,8 +156,7 @@ def load_patients() -> dict[str, Patient]:
 def save_reply(patient_id: str, message_id: str, sender_name: str, body: str, date: str):
     """Append a reply to a message in the JSON file on disk.
     This writes directly to JSON since we need to preserve the full file structure."""
-    filename = patient_id.replace("-", "_") + ".json"
-    filepath = DATA_DIR / filename
+    filepath = _patient_filepath(patient_id)
 
     with open(filepath) as f:
         data = json.load(f)
