@@ -343,9 +343,18 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
 
                 st.markdown(concern.get("summary", ""))
 
-                # Status
+                # Type, onset, status
+                meta_parts = []
+                ctype = concern.get("concern_type", "")
+                if ctype:
+                    meta_parts.append(ctype.replace("_", " ").title())
+                onset = concern.get("onset", "")
+                if onset:
+                    meta_parts.append(f"since {onset}")
                 if status_badge:
-                    st.markdown(status_badge)
+                    meta_parts.append(status_badge)
+                if meta_parts:
+                    st.markdown(" · ".join(meta_parts))
 
                 # Evidence
                 if concern.get("evidence"):

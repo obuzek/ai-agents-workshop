@@ -17,7 +17,7 @@ from lab1.agent.store import get_concerns, load_store
 app = FastAPI(title="Lab 1 Agent API", version="0.1.0")
 
 _run_lock = threading.Lock()
-_run_status = {"running": False, "error": None}
+_run_error: str | None = None
 
 
 @app.get("/patients/{patient_id}/concerns", response_model=list[Concern])
@@ -35,27 +35,26 @@ def agent_status():
         "last_run": store.last_run,
         "patient_count": len(store.patients),
         "total_concerns": total,
-        "running": _run_status["running"],
-        "error": _run_status["error"],
+        "running": _run_lock.locked(),
+        "error": _run_error,
     }
 
 
 @app.post("/patients/{patient_id}/run")
 def trigger_run(patient_id: str):
     """Run the agent for a single patient in a background thread."""
-    if _run_status["running"]:
+    if _run_lock.locked():
         return {"status": "already_running"}
 
     def _background_run():
+        global _run_error
         from lab1.agent.run import run_single
-        _run_status["running"] = True
-        _run_status["error"] = None
-        try:
-            run_single(patient_id)
-        except Exception as e:
-            _run_status["error"] = str(e)
-        finally:
-            _run_status["running"] = False
+        with _run_lock:
+            _run_error = None
+            try:
+                run_single(patient_id)
+            except Exception as e:
+                _run_error = str(e)
 
     thread = threading.Thread(target=_background_run, daemon=True)
     thread.start()

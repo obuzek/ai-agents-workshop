@@ -85,7 +85,7 @@ def get_concerns(patient_id: str):
         )
         resp.raise_for_status()
         return resp.json()
-    except (http_client.ConnectionError, http_client.Timeout):
+    except http_client.RequestException:
         return []
 
 
@@ -97,7 +97,7 @@ def trigger_agent(patient_id: str):
         resp = http_client.post(f"{AGENT_API_URL}/patients/{patient_id}/run", timeout=5)
         resp.raise_for_status()
         return resp.json()
-    except (http_client.ConnectionError, http_client.Timeout):
+    except http_client.RequestException:
         raise HTTPException(status_code=503, detail="Agent API unavailable")
 
 
@@ -108,7 +108,7 @@ def agent_status():
         resp = http_client.get(f"{AGENT_API_URL}/status", timeout=5)
         resp.raise_for_status()
         return resp.json()
-    except (http_client.ConnectionError, http_client.Timeout):
+    except http_client.RequestException:
         return {"running": False, "last_run": "", "error": "Agent API unavailable"}
 
 

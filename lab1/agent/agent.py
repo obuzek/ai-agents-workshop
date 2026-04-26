@@ -11,10 +11,13 @@ reasoning and tool selection are entirely up to the model.
 """
 
 import json
+import logging
 import os
 import time
 from datetime import datetime, timezone
 from openai import OpenAI, RateLimitError
+
+logger = logging.getLogger(__name__)
 
 from lab1.agent.tools import TOOLS, TOOL_FUNCTIONS
 from lab1.agent.models import Concern, PatientConcerns, RelatedData
@@ -38,7 +41,7 @@ def _llm_call(messages, tools):
             if attempt == MAX_RETRIES - 1:
                 raise
             wait = 2 ** attempt
-            print(f"  Rate limited, retrying in {wait}s...")
+            logger.warning("Rate limited, retrying in %ds...", wait)
             time.sleep(wait)
     raise RuntimeError("Unreachable")
 
@@ -132,7 +135,7 @@ def process_patient(patient_id: str) -> PatientConcerns:
                 fn_name = tool_call.function.name
                 fn_args = json.loads(tool_call.function.arguments)
 
-                print(f"  [{patient_id}] tool: {fn_name}({fn_args})")
+                logger.info("[%s] tool: %s(%s)", patient_id, fn_name, fn_args)
 
                 fn = TOOL_FUNCTIONS.get(fn_name)
                 if fn is None:
@@ -157,14 +160,18 @@ def process_patient(patient_id: str) -> PatientConcerns:
         # Strip markdown code fences if present
         if raw.startswith("```"):
             lines = raw.split("\n")
-            lines = [l for l in lines if not l.startswith("```")]
+            # Remove only the opening and closing fence lines
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].startswith("```"):
+                lines = lines[:-1]
             raw = "\n".join(lines)
 
         try:
             data = json.loads(raw)
         except json.JSONDecodeError as e:
-            print(f"  [{patient_id}] WARNING: Could not parse agent output: {e}")
-            print(f"  Raw output: {raw[:200]}...")
+            logger.warning("[%s] Could not parse agent output: %s", patient_id, e)
+            logger.debug("[%s] Raw output: %s...", patient_id, raw[:200])
             return PatientConcerns(patient_id=patient_id, patient_name="Unknown")
 
         now = datetime.now(timezone.utc).isoformat()
@@ -198,5 +205,5 @@ def process_patient(patient_id: str) -> PatientConcerns:
         )
 
     # Safety: hit max turns without finishing
-    print(f"  [{patient_id}] WARNING: Hit max turns ({MAX_TURNS}) without finishing")
+    logger.warning("[%s] Hit max turns (%d) without finishing", patient_id, MAX_TURNS)
     return PatientConcerns(patient_id=patient_id, patient_name="Unknown")

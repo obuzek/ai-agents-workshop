@@ -8,8 +8,11 @@ Usage:
     python -m lab1.agent.run
 """
 
+import logging
 import time
 from datetime import datetime, timezone
+
+logger = logging.getLogger(__name__)
 
 from lab1.agent.agent import process_patient
 from lab1.agent.store import load_store, save_store
@@ -21,7 +24,7 @@ POLL_INTERVAL = 30  # seconds between passes
 
 def run_single(patient_id: str):
     """Run the agent for a single patient and save to the store."""
-    print(f"\n--- Processing {patient_id} ---")
+    logger.info("Processing %s", patient_id)
     result = process_patient(patient_id)
 
     store = load_store()
@@ -30,7 +33,7 @@ def run_single(patient_id: str):
     save_store(store)
 
     n = len(result.concerns)
-    print(f"  -> {n} concern{'s' if n != 1 else ''} identified (saved)")
+    logger.info("  -> %d concern%s identified (saved)", n, "s" if n != 1 else "")
 
 
 def run_pass() -> ConcernsStore:
@@ -40,7 +43,7 @@ def run_pass() -> ConcernsStore:
 
     for p in patients:
         patient_id = p["id"]
-        print(f"\n--- Processing {p['name']} ({patient_id}) ---")
+        logger.info("Processing %s (%s)", p["name"], patient_id)
 
         result = process_patient(patient_id)
         store.patients[patient_id] = result
@@ -48,7 +51,7 @@ def run_pass() -> ConcernsStore:
         save_store(store)
 
         n = len(result.concerns)
-        print(f"  -> {n} concern{'s' if n != 1 else ''} identified (saved)")
+        logger.info("  -> %d concern%s identified (saved)", n, "s" if n != 1 else "")
 
     return store
 
@@ -66,8 +69,9 @@ def stores_match(a: ConcernsStore, b: ConcernsStore) -> bool:
 
 
 def main():
-    print("=== Lab 1: Naive Agent ===")
-    print("Starting concern extraction loop...\n")
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    logger.info("=== Lab 1: Naive Agent ===")
+    logger.info("Starting concern extraction loop...")
 
     previous = load_store()
 
@@ -76,14 +80,14 @@ def main():
         save_store(new_store)
 
         total = sum(len(pc.concerns) for pc in new_store.patients.values())
-        print(f"\n--- Pass complete: {total} total concerns across {len(new_store.patients)} patients ---")
+        logger.info("Pass complete: %d total concerns across %d patients", total, len(new_store.patients))
 
         if stores_match(previous, new_store):
-            print("\nDONE — no new concerns found. Agent is up to date.")
+            logger.info("DONE — no new concerns found. Agent is up to date.")
             break
 
         previous = new_store
-        print(f"\nConcerns changed. Polling again in {POLL_INTERVAL}s...")
+        logger.info("Concerns changed. Polling again in %ds...", POLL_INTERVAL)
         time.sleep(POLL_INTERVAL)
 
 
