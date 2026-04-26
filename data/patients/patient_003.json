@@ -1741,7 +1741,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "clinical_question",
+      "category": "medical question",
       "priority": "routine",
       "subject": "Requesting thyroid labs - TSH recheck",
       "body": "Hi Dr. Kim,\n\nI know we discussed moving to annual thyroid monitoring at my last visit, but I wanted to ask about getting my TSH and free T4 rechecked. My last TSH was 2.8 in April, which was the lowest it's been since we started tracking (range has been 2.6-4.1 over 2 years). I've been logging my resting heart rate and HRV daily, and over the past 6 weeks my RHR has trended up from 51 to 55 bpm, with HRV dropping from 62ms to 48ms.\n\nI realize these could be training-related variables, but given my mother's Hashimoto's diagnosis at 50 and the fact that my TPO antibodies were 21 IU/mL last time (within range but not negligible), I'd feel more comfortable with a 6-month check rather than waiting a full year. A 2017 study in the European Thyroid Journal (Biondi et al.) suggested that patients with family history of autoimmune thyroid disease and TSH in the upper-normal range may benefit from closer surveillance.\n\nWould you be willing to order TSH and free T4? I can go to the Quest on Diversey at my convenience.\n\nThank you,\nSusan",
@@ -1767,7 +1767,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "clinical_question",
+      "category": "medical question",
       "priority": "routine",
       "subject": "Question about levothyroxine for subclinical hypothyroidism",
       "body": "Hi Dr. Kim,\n\nI've been reading a recent meta-analysis in Thyroid (Feller et al., 2018) about levothyroxine treatment in subclinical hypothyroidism. The data seemed mixed, but one subgroup analysis suggested possible benefit for patients under 65 with TSH consistently above 3.0 in terms of lipid profiles and cardiovascular risk reduction.\n\nMy TSH has averaged approximately 3.4 across 7 measurements over 2.5 years (range 2.6-4.1). I know this is within the reference range, but the ATA's own statement notes that the upper limit of normal is debated, with some endocrinologists advocating for a range of 0.4-2.5.\n\nI'm not asking to start treatment \u2014 I just want to understand your clinical reasoning for watchful waiting vs. a trial of low-dose levothyroxine (e.g., 25mcg). Is there a TSH threshold or symptom profile that would change your recommendation?\n\nI respect your judgment on this \u2014 I just want to make sure I understand the decision framework.\n\nThank you,\nSusan",
@@ -1793,7 +1793,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "refill_request",
+      "category": "prescription refill",
       "priority": "routine",
       "subject": "Sertraline refill request",
       "body": "Hi Dr. Kim,\n\nI'm running low on sertraline 50mg \u2014 I have about a week's supply left. Could you send a refill to Walgreens on Clark & Diversey?\n\nQuick update since you'll probably ask: I've been tracking my mood and anxiety with the Daylio app for the past 14 months. My average daily mood score has been 3.8/5 (range 3.2-4.5), and I've had zero days rated below 3 in the past 6 months. GAD-7 self-scored last week was 4. The sertraline is doing its job \u2014 no side effects, no desire to change the dose.\n\nI'm also still on vitamin D 2000 IU, magnesium glycinate 400mg, omega-3 2g, and CoQ10 200mg daily. No changes to the supplement stack.\n\nThank you,\nSusan",
@@ -1819,7 +1819,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "results_inquiry",
+      "category": "test results",
       "priority": "routine",
       "subject": "Vitamin D result - 32 ng/mL - is this really optimal?",
       "body": "Hi Dr. Kim,\n\nI just reviewed my lab results from the April panel and wanted to follow up on my vitamin D level. It came back at 32 ng/mL, which I know falls within your reference range of 30-100. However, I have a few concerns:\n\n1. This is down from 38 ng/mL in April 2024, despite consistent supplementation with 2000 IU daily for over a year\n2. The Endocrine Society's 2024 updated guidelines suggest that levels of 40-60 ng/mL may be more appropriate for optimal musculoskeletal health and immune function\n3. As a distance runner logging 40+ miles/week, I have higher demands on bone mineral density and immune recovery\n4. My level was 22 ng/mL before supplementation \u2014 so 2000 IU is barely keeping me above the floor of the reference range\n\nWould you consider increasing my dose to 4000-5000 IU daily? Or alternatively, could we try a loading protocol \u2014 50,000 IU weekly for 8 weeks \u2014 and then recheck? I've seen this approach recommended in several sports medicine contexts.\n\nI realize I may be overthinking this, but 32 feels like we're settling for 'not deficient' rather than 'optimal.'\n\nThank you,\nSusan",
@@ -1845,7 +1845,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "clinical_question",
+      "category": "medical question",
       "priority": "routine",
       "subject": "MTHFR variant and methylfolate - follow-up question",
       "body": "Hi Dr. Kim,\n\nThank you for ordering the homocysteine level at my last annual \u2014 the result of 7.2 umol/L was reassuring. I wanted to follow up on the MTHFR discussion we started at that visit.\n\nI know you said the heterozygous C677T variant is common and not clinically actionable with a normal homocysteine. I accept that. However, I've been reading about potential implications beyond homocysteine metabolism:\n\n1. A 2019 paper in Nutrients (Hiraoka & Kagawa) discussed MTHFR variants in the context of folate-dependent neurotransmitter synthesis, specifically serotonin and dopamine precursors\n2. Given that I'm on sertraline (which modulates serotonin reuptake), I'm wondering whether methylfolate supplementation (e.g., L-methylfolate 15mg, like Deplin) could have an adjunctive benefit for my anxiety management\n3. Some integrative psychiatrists recommend methylfolate as an SSRI augmentation strategy regardless of MTHFR status (Papakostas et al., 2012, Am J Psychiatry)\n\nI want to be clear \u2014 my anxiety is well-managed and I'm not looking to change my sertraline dose. I'm just curious whether adding methylfolate could provide additional benefit, or whether this falls into the category of 'not harmful but not evidence-based enough to recommend.'\n\nAlso \u2014 would it be worth checking my serum folate and B12 levels to round out the picture?\n\nThank you for always being patient with my questions.\n\nSusan",
@@ -1871,10 +1871,10 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "clinical_question",
+      "category": "medical question",
       "priority": "routine",
       "subject": "Multiple items to discuss - need appointment?",
-      "body": "Hi Dr. Kim,\n\nI have several items I'd like to discuss with you, and I want to be respectful of your time, so I've organized them. I'm not sure if these can be handled via the portal or if I need to schedule an appointment — happy to do whatever makes sense.\n\n1. TSH TREND: My most recent TSH was 4.8 mIU/L (up from 5.2 at an outside draw I had done in February — I realize I should have mentioned that sooner). I came across a 2024 meta-analysis in Thyroid Research (Razvi et al.) suggesting that age- and sex-specific TSH thresholds may be more appropriate than universal reference ranges, and that a cutoff of 4.0 mIU/L for women aged 40-50 better predicts progression to overt hypothyroidism. Given my family history and this upward trend, I'd like to have a real conversation about whether a trial of low-dose levothyroxine (25mcg) is now warranted.\n\n2. PHARMACOGENOMIC TESTING: I've been reading about CYP2D6 polymorphisms and SSRI metabolism (Hicks et al., 2015, Clinical Pharmacology & Therapeutics). As you know, I tried escitalopram before sertraline and had significant side effects. I'm wondering whether pharmacogenomic testing could retroactively explain that experience and whether it has any implications for my current dosing. Is this something you can order, or would I need a referral?\n\n3. RESTING HEART RATE CHANGE: My Apple Watch data shows my resting heart rate has averaged 62 bpm over the past 30 days, up from my usual baseline of 52 bpm. I've exported the data to a CSV and can share it. This is a sustained 10 bpm increase that doesn't correlate with changes in training volume, sleep, or stress. I want to make sure this isn't clinically significant — especially in the context of the TSH increase.\n\n4. Given all of the above, should I schedule a dedicated appointment to go through everything? I know this is a lot for a portal message, and I'd rather have a thorough conversation than try to handle it piecemeal.\n\nThank you as always for your patience with my data-driven approach.\n\nSusan",
+      "body": "Hi Dr. Kim,\n\nI have several items I'd like to discuss with you, and I want to be respectful of your time, so I've organized them. I'm not sure if these can be handled via the portal or if I need to schedule an appointment \u2014 happy to do whatever makes sense.\n\n1. TSH TREND: My most recent TSH was 4.8 mIU/L (up from 5.2 at an outside draw I had done in February \u2014 I realize I should have mentioned that sooner). I came across a 2024 meta-analysis in Thyroid Research (Razvi et al.) suggesting that age- and sex-specific TSH thresholds may be more appropriate than universal reference ranges, and that a cutoff of 4.0 mIU/L for women aged 40-50 better predicts progression to overt hypothyroidism. Given my family history and this upward trend, I'd like to have a real conversation about whether a trial of low-dose levothyroxine (25mcg) is now warranted.\n\n2. PHARMACOGENOMIC TESTING: I've been reading about CYP2D6 polymorphisms and SSRI metabolism (Hicks et al., 2015, Clinical Pharmacology & Therapeutics). As you know, I tried escitalopram before sertraline and had significant side effects. I'm wondering whether pharmacogenomic testing could retroactively explain that experience and whether it has any implications for my current dosing. Is this something you can order, or would I need a referral?\n\n3. RESTING HEART RATE CHANGE: My Apple Watch data shows my resting heart rate has averaged 62 bpm over the past 30 days, up from my usual baseline of 52 bpm. I've exported the data to a CSV and can share it. This is a sustained 10 bpm increase that doesn't correlate with changes in training volume, sleep, or stress. I want to make sure this isn't clinically significant \u2014 especially in the context of the TSH increase.\n\n4. Given all of the above, should I schedule a dedicated appointment to go through everything? I know this is a lot for a portal message, and I'd rather have a thorough conversation than try to handle it piecemeal.\n\nThank you as always for your patience with my data-driven approach.\n\nSusan",
       "thread": []
     }
   ]

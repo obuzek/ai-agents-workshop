@@ -186,14 +186,36 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Annual physical examination",
       "vitals": {
-        "bloodPressure": { "systolic": 132, "diastolic": 78, "unit": "mmHg" },
-        "heartRate": { "value": 72, "unit": "bpm" },
-        "temperature": { "value": 98.2, "unit": "\u00b0F" },
-        "weight": { "value": 148, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 132,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 72,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 148,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.2,
-        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient presents for annual physical. No new complaints. Continues daily walks and water aerobics. Reports good energy, sleeping well. Diet is balanced with adequate protein. Active in her book club and volunteer activities at the public library. Denies falls, dizziness, chest pain, or shortness of breath. Last DEXA was March 2023, showed mild improvement.",
@@ -201,7 +223,9 @@
         "assessment": "1. Osteoporosis - stable on alendronate, DEXA shows slight improvement in T-scores. 2. Hypertension - borderline controlled on HCTZ 25mg, will continue to monitor. 3. CKD stage 2 - eGFR stable at 72. Continue to avoid nephrotoxic agents. Overall excellent functional status for age.",
         "plan": "1. Continue alendronate 70mg weekly and calcium/vitamin D supplementation. 2. Continue HCTZ 25mg daily. 3. Annual labs ordered: CMP, CBC, lipid panel. 4. Tdap booster administered today (last dose >10 years ago). 5. Return in 3 months for BP recheck. 6. DEXA scan in 2 years (2025)."
       },
-      "labOrders": ["lab-001-001"]
+      "labOrders": [
+        "lab-001-001"
+      ]
     },
     {
       "id": "enc-001-002",
@@ -210,14 +234,36 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Quarterly BP check and lab review",
       "vitals": {
-        "bloodPressure": { "systolic": 138, "diastolic": 82, "unit": "mmHg" },
-        "heartRate": { "value": 74, "unit": "bpm" },
-        "temperature": { "value": 98.4, "unit": "\u00b0F" },
-        "weight": { "value": 147, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 138,
+          "diastolic": 82,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 74,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 147,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.0,
-        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 98, "unit": "%" }
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient returns for quarterly BP check. Notes occasional mild headaches in the morning, which she attributes to seasonal allergies. Denies visual changes, chest pain, or edema. Reports compliance with HCTZ. Has noticed some increased urinary frequency.",
@@ -225,7 +271,9 @@
         "assessment": "1. Hypertension - suboptimally controlled on HCTZ. BP trending up. 2. Hypokalemia - likely HCTZ-related. 3. CKD stage 2 - slight creatinine rise concerning in the context of thiazide use. Thiazide diuretics may be contributing to both the electrolyte disturbance and subtle renal function changes. 4. Osteoporosis - stable.",
         "plan": "1. DISCONTINUE hydrochlorothiazide 25mg. 2. START amlodipine 5mg daily - better option given CKD and avoids electrolyte issues. 3. Recheck BMP in 2 weeks to confirm potassium normalizes. 4. Patient counseled on new medication. 5. Return in 3 months for BP recheck. 6. Continue alendronate and calcium/vitamin D."
       },
-      "labOrders": ["lab-001-002"]
+      "labOrders": [
+        "lab-001-002"
+      ]
     },
     {
       "id": "enc-001-003",
@@ -234,14 +282,36 @@
       "provider": "Rachel Torres, NP",
       "reasonForVisit": "Quarterly BP check, post-medication-switch follow-up",
       "vitals": {
-        "bloodPressure": { "systolic": 126, "diastolic": 76, "unit": "mmHg" },
-        "heartRate": { "value": 70, "unit": "bpm" },
-        "temperature": { "value": 98.0, "unit": "\u00b0F" },
-        "weight": { "value": 149, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 126,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 70,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.0,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 149,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.4,
-        "respiratoryRate": { "value": 15, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient reports feeling well since switching from HCTZ to amlodipine. Morning headaches have resolved. No dizziness, ankle swelling, or other side effects from the new medication. Continues walking daily despite the cold weather - uses the indoor track at the community center. Water aerobics on hold due to pool maintenance at the Y.",
@@ -249,7 +319,9 @@
         "assessment": "1. Hypertension - well controlled on amlodipine 5mg. Excellent response to medication switch. 2. CKD stage 2 - stable, creatinine and eGFR back to baseline after discontinuation of HCTZ. 3. Osteoporosis - stable on current regimen.",
         "plan": "1. Continue amlodipine 5mg daily. 2. Continue alendronate and supplements. 3. Return in 3 months for routine BP follow-up. 4. Annual physical due in June."
       },
-      "labOrders": ["lab-001-003"]
+      "labOrders": [
+        "lab-001-003"
+      ]
     },
     {
       "id": "enc-001-004",
@@ -258,14 +330,36 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Annual physical examination",
       "vitals": {
-        "bloodPressure": { "systolic": 128, "diastolic": 74, "unit": "mmHg" },
-        "heartRate": { "value": 68, "unit": "bpm" },
-        "temperature": { "value": 98.6, "unit": "\u00b0F" },
-        "weight": { "value": 150, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 128,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 68,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 150,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.6,
-        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient presents for annual physical. Feeling well overall. Reports excellent compliance with all medications. Water aerobics resumed. Book club is reading Gabriel Garcia Marquez this month and she is very enthusiastic about it. Denies any falls, fractures, new pain, chest discomfort, or breathing issues. Occasional mild knee stiffness in the mornings that resolves with activity.",
@@ -273,7 +367,9 @@
         "assessment": "1. Hypertension - excellent control on amlodipine 5mg. 2. Osteoporosis - stable on alendronate. DEXA due next year. 3. CKD stage 2 - stable. 4. Mild bilateral knee osteoarthritis - age-appropriate, not limiting function. 5. Health maintenance up to date.",
         "plan": "1. Continue current medications. 2. Annual labs: CMP, CBC, lipid panel, vitamin D level. 3. Schedule DEXA scan for spring 2025. 4. Flu shot and COVID booster in the fall. 5. Knee: continue activity as tolerated, may use acetaminophen PRN for stiffness. Avoid NSAIDs given CKD. 6. Return in 3 months for BP check or sooner if concerns."
       },
-      "labOrders": ["lab-001-004"]
+      "labOrders": [
+        "lab-001-004"
+      ]
     },
     {
       "id": "enc-001-005",
@@ -282,14 +378,36 @@
       "provider": "Rachel Torres, NP",
       "reasonForVisit": "Quarterly BP check (gap from mid-2024 visit due to scheduling conflicts over the holidays)",
       "vitals": {
-        "bloodPressure": { "systolic": 130, "diastolic": 78, "unit": "mmHg" },
-        "heartRate": { "value": 71, "unit": "bpm" },
-        "temperature": { "value": 97.9, "unit": "\u00b0F" },
-        "weight": { "value": 148, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 130,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 71,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 97.9,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 148,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.2,
-        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient apologizes for missing her fall appointment - she was traveling to visit her son Michael in Portland for Thanksgiving and then the holidays kept her busy. Reports feeling well. Took all medications as prescribed while traveling. No falls, no new symptoms. Mentions she was quite active over the holidays, walking a great deal in Portland.",
@@ -297,7 +415,9 @@
         "assessment": "1. Hypertension - controlled on amlodipine 5mg. 2. CKD stage 2 - due for labs to recheck. 3. Osteoporosis - DEXA to be scheduled. 4. Note: patient missed planned October follow-up. No adverse consequence but reinforced importance of regular monitoring.",
         "plan": "1. Continue current medications. 2. Order BMP and CBC today. 3. Schedule DEXA scan for March/April 2025. 4. Return in 3 months. 5. Discussed importance of keeping quarterly appointments."
       },
-      "labOrders": ["lab-001-005"]
+      "labOrders": [
+        "lab-001-005"
+      ]
     },
     {
       "id": "enc-001-006",
@@ -306,14 +426,36 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "DEXA bone density scan",
       "vitals": {
-        "bloodPressure": { "systolic": 124, "diastolic": 72, "unit": "mmHg" },
-        "heartRate": { "value": 69, "unit": "bpm" },
-        "temperature": { "value": 98.1, "unit": "\u00b0F" },
-        "weight": { "value": 148, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 124,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 69,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.1,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 148,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.2,
-        "respiratoryRate": { "value": 15, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 98, "unit": "%" }
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient presents for scheduled DEXA scan. No new complaints. Continues alendronate weekly without GI issues. Taking calcium and vitamin D as directed. Reports no falls or fractures since last visit. Remains active with daily walks and water aerobics.",
@@ -329,14 +471,36 @@
       "provider": "Dr. Sarah Kim, MD",
       "reasonForVisit": "Annual physical examination",
       "vitals": {
-        "bloodPressure": { "systolic": 126, "diastolic": 74, "unit": "mmHg" },
-        "heartRate": { "value": 70, "unit": "bpm" },
-        "temperature": { "value": 98.4, "unit": "\u00b0F" },
-        "weight": { "value": 149, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 126,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 70,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 149,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.4,
-        "respiratoryRate": { "value": 15, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Annual physical. Patient reports feeling very well. Excited about an upcoming trip to Portugal in October with her book club. Wants to discuss any travel vaccines she might need. No new symptoms. Continues all medications as prescribed. Sleep is good, 7 hours per night. Appetite good. Mood is positive - she joined a new watercolor painting class at the community center.",
@@ -344,7 +508,9 @@
         "assessment": "1. Hypertension - well controlled on amlodipine 5mg. 2. Osteoporosis - improved per April 2025 DEXA, continue current regimen. 3. CKD stage 2 - stable. 4. Overall: excellent health maintenance. Patient is aging well with good functional status and active lifestyle.",
         "plan": "1. Continue all current medications. 2. Annual labs ordered: CMP, CBC, lipid panel, vitamin D level. 3. Travel consultation: Portugal is low risk, but recommend Hepatitis A vaccine if not previously vaccinated (will check records) and ensure routine vaccines are current. Tdap up to date (2023). Flu and COVID current. 4. Discussed continued fall prevention. 5. Return in 3 months for BP follow-up."
       },
-      "labOrders": ["lab-001-006"]
+      "labOrders": [
+        "lab-001-006"
+      ]
     },
     {
       "id": "enc-001-008",
@@ -353,14 +519,36 @@
       "provider": "Rachel Torres, NP",
       "reasonForVisit": "Quarterly BP check, flu and COVID vaccines",
       "vitals": {
-        "bloodPressure": { "systolic": 134, "diastolic": 80, "unit": "mmHg" },
-        "heartRate": { "value": 73, "unit": "bpm" },
-        "temperature": { "value": 98.3, "unit": "\u00b0F" },
-        "weight": { "value": 147, "unit": "lbs" },
-        "height": { "value": 63, "unit": "in" },
+        "bloodPressure": {
+          "systolic": 134,
+          "diastolic": 80,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 73,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.3,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 147,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 63,
+          "unit": "in"
+        },
         "bmi": 26.0,
-        "respiratoryRate": { "value": 16, "unit": "breaths/min" },
-        "oxygenSaturation": { "value": 97, "unit": "%" }
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
       },
       "notes": {
         "subjective": "Patient here for quarterly follow-up and fall vaccinations. Reports her trip to Portugal with the book club was wonderful - walked extensively through Lisbon and Porto without difficulty. Felt a little more fatigued than usual for a few days after returning, which she attributes to jet lag. Now feeling back to normal. No falls, no new pain. Tolerating all medications well.",
@@ -379,37 +567,287 @@
       "panels": [
         {
           "name": "Comprehensive Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 94, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "normal" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 22, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 1.01, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 72, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 140, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 3.8, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.4, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" },
-            { "test": "Total Protein", "code": { "system": "LOINC", "code": "2885-2", "display": "Protein [Mass/volume] in Serum or Plasma" }, "value": 7.0, "unit": "g/dL", "referenceRange": { "low": 6.0, "high": 8.3 }, "interpretation": "normal" },
-            { "test": "Albumin", "code": { "system": "LOINC", "code": "1751-7", "display": "Albumin [Mass/volume] in Serum or Plasma" }, "value": 4.1, "unit": "g/dL", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 94,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 22,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.01,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 72,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 3.8,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Total Protein",
+              "code": {
+                "system": "LOINC",
+                "code": "2885-2",
+                "display": "Protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 7.0,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 6.0,
+                "high": 8.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Albumin",
+              "code": {
+                "system": "LOINC",
+                "code": "1751-7",
+                "display": "Albumin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
           "results": [
-            { "test": "WBC", "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" }, "value": 6.2, "unit": "x10^3/uL", "referenceRange": { "low": 4.5, "high": 11.0 }, "interpretation": "normal" },
-            { "test": "Hemoglobin", "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" }, "value": 13.1, "unit": "g/dL", "referenceRange": { "low": 12.0, "high": 16.0 }, "interpretation": "normal" },
-            { "test": "Hematocrit", "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" }, "value": 39.2, "unit": "%", "referenceRange": { "low": 36.0, "high": 46.0 }, "interpretation": "normal" },
-            { "test": "Platelets", "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" }, "value": 234, "unit": "x10^3/uL", "referenceRange": { "low": 150, "high": 400 }, "interpretation": "normal" }
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.2,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.1,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 39.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 234,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Lipid Panel",
-          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Total Cholesterol", "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" }, "value": 198, "unit": "mg/dL", "referenceRange": { "high": 200, "text": "<200 desirable" }, "interpretation": "normal" },
-            { "test": "LDL Cholesterol", "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" }, "value": 118, "unit": "mg/dL", "referenceRange": { "high": 130, "text": "<130 desirable" }, "interpretation": "normal" },
-            { "test": "HDL Cholesterol", "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" }, "value": 62, "unit": "mg/dL", "referenceRange": { "low": 40, "text": ">40" }, "interpretation": "normal" },
-            { "test": "Triglycerides", "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" }, "value": 128, "unit": "mg/dL", "referenceRange": { "high": 150 }, "interpretation": "normal" }
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 198,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 118,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 62,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 128,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -422,15 +860,118 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24320-4", "display": "Basic metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24320-4",
+            "display": "Basic metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 91, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "normal" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 24, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 1.08, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 68, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 139, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 3.3, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "low" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.2, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 91,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 24,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.08,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 68,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 139,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 3.3,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "low"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.2,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -443,15 +984,118 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24320-4", "display": "Basic metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24320-4",
+            "display": "Basic metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 92, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "normal" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 21, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 0.99, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 73, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 141, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 4.1, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.5, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 92,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 21,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.99,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 73,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.5,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -464,44 +1108,313 @@
       "panels": [
         {
           "name": "Comprehensive Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 96, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "normal" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 23, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 1.02, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 71, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 140, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 4.2, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.6, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" },
-            { "test": "Total Protein", "code": { "system": "LOINC", "code": "2885-2", "display": "Protein [Mass/volume] in Serum or Plasma" }, "value": 7.1, "unit": "g/dL", "referenceRange": { "low": 6.0, "high": 8.3 }, "interpretation": "normal" },
-            { "test": "Albumin", "code": { "system": "LOINC", "code": "1751-7", "display": "Albumin [Mass/volume] in Serum or Plasma" }, "value": 4.0, "unit": "g/dL", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 96,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 23,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.02,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 71,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.2,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.6,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Total Protein",
+              "code": {
+                "system": "LOINC",
+                "code": "2885-2",
+                "display": "Protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 7.1,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 6.0,
+                "high": 8.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Albumin",
+              "code": {
+                "system": "LOINC",
+                "code": "1751-7",
+                "display": "Albumin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 4.0,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
           "results": [
-            { "test": "WBC", "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" }, "value": 5.8, "unit": "x10^3/uL", "referenceRange": { "low": 4.5, "high": 11.0 }, "interpretation": "normal" },
-            { "test": "Hemoglobin", "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" }, "value": 12.8, "unit": "g/dL", "referenceRange": { "low": 12.0, "high": 16.0 }, "interpretation": "normal" },
-            { "test": "Hematocrit", "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" }, "value": 38.4, "unit": "%", "referenceRange": { "low": 36.0, "high": 46.0 }, "interpretation": "normal" },
-            { "test": "Platelets", "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" }, "value": 228, "unit": "x10^3/uL", "referenceRange": { "low": 150, "high": 400 }, "interpretation": "normal" }
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.8,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 12.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 38.4,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 228,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Lipid Panel",
-          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Total Cholesterol", "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" }, "value": 192, "unit": "mg/dL", "referenceRange": { "high": 200, "text": "<200 desirable" }, "interpretation": "normal" },
-            { "test": "LDL Cholesterol", "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" }, "value": 112, "unit": "mg/dL", "referenceRange": { "high": 130, "text": "<130 desirable" }, "interpretation": "normal" },
-            { "test": "HDL Cholesterol", "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" }, "value": 64, "unit": "mg/dL", "referenceRange": { "low": 40, "text": ">40" }, "interpretation": "normal" },
-            { "test": "Triglycerides", "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" }, "value": 122, "unit": "mg/dL", "referenceRange": { "high": 150 }, "interpretation": "normal" }
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 192,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 112,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 64,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 122,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Vitamin D",
-          "code": { "system": "LOINC", "code": "1989-3", "display": "Vitamin D panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "Vitamin D panel"
+          },
           "results": [
-            { "test": "25-Hydroxyvitamin D", "code": { "system": "LOINC", "code": "1989-3", "display": "Vitamin D [Mass/volume] in Serum or Plasma" }, "value": 38, "unit": "ng/mL", "referenceRange": { "low": 30, "high": 100, "text": "30-100 ng/mL sufficient" }, "interpretation": "normal" }
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "Vitamin D [Mass/volume] in Serum or Plasma"
+              },
+              "value": 38,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "30-100 ng/mL sufficient"
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -514,15 +1427,118 @@
       "panels": [
         {
           "name": "Basic Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24320-4", "display": "Basic metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24320-4",
+            "display": "Basic metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 102, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "high" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 22, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 1.03, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 70, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 141, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 4.0, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.3, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 102,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 22,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.03,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 70,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.0,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.3,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -535,44 +1551,313 @@
       "panels": [
         {
           "name": "Comprehensive Metabolic Panel",
-          "code": { "system": "LOINC", "code": "24323-8", "display": "Comprehensive metabolic 2000 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Glucose", "code": { "system": "LOINC", "code": "2345-7", "display": "Glucose [Mass/volume] in Serum or Plasma" }, "value": 93, "unit": "mg/dL", "referenceRange": { "low": 70, "high": 100 }, "interpretation": "normal" },
-            { "test": "BUN", "code": { "system": "LOINC", "code": "3094-0", "display": "Urea nitrogen [Mass/volume] in Serum or Plasma" }, "value": 21, "unit": "mg/dL", "referenceRange": { "low": 7, "high": 20 }, "interpretation": "high" },
-            { "test": "Creatinine", "code": { "system": "LOINC", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma" }, "value": 1.00, "unit": "mg/dL", "referenceRange": { "low": 0.6, "high": 1.1 }, "interpretation": "normal" },
-            { "test": "eGFR", "code": { "system": "LOINC", "code": "48642-3", "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)" }, "value": 72, "unit": "mL/min/1.73m2", "referenceRange": { "low": 60, "high": 120, "text": ">60 mL/min/1.73m2" }, "interpretation": "normal" },
-            { "test": "Sodium", "code": { "system": "LOINC", "code": "2951-2", "display": "Sodium [Moles/volume] in Serum or Plasma" }, "value": 140, "unit": "mEq/L", "referenceRange": { "low": 136, "high": 145 }, "interpretation": "normal" },
-            { "test": "Potassium", "code": { "system": "LOINC", "code": "2823-3", "display": "Potassium [Moles/volume] in Serum or Plasma" }, "value": 4.3, "unit": "mEq/L", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" },
-            { "test": "Calcium", "code": { "system": "LOINC", "code": "17861-6", "display": "Calcium [Mass/volume] in Serum or Plasma" }, "value": 9.5, "unit": "mg/dL", "referenceRange": { "low": 8.5, "high": 10.5 }, "interpretation": "normal" },
-            { "test": "Total Protein", "code": { "system": "LOINC", "code": "2885-2", "display": "Protein [Mass/volume] in Serum or Plasma" }, "value": 6.9, "unit": "g/dL", "referenceRange": { "low": 6.0, "high": 8.3 }, "interpretation": "normal" },
-            { "test": "Albumin", "code": { "system": "LOINC", "code": "1751-7", "display": "Albumin [Mass/volume] in Serum or Plasma" }, "value": 4.2, "unit": "g/dL", "referenceRange": { "low": 3.5, "high": 5.0 }, "interpretation": "normal" }
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 93,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 21,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.0,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "eGFR",
+              "code": {
+                "system": "LOINC",
+                "code": "48642-3",
+                "display": "Glomerular filtration rate/1.73 sq M.predicted among non-blacks [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD)"
+              },
+              "value": 72,
+              "unit": "mL/min/1.73m2",
+              "referenceRange": {
+                "low": 60,
+                "high": 120,
+                "text": ">60 mL/min/1.73m2"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.3,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.5,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Total Protein",
+              "code": {
+                "system": "LOINC",
+                "code": "2885-2",
+                "display": "Protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 6.9,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 6.0,
+                "high": 8.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Albumin",
+              "code": {
+                "system": "LOINC",
+                "code": "1751-7",
+                "display": "Albumin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 4.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Complete Blood Count",
-          "code": { "system": "LOINC", "code": "58410-2", "display": "CBC panel - Blood by Automated count" },
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
           "results": [
-            { "test": "WBC", "code": { "system": "LOINC", "code": "6690-2", "display": "Leukocytes [#/volume] in Blood by Automated count" }, "value": 6.0, "unit": "x10^3/uL", "referenceRange": { "low": 4.5, "high": 11.0 }, "interpretation": "normal" },
-            { "test": "Hemoglobin", "code": { "system": "LOINC", "code": "718-7", "display": "Hemoglobin [Mass/volume] in Blood" }, "value": 13.0, "unit": "g/dL", "referenceRange": { "low": 12.0, "high": 16.0 }, "interpretation": "normal" },
-            { "test": "Hematocrit", "code": { "system": "LOINC", "code": "4544-3", "display": "Hematocrit [Volume Fraction] of Blood by Automated count" }, "value": 39.0, "unit": "%", "referenceRange": { "low": 36.0, "high": 46.0 }, "interpretation": "normal" },
-            { "test": "Platelets", "code": { "system": "LOINC", "code": "777-3", "display": "Platelets [#/volume] in Blood by Automated count" }, "value": 241, "unit": "x10^3/uL", "referenceRange": { "low": 150, "high": 400 }, "interpretation": "normal" }
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.0,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.0,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 39.0,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 241,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Lipid Panel",
-          "code": { "system": "LOINC", "code": "24331-1", "display": "Lipid 1996 panel - Serum or Plasma" },
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
           "results": [
-            { "test": "Total Cholesterol", "code": { "system": "LOINC", "code": "2093-3", "display": "Cholesterol [Mass/volume] in Serum or Plasma" }, "value": 195, "unit": "mg/dL", "referenceRange": { "high": 200, "text": "<200 desirable" }, "interpretation": "normal" },
-            { "test": "LDL Cholesterol", "code": { "system": "LOINC", "code": "2089-1", "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma" }, "value": 115, "unit": "mg/dL", "referenceRange": { "high": 130, "text": "<130 desirable" }, "interpretation": "normal" },
-            { "test": "HDL Cholesterol", "code": { "system": "LOINC", "code": "2085-9", "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma" }, "value": 61, "unit": "mg/dL", "referenceRange": { "low": 40, "text": ">40" }, "interpretation": "normal" },
-            { "test": "Triglycerides", "code": { "system": "LOINC", "code": "2571-8", "display": "Triglyceride [Mass/volume] in Serum or Plasma" }, "value": 130, "unit": "mg/dL", "referenceRange": { "high": 150 }, "interpretation": "normal" }
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 195,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 115,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 61,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 130,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
           ]
         },
         {
           "name": "Vitamin D",
-          "code": { "system": "LOINC", "code": "1989-3", "display": "Vitamin D panel" },
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "Vitamin D panel"
+          },
           "results": [
-            { "test": "25-Hydroxyvitamin D", "code": { "system": "LOINC", "code": "1989-3", "display": "Vitamin D [Mass/volume] in Serum or Plasma" }, "value": 42, "unit": "ng/mL", "referenceRange": { "low": 30, "high": 100, "text": "30-100 ng/mL sufficient" }, "interpretation": "normal" }
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "Vitamin D [Mass/volume] in Serum or Plasma"
+              },
+              "value": 42,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "30-100 ng/mL sufficient"
+              },
+              "interpretation": "normal"
+            }
           ]
         }
       ]
@@ -582,16 +1867,25 @@
     {
       "id": "msg-001-001",
       "date": "2025-04-14T09:22:00Z",
-      "sender": { "name": "Patricia Kowalski", "role": "patient" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "results_inquiry",
+      "sender": {
+        "name": "Patricia Kowalski",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "test results",
       "priority": "routine",
       "subject": "Question about my DEXA scan results from April 2nd",
       "body": "Dear Dr. Kim,\n\nI received the letter regarding my bone density scan results from my appointment on April 2nd, and I wanted to thank you for sending those along so promptly. I can see that my T-score at the lumbar spine has improved from -2.5 to -2.3, and the femoral neck has gone from -2.2 to -2.1. I am very encouraged by this progress.\n\nHowever, I have a few questions I was hoping you could help me understand. First, does this improvement mean that the alendronate is working as expected, or would you have anticipated a greater change over the two-year interval since my last scan? Second, I noticed the report mentions a FRAX score of 15% for major osteoporotic fracture. I recall that last time it was somewhat higher, though I cannot find that exact figure in my records. Is a 15% risk considered moderate or still on the higher side for someone my age?\n\nI continue to take the alendronate every Wednesday morning on an empty stomach with a full glass of water, exactly as you instructed, and I have not missed a dose. I also take my calcium and vitamin D twice daily.\n\nThank you for your time, and I look forward to your response whenever it is convenient.\n\nSincerely,\nPatricia Kowalski",
       "thread": [
         {
           "date": "2025-04-15T14:45:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dear Patricia,\n\nThank you for your thoughtful questions. I'm glad you're reviewing your results carefully.\n\nThe improvement in your T-scores is very encouraging and is consistent with what we expect from alendronate therapy. In many patients, we aim to see stabilization rather than large improvements, so the fact that your scores have moved in the right direction over the past two years is a genuinely positive result. You are clearly doing an excellent job with your medication adherence and calcium/vitamin D supplementation.\n\nRegarding your FRAX score: 15% for major osteoporotic fracture is considered moderate risk. For context, treatment is generally recommended when this score exceeds 20%, so you are below that threshold. Your previous FRAX was approximately 18%, so you've actually seen meaningful improvement there as well. Your continued activity level, particularly the walking and water aerobics, is also protective against fractures.\n\nWe'll plan to repeat the DEXA in 2027 unless there are any clinical changes in the meantime. Please don't hesitate to reach out if you have further questions.\n\nBest regards,\nDr. Kim"
         }
       ]
@@ -599,16 +1893,25 @@
     {
       "id": "msg-001-002",
       "date": "2025-07-28T11:05:00Z",
-      "sender": { "name": "Patricia Kowalski", "role": "patient" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "refill_request",
+      "sender": {
+        "name": "Patricia Kowalski",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "prescription refill",
       "priority": "routine",
       "subject": "Amlodipine refill request - pharmacy says authorization needed",
       "body": "Dear Dr. Kim,\n\nI am writing to request a refill of my amlodipine 5mg. I went to pick up my prescription at the Walgreens on Central Street in Evanston this past Saturday, July 26th, and the pharmacist informed me that the prescription has expired and they would need a new authorization from your office before they can dispense it.\n\nI currently have approximately five tablets remaining, so I believe I have enough to last through this coming weekend, but I would very much appreciate it if the office could send the authorization through at your earliest convenience so that there is no gap in my medication.\n\nFor reference, the pharmacy is Walgreens #3847 at 1910 Central Street, Evanston, IL 60201, and their phone number is 847-555-0220. My prescription had been for amlodipine besylate 5mg, one tablet by mouth daily, quantity 90 with the previous authorization.\n\nThank you very much for your help with this.\n\nSincerely,\nPatricia Kowalski",
       "thread": [
         {
           "date": "2025-07-28T15:30:00Z",
-          "sender": { "name": "Rachel Torres, NP", "role": "nurse" },
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
           "body": "Hi Patricia,\n\nI've sent a new prescription for amlodipine 5mg (90-day supply with 3 refills) to your Walgreens on Central Street. It should be ready for pickup by tomorrow morning.\n\nYou're doing a great job staying on top of your refills. At your next visit in October, we'll make sure all your prescriptions are aligned so they don't expire at different times.\n\nTake care,\nRachel Torres, NP"
         }
       ]
@@ -616,21 +1919,33 @@
     {
       "id": "msg-001-003",
       "date": "2025-08-11T08:47:00Z",
-      "sender": { "name": "Patricia Kowalski", "role": "patient" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "clinical_question",
+      "sender": {
+        "name": "Patricia Kowalski",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "routine",
       "subject": "Travel vaccines for upcoming trip to Portugal in October",
       "body": "Dear Dr. Kim,\n\nAs I mentioned during my annual physical on June 18th, I am planning a trip to Portugal with my book club from October 14th through October 28th. We will be spending time in Lisbon, Porto, and the Algarve region. This will be my first trip to Europe, and I want to make sure I am properly prepared from a health standpoint.\n\nI have been reading the CDC travel recommendations for Portugal, and it appears that the standard advice is to be up to date on routine vaccines. I believe I am current on everything based on our records, but I wanted to confirm the following: Do I need a Hepatitis A or Hepatitis B vaccine for Portugal? Should I have any concerns about traveling with my current medications, particularly the alendronate? I know I need to take it on an empty stomach in the morning, and I am wondering if the time zone change (Portugal is six hours ahead of Chicago, if I am not mistaken) will affect when I should take it.\n\nAlso, I plan to do quite a bit of walking, including some hilly terrain in Porto, and I want to make sure there is nothing else I should be mindful of given my age and medical history.\n\nI would be happy to schedule a brief visit if you think that would be more appropriate than discussing this over the portal.\n\nThank you so much for your guidance.\n\nWarm regards,\nPatricia Kowalski",
       "thread": [
         {
           "date": "2025-08-12T10:15:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dear Patricia,\n\nWhat a wonderful trip! Portugal is a beautiful country and I think you'll enjoy it immensely.\n\nHere are my recommendations:\n\n1. Vaccines: Portugal is a Western European country with modern healthcare infrastructure, so no special travel vaccines are required beyond routine immunizations. I checked your records and you received Hepatitis A and B vaccines as part of a series back in 2016, so you're covered. Your Tdap is current (2023), and we'll get your flu shot and COVID booster at your October visit before you leave.\n\n2. Alendronate and time zones: Since you take it weekly (Wednesdays), the simplest approach is to keep taking it on Wednesday mornings, Portugal time. The 6-hour shift won't matter for a weekly medication. Just maintain the same routine: take it first thing in the morning with a full glass of plain water, stay upright for 30 minutes, and wait to eat.\n\n3. Walking and activity: You're in excellent shape for this trip. Your blood pressure is well controlled, and you're already walking daily. For the hilly terrain in Porto, just take your time, wear supportive shoes, and stay hydrated. Given your osteoporosis, be mindful of uneven cobblestone streets - a walking stick or trekking poles can be helpful for stability.\n\n4. General travel tips: Bring enough medication for the full trip plus a few extra days. Keep medications in your carry-on luggage. I'd recommend a brief visit when you come in for your flu shot so we can do a quick check before you go.\n\nLet Maria at the front desk know and she'll schedule you for early October.\n\nHave a wonderful trip!\nDr. Kim"
         },
         {
           "date": "2025-08-12T16:32:00Z",
-          "sender": { "name": "Maria Gonzalez", "role": "staff" },
+          "sender": {
+            "name": "Maria Gonzalez",
+            "role": "staff"
+          },
           "body": "Hi Mrs. Kowalski,\n\nDr. Kim asked me to reach out about scheduling. I have you down for your quarterly follow-up and flu/COVID vaccines on Wednesday, October 8th at 10:00 AM. Does that work for your schedule? That would give you almost a week before your trip on October 14th.\n\nPlease let me know and I'll confirm the appointment.\n\nThank you,\nMaria Gonzalez\nLakeview Family Medicine"
         }
       ]
@@ -638,16 +1953,25 @@
     {
       "id": "msg-001-004",
       "date": "2025-06-23T10:14:00Z",
-      "sender": { "name": "Patricia Kowalski", "role": "patient" },
-      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
-      "category": "gratitude",
+      "sender": {
+        "name": "Patricia Kowalski",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
       "priority": "routine",
       "subject": "Thank you for a thorough annual visit",
       "body": "Dear Dr. Kim,\n\nI wanted to take a moment to write and thank you for the time and care you took during my annual physical on June 18th. I know how busy your practice must be, and yet I never feel rushed when I am in your office. You addressed every one of my questions thoroughly, including my concerns about the trip to Portugal and the mild knee stiffness I had been noticing.\n\nI also appreciate that you took the time to explain my lab results in terms I could understand, and that you were candid about the importance of monitoring my kidney function over time. It is reassuring to know that everything remains stable.\n\nMy late husband Edward always said that a good doctor listens more than she speaks, and you certainly exemplify that. I have been a patient at Lakeview Family Medicine for over ten years now, and I continue to feel that I am in the very best hands.\n\nI have already started looking into the watercolor class that Rachel mentioned during my visit, and I am delighted to say I signed up for the Tuesday session at the Evanston Art Center. It seems the prescription for staying active applies to the mind as well as the body.\n\nWith sincere gratitude,\nPatricia Kowalski",
       "thread": [
         {
           "date": "2025-06-24T09:00:00Z",
-          "sender": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
           "body": "Dear Patricia,\n\nYour kind words absolutely made my day. It is a privilege to be your physician, and your dedication to your own health makes my job easy. Edward's words are a wonderful reminder of what matters most in medicine.\n\nI'm thrilled to hear you signed up for the watercolor class! Staying engaged and trying new things is one of the best things you can do for your overall well-being. I look forward to hearing about it at your next visit.\n\nWarmly,\nDr. Kim"
         }
       ]

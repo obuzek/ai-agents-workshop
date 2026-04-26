@@ -56,7 +56,7 @@
       },
       "status": "active",
       "onsetDate": "2026-04-12",
-      "notes": "Acute onset during work — lifting heavy materials at construction site. Pain radiating to left leg suggesting radiculopathy."
+      "notes": "Acute onset during work \u2014 lifting heavy materials at construction site. Pain radiating to left leg suggesting radiculopathy."
     },
     {
       "code": {
@@ -127,7 +127,7 @@
       "date": "2024-04-08",
       "type": "annual-physical",
       "provider": "Dr. Sarah Kim, MD",
-      "reasonForVisit": "Annual physical — new patient establishment. Required for union insurance.",
+      "reasonForVisit": "Annual physical \u2014 new patient establishment. Required for union insurance.",
       "vitals": {
         "bloodPressure": {
           "systolic": 122,
@@ -164,16 +164,18 @@
         "subjective": "34 y/o male presenting for new patient establishment and annual physical. Required for union insurance enrollment. No current complaints. Reports quitting smoking approximately 1 year ago after 5 years at half a pack per day. Physically active at work as a construction foreman. No regular medications. No known allergies. Father with T2DM diagnosed at 52.",
         "objective": "Well-appearing male in no acute distress. HEENT: normocephalic, atraumatic, PERRLA, oropharynx clear. Neck: supple, no lymphadenopathy. Lungs: clear to auscultation bilaterally. Heart: RRR, no murmurs. Abdomen: soft, non-tender, non-distended. Musculoskeletal: full ROM all extremities. Skin: no concerning lesions. Neuro: alert, oriented x4, CN II-XII intact.",
         "assessment": "Healthy 32-year-old male. Former smoker. Family history notable for paternal T2DM. BMI 27.1, slightly overweight. No acute issues identified.",
-        "plan": "1. Routine labs: BMP ordered. 2. Immunizations updated: Tdap booster and COVID-19 bivalent administered today. 3. Counseled on continued tobacco abstinence. 4. Discussed weight management — encouraged structured exercise beyond occupational activity. 5. Return in 1 year or PRN."
+        "plan": "1. Routine labs: BMP ordered. 2. Immunizations updated: Tdap booster and COVID-19 bivalent administered today. 3. Counseled on continued tobacco abstinence. 4. Discussed weight management \u2014 encouraged structured exercise beyond occupational activity. 5. Return in 1 year or PRN."
       },
-      "labOrders": ["lab-002-001"]
+      "labOrders": [
+        "lab-002-001"
+      ]
     },
     {
       "id": "enc-002-002",
       "date": "2026-04-12",
       "type": "urgent",
       "provider": "Rachel Torres, NP",
-      "reasonForVisit": "Acute low back pain after work injury — lifting incident on construction site 2 days ago. Pain worsening, now radiating down left leg.",
+      "reasonForVisit": "Acute low back pain after work injury \u2014 lifting incident on construction site 2 days ago. Pain worsening, now radiating down left leg.",
       "vitals": {
         "bloodPressure": {
           "systolic": 134,
@@ -210,12 +212,12 @@
         "subjective": "34 y/o male construction foreman presents with acute low back pain after lifting a steel beam 2 days ago at work. Reports immediate onset of sharp pain in the lower back. Over the past 48 hours pain has begun radiating down the left posterior thigh and into the calf. Rates pain 7/10 at rest, 9/10 with movement. Reports tingling in left foot intermittently. Denies bowel or bladder dysfunction. Denies saddle anesthesia. Denies fever. Unable to work since injury. Workers' compensation claim filed. No prior back injuries. Tried ibuprofen at home with minimal relief.",
         "objective": "Male in mild distress, guarding lumbar spine. Gait antalgic, favoring left side. Lumbar spine: significant paraspinal muscle spasm bilaterally, worse on left. Tenderness to palpation at L4-L5 and L5-S1. Flexion limited to approximately 40 degrees by pain. Extension limited to 10 degrees. Straight leg raise positive on left at 40 degrees reproducing radicular pain. Straight leg raise negative on right. Motor: 5/5 bilateral lower extremities except left EHL 4+/5. Sensation: decreased to light touch along left L5 dermatome. DTRs: 2+ bilateral patellar and Achilles. No clonus. Perianal sensation intact.",
         "assessment": "1. Acute lumbar radiculopathy, left-sided, likely L4-L5 or L5-S1 disc herniation given mechanism of injury, positive SLR, subtle EHL weakness, and L5 dermatomal sensory changes. 2. Acute low back pain, work-related injury. Red flags (cauda equina) not present at this time. However, given motor findings (EHL weakness), advanced imaging warranted urgently.",
-        "plan": "1. MRI lumbar spine without contrast — ordered STAT. 2. Cyclobenzaprine 10 mg TID PRN for muscle spasm. 3. Naproxen 500 mg BID with food for pain and inflammation. 4. Strict activity modification — no lifting over 10 lbs, no bending/twisting. Out of work pending MRI results and follow-up. 5. Workers' compensation paperwork initiated — will complete and send to employer. 6. Return precautions reviewed: go to ER immediately if bowel/bladder dysfunction, worsening leg weakness, saddle anesthesia, or inability to ambulate. 7. Follow-up in 1 week or sooner if MRI results return. Patient verbalized understanding."
+        "plan": "1. MRI lumbar spine without contrast \u2014 ordered STAT. 2. Cyclobenzaprine 10 mg TID PRN for muscle spasm. 3. Naproxen 500 mg BID with food for pain and inflammation. 4. Strict activity modification \u2014 no lifting over 10 lbs, no bending/twisting. Out of work pending MRI results and follow-up. 5. Workers' compensation paperwork initiated \u2014 will complete and send to employer. 6. Return precautions reviewed: go to ER immediately if bowel/bladder dysfunction, worsening leg weakness, saddle anesthesia, or inability to ambulate. 7. Follow-up in 1 week or sooner if MRI results return. Patient verbalized understanding."
       },
       "labOrders": [],
       "referrals": [
         {
-          "to": "Radiology — MRI Lumbar Spine without contrast",
+          "to": "Radiology \u2014 MRI Lumbar Spine without contrast",
           "reason": "Acute lumbar radiculopathy with motor deficit (EHL weakness). Evaluate for disc herniation.",
           "status": "pending"
         }
@@ -260,10 +262,10 @@
         }
       },
       "notes": {
-        "subjective": "Patient returns for follow-up of acute low back injury. Reports pain has improved slightly from 7/10 to 5-6/10 at rest with cyclobenzaprine and naproxen. However, left leg pain persists — still radiating to calf. Tingling in left foot ongoing, especially at night. States the cyclobenzaprine makes him drowsy. Has been staying off work per instructions. Frustrated about being out of work. Asking about timeline for return to duty. MRI was completed 4/18 — patient anxious about results.",
-        "objective": "Less distress than initial visit. Gait improved but still mildly antalgic. Lumbar paraspinal spasm decreased. Tenderness at L4-L5 persists. SLR still positive on left at 50 degrees (improved from 40). Motor: left EHL 4+/5, unchanged. Sensation: mild decrease to light touch left lateral leg/dorsal foot persists. MRI results reviewed in visit (see imaging results — pending final radiology read at time of encounter documentation).",
-        "assessment": "1. Lumbar radiculopathy, left L5, with ongoing motor and sensory deficit. Clinical trajectory improving but incomplete resolution. MRI interpretation pending final radiologist report — preliminary review suggests L4-L5 disc involvement. 2. Work-related injury — continued work restriction appropriate.",
-        "plan": "1. Continue cyclobenzaprine 10 mg TID PRN and naproxen 500 mg BID. 2. Await final MRI radiology report — will call patient with results and discuss next steps including possible physical therapy referral vs. spine specialist referral depending on findings. 3. Remain out of work until re-evaluation. Updated workers' comp documentation provided. 4. If symptoms worsen — particularly worsening weakness, new bowel/bladder symptoms — go to ER immediately. 5. Follow-up in 2 weeks or sooner when MRI results finalized. 6. Discussed importance of gentle walking as tolerated. Avoid prolonged sitting or standing."
+        "subjective": "Patient returns for follow-up of acute low back injury. Reports pain has improved slightly from 7/10 to 5-6/10 at rest with cyclobenzaprine and naproxen. However, left leg pain persists \u2014 still radiating to calf. Tingling in left foot ongoing, especially at night. States the cyclobenzaprine makes him drowsy. Has been staying off work per instructions. Frustrated about being out of work. Asking about timeline for return to duty. MRI was completed 4/18 \u2014 patient anxious about results.",
+        "objective": "Less distress than initial visit. Gait improved but still mildly antalgic. Lumbar paraspinal spasm decreased. Tenderness at L4-L5 persists. SLR still positive on left at 50 degrees (improved from 40). Motor: left EHL 4+/5, unchanged. Sensation: mild decrease to light touch left lateral leg/dorsal foot persists. MRI results reviewed in visit (see imaging results \u2014 pending final radiology read at time of encounter documentation).",
+        "assessment": "1. Lumbar radiculopathy, left L5, with ongoing motor and sensory deficit. Clinical trajectory improving but incomplete resolution. MRI interpretation pending final radiologist report \u2014 preliminary review suggests L4-L5 disc involvement. 2. Work-related injury \u2014 continued work restriction appropriate.",
+        "plan": "1. Continue cyclobenzaprine 10 mg TID PRN and naproxen 500 mg BID. 2. Await final MRI radiology report \u2014 will call patient with results and discuss next steps including possible physical therapy referral vs. spine specialist referral depending on findings. 3. Remain out of work until re-evaluation. Updated workers' comp documentation provided. 4. If symptoms worsen \u2014 particularly worsening weakness, new bowel/bladder symptoms \u2014 go to ER immediately. 5. Follow-up in 2 weeks or sooner when MRI results finalized. 6. Discussed importance of gentle walking as tolerated. Avoid prolonged sitting or standing."
       },
       "labOrders": [],
       "referrals": []
@@ -463,7 +465,7 @@
         "name": "Rachel Torres, NP",
         "role": "provider"
       },
-      "category": "urgent_symptom",
+      "category": "medical question",
       "priority": "urgent",
       "subject": "pain getting worse",
       "body": "sorry to msg so late but my back is real bad tonite. the leg pain is way worse and my foot keeps going numb. took the cyclobenzaprine and naproxen but its not helping. should i go to the ER?? im kinda freaking out",
@@ -474,7 +476,7 @@
             "name": "Rachel Torres, NP",
             "role": "provider"
           },
-          "body": "Hi Marcus, thank you for reaching out. I'm sorry you're dealing with increased pain. A few important questions: (1) Are you having any difficulty urinating or having bowel accidents? (2) Do you have numbness in your groin/inner thigh area? (3) Is the weakness in your foot getting worse — can you still pull your toes up toward you? If the answer to any of these is YES, please go to the ER right away. If no to all three, the increased pain is likely a flare of your radiculopathy, which can happen. You can try icing 20 min on / 20 min off. We have your follow-up tomorrow — if you can't wait until then, go to the ER. Call 911 if symptoms suddenly worsen."
+          "body": "Hi Marcus, thank you for reaching out. I'm sorry you're dealing with increased pain. A few important questions: (1) Are you having any difficulty urinating or having bowel accidents? (2) Do you have numbness in your groin/inner thigh area? (3) Is the weakness in your foot getting worse \u2014 can you still pull your toes up toward you? If the answer to any of these is YES, please go to the ER right away. If no to all three, the increased pain is likely a flare of your radiculopathy, which can happen. You can try icing 20 min on / 20 min off. We have your follow-up tomorrow \u2014 if you can't wait until then, go to the ER. Call 911 if symptoms suddenly worsen."
         },
         {
           "date": "2026-04-21T09:31:00Z",
@@ -497,7 +499,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "results_inquiry",
+      "category": "test results",
       "priority": "routine",
       "subject": "mri results??",
       "body": "hey dr kim any word on the mri yet? its been almost a week since i got it done and nobody called me. tryna not to stress about it but u know",
@@ -523,7 +525,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "medication_concern",
+      "category": "prescription refill",
       "priority": "urgent",
       "subject": "meds not helping",
       "body": "dr kim these meds arent doin nothin anymore i been outta work 2 weeks now and my foreman keeps askin when im comin back. cant sleep cuz the pain is so bad every nite. i need somethin stronger or send me to someone who can actually fix this cuz im losin it out here. naproxen dont even touch it no more",

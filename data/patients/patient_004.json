@@ -1686,7 +1686,7 @@
         "name": "Maria Gonzalez",
         "role": "staff"
       },
-      "category": "scheduling",
+      "category": "appointment request",
       "priority": "routine",
       "subject": "need to reschedule my appt sorry",
       "body": "Hi there this is Raj Patel I'm writing because I had that appointment on Thursday the 19th I think it was but the thing is my dispatcher just called and I got a load going to El Paso and then I have to deadhead back to Dallas to pick up another one and I won't be back in Chicago until maybe the 25th or 26th but honestly it could be later because you never know with these routes sometimes they add stops and last time I went through Texas they had me do a drop in San Antonio too so I really can't say for sure when I'll be back. I know this is the third time and I'm sorry about that Sunita is pretty mad at me about it too she says I need to take care of this but I can't just tell my dispatcher no you know how it is I got to work. Anyway can you reschedule me for sometime after the 26th, maybe the week after that? I'm flexible on the day as long as it's not too early in the morning because when I get back from a long haul I need to sleep in a little. Just let me know what you have and my wife can confirm it. Thanks",
@@ -1712,7 +1712,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "symptom_report",
+      "category": "medical question",
       "priority": "routine",
       "subject": "blood sugar question",
       "body": "Hey Dr Kim so I'm writing because I was at this truck stop outside of Joplin Missouri today and they had one of those pharmacy kiosks where you can check your blood sugar I don't usually do it on the road but I hadn't eaten since breakfast and I figured why not so I did it and it said 268 which I know is probably a little high but I had a pretty big breakfast this morning at the Waffle House, I had the eggs and hash browns and sausage and biscuits and gravy so that might be why. I've been taking my metformin pretty regular except I think I missed yesterday's evening dose because I was driving straight through to make a delivery time. The glipizide I take in the morning. Anyway I just wanted to mention it because you always ask me about my numbers so there you go. How high is too high? I'm not feeling bad or anything maybe a little tired but I'm always tired that's just the job. Let me know if I should be worried or if it's just from the big breakfast. Also unrelated but do you know if I need to do anything special for my CDL physical coming up in October, my company is asking about it.",
@@ -1738,7 +1738,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "refill_request",
+      "category": "prescription refill",
       "priority": "routine",
       "subject": "metformin ran out need refill",
       "body": "Dr Kim I need a refill on my metformin I ran out a few days ago, the pharmacy said I don't have any refills left and they need you to call it in. Here's the thing and don't be mad but my sugar was running really high like in the 300s a couple weeks ago and I remembered you said the metformin was important so I started taking it three times a day instead of two, I figured if two is good three is better right? So I ran out about a week and a half early. I know you're probably going to say I shouldn't have done that but I was trying to get the numbers down and it seemed like it was working a little bit, they went down to like 250 or so. Anyway I also ran low on the glipizide but I still have a few of those left. I'm on the road until Friday but Sunita can pick up the prescription if you send it to the Walgreens on Pulaski. Thanks doc.",
@@ -1764,7 +1764,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "urgent_symptom",
+      "category": "medical question",
       "priority": "routine",
       "subject": "doing ok just tired and a question",
       "body": "Hi Dr Kim hope you're doing well I just wanted to check in and let you know I've been taking the insulin like you showed me, well most nights anyway sometimes I forget when I get in late from a run but I'd say I'm doing it maybe 5 out of 7 nights which isn't bad right? Sunita helps me when I'm home she's good about reminding me. The metformin and glipizide I'm taking regular too. Work has been crazy busy they've got me doing these runs to Memphis and back twice a week and by the time I get home I'm just wiped out, I mean really exhausted like I can barely keep my eyes open sometimes on the road which is probably the sleep apnea thing I know you want me to use that CPAP machine but it's just so uncomfortable and I can't figure out how to use it in the sleeper cab of the truck, maybe if they made a different kind of mask I could try it again I don't know. Anyway Sunita says I should mention this but I've been having trouble with my feet lately, well my right foot mostly, it's been kind of numb and tingly for I don't know a couple weeks maybe three, it comes and goes but lately it's more like it's there all the time especially at night, and last week I stepped on something in the garage and didn't even feel it until Sunita noticed I was bleeding a little. Is that something I should worry about or is it just from sitting in the truck all day?",
@@ -1790,7 +1790,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "symptom_report",
+      "category": "medical question",
       "priority": "routine",
       "subject": "feeling kind of off lately",
       "body": "Hi Dr Kim so my cousin Deepak came in from Detroit last week and we had a big family thing at the house, Sunita cooked a ton of food and I mean a ton like biryani and samosas and gulab jamun and all that and I know I probably shouldn't have eaten so much but you can't just not eat when family is over you know how it is. Anyway I checked my sugar after that and it was like 280 which is a little high I know but I think it was just from all the food and it'll probably come back down on its own. I've been feeling kind of dizzy though like when I stand up from sitting for a while everything goes a little black for a second and I have to grab onto something, it's been happening maybe four or five times a day for the last week or so. Also I wanted to ask you about my CPAP because the mask they gave me hurts the bridge of my nose and leaves red marks so I haven't really been wearing it much lately, maybe once or twice a week if that, I know you said it was important but I just can't sleep with that thing on my face. Oh and one more thing I almost forgot my feet have been more numb than usual especially the right one, like I can barely feel the floor when I walk to the bathroom at night and the tingling is pretty much constant now instead of coming and going like before, I don't know if that means anything or if it's just because I've been sitting a lot more with the long hauls lately. Anyway just wanted to give you an update hope everything is good.",
@@ -1807,7 +1807,7 @@
         "name": "Dr. Sarah Kim, MD",
         "role": "provider"
       },
-      "category": "symptom_report",
+      "category": "medical question",
       "priority": "routine",
       "subject": "one more thing",
       "body": "Hey Dr Kim sorry to bother you again I forgot to mention this in my last message but my vision has been kind of blurry the last few days, like when I'm reading the signs on the highway I have to squint a lot more than I used to and the GPS screen in the truck looks fuzzy. I'm pretty sure I just need new glasses its probably been three or four years since I got these ones so that's probably all it is. Does your office know a good eye doctor you could recommend? I've been meaning to go to one anyway. Thanks.",
