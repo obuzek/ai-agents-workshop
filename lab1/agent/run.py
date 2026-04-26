@@ -14,10 +14,14 @@ from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
+import os
+import requests
+
 from lab1.agent.agent import process_patient
 from lab1.agent.store import load_store, save_store
-from lab1.agent.tools import list_patients
 from lab1.agent.models import ConcernsStore
+
+API_URL = os.environ.get("API_URL", "http://localhost:8000")
 
 POLL_INTERVAL = 30  # seconds between passes
 
@@ -38,7 +42,9 @@ def run_single(patient_id: str):
 
 def run_pass() -> ConcernsStore:
     """Run the agent once for every patient. Saves incrementally after each patient."""
-    patients = list_patients()
+    resp = requests.get(f"{API_URL}/patients")
+    resp.raise_for_status()
+    patients = resp.json()
     store = load_store()
 
     for p in patients:

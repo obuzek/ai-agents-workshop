@@ -9,6 +9,8 @@ dependencies = [
     "streamlit>=1.45",
     "requests>=2.32",
     "openai>=1.0",
+    "langgraph>=0.4",
+    "langchain-openai>=0.3",
 ]
 
 [tool.hatch.build.targets.wheel]

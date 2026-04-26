@@ -1,49 +1,28 @@
 """
-The naive agent — a ReAct tool-calling loop.
+The naive agent — a ReAct tool-calling loop powered by LangGraph.
 
 The agent receives a patient ID and a goal. It decides which tools to call,
 in what order, and how to interpret the results. When it has gathered enough
 information, it returns structured concerns.
 
 This is the core of Lab 1: a real agent loop where the LLM drives the
-investigation. The structured output is only for the final result — the
-reasoning and tool selection are entirely up to the model.
+investigation. LangGraph manages the ReAct cycle (observe, reason, act)
+and structured output ensures we get valid JSON every time.
 """
 
-import json
 import logging
 import os
-import time
 from datetime import datetime, timezone
-from openai import OpenAI, RateLimitError
+
+from langchain_openai import ChatOpenAI
+from langgraph.prebuilt import create_react_agent
+
+from lab1.agent.tools import ALL_TOOLS
+from lab1.agent.models import PatientConcerns
 
 logger = logging.getLogger(__name__)
 
-from lab1.agent.tools import TOOLS, TOOL_FUNCTIONS
-from lab1.agent.models import Concern, PatientConcerns, RelatedData
-
-client = OpenAI()  # reads OPENAI_API_KEY, OPENAI_BASE_URL from env
 MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o")
-MAX_TURNS = 20  # safety limit on tool-calling rounds
-MAX_RETRIES = 5  # retries on rate limit
-
-
-def _llm_call(messages, tools):
-    """Call the LLM with retry + exponential backoff on rate limits."""
-    for attempt in range(MAX_RETRIES):
-        try:
-            return client.chat.completions.create(
-                model=MODEL,
-                messages=messages,
-                tools=tools,
-            )
-        except RateLimitError as e:
-            if attempt == MAX_RETRIES - 1:
-                raise
-            wait = 2 ** attempt
-            logger.warning("Rate limited, retrying in %ds...", wait)
-            time.sleep(wait)
-    raise RuntimeError("Unreachable")
 
 SYSTEM_PROMPT = """\
 You are a clinical inbox assistant for a primary care practice. You review a
@@ -79,131 +58,50 @@ OUTPUT RULES:
   encounter_dates that are relevant. These become links in the UI.
 - Only surface information that is IN the record. Do not infer diagnoses.
 - Do not draft replies or make clinical recommendations.
-
-When you are done investigating, respond with ONLY this JSON (no other text):
-
-{
-  "patient_id": "patient-001",
-  "patient_name": "First Last",
-  "concerns": [
-    {
-      "id": "concern-001-001",
-      "patient_id": "patient-001",
-      "title": "Brief title (5 words max)",
-      "summary": "One sentence: the clinical fact and why it matters.",
-      "action": "Specific action the doctor should take",
-      "concern_type": "medication|lab_result|symptom|follow_up|administrative",
-      "urgency": "routine|soon|urgent",
-      "status": "unresolved|monitoring|resolved",
-      "onset": "YYYY-MM-DD",
-      "last_updated": "<current ISO timestamp>",
-      "evidence": ["TSH 4.8 mIU/L (2026-04-01)", "Previous TSH 3.1 (2025-06-18)"],
-      "related": {
-        "message_ids": ["msg-001-001"],
-        "lab_dates": ["2025-01-09"],
-        "conditions": ["Essential hypertension"],
-        "encounter_dates": ["2025-04-02"]
-      }
-    }
-  ]
-}
 """
+
+
+def _build_agent():
+    """Build the LangGraph ReAct agent."""
+    llm = ChatOpenAI(model=MODEL)
+    return create_react_agent(
+        model=llm,
+        tools=ALL_TOOLS,
+        prompt=SYSTEM_PROMPT,
+        response_format=PatientConcerns,
+    )
+
+
+# Module-level agent instance (reused across calls)
+_agent = _build_agent()
 
 
 def process_patient(patient_id: str) -> PatientConcerns:
     """Run the agent loop for a single patient. Returns structured concerns."""
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": (
-            f"Please review patient {patient_id}. "
-            "Start by looking at their messages and record, then investigate "
-            "any concerns you find. When done, output your findings as JSON."
-        )},
-    ]
+    user_message = (
+        f"Please review patient {patient_id}. "
+        "Start by looking at their messages and record, then investigate "
+        "any concerns you find. When done, output your findings."
+    )
 
-    for turn in range(MAX_TURNS):
-        response = _llm_call(messages, TOOLS)
+    logger.info("[%s] Starting agent run", patient_id)
+    result = _agent.invoke(
+        {"messages": [{"role": "user", "content": user_message}]},
+    )
 
-        choice = response.choices[0]
+    # LangGraph returns the structured response directly
+    structured = result["structured_response"]
 
-        # If the model wants to call tools, execute them and feed results back
-        if choice.finish_reason == "tool_calls":
-            messages.append(choice.message.model_dump())
+    # Ensure patient_id is set correctly and timestamps are filled in
+    now = datetime.now(timezone.utc).isoformat()
+    for concern in structured.concerns:
+        concern.patient_id = patient_id
+        if not concern.last_updated:
+            concern.last_updated = now
 
-            for tool_call in choice.message.tool_calls:
-                fn_name = tool_call.function.name
-                fn_args = json.loads(tool_call.function.arguments)
+    if not structured.patient_id:
+        structured.patient_id = patient_id
 
-                logger.info("[%s] tool: %s(%s)", patient_id, fn_name, fn_args)
-
-                fn = TOOL_FUNCTIONS.get(fn_name)
-                if fn is None:
-                    result = {"error": f"Unknown tool: {fn_name}"}
-                else:
-                    try:
-                        result = fn(**fn_args)
-                    except Exception as e:
-                        result = {"error": str(e)}
-
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": json.dumps(result, default=str),
-                })
-
-            continue
-
-        # Model is done — parse the final JSON response
-        raw = choice.message.content.strip()
-
-        # Strip markdown code fences if present
-        if raw.startswith("```"):
-            lines = raw.split("\n")
-            # Remove only the opening and closing fence lines
-            if lines[0].startswith("```"):
-                lines = lines[1:]
-            if lines and lines[-1].startswith("```"):
-                lines = lines[:-1]
-            raw = "\n".join(lines)
-
-        try:
-            data = json.loads(raw)
-        except json.JSONDecodeError as e:
-            logger.warning("[%s] Could not parse agent output: %s", patient_id, e)
-            logger.debug("[%s] Raw output: %s...", patient_id, raw[:200])
-            return PatientConcerns(patient_id=patient_id, patient_name="Unknown")
-
-        now = datetime.now(timezone.utc).isoformat()
-        concerns = []
-        for c in data.get("concerns", []):
-            related = c.get("related", {})
-            concerns.append(Concern(
-                id=c.get("id", ""),
-                patient_id=patient_id,
-                title=c.get("title", ""),
-                summary=c.get("summary", ""),
-                action=c.get("action", ""),
-                concern_type=c.get("concern_type", ""),
-                urgency=c.get("urgency", "routine"),
-                status=c.get("status", "monitoring"),
-                onset=c.get("onset", ""),
-                last_updated=c.get("last_updated", now),
-                evidence=c.get("evidence", []),
-                related=RelatedData(
-                    message_ids=related.get("message_ids", []),
-                    lab_dates=related.get("lab_dates", []),
-                    conditions=related.get("conditions", []),
-                    encounter_dates=related.get("encounter_dates", []),
-                ),
-            ))
-
-        return PatientConcerns(
-            patient_id=patient_id,
-            patient_name=data.get("patient_name", "Unknown"),
-            concerns=concerns,
-        )
-
-    # Safety: hit max turns without finishing
-    logger.warning("[%s] Hit max turns (%d) without finishing", patient_id, MAX_TURNS)
-    return PatientConcerns(patient_id=patient_id, patient_name="Unknown")
+    logger.info("[%s] Agent found %d concerns", patient_id, len(structured.concerns))
+    return structured
