@@ -866,6 +866,39 @@
           "body": "Dear Mr. Asante,\n\nI can confirm that the referral was electronically transmitted to Dr. Hendricks's office on March 24th at 10:42 AM. It includes your encounter notes from your most recent visits, your current medication list, and a specific note from Dr. Kim regarding the giving-way episodes and your interest in discussing unicompartmental arthroplasty.\n\nI have also called Dr. Hendricks's scheduling coordinator directly to flag the referral. She confirmed receipt and said you should expect a call by early next week.\n\nPlease don't hesitate to reach out if you haven't heard from them by Wednesday, April 1st.\n\nBest regards,\nRachel Torres, NP"
         }
       ]
+    },
+    {
+      "id": "msg-006-007",
+      "date": "2026-04-19T08:45:00Z",
+      "sender": { "name": "Kwame Asante", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "medication_concern",
+      "priority": "urgent",
+      "subject": "URGENT: Pharmacy refusing to fill warfarin",
+      "body": "Dr. Kim,\n\nI am contacting you on a matter that requires your immediate attention. As of this morning, CVS pharmacy has refused to fill my warfarin prescription, stating that the prescription on file has expired. I have now been without warfarin for two days.\n\nI should not need to remind you that I have persistent atrial fibrillation with a CHA2DS2-VASc score of 3, and that discontinuation of anticoagulation places me at material risk of thromboembolic stroke. I have reviewed the pharmacokinetics myself: warfarin has an elimination half-life of approximately 40 hours, which means that after 48 hours without a dose, my plasma concentration has already dropped below the therapeutic threshold. By my calculation, my INR is falling out of range as I write this.\n\nI trust that this will be handled immediately. A new prescription needs to be called in to CVS #8841 on Delaware Place today, without delay. I should not have to go a third day without a medication that is, by any clinical standard, essential to preventing a potentially catastrophic event.\n\nI expect confirmation that this has been resolved by end of business today.\n\nRespectfully,\nKwame Asante",
+      "thread": []
+    },
+    {
+      "id": "msg-006-008",
+      "date": "2026-04-22T10:15:00Z",
+      "sender": { "name": "Kwame Asante", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "medication_concern",
+      "priority": "routine",
+      "subject": "Comprehensive medication review request",
+      "body": "Dr. Kim,\n\nI am writing to request a formal, comprehensive review of my entire medication regimen. I am currently taking eight or more daily medications, and I have recently read a compelling article in the Journal of the American Geriatrics Society regarding polypharmacy risks in patients over 65. The findings are concerning, and I believe a structured deprescribing assessment is warranted in my case.\n\nSpecifically, I would like the following addressed:\n\n- Whether the famotidine remains necessary given that my GERD was well-controlled for years and the original switch from omeprazole was not driven by symptom failure\n- Whether sertraline can be tapered, as my PHQ-9 scores have been consistently low for over two years\n- Whether the calcium/vitamin D supplement is still indicated given my current bone density status\n- A formal drug interaction review across all active prescriptions, particularly interactions involving warfarin, metoprolol, and sertraline\n\nI have identified at least three potential moderate interactions using the Lexicomp database, and I would like your clinical assessment of each.\n\nI expect this review to be thorough and evidence-based. Please advise whether this can be conducted via the portal or whether an in-person appointment is required.\n\nRegards,\nKwame Asante",
+      "thread": []
+    },
+    {
+      "id": "msg-006-009",
+      "date": "2026-04-25T14:30:00Z",
+      "sender": { "name": "Kwame Asante", "role": "patient" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "complaint",
+      "priority": "urgent",
+      "subject": "Re: Lack of response to urgent medication issue",
+      "body": "Dr. Kim,\n\nIt has now been six days since I reported that my warfarin prescription had expired and CVS was unable to fill it. I have received no response from your office. I find this silence unacceptable and, frankly, concerning from a patient safety standpoint.\n\nI am documenting this lapse in care, including the dates of each unanswered communication, for my personal records. I am well aware of my rights under federal and state regulations regarding timely response to patient communications, particularly those involving urgent medication issues.\n\nI also note that my separate request for a comprehensive medication review, sent on April 22nd, has likewise gone unanswered. I trust that both matters will be addressed promptly.\n\nI look forward to your response without further delay.\n\nKwame Asante",
+      "thread": []
     }
   ]
 }

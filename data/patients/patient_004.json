@@ -1778,6 +1778,40 @@
           "body": "Mr. Patel, I need you to read this carefully.\n\nThe numbness and tingling in your right foot, and especially the fact that you stepped on something and did not feel it, is a SERIOUS symptom. This is very likely diabetic neuropathy -- nerve damage caused by high blood sugar levels over time. We noted decreased sensation in your foot at your last exam, and what you're describing tells me it has gotten worse.\n\nThis is NOT from sitting in the truck. This is a complication of your diabetes.\n\nWhen you lose sensation in your feet, you can injure yourself without knowing it, and those injuries can become infected. For someone with diabetes, foot infections can become very serious very quickly and in the worst cases can lead to amputation. I do not say this to scare you but because I need you to understand the urgency.\n\nI need you to do the following:\n1. Examine the cut on your foot RIGHT NOW -- if there is any redness, swelling, warmth, drainage, or if it has not healed, go to urgent care immediately.\n2. Call our office FIRST THING TOMORROW MORNING to schedule an appointment this week. Tell Maria I said it's urgent.\n3. Do NOT walk barefoot -- wear shoes at all times, even in the house.\n4. Check your feet every night for cuts, blisters, or sores.\n\nI also want to be honest with you: the fatigue and difficulty staying awake while driving is extremely dangerous, both for you and for others on the road. You MUST use your CPAP. I can order a different mask style if that would help.\n\nPlease call tomorrow. This cannot wait."
         }
       ]
+    },
+    {
+      "id": "msg-004-005",
+      "date": "2026-04-20T09:14:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "feeling kind of off lately",
+      "body": "Hi Dr Kim so my cousin Deepak came in from Detroit last week and we had a big family thing at the house, Sunita cooked a ton of food and I mean a ton like biryani and samosas and gulab jamun and all that and I know I probably shouldn't have eaten so much but you can't just not eat when family is over you know how it is. Anyway I checked my sugar after that and it was like 280 which is a little high I know but I think it was just from all the food and it'll probably come back down on its own. I've been feeling kind of dizzy though like when I stand up from sitting for a while everything goes a little black for a second and I have to grab onto something, it's been happening maybe four or five times a day for the last week or so. Also I wanted to ask you about my CPAP because the mask they gave me hurts the bridge of my nose and leaves red marks so I haven't really been wearing it much lately, maybe once or twice a week if that, I know you said it was important but I just can't sleep with that thing on my face. Oh and one more thing I almost forgot my feet have been more numb than usual especially the right one, like I can barely feel the floor when I walk to the bathroom at night and the tingling is pretty much constant now instead of coming and going like before, I don't know if that means anything or if it's just because I've been sitting a lot more with the long hauls lately. Anyway just wanted to give you an update hope everything is good.",
+      "thread": []
+    },
+    {
+      "id": "msg-004-006",
+      "date": "2026-04-24T11:32:00Z",
+      "sender": {
+        "name": "Raj Patel",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "symptom_report",
+      "priority": "routine",
+      "subject": "one more thing",
+      "body": "Hey Dr Kim sorry to bother you again I forgot to mention this in my last message but my vision has been kind of blurry the last few days, like when I'm reading the signs on the highway I have to squint a lot more than I used to and the GPS screen in the truck looks fuzzy. I'm pretty sure I just need new glasses its probably been three or four years since I got these ones so that's probably all it is. Does your office know a good eye doctor you could recommend? I've been meaning to go to one anyway. Thanks.",
+      "thread": []
     }
   ]
 }

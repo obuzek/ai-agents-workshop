@@ -728,6 +728,23 @@
           "body": "ok thank you. that actually makes me feel a lot better. I'll start keeping the log. and yeah I'll schedule the telehealth thing this week. sorry for the dramatic midnight message lol. sam told me to message you about it like a month ago and I kept putting it off because I figured I was being ridiculous. appreciate you taking it seriously."
         }
       ]
+    },
+    {
+      "id": "msg-012-006",
+      "date": "2026-04-21T22:15:00Z",
+      "sender": { "name": "Devon Reeves", "role": "patient" },
+      "recipient": { "name": "Rachel Torres, NP", "role": "nurse" },
+      "category": "side_effects",
+      "priority": "routine",
+      "subject": "sleep stuff + weird heart thing",
+      "body": "hey rachel, so fun update from the land of never-sleeping: the insomnia is somehow getting WORSE?? like I didn't think that was physically possible but here we are, setting new personal records. I genuinely have not slept more than 3 hours a night in over a week. I'm basically a ghost with a creative cloud subscription at this point. my brain just will not shut off no matter what I do and the CBT-i app is like 'have you tried relaxing' and I'm like wow thanks I'm cured lol. anyway I'm struggling and I think the current situation isn't cutting it medication-wise. oh also my heart has been doing this weird racing thing again, like it randomly speeds up for no reason? it'll just be sitting there doing its job and then suddenly it's like I just sprinted up six flights of stairs. probably just anxiety lol but figured I'd mention it since we talked about it before. anyway lmk if there's anything we can adjust for the sleep situation, I am begging.",
+      "thread": [
+        {
+          "date": "2026-04-22T10:30:00Z",
+          "sender": { "name": "Rachel Torres, NP", "role": "nurse" },
+          "body": "Hi Devon, thanks for reaching out — I'm sorry to hear the insomnia has gotten worse. Not sleeping more than 3 hours a night for a week is really rough, and I want to help you get some relief. It's possible the current approach just isn't enough and we may need to look at a dosage adjustment or try a different sleep medication. Before your next visit, I'd like you to think about your sleep hygiene routine — are you still keeping a consistent wake time, limiting screens before bed, and keeping caffeine to mornings only? Sometimes small drift in those habits can make a big difference. I'd also like to schedule a follow-up so we can talk through your options in more detail and find something that actually works for you. You can call the front desk or message Maria to get on the books. Hang in there — we'll figure this out."
+        }
+      ]
     }
   ]
 }

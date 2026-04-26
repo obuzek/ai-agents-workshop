@@ -511,6 +511,23 @@
           "body": "Hi Marcus, I understand the wait is stressful. The MRI images have come in but the final radiologist report hasn't been finalized yet. I've flagged it as urgent with radiology. As soon as the report is ready, I will call you personally to go over the results and discuss next steps. If we don't have the report by Monday, I'll follow up with radiology again. Hang in there."
         }
       ]
+    },
+    {
+      "id": "msg-002-004",
+      "date": "2026-04-22T06:48:00Z",
+      "sender": {
+        "name": "Marcus Chen",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medication_concern",
+      "priority": "urgent",
+      "subject": "meds not helping",
+      "body": "dr kim these meds arent doin nothin anymore i been outta work 2 weeks now and my foreman keeps askin when im comin back. cant sleep cuz the pain is so bad every nite. i need somethin stronger or send me to someone who can actually fix this cuz im losin it out here. naproxen dont even touch it no more",
+      "thread": []
     }
   ]
 }

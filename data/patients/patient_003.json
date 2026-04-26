@@ -1859,6 +1859,23 @@
           "body": "Hi Susan,\n\nYou're asking all the right questions, and I appreciate your thoroughness.\n\nYou're correct that the Papakostas study showed L-methylfolate 15mg had some benefit as SSRI augmentation \u2014 but importantly, that study enrolled patients with major depressive disorder who had inadequate response to SSRIs. Your situation is quite different: you have GAD (not MDD), you're responding well to sertraline, and your GAD-7 scores are consistently in the mild range.\n\nRegarding the MTHFR-neurotransmitter connection: the evidence is largely mechanistic (cell studies, theoretical pathways) rather than clinical. There are no RCTs demonstrating that methylfolate supplementation improves anxiety outcomes in well-managed GAD patients with heterozygous C677T and normal homocysteine.\n\nMy recommendation:\n- I don't think L-methylfolate 15mg (Deplin) is indicated in your case. It's expensive (~$75-100/month even with coupons), and the expected benefit is very low given your clinical profile\n- I'm happy to order folate and B12 levels \u2014 this is reasonable and inexpensive, and will definitively answer whether there's any nutritional gap to address\n- If folate or B12 are low, we can supplement appropriately. A standard methylfolate/B12 complex at OTC doses would be reasonable in that scenario\n\nI'll add the folate and B12 to your next lab order. No need for a separate visit.\n\nDr. Kim"
         }
       ]
+    },
+    {
+      "id": "msg-003-006",
+      "date": "2026-04-23T20:05:00Z",
+      "sender": {
+        "name": "Susan Thornton",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "clinical_question",
+      "priority": "routine",
+      "subject": "Multiple items to discuss - need appointment?",
+      "body": "Hi Dr. Kim,\n\nI have several items I'd like to discuss with you, and I want to be respectful of your time, so I've organized them. I'm not sure if these can be handled via the portal or if I need to schedule an appointment — happy to do whatever makes sense.\n\n1. TSH TREND: My most recent TSH was 4.8 mIU/L (up from 5.2 at an outside draw I had done in February — I realize I should have mentioned that sooner). I came across a 2024 meta-analysis in Thyroid Research (Razvi et al.) suggesting that age- and sex-specific TSH thresholds may be more appropriate than universal reference ranges, and that a cutoff of 4.0 mIU/L for women aged 40-50 better predicts progression to overt hypothyroidism. Given my family history and this upward trend, I'd like to have a real conversation about whether a trial of low-dose levothyroxine (25mcg) is now warranted.\n\n2. PHARMACOGENOMIC TESTING: I've been reading about CYP2D6 polymorphisms and SSRI metabolism (Hicks et al., 2015, Clinical Pharmacology & Therapeutics). As you know, I tried escitalopram before sertraline and had significant side effects. I'm wondering whether pharmacogenomic testing could retroactively explain that experience and whether it has any implications for my current dosing. Is this something you can order, or would I need a referral?\n\n3. RESTING HEART RATE CHANGE: My Apple Watch data shows my resting heart rate has averaged 62 bpm over the past 30 days, up from my usual baseline of 52 bpm. I've exported the data to a CSV and can share it. This is a sustained 10 bpm increase that doesn't correlate with changes in training volume, sleep, or stress. I want to make sure this isn't clinically significant — especially in the context of the TSH increase.\n\n4. Given all of the above, should I schedule a dedicated appointment to go through everything? I know this is a lot for a portal message, and I'd rather have a thorough conversation than try to handle it piecemeal.\n\nThank you as always for your patience with my data-driven approach.\n\nSusan",
+      "thread": []
     }
   ]
 }

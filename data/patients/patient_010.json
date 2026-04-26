@@ -1653,6 +1653,17 @@
           "body": "Dorothy, don't you ever apologize for reaching out. This is exactly what you should be doing. I'm very concerned about what you're describing. First, the immediate safety plan: You were RIGHT to turn his oxygen up to 4L during that episode. If it happens again and he doesn't improve within 10-15 minutes on 4L, or if his lips turn blue, call 911 immediately. Do not wait. Now for the appointment: I'm having Maria call you this morning to get him in tomorrow (Friday). I want to examine him, check his weight myself, and draw labs. If he's too weak to come in, we can arrange for the home health nurse to come today to check his vitals and oxygen levels. Dorothy, I hear what you're telling me about what Bill said. I want you to know that when you come in, we're going to have an honest conversation about where things stand and what our options are -- including how to keep him comfortable. Please bring Karen if she can come. You have been Bill's rock through all of this, and we are going to make sure you both have the support you need. Call us if anything changes before tomorrow. My nurse Rachel has my direct number if you need me after hours."
         }
       ]
+    },
+    {
+      "id": "msg-010-005",
+      "date": "2026-04-24T07:22:00Z",
+      "sender": { "name": "Dorothy Novak", "role": "family" },
+      "recipient": { "name": "Dr. Sarah Kim, MD", "role": "provider" },
+      "category": "urgent_symptom",
+      "priority": "urgent",
+      "subject": "Bill not doing well - very worried",
+      "body": "Dr. Kim, it's Dorothy. I don't know if I should be taking Bill to the emergency room or not but something is wrong. The last two days he's been confused -- yesterday he called me by his sister Eileen's name and this morning he couldn't tell me what day it was. That's not like him. His ankles are swelled up worse than I've ever seen, I mean I can barely get his shoes on and when I press on them my finger leaves a dent. He hasn't been able to sleep in bed for three nights now because he can't breathe lying down, so he's been in the recliner. I weighed him on the bathroom scale this morning and he's up 6 pounds from last Friday. I've been giving him all his pills like the schedule says. I wrote everything down like you told me to. I'm scared, Dr. Kim. I don't know if this is something his body is just doing now or if we need to do something different. Please call me when you get this. I'll have my phone right next to me.",
+      "thread": []
     }
   ]
 }
