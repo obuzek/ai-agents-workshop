@@ -179,6 +179,11 @@ def trigger_agent(patient_id: str):
     _post(f"/patients/{patient_id}/run", {})
 
 
+def mark_concern_resolved(patient_id: str, concern_id: str):
+    """Mark a concern as resolved."""
+    _post(f"/patients/{patient_id}/concerns/{concern_id}/resolve", {})
+
+
 def get_agent_status() -> dict:
     """Get the agent's current status (running, last_run, etc.)."""
     try:
@@ -195,18 +200,32 @@ def get_agent_status() -> dict:
 # Each render function takes model objects, never raw dicts.
 
 
-def render_patient_selector(patients: list[dict], inbox: list[dict]) -> str:
+def render_patient_selector(patients: list[dict], inbox: list[dict],
+                            all_concerns: dict[str, list]) -> str:
     """Render the patient dropdown. Returns the selected patient ID."""
     new_counts: dict[str, int] = {}
     for item in inbox:
         pid = item["patient_id"]
         new_counts[pid] = new_counts.get(pid, 0) + 1
 
+    def max_urgency(pid: str) -> str:
+        """Return the highest urgency among unresolved concerns for a patient."""
+        concerns = all_concerns.get(pid, [])
+        urgencies = {c.get("urgency", "routine") for c in concerns
+                     if c.get("status") != "resolved"}
+        if "urgent" in urgencies:
+            return "urgent"
+        if "soon" in urgencies:
+            return "soon"
+        return "none"
+
     def label(p):
         count = new_counts.get(p["id"], 0)
+        urgency = max_urgency(p["id"])
+        icon = {"urgent": "\U0001f534", "soon": "\U0001f7e1", "none": "\u2705"}[urgency]
         if count == 0:
-            return f"✅ {p['name']}"
-        return f"⬜ {p['name']} ({count} new)"
+            return f"{icon} {p['name']}"
+        return f"{icon} {p['name']} ({count} new)"
 
     return st.selectbox(
         "Patient",
@@ -417,6 +436,12 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
                             st.session_state["highlight_encounter_date"] = ed
                             st.session_state["active_record_tab"] = "History"
                             st.rerun()
+
+                # Mark resolved button
+                if concern.get("status") != "resolved":
+                    if st.button("Mark Resolved", key=f"resolve_{concern.get('id', '')}"):
+                        mark_concern_resolved(patient_id, concern.get("id", ""))
+                        st.rerun()
     else:
         st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")
 
@@ -503,13 +528,14 @@ st.title("Lakeview Family Medicine")
 # Load data
 patient_list = load_patient_list()
 inbox = load_inbox()
-selected_id = render_patient_selector(patient_list, inbox)
+all_concerns = {p["id"]: load_concerns(p["id"]) for p in patient_list}
+selected_id = render_patient_selector(patient_list, inbox, all_concerns)
 
 st.divider()
 
 patient = load_patient(selected_id)
 messages = load_messages(selected_id)
-concerns = load_concerns(selected_id)
+concerns = all_concerns.get(selected_id, [])
 
 # Row 1: Medical record + Concerns
 col_record, col_concerns = st.columns([3, 2])

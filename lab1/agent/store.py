@@ -36,3 +36,17 @@ def get_concerns(patient_id: str) -> list[dict]:
     if patient_concerns is None:
         return []
     return [c.model_dump() for c in patient_concerns.concerns]
+
+
+def resolve_concern(patient_id: str, concern_id: str) -> bool:
+    """Mark a concern as resolved. Returns True if found and updated."""
+    store = load_store()
+    patient_concerns = store.patients.get(patient_id)
+    if patient_concerns is None:
+        return False
+    for c in patient_concerns.concerns:
+        if c.id == concern_id:
+            c.status = "resolved"
+            save_store(store)
+            return True
+    return False

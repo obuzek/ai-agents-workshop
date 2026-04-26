@@ -101,6 +101,21 @@ def trigger_agent(patient_id: str):
         raise HTTPException(status_code=503, detail="Agent API unavailable")
 
 
+@app.post("/patients/{patient_id}/concerns/{concern_id}/resolve")
+def resolve_concern(patient_id: str, concern_id: str):
+    """Mark a concern as resolved. Proxies to the agent API."""
+    get_patient_or_404(patient_id)
+    try:
+        resp = http_client.post(
+            f"{AGENT_API_URL}/patients/{patient_id}/concerns/{concern_id}/resolve",
+            timeout=5,
+        )
+        resp.raise_for_status()
+        return resp.json()
+    except http_client.RequestException:
+        raise HTTPException(status_code=503, detail="Agent API unavailable")
+
+
 @app.get("/agent/status")
 def agent_status():
     """Get the agent's current status. Proxies to the agent API."""
