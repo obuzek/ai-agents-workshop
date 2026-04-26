@@ -5,13 +5,17 @@ Serves patient data from the JSON files in data/patients/.
 Run with: uvicorn app.api:app --reload
 """
 
+import os
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import requests as http_client
 
 from app.store import load_patients, save_reply
 
 app = FastAPI(title="Lakeview Family Medicine EHR", version="0.1.0")
+
+AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 
 
 # --- Request models ---
@@ -69,9 +73,43 @@ def get_messages(patient_id: str):
 @app.get("/patients/{patient_id}/concerns")
 def get_concerns(patient_id: str):
     """Get the current concerns for a patient.
-    Returns empty list until the agent populates it."""
-    # TODO: this will be populated by the agent in later steps
-    return []
+
+    Proxies to the agent API. Returns empty list if the agent API
+    is unavailable — the UI degrades gracefully without the agent.
+    """
+    get_patient_or_404(patient_id)
+    try:
+        resp = http_client.get(
+            f"{AGENT_API_URL}/patients/{patient_id}/concerns",
+            timeout=5,
+        )
+        resp.raise_for_status()
+        return resp.json()
+    except (http_client.ConnectionError, http_client.Timeout):
+        return []
+
+
+@app.post("/patients/{patient_id}/run")
+def trigger_agent(patient_id: str):
+    """Trigger the agent for a single patient. Proxies to the agent API."""
+    get_patient_or_404(patient_id)
+    try:
+        resp = http_client.post(f"{AGENT_API_URL}/patients/{patient_id}/run", timeout=5)
+        resp.raise_for_status()
+        return resp.json()
+    except (http_client.ConnectionError, http_client.Timeout):
+        raise HTTPException(status_code=503, detail="Agent API unavailable")
+
+
+@app.get("/agent/status")
+def agent_status():
+    """Get the agent's current status. Proxies to the agent API."""
+    try:
+        resp = http_client.get(f"{AGENT_API_URL}/status", timeout=5)
+        resp.raise_for_status()
+        return resp.json()
+    except (http_client.ConnectionError, http_client.Timeout):
+        return {"running": False, "last_run": "", "error": "Agent API unavailable"}
 
 
 @app.get("/inbox")

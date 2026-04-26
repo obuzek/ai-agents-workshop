@@ -8,10 +8,11 @@ dependencies = [
     "uvicorn>=0.34",
     "streamlit>=1.45",
     "requests>=2.32",
+    "openai>=1.0",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["app"]
+packages = ["app", "lab1"]
 
 [build-system]
 requires = ["hatchling"]
