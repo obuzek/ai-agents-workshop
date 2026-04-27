@@ -63,7 +63,7 @@ Complete these steps **before the workshop** to make sure your environment is re
 
 ### Docker
 
-Lab 2 uses [Langfuse](https://langfuse.com/) for LLM observability, running locally via Docker Compose. You don't need Docker for Labs 1, 3, or 4.
+Labs 2, 3, and 4 use Docker Compose for various services (Langfuse, Postgres). Install Docker before the workshop.
 
 === "macOS"
     Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or via Homebrew:
@@ -88,11 +88,12 @@ docker compose version
 ```
 
 ???+ tip "Pre-pull the images"
-    The Langfuse stack pulls several container images on first run. To avoid waiting during the lab:
+    The Langfuse and Postgres stacks pull container images on first run. To avoid waiting during the labs:
 
     ```bash
     cd ai-agents-workshop
-    docker compose -f docker-compose.langfuse.yml pull
+    docker compose -f docker-compose.langfuse.yml pull  # Lab 2
+    docker pull postgres:16                              # Lab 4
     ```
 
 ## Optional for Lab 3
@@ -125,6 +126,35 @@ ollama list | grep guardian
 
 ???+ tip "Why Ollama?"
     Granite Guardian runs locally — no API keys, no cloud dependency. Your patient data never leaves your machine, which matters when you're building hallucination detection for healthcare data.
+
+## Required for Lab 4
+
+### Postgres (via Docker)
+
+Lab 4 stores agent concerns in Postgres with Row-Level Security. The database runs in Docker — no local Postgres installation needed.
+
+```bash
+# Start the Lab 4 Postgres database
+docker compose up -d
+
+# Verify it's running
+docker compose exec postgres psql -U agent -d agent_store -c "SELECT id, display_name FROM providers;"
+```
+
+You should see three providers: Dr. Sarah Kim, Nurse Jordan Lopez, and MA Riley Davis.
+
+```bash
+# Install the Python Postgres driver
+uv sync --extra postgres
+```
+
+???+ tip "Pre-pull the Postgres image"
+    ```bash
+    docker pull postgres:16
+    ```
+
+???+ note "No Docker? Lab 4 still works"
+    Without Docker, Lab 4 falls back to the same JSON file store used in Labs 1-3. You'll miss the RLS demo and role switching, but the concern stability and tool scoping features still work. Just skip the `DATABASE_URL` environment variable.
 
 ---
 
