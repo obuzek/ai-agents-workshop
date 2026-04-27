@@ -112,8 +112,8 @@ By the end of this lab, you will:
 - [x] Understand the ReAct loop (Observe → Reason → Act) and how it maps to LangGraph's `create_react_agent`
 - [x] Know the difference between an agent that *surfaces information* and one that *generates content* — and why it matters in healthcare
 - [x] Understand how Structured Outputs and constrained decoding eliminate JSON parsing headaches
-- [ ] Run the agent against synthetic patient data and examine its output
-- [ ] Identify the limitations of a naive implementation
+- [x] Run the agent against synthetic patient data and examine its output
+- [x] Identify the limitations of a naive implementation
 
 ---
 

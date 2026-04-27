@@ -30,26 +30,10 @@ This is the inner loop of the ADLC's Operations & Governance phase — monitor, 
 By the end of this lab, you will:
 
 - [x] Know how to use Langfuse traces to identify concrete agent failures
-- [ ] Replace dump-everything tools with keyword-based search tools
-- [ ] Add a critic agent that evaluates the primary agent's output in a loop
-- [ ] Implement hallucination detection using Granite Guardian
-- [ ] Compare LLM-as-judge vs. purpose-built grounding models
-
----
-
-## Prerequisites (optional)
-
-Granite Guardian grounding is **optional** — the lab works out of the box with LLM-as-judge grounding. If you want to compare both approaches, install Ollama:
-
-1. Install [Ollama](https://ollama.com/)
-2. Pull the Granite Guardian model:
-
-```bash
-ollama pull ibm/granite3.2-guardian:3b
-```
-
-???+ tip "Why Ollama?"
-    Granite Guardian runs locally — no API keys, no cloud dependency. Your patient data never leaves your machine, which matters when you're building hallucination detection for healthcare data.
+- [x] Replace dump-everything tools with keyword-based search tools
+- [x] Add a critic agent that evaluates the primary agent's output in a loop
+- [x] Implement hallucination detection using Granite Guardian
+- [x] Compare LLM-as-judge vs. purpose-built grounding models
 
 ---
 
@@ -324,7 +308,7 @@ The critic sees the concerns plus grounding verdicts and decides: approve or rev
 ## Step 5: Toggle Grounding Modes
 
 ???+ tip "Granite Guardian requires Ollama"
-    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running with the model pulled (see [Prerequisites](#prerequisites-optional)).
+    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running with the model pulled (see [Prerequisites](prerequisites.md#ollama-granite-guardian)).
 
 The **Grounding** button at the bottom of the UI toggles between `LLM` and `GUARDIAN` modes. This follows the same pattern as Lab 2's PII masking toggle — a runtime flag on the agent API:
 
