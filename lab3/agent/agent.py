@@ -15,7 +15,7 @@ import json
 import logging
 import os
 from datetime import datetime, timezone
-from typing import Annotated, TypedDict
+from typing import TypedDict
 
 from langchain_openai import ChatOpenAI
 from langfuse import observe
@@ -98,8 +98,10 @@ _react_agent = create_react_agent(
     response_format=PatientConcerns,
 )
 
-# Initialize Langfuse with PII masking on import (side effect sets up the singleton).
-_langfuse_handler = create_langfuse_handler()
+# Initialize the Langfuse singleton with PII masking on import.
+# The returned handler isn't used directly — each node creates its own —
+# but this call registers the mask function on the global Langfuse client.
+create_langfuse_handler()
 
 
 def _extract_tool_context(messages: list) -> str:

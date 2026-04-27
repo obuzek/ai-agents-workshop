@@ -20,7 +20,7 @@ from langfuse import observe
 from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
 
-from lab3.agent.grounding import GroundingResult, ClaimVerdict
+from lab3.agent.grounding import GroundingResult
 
 logger = logging.getLogger(__name__)
 

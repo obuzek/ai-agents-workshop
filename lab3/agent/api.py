@@ -43,18 +43,21 @@ def agent_status():
 @app.post("/patients/{patient_id}/run")
 def trigger_run(patient_id: str):
     """Run the agent for a single patient in a background thread."""
-    if _run_lock.locked():
+    # Acquire non-blocking to avoid TOCTOU race — if two requests arrive
+    # simultaneously, only the one that gets the lock proceeds.
+    if not _run_lock.acquire(blocking=False):
         return {"status": "already_running"}
 
     def _background_run():
         global _run_error
         from lab3.agent.run import run_single
-        with _run_lock:
+        try:
             _run_error = None
-            try:
-                run_single(patient_id)
-            except Exception as e:
-                _run_error = str(e)
+            run_single(patient_id)
+        except Exception as e:
+            _run_error = str(e)
+        finally:
+            _run_lock.release()
 
     thread = threading.Thread(target=_background_run, daemon=True)
     thread.start()

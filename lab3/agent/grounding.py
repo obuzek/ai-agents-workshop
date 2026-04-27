@@ -49,6 +49,11 @@ class ClaimVerdict(BaseModel):
     reason: str
 
 
+class ClaimVerdicts(BaseModel):
+    """Wrapper for structured output — list of grounding verdicts."""
+    verdicts: list[ClaimVerdict]
+
+
 class GroundingResult(BaseModel):
     """Grounding results for one concern."""
     concern_title: str
@@ -140,11 +145,7 @@ CLAIMS TO VERIFY:
 def _check_llm_judge(claims: list[str], context: str) -> list[ClaimVerdict]:
     """Use the same OpenAI model to evaluate groundedness."""
     model = os.environ.get("OPENAI_MODEL", "gpt-4o")
-    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(
-        type("ClaimVerdicts", (BaseModel,), {
-            "__annotations__": {"verdicts": list[ClaimVerdict]},
-        })
-    )
+    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(ClaimVerdicts)
     handler = CallbackHandler()
     result = llm.invoke(
         _JUDGE_PROMPT.format(context=context, claims=json.dumps(claims)),
