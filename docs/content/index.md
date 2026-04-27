@@ -34,7 +34,7 @@ Build a background agent that reads patient records and portal messages, identif
 The naive agent is a black box. Add tracing and structured logging so you can see every decision it makes and inspect its reasoning.
 
 ### [Lab 3: Improving Your Agent](./lab-3.md)
-Use observability data to identify failure modes. Add a critic agent to evaluate the primary agent's output, and Granite Guardian for content safety.
+Use observability data to identify failure modes. Add a critic agent to evaluate the primary agent's output, and Granite Guardian for groundedness detection.
 
 ### [Lab 4: Securing Data Used By The Agent](./lab-4.md)
 Move from "trust the code" to database-enforced access control with Postgres Row-Level Security. Map the threat model, apply least-privilege, and test against adversarial inputs.

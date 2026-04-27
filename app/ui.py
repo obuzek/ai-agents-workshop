@@ -126,7 +126,7 @@ def get_agent_status() -> dict:
         resp = requests.get(f"{API_URL}/agent/status", timeout=3)
         resp.raise_for_status()
         return resp.json()
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return {"running": False, "last_run": "", "error": "Agent unavailable"}
 
 
@@ -136,7 +136,7 @@ def get_masking_status() -> bool | None:
         resp = requests.get(f"{AGENT_API_URL}/masking", timeout=3)
         resp.raise_for_status()
         return resp.json().get("enabled")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
@@ -146,7 +146,27 @@ def toggle_masking() -> bool | None:
         resp = requests.post(f"{AGENT_API_URL}/masking/toggle", timeout=3)
         resp.raise_for_status()
         return resp.json().get("enabled")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return None
+
+
+def get_grounding_mode() -> str | None:
+    """Check which grounding mode is active. Returns None if agent is unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/grounding", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("mode")
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return None
+
+
+def toggle_grounding() -> str | None:
+    """Toggle grounding mode. Returns new mode, or None if agent is unavailable."""
+    try:
+        resp = requests.post(f"{AGENT_API_URL}/grounding/toggle", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("mode")
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
@@ -194,6 +214,7 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
         "Patient",
         options=[p["id"] for p in patients],
         format_func=lambda pid: label(patient_map[pid]),
+        key="selected_patient",
     )
 
 
@@ -289,32 +310,57 @@ def _related_row(text: str, button_key: str, **session_updates):
             st.rerun()
 
 
-def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Message] = None):
-    """Render the concerns panel (populated by the agent)."""
+@st.fragment
+def render_concerns(patient_id: str, messages: list[Message] = None):
+    """Render the concerns panel (populated by the agent).
+
+    This is a Streamlit fragment — it can rerun independently without
+    rerunning the whole page. This lets the agent status poll without
+    blocking navigation in the rest of the UI.
+    """
     st.subheader("Concerns")
 
     # Agent controls
     status = get_agent_status()
+    # Treat "just triggered" the same as "running" — the background thread
+    # may not have acquired the lock by the time this rerun checks status.
+    is_running = status.get("running") or st.session_state.get("agent_just_triggered")
     col_btn, col_status = st.columns([1, 2])
     with col_btn:
-        if status.get("running"):
+        if is_running:
             st.button("Agent Running...", disabled=True)
         else:
             if st.button("Run Agent"):
                 trigger_agent(patient_id)
-                st.rerun()
+                st.session_state["agent_just_triggered"] = True
+                st.rerun(scope="fragment")
     with col_status:
-        if status.get("running"):
+        if is_running:
             st.caption("Agent is processing patients...")
         elif status.get("last_run"):
             st.caption(f"Last run: {status['last_run'][:19]}")
         if status.get("error"):
             st.caption(f"Error: {status['error']}")
 
-    # Auto-refresh while agent is running
+    # Clear the trigger flag once the status endpoint confirms running
     if status.get("running"):
+        st.session_state.pop("agent_just_triggered", None)
+
+    # Auto-refresh while agent is running (fragment-scoped, doesn't block the page)
+    if is_running:
+        st.session_state["agent_was_running"] = True
         time.sleep(3)
+        st.rerun(scope="fragment")
+
+    # Agent just finished — clear cache so we pick up new concerns.
+    # Full rerun here (not fragment-scoped) so the patient selector
+    # urgency badges also update with the new concerns.
+    if st.session_state.pop("agent_was_running", False):
+        st.cache_data.clear()
         st.rerun()
+
+    # Fetch concerns fresh (fragment may rerun independently of the page)
+    concerns = load_concerns(patient_id)
 
     # Display concerns sorted by urgency
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
@@ -476,7 +522,6 @@ st.divider()
 
 patient = load_patient(selected_id)
 messages = load_messages(selected_id)
-concerns = all_concerns.get(selected_id, [])
 
 # Row 1: Medical record + Concerns
 col_record, col_concerns = st.columns([3, 2])
@@ -507,7 +552,7 @@ with col_record:
         render_history(patient)
 
 with col_concerns:
-    render_concerns(concerns, selected_id, messages)
+    render_concerns(selected_id, messages)
 
 # Row 2: Inbox + Conversation viewer
 st.divider()
@@ -523,13 +568,21 @@ with col_viewer:
         st.subheader("Conversation")
         st.info("Select a patient to view messages.")
 
-# PII masking toggle — only visible when the agent API is running (Lab 2+)
+# Agent toggles — only visible when the agent API is running
 masking_status = get_masking_status()
-if masking_status is not None:
+grounding_mode = get_grounding_mode()
+if masking_status is not None or grounding_mode is not None:
     st.divider()
-    col_spacer, col_toggle = st.columns([4, 1])
-    with col_toggle:
-        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
-        if st.button(label, type="secondary" if masking_status else "primary"):
-            toggle_masking()
-            st.rerun()
+    col_spacer, col_masking, col_grounding = st.columns([3, 1, 1])
+    with col_masking:
+        if masking_status is not None:
+            label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
+            if st.button(label, type="secondary" if masking_status else "primary"):
+                toggle_masking()
+                st.rerun()
+    with col_grounding:
+        if grounding_mode is not None:
+            label = f"Grounding: {grounding_mode.upper()}"
+            if st.button(label, type="secondary"):
+                toggle_grounding()
+                st.rerun()

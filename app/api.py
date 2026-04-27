@@ -82,6 +82,85 @@ def get_messages(patient_id: str):
     return [m.model_dump(by_alias=True) for m in messages]
 
 
+# --- Search endpoints (Lab 3) ---
+# These let agent tools request specific slices of a patient record
+# instead of fetching the entire thing.
+
+
+def _contains(obj, keyword: str) -> bool:
+    """Recursively check if keyword appears in any string value of a Pydantic model or dict."""
+    if isinstance(obj, str):
+        return keyword in obj.lower()
+    if isinstance(obj, BaseModel):
+        return any(_contains(getattr(obj, f), keyword) for f in obj.model_fields)
+    if isinstance(obj, dict):
+        return any(_contains(v, keyword) for v in obj.values())
+    if isinstance(obj, (list, tuple)):
+        return any(_contains(item, keyword) for item in obj)
+    return False
+
+
+@app.get("/patients/{patient_id}/demographics")
+def get_demographics(patient_id: str):
+    """Get just the demographics for a patient."""
+    patient = get_patient_or_404(patient_id)
+    return patient.demographics.model_dump(by_alias=True)
+
+
+@app.get("/patients/{patient_id}/conditions")
+def search_conditions(patient_id: str, q: str = ""):
+    """Search conditions by keyword. Returns all if no query given."""
+    patient = get_patient_or_404(patient_id)
+    return [
+        c.model_dump(by_alias=True) for c in patient.conditions
+        if not q or _contains(c, q.lower())
+    ]
+
+
+@app.get("/patients/{patient_id}/medications")
+def search_medications(patient_id: str, q: str = ""):
+    """Search medications by keyword. Returns all if no query given."""
+    patient = get_patient_or_404(patient_id)
+    return [
+        m.model_dump(by_alias=True) for m in patient.medications
+        if not q or _contains(m, q.lower())
+    ]
+
+
+@app.get("/patients/{patient_id}/labs")
+def search_labs(patient_id: str, test: str = ""):
+    """Search lab results by test name. Returns matching results with dates."""
+    patient = get_patient_or_404(patient_id)
+    test_lower = test.lower()
+    matches = []
+    for lab in patient.labs:
+        for panel in lab.panels:
+            for result in panel.results:
+                if not test or test_lower in result.test.lower():
+                    matches.append({
+                        "date": lab.date,
+                        "panel": panel.name,
+                        "test": result.test,
+                        "value": result.value,
+                        "unit": result.unit,
+                        "interpretation": result.interpretation,
+                    })
+    return sorted(matches, key=lambda r: r["date"], reverse=True)
+
+
+@app.get("/patients/{patient_id}/encounters")
+def search_encounters(patient_id: str, q: str = ""):
+    """Search encounters by keyword. Returns all if no query given."""
+    patient = get_patient_or_404(patient_id)
+    return [
+        e.model_dump(by_alias=True) for e in patient.encounters
+        if not q or _contains(e, q.lower())
+    ]
+
+
+# --- Agent proxy endpoints ---
+
+
 @app.get("/patients/{patient_id}/concerns")
 def get_concerns(patient_id: str):
     """Get the current concerns for a patient.

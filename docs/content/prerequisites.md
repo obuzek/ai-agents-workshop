@@ -95,6 +95,37 @@ docker compose version
     docker compose -f docker-compose.langfuse.yml pull
     ```
 
+## Optional for Lab 3
+
+### Ollama + Granite Guardian
+
+Lab 3 includes a grounding check that compares LLM-as-judge vs. [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/). The Guardian path is **optional** — the lab works out of the box with LLM-as-judge grounding. If you want to compare both approaches:
+
+1. Install [Ollama](https://ollama.com/)
+2. Pull the Granite Guardian model (the `:3b` tag is required — the model has no default tag):
+
+```bash
+ollama pull ibm/granite3.2-guardian:3b
+```
+
+3. Install the optional Python dependency:
+
+```bash
+uv sync --extra guardian
+```
+
+Verify Ollama has the model:
+
+```bash
+ollama list | grep guardian
+```
+
+!!! warning "Don't toggle without installing"
+    The **Grounding** toggle in Lab 3's UI will switch to Guardian mode, but the agent will crash if `ollama` isn't installed or the model isn't pulled. Only flip the toggle if you completed these steps.
+
+???+ tip "Why Ollama?"
+    Granite Guardian runs locally — no API keys, no cloud dependency. Your patient data never leaves your machine, which matters when you're building hallucination detection for healthcare data.
+
 ---
 
 ## Clone and Install

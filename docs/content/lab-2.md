@@ -42,10 +42,10 @@ By the end of this lab, you will:
 
 - [x] Understand why agent observability requires different tooling than traditional software monitoring
 - [x] Know the difference between traces, spans, and the data they capture
-- [ ] Instrument a LangGraph agent with Langfuse using three lines of code
-- [ ] See raw PHI in your traces and understand the risk
-- [ ] Implement client-side PII masking so sensitive data never reaches the trace store
-- [ ] Use the Langfuse UI to inspect agent behavior: tool calls, token usage, cost, latency
+- [x] Instrument a LangGraph agent with Langfuse using three lines of code
+- [x] See raw PHI in your traces and understand the risk
+- [x] Implement client-side PII masking so sensitive data never reaches the trace store
+- [x] Use the Langfuse UI to inspect agent behavior: tool calls, token usage, cost, latency
 
 ---
 
