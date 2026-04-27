@@ -106,16 +106,13 @@ That's it. The `CallbackHandler` hooks into LangChain's callback system, which L
 
 ## Step 3: Run the Agent
 
-Start the system (you need three terminals, just like Lab 1):
+Start the system (you need two terminals):
 
 ```bash
-# Terminal 1: Main API
-uv run uvicorn app.api:app --port 8000
-
-# Terminal 2: Streamlit UI
+# Terminal 1: Streamlit UI (auto-starts the EHR API)
 uv run streamlit run app/ui.py --server.port 8501
 
-# Terminal 3: Agent API (now using lab2)
+# Terminal 2: Agent API (now using lab2)
 uv run uvicorn lab2.agent.api:app --port 8001
 ```
 

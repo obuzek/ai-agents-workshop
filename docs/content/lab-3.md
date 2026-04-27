@@ -240,13 +240,10 @@ Each module has one job. The grounding module doesn't know about the critic. The
 Start the system with the Lab 3 agent:
 
 ```bash
-# Terminal 1: Main API
-uv run uvicorn app.api:app --port 8000
-
-# Terminal 2: Streamlit UI
+# Terminal 1: Streamlit UI (auto-starts the EHR API)
 uv run streamlit run app/ui.py --server.port 8501
 
-# Terminal 3: Agent API (now using lab3)
+# Terminal 2: Agent API (now using lab3)
 uv run uvicorn lab3.agent.api:app --port 8001
 ```
 

@@ -64,12 +64,12 @@ uv sync --all-extras
 
 ### Start the servers
 
-You need three terminals for Lab 4:
+You need two terminals for Lab 4:
 
-**Terminal 1 — API server:**
+**Terminal 1 — UI (auto-starts the EHR API):**
 
 ```bash
-uv run uvicorn app.api:app --reload --port 8000
+uv run streamlit run app/ui.py --server.port 8501
 ```
 
 **Terminal 2 — Agent API (with Postgres):**
@@ -78,14 +78,11 @@ uv run uvicorn app.api:app --reload --port 8000
 uv run uvicorn lab4.agent.api:app --port 8001
 ```
 
-**Terminal 3 — UI:**
-
-```bash
-uv run streamlit run app/ui.py --server.port 8501
-```
-
 !!! tip "No role dropdown?"
     If the **Active Role** dropdown doesn't appear, refresh the page. The UI loads before the agent API finishes connecting to Postgres, so the first request for providers returns empty. A page refresh fixes it.
+
+???+ note "No Docker?"
+    If you can't run Docker, Lab 4 still works — just skip the `DATABASE_URL` variable. The agent falls back to the JSON file store from Labs 1-3. You'll miss the RLS demo and role switching, but concern stability and tool scoping still work.
 
 ---
 

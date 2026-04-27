@@ -2,7 +2,8 @@
 FastAPI backend for the EHR inbox system.
 
 Serves patient data from the JSON files in data/patients/.
-Run with: uv run uvicorn app.api:app --reload
+Started automatically by the Streamlit UI, or manually:
+    uv run uvicorn app.api:app --reload
 """
 
 import logging

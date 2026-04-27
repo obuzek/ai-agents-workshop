@@ -1,15 +1,19 @@
 """
 Streamlit UI for the EHR inbox system.
 
-Start the backend and UI in two terminals:
-    uv run uvicorn app.api:app --reload --port 8000
+Start with a single command:
     uv run streamlit run app/ui.py --server.port 8501
 
-Set API_URL to point the UI at a different backend (default: http://localhost:8000).
+The EHR API server starts automatically in the background.
+
+Set API_URL to point the UI at an externally-managed backend instead.
+Set API_PORT to change the auto-started API's port (default: 8000).
 """
 
 import logging
 import os
+import socket
+import threading
 import time
 
 logger = logging.getLogger(__name__)
@@ -28,8 +32,47 @@ print(
     "╚══════════════════════════════════════════════════════════╝"
 )
 
-API_URL = os.environ.get("API_URL", "http://localhost:8000")
+API_PORT = int(os.environ.get("API_PORT", "8000"))
+API_URL = os.environ.get("API_URL", f"http://localhost:{API_PORT}")
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
+
+
+def _port_in_use(port: int) -> bool:
+    """Check if a port is already bound on localhost."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(("127.0.0.1", port)) == 0
+
+
+@st.cache_resource
+def _ensure_api_server():
+    """Start the EHR API in a background thread (once per Streamlit process).
+
+    Skipped if the port is already in use (e.g. user started it manually)
+    or if API_URL points somewhere other than the default localhost port.
+    """
+    # If the user set a custom API_URL, they're managing the server themselves.
+    if os.environ.get("API_URL"):
+        return None
+
+    if _port_in_use(API_PORT):
+        return None
+
+    import uvicorn
+    thread = threading.Thread(
+        target=uvicorn.run,
+        kwargs={"app": "app.api:app", "host": "127.0.0.1", "port": API_PORT},
+        daemon=True,
+    )
+    thread.start()
+    # Wait for the server to be ready before Streamlit makes its first request.
+    for _ in range(50):
+        if _port_in_use(API_PORT):
+            break
+        time.sleep(0.1)
+    return thread
+
+
+_ensure_api_server()
 
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 

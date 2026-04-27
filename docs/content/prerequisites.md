@@ -262,19 +262,13 @@ uv sync --all-extras
 
 ## 5. Start the EHR Inbox
 
-The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it by running two commands in separate terminals:
-
-**Terminal 1 — API server:**
-
-```bash
-uv run uvicorn app.api:app --reload --port 8000
-```
-
-**Terminal 2 — Inbox UI:**
+The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it with a single command:
 
 ```bash
 uv run streamlit run app/ui.py --server.port 8501
 ```
+
+The EHR API server starts automatically in the background on port 8000.
 
 Open [http://localhost:8501](http://localhost:8501) in your browser. You should see the inbox with 12 patients and their portal messages.
 
@@ -282,9 +276,8 @@ Open [http://localhost:8501](http://localhost:8501) in your browser. You should 
     The API and UI ports are configurable:
 
     ```bash
-    # Use different ports
-    uv run uvicorn app.api:app --reload --port 9000
-    API_URL=http://localhost:9000 uv run streamlit run app/ui.py --server.port 9501
+    # Use a different API port
+    API_PORT=9000 uv run streamlit run app/ui.py --server.port 9501
     ```
 
 ## Verify It Works

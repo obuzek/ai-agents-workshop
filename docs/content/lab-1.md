@@ -124,10 +124,6 @@ Before we look at any agent code, let's get oriented with the application.
 Start the EHR data viewer (you don't need an API key for this part):
 
 ```bash
-# Terminal 1: Start the backend API
-uv run uvicorn app.api:app --port 8000
-
-# Terminal 2: Start the Streamlit UI
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
@@ -242,10 +238,10 @@ This is the **contract** between the agent and the UI. The agent fills it in; th
 
 Make sure you've configured your LLM provider in `.env` (see [Prerequisites](./prerequisites.md#3-llm-provider-setup)).
 
-Start the agent API (in addition to the two terminals from Step 1):
+Start the agent API in a second terminal (the UI from Step 1 should still be running):
 
 ```bash
-# Terminal 3: Start the agent API
+# Terminal 2: Start the agent API
 uv run uvicorn lab1.agent.api:app --port 8001
 ```
 
