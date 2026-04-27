@@ -235,16 +235,9 @@ This is **least-privilege tool scoping**. The agent can see who's in the practic
 
 ## Step 6: Verify Concern Stability
 
-Run the agent again for the same patient as Dr. Kim. Compare the concern IDs before and after:
+Pick a patient you already ran as Dr. Kim. Note the concerns in the UI — titles, urgency, count. Now click **Run Agent** again.
 
-```bash
-docker compose exec postgres psql -U agent -d agent_store \
-  -c "SELECT id, title, last_updated FROM concerns
-      WHERE patient_id = 'patient-001' AND provider_id = 'dr_kim'
-      ORDER BY id;"
-```
-
-Concerns with the same underlying issue keep their IDs — the `last_updated` timestamp changes but the `id` is stable. New concerns get new IDs. Old concerns that the agent didn't mention are left untouched.
+Since no new data has arrived, the concerns should come back the same (or very similar). The agent receives its previous concerns as context and reuses their IDs rather than generating new ones from scratch each time.
 
 This matters because downstream systems (notification triggers, audit logs, care coordination) can reference concern IDs and know they're stable.
 
