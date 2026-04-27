@@ -82,5 +82,11 @@ A few targeted improvements dramatically change agent reliability:
 
 ---
 
-???+ tip "Up Next"
-    Head to [Lab 4: Securing Data Used By The Agent](./lab-4.md) to harden your agent against data leakage and prompt injection.
+## Up Next
+
+| Lab | Problem | Solution |
+|---|---|---|
+| ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
+| ~~[Lab 3](lab-3.md)~~ | ~~Unstable output, hallucinations, overstepping~~ | ~~Evaluation: output validation, grounding checks, guardrails~~ |
+| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: scoped tools, access controls, audit trails |

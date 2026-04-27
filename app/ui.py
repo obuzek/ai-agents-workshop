@@ -14,12 +14,10 @@ import time
 import streamlit as st
 import requests
 
-from app.models import (
-    Patient, Message, Condition, Allergy, Medication,
-    Lab, LabPanel, LabResult, Encounter, SOAPNotes, Sender, ThreadEntry,
-)
+from app.models import Patient, Message, Concern
 
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
+AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 
@@ -74,74 +72,12 @@ def _post(endpoint: str, payload: dict):
     st.cache_data.clear()
 
 
-def _parse_sender(data: dict) -> Sender:
-    return Sender(name=data["name"], role=data["role"])
-
-
 def _parse_message(data: dict) -> Message:
-    return Message(
-        id=data["id"],
-        date=data["date"],
-        sender=_parse_sender(data["sender"]),
-        category=data["category"],
-        subject=data["subject"],
-        body=data["body"],
-        thread=[
-            ThreadEntry(date=t["date"], sender=_parse_sender(t["sender"]), body=t["body"])
-            for t in data.get("thread", [])
-        ],
-    )
+    return Message.model_validate(data)
 
 
 def _parse_patient(data: dict) -> Patient:
-    demo = data["demographics"]
-    social = data.get("socialHistory", "")
-    if isinstance(social, dict):
-        social = social.get("notes", "")
-
-    return Patient(
-        id=data["id"],
-        given_name=demo["name"]["given"],
-        family_name=demo["name"]["family"],
-        birth_date=demo["birthDate"],
-        language=demo.get("preferredLanguage", "English"),
-        conditions=[
-            Condition(display=c["display"], status=c["status"],
-                      notes=c.get("notes", ""), onset_date=c.get("onsetDate", ""))
-            for c in data.get("conditions", [])
-        ],
-        allergies=[
-            Allergy(substance=a["substance"], reaction=a["reaction"])
-            for a in data.get("allergies", [])
-        ],
-        medications=[
-            Medication(display=m["display"], dosage=m["dosage"], frequency=m["frequency"],
-                       prescriber=m["prescriber"], status=m["status"])
-            for m in data.get("medications", [])
-        ],
-        labs=[
-            Lab(date=lab["date"], ordered_by=lab["orderedBy"], panels=[
-                LabPanel(name=p["name"], results=[
-                    LabResult(test=r["test"], value=r["value"], unit=r.get("unit", ""),
-                              interpretation=r.get("interpretation", ""))
-                    for r in p.get("results", [])
-                ])
-                for p in lab.get("panels", [])
-            ])
-            for lab in data.get("labs", [])
-        ],
-        encounters=[
-            Encounter(date=e["date"], reason=e.get("reasonForVisit", "Visit"), notes=SOAPNotes(
-                subjective=e.get("notes", {}).get("subjective", ""),
-                objective=e.get("notes", {}).get("objective", ""),
-                assessment=e.get("notes", {}).get("assessment", ""),
-                plan=e.get("notes", {}).get("plan", ""),
-            ))
-            for e in data.get("encounters", [])
-        ],
-        messages=[_parse_message(m) for m in data.get("messages", [])],
-        social_history=social,
-    )
+    return Patient.model_validate(data)
 
 
 def load_patient_list() -> list[dict]:
@@ -164,9 +100,9 @@ def load_messages(patient_id: str) -> list[Message]:
     return [_parse_message(m) for m in _fetch(f"/patients/{patient_id}/messages")]
 
 
-def load_concerns(patient_id: str) -> list:
-    """Load concerns for a patient."""
-    return _fetch(f"/patients/{patient_id}/concerns")
+def load_concerns(patient_id: str) -> list[Concern]:
+    """Load concerns for a patient as Concern models."""
+    return [Concern.model_validate(c) for c in _fetch(f"/patients/{patient_id}/concerns")]
 
 
 def send_reply(patient_id: str, message_id: str, body: str):
@@ -194,6 +130,26 @@ def get_agent_status() -> dict:
         return {"running": False, "last_run": "", "error": "Agent unavailable"}
 
 
+def get_masking_status() -> bool | None:
+    """Check whether PII masking is enabled on the agent. Returns None if agent is unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/masking", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("enabled")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
+
+
+def toggle_masking() -> bool | None:
+    """Toggle PII masking on the agent. Returns new state, or None if agent is unavailable."""
+    try:
+        resp = requests.post(f"{AGENT_API_URL}/masking/toggle", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("enabled")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
+
+
 # ======================
 # UI components
 # ======================
@@ -201,7 +157,7 @@ def get_agent_status() -> dict:
 
 
 def render_patient_selector(patients: list[dict], inbox: list[dict],
-                            all_concerns: dict[str, list]) -> str:
+                            all_concerns: dict[str, list[Concern]]) -> str:
     """Render the patient dropdown. Returns the selected patient ID."""
     new_counts: dict[str, int] = {}
     for item in inbox:
@@ -211,8 +167,7 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
     def max_urgency(pid: str) -> str:
         """Return the highest urgency among unresolved concerns for a patient."""
         concerns = all_concerns.get(pid, [])
-        urgencies = {c.get("urgency", "routine") for c in concerns
-                     if c.get("status") != "resolved"}
+        urgencies = {c.urgency for c in concerns if c.status != "resolved"}
         if "urgent" in urgencies:
             return "urgent"
         if "soon" in urgencies:
@@ -222,15 +177,23 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
     def label(p):
         count = new_counts.get(p["id"], 0)
         urgency = max_urgency(p["id"])
-        icon = {"urgent": "\U0001f534", "soon": "\U0001f7e1", "none": "\u2705"}[urgency]
+        if urgency == "urgent":
+            icon = "\U0001f534"
+        elif urgency == "soon":
+            icon = "\U0001f7e1"
+        elif count > 0:
+            icon = "\U0001f4e8"  # envelope — unread messages but no flagged concerns
+        else:
+            icon = "\u2705"
         if count == 0:
             return f"{icon} {p['name']}"
         return f"{icon} {p['name']} ({count} new)"
 
+    patient_map = {p["id"]: p for p in patients}
     return st.selectbox(
         "Patient",
         options=[p["id"] for p in patients],
-        format_func=lambda pid: label(next(p for p in patients if p["id"] == pid)),
+        format_func=lambda pid: label(patient_map[pid]),
     )
 
 
@@ -310,12 +273,23 @@ def render_history(patient: Patient):
     if highlight_date:
         del st.session_state["highlight_encounter_date"]
 
-    if patient.social_history:
+    if patient.social_history and patient.social_history.notes:
         st.markdown("**Social History**")
-        st.caption(patient.social_history)
+        st.caption(patient.social_history.notes)
 
 
-def render_concerns(concerns: list, patient_id: str, messages: list[Message] = None):
+def _related_row(text: str, button_key: str, **session_updates):
+    """Render a related-item row with a label and an Open button."""
+    col_l, col_b = st.columns([3, 1])
+    with col_l:
+        st.markdown(f"- {text}")
+    with col_b:
+        if st.button("Open", key=button_key):
+            st.session_state.update(session_updates)
+            st.rerun()
+
+
+def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Message] = None):
     """Render the concerns panel (populated by the agent)."""
     st.subheader("Concerns")
 
@@ -344,98 +318,70 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
 
     # Display concerns sorted by urgency
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
+    badge_colors = {"urgent": "red", "soon": "orange", "routine": "blue"}
+    status_badges = {"unresolved": ":orange-background[needs reply]",
+                     "monitoring": ":blue-background[monitoring]",
+                     "resolved": ":green-background[resolved]"}
     if concerns:
-        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.get("urgency", "routine"), 99))
+        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.urgency, 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
         for concern in concerns:
-            urgency = concern.get("urgency", "routine")
-            status_val = concern.get("status", "")
-            badge_color = {"urgent": "red", "soon": "orange", "routine": "blue"}.get(urgency, "blue")
-            status_badge = {"unresolved": ":orange-background[needs reply]",
-                            "monitoring": ":blue-background[monitoring]",
-                            "resolved": ":green-background[resolved]"}.get(status_val, "")
+            badge_color = badge_colors.get(concern.urgency, "blue")
+            status_badge = status_badges.get(concern.status, "")
 
-            with st.expander(f":{badge_color}-background[{urgency}]  {concern.get('title', 'Concern')}"):
-                # Action — the most important line
-                action = concern.get("action", "")
-                if action:
-                    st.markdown(f"**Do:** {action}")
+            with st.expander(f":{badge_color}-background[{concern.urgency}]  {concern.title}"):
+                if concern.action:
+                    st.markdown(f"**Do:** {concern.action}")
 
-                st.markdown(concern.get("summary", ""))
+                st.markdown(concern.summary)
 
                 # Type, onset, status
                 meta_parts = []
-                ctype = concern.get("concern_type", "")
-                if ctype:
-                    meta_parts.append(ctype.replace("_", " ").title())
-                onset = concern.get("onset", "")
-                if onset:
-                    meta_parts.append(f"since {onset}")
+                if concern.concern_type:
+                    meta_parts.append(concern.concern_type.replace("_", " ").title())
+                if concern.onset:
+                    meta_parts.append(f"since {concern.onset}")
                 if status_badge:
                     meta_parts.append(status_badge)
                 if meta_parts:
                     st.markdown(" · ".join(meta_parts))
 
                 # Evidence
-                if concern.get("evidence"):
+                if concern.evidence:
                     st.markdown("**Evidence:**")
-                    for e in concern["evidence"]:
+                    for e in concern.evidence:
                         st.markdown(f"- {e}")
 
                 # Related links
-                related = concern.get("related", {})
-                msg_ids = related.get("message_ids", [])
-                lab_dates = related.get("lab_dates", [])
-                conditions = related.get("conditions", [])
-                encounter_dates = related.get("encounter_dates", [])
-
-                has_links = msg_ids or lab_dates or conditions or encounter_dates
+                related = concern.related
+                has_links = related.message_ids or related.lab_dates or related.conditions or related.encounter_dates
                 if has_links:
                     st.markdown("**Related:**")
 
-                for mid in msg_ids:
-                    subject = msg_subjects.get(mid, mid)
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- {subject}")
-                    with col_btn:
-                        if st.button("Open", key=f"jump_{concern.get('id','')}_{mid}"):
-                            st.session_state["jump_to_message"] = mid
-                            st.rerun()
+                for mid in related.message_ids:
+                    _related_row(msg_subjects.get(mid, mid),
+                                 f"jump_{concern.id}_{mid}",
+                                 jump_to_message=mid)
 
-                for ld in lab_dates:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- Labs from {ld}")
-                    with col_btn:
-                        if st.button("Open", key=f"lab_{concern.get('id','')}_{ld}"):
-                            st.session_state["highlight_lab_date"] = ld
-                            st.session_state["active_record_tab"] = "Labs"
-                            st.rerun()
+                for ld in related.lab_dates:
+                    _related_row(f"Labs from {ld}",
+                                 f"lab_{concern.id}_{ld}",
+                                 highlight_lab_date=ld, active_record_tab="Labs")
 
-                for cond in conditions:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- {cond}")
-                    with col_btn:
-                        if st.button("Open", key=f"cond_{concern.get('id','')}_{cond}"):
-                            st.session_state["active_record_tab"] = "Conditions"
-                            st.rerun()
+                for cond in related.conditions:
+                    _related_row(cond,
+                                 f"cond_{concern.id}_{cond}",
+                                 active_record_tab="Conditions")
 
-                for ed in encounter_dates:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- Visit {ed}")
-                    with col_btn:
-                        if st.button("Open", key=f"enc_{concern.get('id','')}_{ed}"):
-                            st.session_state["highlight_encounter_date"] = ed
-                            st.session_state["active_record_tab"] = "History"
-                            st.rerun()
+                for ed in related.encounter_dates:
+                    _related_row(f"Visit {ed}",
+                                 f"enc_{concern.id}_{ed}",
+                                 highlight_encounter_date=ed, active_record_tab="History")
 
                 # Mark resolved button
-                if concern.get("status") != "resolved":
-                    if st.button("Mark Resolved", key=f"resolve_{concern.get('id', '')}"):
-                        mark_concern_resolved(patient_id, concern.get("id", ""))
+                if concern.status != "resolved":
+                    if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
+                        mark_concern_resolved(patient_id, concern.id)
                         st.rerun()
     else:
         st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")
@@ -576,3 +522,14 @@ with col_viewer:
     else:
         st.subheader("Conversation")
         st.info("Select a patient to view messages.")
+
+# PII masking toggle — only visible when the agent API is running (Lab 2+)
+masking_status = get_masking_status()
+if masking_status is not None:
+    st.divider()
+    col_spacer, col_toggle = st.columns([4, 1])
+    with col_toggle:
+        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
+        if st.button(label, type="secondary" if masking_status else "primary"):
+            toggle_masking()
+            st.rerun()

@@ -71,7 +71,7 @@ def list_patients():
 def get_patient(patient_id: str):
     """Get a full patient record as a structured object."""
     patient = get_patient_or_404(patient_id)
-    return _serialize_patient(patient)
+    return patient.model_dump(by_alias=True)
 
 
 @app.get("/patients/{patient_id}/messages")
@@ -79,7 +79,7 @@ def get_messages(patient_id: str):
     """Get all messages for a patient, newest first."""
     patient = get_patient_or_404(patient_id)
     messages = sorted(patient.messages, key=lambda m: m.date, reverse=True)
-    return [_serialize_message(m) for m in messages]
+    return [m.model_dump(by_alias=True) for m in messages]
 
 
 @app.get("/patients/{patient_id}/concerns")
@@ -150,85 +150,3 @@ def reply_to_message(patient_id: str, message_id: str, reply: ReplyRequest):
         date=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     )
     return {"status": "ok"}
-
-
-# --- Serialization helpers ---
-
-
-def _serialize_patient(patient):
-    """Serialize a Patient to a dict matching the API contract."""
-    return {
-        "id": patient.id,
-        "name": patient.name,
-        "demographics": {
-            "name": {"given": patient.given_name, "family": patient.family_name},
-            "birthDate": patient.birth_date,
-            "preferredLanguage": patient.language,
-        },
-        "conditions": [
-            {"display": c.display, "status": c.status, "onsetDate": c.onset_date, "notes": c.notes}
-            for c in patient.conditions
-        ],
-        "allergies": [
-            {"substance": a.substance, "reaction": a.reaction}
-            for a in patient.allergies
-        ],
-        "medications": [
-            {"display": m.display, "dosage": m.dosage, "frequency": m.frequency,
-             "prescriber": m.prescriber, "status": m.status}
-            for m in patient.medications
-        ],
-        "labs": [
-            {
-                "date": lab.date,
-                "orderedBy": lab.ordered_by,
-                "panels": [
-                    {
-                        "name": panel.name,
-                        "results": [
-                            {"test": r.test, "value": r.value, "unit": r.unit,
-                             "interpretation": r.interpretation}
-                            for r in panel.results
-                        ],
-                    }
-                    for panel in lab.panels
-                ],
-            }
-            for lab in patient.labs
-        ],
-        "encounters": [
-            {
-                "date": enc.date,
-                "reasonForVisit": enc.reason,
-                "notes": {
-                    "subjective": enc.notes.subjective,
-                    "objective": enc.notes.objective,
-                    "assessment": enc.notes.assessment,
-                    "plan": enc.notes.plan,
-                },
-            }
-            for enc in patient.encounters
-        ],
-        "messages": [_serialize_message(m) for m in patient.messages],
-        "socialHistory": patient.social_history,
-    }
-
-
-def _serialize_message(msg):
-    """Serialize a Message to a dict."""
-    return {
-        "id": msg.id,
-        "date": msg.date,
-        "sender": {"name": msg.sender.name, "role": msg.sender.role},
-        "category": msg.category,
-        "subject": msg.subject,
-        "body": msg.body,
-        "thread": [
-            {
-                "date": t.date,
-                "sender": {"name": t.sender.name, "role": t.sender.role},
-                "body": t.body,
-            }
-            for t in msg.thread
-        ],
-    }

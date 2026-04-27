@@ -2,7 +2,7 @@
 
 Complete these steps **before the workshop** to make sure your environment is ready.
 
-## Required Software
+## Required for All Labs
 
 ### Python 3.11+
 
@@ -58,6 +58,44 @@ Complete these steps **before the workshop** to make sure your environment is re
     uv --version
     ```
     Alternatively: `winget install --id=astral-sh.uv -e`
+
+## Required for Lab 2
+
+### Docker
+
+Lab 2 uses [Langfuse](https://langfuse.com/) for LLM observability, running locally via Docker Compose. You don't need Docker for Labs 1, 3, or 4.
+
+=== "macOS"
+    Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or via Homebrew:
+    ```bash
+    brew install --cask docker
+    ```
+
+=== "Linux"
+    ```bash
+    sudo apt install docker.io docker-compose-plugin
+    sudo systemctl enable --now docker
+    sudo usermod -aG docker $USER  # log out and back in after this
+    ```
+
+=== "Windows"
+    Install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+Verify it's working:
+
+```bash
+docker compose version
+```
+
+???+ tip "Pre-pull the images"
+    The Langfuse stack pulls several container images on first run. To avoid waiting during the lab:
+
+    ```bash
+    cd ai-agents-workshop
+    docker compose -f docker-compose.langfuse.yml pull
+    ```
+
+---
 
 ## Clone and Install
 

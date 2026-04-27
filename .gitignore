@@ -176,3 +176,4 @@ cython_debug/
 .claude/settings.local.json
 .ai-worktrees/
 .agent-lock
+data/agent_output.json

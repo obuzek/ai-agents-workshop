@@ -96,5 +96,14 @@ Data security for agents requires thinking beyond the model:
 
 ---
 
-???+ success "Workshop Complete"
+## Workshop Complete
+
+| Lab | Problem | Solution |
+|---|---|---|
+| ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
+| ~~[Lab 3](lab-3.md)~~ | ~~Unstable output, hallucinations, overstepping~~ | ~~Evaluation: output validation, grounding checks, guardrails~~ |
+| ~~[Lab 4](lab-4.md)~~ | ~~Unrestricted data access~~ | ~~Security: scoped tools, access controls, audit trails~~ |
+
+???+ success "You're done!"
     You've built an agent, made it observable, improved its reliability, and hardened it against data attacks. Check out the [Additional Resources](./resources.md) for further reading and frameworks to take this further.
