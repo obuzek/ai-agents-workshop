@@ -75,9 +75,10 @@ uv run uvicorn app.api:app --reload --port 8000
 **Terminal 2 — Agent API (with Postgres):**
 
 ```bash
-DATABASE_URL="postgresql://app_user:app_user_dev@localhost:5433/agent_store" \
-uv run uvicorn lab4.agent.api:app --port 8001
+uv run --env-file .env uvicorn lab4.agent.api:app --port 8001
 ```
+
+Your `.env` file should already have `DATABASE_URL` set from [prerequisites](prerequisites.md). If not, copy the example: `cp .env-example .env`
 
 **Terminal 3 — UI:**
 

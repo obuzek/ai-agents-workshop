@@ -17,7 +17,7 @@ import os
 from datetime import datetime, timezone
 from typing import TypedDict
 
-from langchain_openai import ChatOpenAI
+from app.llm import get_chat_model
 from langfuse import observe
 from langfuse.langchain import CallbackHandler
 from langgraph.graph import StateGraph, START, END
@@ -31,7 +31,6 @@ from lab4.agent.critic import evaluate as critic_evaluate
 
 logger = logging.getLogger(__name__)
 
-MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o")
 MAX_REVISIONS = int(os.environ.get("MAX_REVISIONS", "2"))
 
 SYSTEM_PROMPT = """\
@@ -95,7 +94,7 @@ class ReviewState(TypedDict):
 def _create_react_agent(patient_id: str):
     """Create a ReAct agent with tools scoped to a specific patient."""
     return create_react_agent(
-        model=ChatOpenAI(model=MODEL, max_retries=3),
+        model=get_chat_model(max_retries=3),
         tools=create_tools(patient_id),
         prompt=SYSTEM_PROMPT,
         response_format=PatientConcerns,

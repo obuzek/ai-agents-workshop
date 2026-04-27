@@ -18,7 +18,7 @@ import json
 import logging
 import os
 
-from langchain_openai import ChatOpenAI
+from app.llm import get_chat_model
 from langfuse import observe
 from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
@@ -105,8 +105,7 @@ Evidence: {evidence}
 @observe(name="Claim Extraction")
 def _extract_claims(title: str, summary: str, action: str, evidence: list[str]) -> list[str]:
     """Extract specific, verifiable medical claims from a concern."""
-    model = os.environ.get("OPENAI_MODEL", "gpt-4o")
-    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(ExtractedClaims)
+    llm = get_chat_model(max_retries=3).with_structured_output(ExtractedClaims)
     handler = CallbackHandler()
     result = llm.invoke(
         _EXTRACT_PROMPT.format(
@@ -143,9 +142,8 @@ CLAIMS TO VERIFY:
 
 @observe(name="Grounding: LLM-as-Judge")
 def _check_llm_judge(claims: list[str], context: str) -> list[ClaimVerdict]:
-    """Use the same OpenAI model to evaluate groundedness."""
-    model = os.environ.get("OPENAI_MODEL", "gpt-4o")
-    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(ClaimVerdicts)
+    """Use the configured LLM to evaluate groundedness."""
+    llm = get_chat_model(max_retries=3).with_structured_output(ClaimVerdicts)
     handler = CallbackHandler()
     result = llm.invoke(
         _JUDGE_PROMPT.format(context=context, claims=json.dumps(claims)),
