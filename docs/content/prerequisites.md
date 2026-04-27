@@ -2,7 +2,75 @@
 
 Complete these steps **before the workshop** to make sure your environment is ready.
 
-## LLM Provider Setup
+## 1. Install Tools
+
+### Python 3.11+
+
+=== "macOS"
+    ```bash
+    brew install python@3.11
+    python3 --version
+    ```
+
+=== "Linux"
+    ```bash
+    sudo apt update
+    sudo apt install python3.11 python3.11-venv
+    python3 --version
+    ```
+
+=== "Windows"
+    Download from [python.org](https://www.python.org/downloads/). Check "Add Python to PATH" during installation.
+
+### Git
+
+=== "macOS"
+    ```bash
+    brew install git
+    ```
+
+=== "Linux"
+    ```bash
+    sudo apt install git
+    ```
+
+=== "Windows"
+    Download from [git-scm.com](https://git-scm.com/download/win).
+
+### uv (Python package manager)
+
+=== "macOS/Linux"
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv --version
+    ```
+
+=== "macOS (Homebrew)"
+    ```bash
+    brew install uv
+    uv --version
+    ```
+
+=== "Windows"
+    <!-- TODO: verify Windows uv install instructions (see issue) -->
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    uv --version
+    ```
+    Alternatively: `winget install --id=astral-sh.uv -e`
+
+---
+
+## 2. Clone and Install
+
+```bash
+git clone https://github.com/obuzek/ai-agents-workshop.git
+cd ai-agents-workshop
+```
+
+---
+
+## 3. LLM Provider Setup
 
 The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs well under $1).
 
@@ -76,6 +144,16 @@ The total LLM cost for the entire workshop should not exceed **$5** on any paid 
 
 See `.env-example` for all available configuration options.
 
+### Verify your API key
+
+After setting up your `.env` file, confirm the LLM is reachable:
+
+```bash
+uv run python -c "from app.llm import get_chat_model; print(get_chat_model().invoke('Say hello in exactly three words.').content)"
+```
+
+You should see a short greeting. If you get an authentication error, double-check your API key in `.env`.
+
 !!! tip "Switching providers mid-workshop"
     Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
 
@@ -89,66 +167,9 @@ See `.env-example` for all available configuration options.
 
 ---
 
-## Required for All Labs
+## 4. Later-Lab Prerequisites
 
-### Python 3.11+
-
-=== "macOS"
-    ```bash
-    brew install python@3.11
-    python3 --version
-    ```
-
-=== "Linux"
-    ```bash
-    sudo apt update
-    sudo apt install python3.11 python3.11-venv
-    python3 --version
-    ```
-
-=== "Windows"
-    Download from [python.org](https://www.python.org/downloads/). Check "Add Python to PATH" during installation.
-
-### Git
-
-=== "macOS"
-    ```bash
-    brew install git
-    ```
-
-=== "Linux"
-    ```bash
-    sudo apt install git
-    ```
-
-=== "Windows"
-    Download from [git-scm.com](https://git-scm.com/download/win).
-
-### uv (Python package manager)
-
-=== "macOS/Linux"
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    uv --version
-    ```
-
-=== "macOS (Homebrew)"
-    ```bash
-    brew install uv
-    uv --version
-    ```
-
-=== "Windows"
-    <!-- TODO: verify Windows uv install instructions (see issue) -->
-    ```powershell
-    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-    uv --version
-    ```
-    Alternatively: `winget install --id=astral-sh.uv -e`
-
-## Required for Lab 2
-
-### Docker
+### Docker (Labs 2, 3, 4)
 
 Labs 2, 3, and 4 use Docker Compose for various services (Langfuse, Postgres). Install Docker before the workshop.
 
@@ -183,9 +204,7 @@ docker compose version
     docker pull postgres:16                              # Lab 4
     ```
 
-## Optional for Lab 3
-
-### Ollama + Granite Guardian
+### Ollama + Granite Guardian (Lab 3 — optional)
 
 Lab 3 includes a grounding check that compares LLM-as-judge vs. [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/). The Guardian path is **optional** — the lab works out of the box with LLM-as-judge grounding. If you want to compare both approaches:
 
@@ -214,9 +233,7 @@ ollama list | grep guardian
 ???+ tip "Why Ollama?"
     Granite Guardian runs locally — no API keys, no cloud dependency. Your patient data never leaves your machine, which matters when you're building hallucination detection for healthcare data.
 
-## Required for Lab 4
-
-### Postgres (via Docker)
+### Postgres via Docker (Lab 4)
 
 Lab 4 stores agent concerns in Postgres with Row-Level Security. The database runs in Docker — no local Postgres installation needed.
 
@@ -245,14 +262,7 @@ uv sync --extra postgres
 
 ---
 
-## Clone and Install
-
-```bash
-git clone https://github.com/obuzek/ai-agents-workshop.git
-cd ai-agents-workshop
-```
-
-## Start the EHR Inbox
+## 5. Start the EHR Inbox
 
 The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it by running two commands in separate terminals:
 
