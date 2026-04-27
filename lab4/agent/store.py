@@ -185,6 +185,7 @@ def _pg_get_shared_by(concern_id: str, provider_id: str) -> str | None:
     """If this concern was shared with the provider, return who shared it."""
     pool = _get_pool()
     with pool.connection() as conn:
+        conn.execute("SET LOCAL app.provider_id = %s", (provider_id,))
         row = conn.execute(
             "SELECT p.display_name FROM shared_concerns sc "
             "JOIN providers p ON sc.shared_by = p.id "
