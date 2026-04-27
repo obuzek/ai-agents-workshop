@@ -54,29 +54,34 @@ markdown_extensions:
 plugins:
   revealjs:
     center: false
+    hash: true
     mermaid: true
-    minScale: 0.5
-    maxScale: 1.0
+    width: 1280
+    height: 720
+    minScale: 0.3
+    maxScale: 2.0
     theme:
       light:
         hack:
           "": { font-family: "'IBM Plex Sans', sans-serif", font-size: "28px" }
-          ".slides section": { text-align: "left", padding: "40px 0", box-sizing: "border-box", overflow: "hidden" }
+          ".slides section": { text-align: "left", padding: "40px", box-sizing: "border-box", overflow: "hidden", display: "flex", flex-direction: "column", word-wrap: "break-word", overflow-wrap: "break-word" }
           ".slides h1": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.4em" }
           ".slides h2": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.2em" }
           ".slides ul, .slides ol": { display: "block", margin-left: "1.2em", width: "100%" }
           ".slides li": { font-size: "0.8em", margin-bottom: "0.25em" }
           ".slides p": { font-size: "0.8em" }
+          ".slides .push-bottom": { margin-top: "auto" }
           ".slides .mermaid svg": { max-width: "100% !important", max-height: "55vh", width: "100%", height: "auto" }
       dark:
         hack:
           "": { font-family: "'IBM Plex Sans', sans-serif", font-size: "28px" }
-          ".slides section": { text-align: "left", padding: "40px 0", box-sizing: "border-box", overflow: "hidden" }
+          ".slides section": { text-align: "left", padding: "40px", box-sizing: "border-box", overflow: "hidden", display: "flex", flex-direction: "column", word-wrap: "break-word", overflow-wrap: "break-word" }
           ".slides h1": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.4em" }
           ".slides h2": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.2em" }
           ".slides ul, .slides ol": { display: "block", margin-left: "1.2em", width: "100%" }
           ".slides li": { font-size: "0.8em", margin-bottom: "0.25em" }
           ".slides p": { font-size: "0.8em" }
+          ".slides .push-bottom": { margin-top: "auto" }
           ".slides .mermaid svg": { max-width: "100% !important", max-height: "55vh", width: "100%", height: "auto" }
   # Built-in blog plugin - see https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
   # blog:
