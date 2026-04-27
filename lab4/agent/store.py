@@ -69,7 +69,7 @@ def _pg_get_concerns(patient_id: str, provider_id: str) -> list[Concern]:
     """Fetch concerns visible to this provider for this patient."""
     pool = _get_pool()
     with pool.connection() as conn:
-        conn.execute("SET LOCAL app.provider_id = %s", (provider_id,))
+        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
         conn.row_factory = psycopg.rows.dict_row
         rows = conn.execute(
             "SELECT * FROM concerns WHERE patient_id = %s ORDER BY last_updated DESC",
@@ -84,7 +84,7 @@ def _pg_save_concerns(
     """Upsert concerns: update existing IDs, insert new ones, leave others untouched."""
     pool = _get_pool()
     with pool.connection() as conn:
-        conn.execute("SET LOCAL app.provider_id = %s", (provider_id,))
+        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
         for c in concerns:
             conn.execute(
                 """
@@ -140,7 +140,7 @@ def _pg_resolve_concern(patient_id: str, concern_id: str, provider_id: str) -> b
     """Mark a concern as resolved. RLS ensures you can only resolve your own or shared."""
     pool = _get_pool()
     with pool.connection() as conn:
-        conn.execute("SET LOCAL app.provider_id = %s", (provider_id,))
+        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
         result = conn.execute(
             "UPDATE concerns SET status = 'resolved' WHERE id = %s AND patient_id = %s",
             (concern_id, patient_id),
@@ -152,7 +152,7 @@ def _pg_share_concern(concern_id: str, shared_with: str, shared_by: str) -> bool
     """Share a concern with another provider."""
     pool = _get_pool()
     with pool.connection() as conn:
-        conn.execute("SET LOCAL app.provider_id = %s", (shared_by,))
+        conn.execute("SELECT set_config('app.provider_id', %s, true)", (shared_by,))
         conn.execute(
             """
             INSERT INTO shared_concerns (concern_id, shared_with, shared_by)
@@ -189,7 +189,7 @@ def _pg_get_shared_by(concern_id: str, provider_id: str) -> str | None:
     """If this concern was shared with the provider, return who shared it."""
     pool = _get_pool()
     with pool.connection() as conn:
-        conn.execute("SET LOCAL app.provider_id = %s", (provider_id,))
+        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
         row = conn.execute(
             "SELECT p.display_name FROM shared_concerns sc "
             "JOIN providers p ON sc.shared_by = p.id "
