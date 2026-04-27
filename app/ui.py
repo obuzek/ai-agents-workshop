@@ -508,8 +508,8 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
 
                 if concern.status != "resolved":
                     if other_providers:
-                        btn_col1, btn_col2 = st.columns(2)
-                        with btn_col1:
+                        col_dd, col_share = st.columns([3, 1])
+                        with col_dd:
                             share_target = st.selectbox(
                                 "Share with",
                                 [p["id"] for p in other_providers],
@@ -519,17 +519,13 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                                 key=f"share_select_{concern.id}",
                                 label_visibility="collapsed",
                             )
+                        with col_share:
                             if st.button("Share", key=f"share_{concern.id}"):
                                 share_concern_with(patient_id, concern.id, share_target)
                                 st.rerun()
-                        with btn_col2:
-                            if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
-                                mark_concern_resolved(patient_id, concern.id)
-                                st.rerun()
-                    else:
-                        if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
-                            mark_concern_resolved(patient_id, concern.id)
-                            st.rerun()
+                    if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
+                        mark_concern_resolved(patient_id, concern.id)
+                        st.rerun()
     else:
         st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")
 
@@ -613,6 +609,25 @@ def render_conversation(msg: Message, patient_id: str):
 
 st.title("Lakeview Family Medicine")
 
+# Role switcher (Lab 4) — only shown when providers are available
+providers = get_providers()
+if providers:
+    role_data = get_active_role()
+    current_role = role_data["provider_id"] if role_data else "dr_kim"
+    provider_names = {p["id"]: p["display_name"] for p in providers}
+    provider_ids = list(provider_names.keys())
+    current_idx = provider_ids.index(current_role) if current_role in provider_ids else 0
+    selected_role = st.selectbox(
+        "Active Role",
+        provider_ids,
+        index=current_idx,
+        format_func=lambda pid: provider_names.get(pid, pid),
+    )
+    if selected_role != current_role:
+        set_active_role(selected_role)
+        st.cache_data.clear()
+        st.rerun()
+
 # Load data
 patient_list = load_patient_list()
 
@@ -678,32 +693,10 @@ with col_viewer:
 # Agent toggles — only visible when the agent API is running
 masking_status = get_masking_status()
 grounding_mode = get_grounding_mode()
-providers = get_providers()
 
-if masking_status is not None or grounding_mode is not None or providers:
+if masking_status is not None or grounding_mode is not None:
     st.divider()
-
-    # Role switcher (Lab 4) — only shown when providers are available
-    if providers:
-        col_role, col_spacer, col_masking, col_grounding = st.columns([2, 1, 1, 1])
-        with col_role:
-            role_data = get_active_role()
-            current_role = role_data["provider_id"] if role_data else "dr_kim"
-            provider_names = {p["id"]: p["display_name"] for p in providers}
-            provider_ids = list(provider_names.keys())
-            current_idx = provider_ids.index(current_role) if current_role in provider_ids else 0
-            selected = st.selectbox(
-                "Active Role",
-                provider_ids,
-                index=current_idx,
-                format_func=lambda pid: provider_names.get(pid, pid),
-            )
-            if selected != current_role:
-                set_active_role(selected)
-                st.cache_data.clear()
-                st.rerun()
-    else:
-        col_spacer, col_masking, col_grounding = st.columns([3, 1, 1])
+    col_spacer, col_masking, col_grounding = st.columns([3, 1, 1])
 
     with col_masking:
         if masking_status is not None:
