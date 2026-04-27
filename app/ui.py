@@ -14,14 +14,10 @@ import time
 import streamlit as st
 import requests
 
-from app.models import Patient, Message
+from app.models import Patient, Message, Concern
 
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
-
-# Concern urgency / status values — must match lab*/agent/models.py
-URGENT, SOON, ROUTINE = "urgent", "soon", "routine"
-RESOLVED = "resolved"
 
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 
@@ -104,9 +100,9 @@ def load_messages(patient_id: str) -> list[Message]:
     return [_parse_message(m) for m in _fetch(f"/patients/{patient_id}/messages")]
 
 
-def load_concerns(patient_id: str) -> list:
-    """Load concerns for a patient."""
-    return _fetch(f"/patients/{patient_id}/concerns")
+def load_concerns(patient_id: str) -> list[Concern]:
+    """Load concerns for a patient as Concern models."""
+    return [Concern.model_validate(c) for c in _fetch(f"/patients/{patient_id}/concerns")]
 
 
 def send_reply(patient_id: str, message_id: str, body: str):
@@ -161,7 +157,7 @@ def toggle_masking() -> bool | None:
 
 
 def render_patient_selector(patients: list[dict], inbox: list[dict],
-                            all_concerns: dict[str, list]) -> str:
+                            all_concerns: dict[str, list[Concern]]) -> str:
     """Render the patient dropdown. Returns the selected patient ID."""
     new_counts: dict[str, int] = {}
     for item in inbox:
@@ -171,20 +167,19 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
     def max_urgency(pid: str) -> str:
         """Return the highest urgency among unresolved concerns for a patient."""
         concerns = all_concerns.get(pid, [])
-        urgencies = {c.get("urgency", ROUTINE) for c in concerns
-                     if c.get("status") != RESOLVED}
-        if URGENT in urgencies:
-            return URGENT
-        if SOON in urgencies:
-            return SOON
+        urgencies = {c.urgency for c in concerns if c.status != "resolved"}
+        if "urgent" in urgencies:
+            return "urgent"
+        if "soon" in urgencies:
+            return "soon"
         return "none"
 
     def label(p):
         count = new_counts.get(p["id"], 0)
         urgency = max_urgency(p["id"])
-        if urgency == URGENT:
+        if urgency == "urgent":
             icon = "\U0001f534"
-        elif urgency == SOON:
+        elif urgency == "soon":
             icon = "\U0001f7e1"
         elif count > 0:
             icon = "\U0001f4e8"  # envelope — unread messages but no flagged concerns
@@ -282,7 +277,7 @@ def render_history(patient: Patient):
         st.caption(patient.social_history.notes)
 
 
-def render_concerns(concerns: list, patient_id: str, messages: list[Message] = None):
+def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Message] = None):
     """Render the concerns panel (populated by the agent)."""
     st.subheader("Concerns")
 
@@ -310,99 +305,88 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
         st.rerun()
 
     # Display concerns sorted by urgency
-    urgency_order = {URGENT: 0, SOON: 1, ROUTINE: 2}
+    urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
     if concerns:
-        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.get("urgency", ROUTINE), 99))
+        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.urgency, 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
         for concern in concerns:
-            urgency = concern.get("urgency", ROUTINE)
-            status_val = concern.get("status", "")
-            badge_color = {URGENT: "red", SOON: "orange", ROUTINE: "blue"}.get(urgency, "blue")
+            badge_color = {"urgent": "red", "soon": "orange", "routine": "blue"}.get(concern.urgency, "blue")
             status_badge = {"unresolved": ":orange-background[needs reply]",
                             "monitoring": ":blue-background[monitoring]",
-                            RESOLVED: ":green-background[resolved]"}.get(status_val, "")
+                            "resolved": ":green-background[resolved]"}.get(concern.status, "")
 
-            with st.expander(f":{badge_color}-background[{urgency}]  {concern.get('title', 'Concern')}"):
-                # Action — the most important line
-                action = concern.get("action", "")
-                if action:
-                    st.markdown(f"**Do:** {action}")
+            with st.expander(f":{badge_color}-background[{concern.urgency}]  {concern.title}"):
+                if concern.action:
+                    st.markdown(f"**Do:** {concern.action}")
 
-                st.markdown(concern.get("summary", ""))
+                st.markdown(concern.summary)
 
                 # Type, onset, status
                 meta_parts = []
-                ctype = concern.get("concern_type", "")
-                if ctype:
-                    meta_parts.append(ctype.replace("_", " ").title())
-                onset = concern.get("onset", "")
-                if onset:
-                    meta_parts.append(f"since {onset}")
+                if concern.concern_type:
+                    meta_parts.append(concern.concern_type.replace("_", " ").title())
+                if concern.onset:
+                    meta_parts.append(f"since {concern.onset}")
                 if status_badge:
                     meta_parts.append(status_badge)
                 if meta_parts:
                     st.markdown(" · ".join(meta_parts))
 
                 # Evidence
-                if concern.get("evidence"):
+                if concern.evidence:
                     st.markdown("**Evidence:**")
-                    for e in concern["evidence"]:
+                    for e in concern.evidence:
                         st.markdown(f"- {e}")
 
                 # Related links
-                related = concern.get("related", {})
-                msg_ids = related.get("message_ids", [])
-                lab_dates = related.get("lab_dates", [])
-                conditions = related.get("conditions", [])
-                encounter_dates = related.get("encounter_dates", [])
-
-                has_links = msg_ids or lab_dates or conditions or encounter_dates
+                related = concern.related
+                has_links = related.message_ids or related.lab_dates or related.conditions or related.encounter_dates
                 if has_links:
                     st.markdown("**Related:**")
 
-                for mid in msg_ids:
+                for mid in related.message_ids:
                     subject = msg_subjects.get(mid, mid)
                     col_label, col_btn = st.columns([3, 1])
                     with col_label:
                         st.markdown(f"- {subject}")
                     with col_btn:
-                        if st.button("Open", key=f"jump_{concern.get('id','')}_{mid}"):
+                        if st.button("Open", key=f"jump_{concern.id}_{mid}"):
                             st.session_state["jump_to_message"] = mid
                             st.rerun()
 
-                for ld in lab_dates:
+                for ld in related.lab_dates:
                     col_label, col_btn = st.columns([3, 1])
                     with col_label:
                         st.markdown(f"- Labs from {ld}")
                     with col_btn:
-                        if st.button("Open", key=f"lab_{concern.get('id','')}_{ld}"):
+                        if st.button("Open", key=f"lab_{concern.id}_{ld}"):
                             st.session_state["highlight_lab_date"] = ld
                             st.session_state["active_record_tab"] = "Labs"
                             st.rerun()
 
-                for cond in conditions:
+                for cond in related.conditions:
                     col_label, col_btn = st.columns([3, 1])
                     with col_label:
                         st.markdown(f"- {cond}")
                     with col_btn:
-                        if st.button("Open", key=f"cond_{concern.get('id','')}_{cond}"):
+                        if st.button("Open", key=f"cond_{concern.id}_{cond}"):
                             st.session_state["active_record_tab"] = "Conditions"
                             st.rerun()
 
-                for ed in encounter_dates:
+                for ed in related.encounter_dates:
                     col_label, col_btn = st.columns([3, 1])
                     with col_label:
                         st.markdown(f"- Visit {ed}")
                     with col_btn:
-                        if st.button("Open", key=f"enc_{concern.get('id','')}_{ed}"):
+                        if st.button("Open", key=f"enc_{concern.id}_{ed}"):
                             st.session_state["highlight_encounter_date"] = ed
                             st.session_state["active_record_tab"] = "History"
                             st.rerun()
 
                 # Mark resolved button
-                if concern.get("status") != RESOLVED:
-                    if st.button("Mark Resolved", key=f"resolve_{concern.get('id', '')}"):
-                        mark_concern_resolved(patient_id, concern.get("id", ""))
+                if concern.status != "resolved":
+                    if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
+                        mark_concern_resolved(patient_id, concern.id)
                         st.rerun()
     else:
         st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")

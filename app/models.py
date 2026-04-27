@@ -13,7 +13,7 @@ The observability masking layer reads these annotations to redact sensitive
 data before it reaches the trace store.
 """
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -268,3 +268,34 @@ class Patient(_AliasModel):
     @property
     def active_medications(self) -> list[Medication]:
         return [m for m in self.medications if m.status == "active"]
+
+
+# --- Concern models (shared contract between main API and agent API) ---
+
+ConcernType = Literal["medication", "lab_result", "symptom", "follow_up", "administrative"]
+Urgency = Literal["routine", "soon", "urgent"]
+ConcernStatus = Literal["unresolved", "monitoring", "resolved"]
+
+
+class RelatedData(BaseModel):
+    """Pointers back into the patient record that support a concern."""
+    message_ids: list[str] = []
+    lab_dates: list[str] = []
+    conditions: list[str] = []
+    encounter_dates: list[str] = []
+
+
+class Concern(BaseModel):
+    """A single concern identified by the agent."""
+    id: str
+    patient_id: str
+    title: str
+    summary: str
+    action: str = ""
+    concern_type: ConcernType
+    urgency: Urgency
+    status: ConcernStatus
+    onset: str
+    last_updated: str
+    evidence: list[str]
+    related: RelatedData = RelatedData()
