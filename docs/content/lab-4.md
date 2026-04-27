@@ -48,11 +48,11 @@ docker compose exec postgres psql -U agent -d agent_store \
 You should see:
 
 ```
-     id      |    display_name     |       role
--------------+---------------------+--------------------
- dr_kim      | Dr. Sarah Kim       | physician
- ma_davis    | MA Riley Davis      | medical_assistant
- nurse_lopez | Nurse Jordan Lopez  | nurse
+      id       |    display_name     |        role
+---------------+---------------------+---------------------
+ dr_kim        | Dr. Sarah Kim, MD   | physician
+ maria_gonzalez| Maria Gonzalez      | medical_assistant
+ rachel_torres | Rachel Torres, NP   | nurse_practitioner
 (3 rows)
 ```
 
@@ -134,7 +134,7 @@ This means running the agent twice doesn't wipe out previous work — it builds 
 
 ## Step 1: Run the Agent as Dr. Kim
 
-In the UI, you should see a **role switcher** dropdown (bottom of the page, next to the masking and grounding toggles). It should show "Dr. Sarah Kim."
+In the UI, you should see a **role switcher** dropdown (bottom of the page, next to the masking and grounding toggles). It should show "Dr. Sarah Kim, MD."
 
 Pick a patient and click **Run Agent**. Watch the concerns appear.
 
@@ -151,12 +151,12 @@ Every concern has `provider_id = 'dr_kim'` — because Dr. Kim's agent created t
 
 ## Step 2: See RLS in Action
 
-Switch the role to **Nurse Jordan Lopez** using the dropdown.
+Switch the role to **Rachel Torres, NP** using the dropdown.
 
 Two things happen:
 
-1. The **patient list** shrinks — Nurse Lopez only has access to patients 1-6
-2. The **concerns panel** is empty — even for patients Nurse Lopez can access
+1. The **patient list** shrinks — Rachel Torres only has access to patients 1-6
+2. The **concerns panel** is empty — even for patients Rachel Torres can access
 
 Why? Because RLS. Look at the policy in `lab4/db/init.sql`:
 
@@ -172,9 +172,9 @@ CREATE POLICY provider_concern_access ON concerns
     );
 ```
 
-Nurse Lopez can only see concerns where `provider_id = 'nurse_lopez'` or the concern was explicitly shared with them. Dr. Kim's concerns are invisible — **even though they're in the same table, for the same patients.**
+Rachel Torres can only see concerns where `provider_id = 'rachel_torres'` or the concern was explicitly shared with them. Dr. Kim's concerns are invisible — **even though they're in the same table, for the same patients.**
 
-This is the teaching moment: **a bug in your Python code cannot leak Dr. Kim's concerns to Nurse Lopez.** The database prevents it. Application-layer access control can always be bypassed by a code bug. Database-layer access control cannot.
+This is the teaching moment: **a bug in your Python code cannot leak Dr. Kim's concerns to Rachel Torres.** The database prevents it. Application-layer access control can always be bypassed by a code bug. Database-layer access control cannot.
 
 ???+ question "What if we just filtered in Python?"
     You could write `WHERE provider_id = :provider_id` in every query. But:
@@ -188,26 +188,26 @@ This is the teaching moment: **a bug in your Python code cannot leak Dr. Kim's c
 
 ---
 
-## Step 3: Run the Agent as Nurse Lopez
+## Step 3: Run the Agent as Rachel Torres
 
-While still in the Nurse Lopez role, run the agent on one of the available patients (1-6).
+While still in the Rachel Torres role, run the agent on one of the available patients (1-6).
 
-Nurse Lopez's agent generates its own concerns — independently of Dr. Kim's. Check the database:
+Rachel Torres's agent generates its own concerns — independently of Dr. Kim's. Check the database:
 
 ```bash
 docker compose exec postgres psql -U agent -d agent_store \
   -c "SELECT id, title, provider_id FROM concerns WHERE patient_id = 'patient-001' ORDER BY provider_id;"
 ```
 
-You'll see two sets of concerns for the same patient — one from `dr_kim`, one from `nurse_lopez`. The agent is a **delegate** — its output inherits the identity of whoever invoked it.
+You'll see two sets of concerns for the same patient — one from `dr_kim`, one from `rachel_torres`. The agent is a **delegate** — its output inherits the identity of whoever invoked it.
 
 ---
 
 ## Step 4: Share a Concern
 
-Switch back to Dr. Kim. Find a concern and click **Share** → select Nurse Lopez.
+Switch back to Dr. Kim. Find a concern and click **Share** → select Rachel Torres.
 
-Now switch to Nurse Lopez. The shared concern appears alongside Nurse Lopez's own concerns, with a "Shared by Dr. Sarah Kim" label.
+Now switch to Rachel Torres. The shared concern appears alongside Rachel Torres's own concerns, with a "Shared by Dr. Sarah Kim, MD" label.
 
 Check the database:
 

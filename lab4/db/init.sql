@@ -81,20 +81,20 @@ GRANT USAGE ON SCHEMA public TO app_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO app_user;
 
--- Seed data
+-- Seed data (must match the practice providers in data/patient_specs.json)
 INSERT INTO providers (id, display_name, role) VALUES
-    ('dr_kim', 'Dr. Sarah Kim', 'physician'),
-    ('nurse_lopez', 'Nurse Jordan Lopez', 'nurse'),
-    ('ma_davis', 'MA Riley Davis', 'medical_assistant');
+    ('dr_kim', 'Dr. Sarah Kim, MD', 'physician'),
+    ('rachel_torres', 'Rachel Torres, NP', 'nurse_practitioner'),
+    ('maria_gonzalez', 'Maria Gonzalez', 'medical_assistant');
 
 INSERT INTO provider_patients (provider_id, patient_id)
 SELECT 'dr_kim', 'patient-' || LPAD(i::text, 3, '0')
 FROM generate_series(1, 12) AS i;
 
 INSERT INTO provider_patients (provider_id, patient_id)
-SELECT 'nurse_lopez', 'patient-' || LPAD(i::text, 3, '0')
+SELECT 'rachel_torres', 'patient-' || LPAD(i::text, 3, '0')
 FROM generate_series(1, 6) AS i;
 
 INSERT INTO provider_patients (provider_id, patient_id)
-SELECT 'ma_davis', 'patient-' || LPAD(i::text, 3, '0')
+SELECT 'maria_gonzalez', 'patient-' || LPAD(i::text, 3, '0')
 FROM generate_series(1, 3) AS i;
