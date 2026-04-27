@@ -21,9 +21,9 @@ from langchain_core.language_models.chat_models import BaseChatModel
 load_dotenv()
 
 _DEFAULT_MODELS = {
-    "gemini": "gemini-2.5-flash",
-    "openai": "gpt-4o",
-    "anthropic": "claude-sonnet-4-20250514",
+    "gemini": "gemini-2.5-flash-lite",
+    "openai": "gpt-4o-mini",
+    "anthropic": "claude-haiku-4-5-20251001",
 }
 
 
