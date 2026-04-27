@@ -323,25 +323,23 @@ lab4/
     __init__.py
     agent.py          # Copied from lab3, updated to pass existing concerns
     api.py            # Extended with /role, /providers, /share endpoints
-    critic.py         # Unchanged from lab3 (symlink or import)
-    grounding.py      # Unchanged from lab3 (symlink or import)
-    models.py         # Imports from app.models (same as lab3)
+    critic.py         # Copied from lab3, imports updated to lab4
+    grounding.py      # Copied from lab3, imports updated to lab4
+    models.py         # Copied from lab3, imports from app.models
     run.py            # Updated: passes provider_id, existing concerns
     store.py          # Rewritten: Postgres backend + JSON fallback
     tools.py          # Factory function with authorized_patient_id scoping
-    observability/    # Unchanged from lab3
+    observability/    # Copied from lab3, imports updated to lab4
       __init__.py
       masking.py
   db/
     init.sql          # Schema, RLS policies, seed data
 ```
 
-DRY strategy for unchanged Lab 3 code:
-- `critic.py`, `grounding.py`, `observability/` — import from `lab3` if
-  possible, otherwise copy with a header comment noting they are identical to
-  Lab 3. The workshop structure requires each lab to be self-contained (runnable
-  independently), so direct imports from `lab3` are preferred over copies when
-  the module path is stable.
+Each lab is fully self-contained — no cross-lab imports. Lab 4 starts as a
+complete copy of Lab 3 with all module names and imports updated to `lab4`.
+DRY applies within Lab 4, not across labs. Participants must be able to read
+and run any lab independently.
 
 ### Graceful degradation
 
