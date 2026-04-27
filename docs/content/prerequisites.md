@@ -258,9 +258,6 @@ uv sync --all-extras
     docker pull postgres:16
     ```
 
-???+ note "No Docker? Lab 4 still works"
-    Without Docker, Lab 4 falls back to the same JSON file store used in Labs 1-3. You'll miss the RLS demo and role switching, but the concern stability and tool scoping features still work. Just skip the `DATABASE_URL` environment variable.
-
 ---
 
 ## 5. Start the EHR Inbox

@@ -84,9 +84,6 @@ uv run uvicorn lab4.agent.api:app --port 8001
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
-???+ note "No Docker?"
-    If you can't run Docker, Lab 4 still works — just skip the `DATABASE_URL` variable. The agent falls back to the JSON file store from Labs 1-3. You'll miss the RLS demo and role switching, but concern stability and tool scoping still work.
-
 ---
 
 ## What Changed from Lab 3
