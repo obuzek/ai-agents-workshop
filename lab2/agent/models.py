@@ -7,7 +7,7 @@ The main API proxies to the agent API; both sides agree on this schema.
 
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 ConcernType = Literal["medication", "lab_result", "symptom", "follow_up", "administrative"]
 Urgency = Literal["routine", "soon", "urgent"]
@@ -44,7 +44,7 @@ class Concern(BaseModel):
 class PatientConcerns(BaseModel):
     """All concerns for one patient."""
     patient_id: str
-    patient_name: str
+    patient_name: str = Field(json_schema_extra={"sensitivity": "pii"})
     concerns: list[Concern] = []
 
 

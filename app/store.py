@@ -2,19 +2,14 @@
 Data store: loads and saves patient records from JSON files.
 
 This is the only module that knows about the JSON format. Everything else
-works with the dataclasses in models.py.
+works with the Pydantic models in models.py.
 """
 
 import json
 import re
 from pathlib import Path
 
-from app.models import (
-    Patient, Condition, Allergy, Medication,
-    Lab, LabPanel, LabResult,
-    Encounter, SOAPNotes,
-    Message, ThreadEntry, Sender,
-)
+from app.models import Patient
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "patients"
 
@@ -22,107 +17,13 @@ DATA_DIR = Path(__file__).parent.parent / "data" / "patients"
 # --- JSON -> Model parsing ---
 
 
-def _parse_sender(data: dict) -> Sender:
-    return Sender(name=data["name"], role=data["role"])
-
-
-def _parse_thread_entry(data: dict) -> ThreadEntry:
-    return ThreadEntry(
-        date=data["date"],
-        sender=_parse_sender(data["sender"]),
-        body=data["body"],
-    )
-
-
-def _parse_message(data: dict) -> Message:
-    return Message(
-        id=data["id"],
-        date=data["date"],
-        sender=_parse_sender(data["sender"]),
-        category=data["category"],
-        subject=data["subject"],
-        body=data["body"],
-        thread=[_parse_thread_entry(t) for t in data.get("thread", [])],
-    )
-
-
-def _parse_condition(data: dict) -> Condition:
-    return Condition(
-        display=data["code"]["display"],
-        status=data["status"],
-        onset_date=data.get("onsetDate", ""),
-        notes=data.get("notes", ""),
-    )
-
-
-def _parse_allergy(data: dict) -> Allergy:
-    return Allergy(substance=data["substance"], reaction=data["reaction"])
-
-
-def _parse_medication(data: dict) -> Medication:
-    return Medication(
-        display=data["code"]["display"],
-        dosage=data["dosage"],
-        frequency=data["frequency"],
-        prescriber=data["prescriber"],
-        status=data["status"],
-    )
-
-
-def _parse_lab_result(data: dict) -> LabResult:
-    return LabResult(
-        test=data["test"],
-        value=data["value"],
-        unit=data.get("unit", ""),
-        interpretation=data.get("interpretation", ""),
-    )
-
-
-def _parse_lab(data: dict) -> Lab:
-    return Lab(
-        date=data["date"],
-        ordered_by=data["orderedBy"],
-        panels=[
-            LabPanel(
-                name=p["name"],
-                results=[_parse_lab_result(r) for r in p.get("results", [])],
-            )
-            for p in data.get("panels", [])
-        ],
-    )
-
-
-def _parse_encounter(data: dict) -> Encounter:
-    notes_data = data.get("notes", {})
-    return Encounter(
-        date=data["date"],
-        reason=data.get("reasonForVisit", "Visit"),
-        notes=SOAPNotes(
-            subjective=notes_data.get("subjective", ""),
-            objective=notes_data.get("objective", ""),
-            assessment=notes_data.get("assessment", ""),
-            plan=notes_data.get("plan", ""),
-        ),
-    )
-
-
 def _parse_patient(data: dict) -> Patient:
-    demo = data["demographics"]
-    social = data.get("socialHistory", {})
-    return Patient(
-        id=data["id"],
-        given_name=demo["name"]["given"],
-        family_name=demo["name"]["family"],
-        birth_date=demo["birthDate"],
-        language=demo.get("preferredLanguage", "English"),
-        conditions=[_parse_condition(c) for c in data.get("conditions", [])],
-        allergies=[_parse_allergy(a) for a in data.get("allergies", [])],
-        medications=[_parse_medication(m) for m in data.get("medications", [])],
-        labs=[_parse_lab(l) for l in data.get("labs", [])],
-        encounters=[_parse_encounter(e) for e in data.get("encounters", [])],
-        messages=[_parse_message(m) for m in data.get("messages", [])],
-        social_history=social.get("notes", ""),
-    )
+    """Parse a raw JSON dict into a Patient model.
+
+    Pydantic handles nested model construction, alias resolution, and
+    validation automatically via model_validate().
+    """
+    return Patient.model_validate(data)
 
 
 # --- Public API ---

@@ -176,41 +176,52 @@ The `mask_pii` function is the client-side filter that Langfuse applies to all t
 
 ### How it works
 
-The function receives data as a keyword argument and must return the masked version in the same structure:
+Our masking uses two layers of defense:
+
+**Layer 1: Field-level redaction from data model annotations.** Our Pydantic data models annotate which fields contain PII or PHI:
 
 ```python
-def mask_pii(*, data, **kwargs):
-    if isinstance(data, str):
-        return _mask_string(data)
-    elif isinstance(data, dict):
-        return {k: mask_pii(data=v) for k, v in data.items()}
-    elif isinstance(data, list):
-        return [mask_pii(data=item) for item in data]
-    return data
+# In app/models.py
+class Demographics(BaseModel):
+    name: Name
+    birth_date: str = _phi(default="", alias="birthDate")    # PHI — clinical identifier
+    phone: str = _pii(default="")                             # PII — contact info
+    email: str = _pii(default="")                             # PII — contact info
 ```
 
-It recurses through dicts and lists, applying `_mask_string` to every string value it finds.
+When the mask function encounters a Pydantic model, it reads these annotations and replaces the values with placeholders (`<PII_REDACTED>`, `<PHI_REDACTED>`) — no NER needed. This is reliable even for short values like names where NER would struggle.
 
-### The masking rules
+**Layer 2: NER-based detection for free text.** For string fields that aren't annotated (message bodies, clinical notes, LLM reasoning), we use [Microsoft Presidio](https://github.com/microsoft/presidio) via LangChain's `PresidioAnonymizer`. Presidio combines:
 
-`_mask_string` applies two kinds of redaction:
+- **spaCy NER**: identifies names, locations, and other contextual entities in natural language
+- **Regex patterns**: catches structured PII — SSNs, email addresses, phone numbers
+- **Custom recognizers**: we add one for insurance member IDs (e.g., `1EG4-TE5-MK72`)
 
-1. **Known names**: loaded from the patient data files at startup. "Patricia Kowalski" becomes `[PATIENT_NAME]`. Names are matched longest-first so full names are replaced before first/last names alone.
+```python
+from langchain_experimental.data_anonymizer import PresidioAnonymizer
 
-2. **Regex patterns**: for structured PII that follows predictable formats:
-    - SSNs (`123-45-6789`) → `[SSN]`
-    - Email addresses → `[EMAIL]`
-    - Phone numbers → `[PHONE]`
-    - Insurance member IDs → `[MEMBER_ID]`
+_anonymizer = PresidioAnonymizer(
+    analyzed_fields=["PERSON", "EMAIL_ADDRESS", "PHONE_NUMBER", "US_SSN",
+                     "LOCATION", "DATE_TIME", "CREDIT_CARD", "URL"],
+    add_default_faker_operators=False,  # Use <TYPE> placeholders, not fake values
+)
+```
 
-???+ question "What's missing?"
-    This masking approach has limitations. Think about:
+### Why two layers?
 
-    - What happens if a patient's name appears in a doctor's note in a non-standard format ("the Kowalski case")?
-    - What about PII that doesn't match a regex — like a street address embedded in a narrative?
-    - What if the LLM *generates* a patient name in its reasoning that doesn't exactly match the data file?
+NER is excellent at finding names embedded in paragraphs ("Dear Dr. Kim, I've been having trouble with..."). But it's unreliable on short strings — a field containing just `"Patricia Kowalski"` might not be confidently classified as a person name depending on context. By annotating the data model, we tell the masking layer *exactly* which fields are sensitive, and reserve NER for the free-text fields where it excels.
 
-    A production system would use a dedicated NER model or a service like [Microsoft Presidio](https://github.com/microsoft/presidio) for PII detection. Regex + known names is sufficient for the workshop, but it's important to understand the gap.
+???+ question "Think about coverage"
+    Even with two layers, no PII detection is perfect. What happens if:
+
+    - A rare name isn't in spaCy's training data?
+    - A medical condition is so specific it effectively identifies the patient?
+    - The LLM paraphrases PII in a way that changes its surface form?
+    - A first name appears alone in the LLM's reasoning text?
+
+    These are real production concerns. In a real healthcare deployment, you would layer additional defenses: dedicated PHI detection models, regular audits of your trace store, and potentially routing sensitive data through a **governed data platform** (like [IBM watsonx.data](https://www.ibm.com/products/watsonx-data)) that enforces data governance policies at the storage layer — so even if your masking pipeline misses something, the data store itself has controls.
+
+    For this workshop, our two-layer approach demonstrates the pattern. Production systems need more.
 
 ### Re-enable masking
 
@@ -228,17 +239,19 @@ Restart the agent API (Terminal 3), then run the agent again for the same patien
 
 Go back to Langfuse at [http://localhost:3000](http://localhost:3000). Find the new trace (the most recent one).
 
-Expand the spans again. Now you should see:
+Expand the spans again. In the **tool call outputs**, you should see:
 
-- `[PATIENT_NAME]` where names used to be
-- `[PHONE]` where phone numbers were
-- `[EMAIL]` where email addresses were
-- `[MEMBER_ID]` where insurance IDs were
+- `<PII_REDACTED>` where patient names, emails, and phone numbers used to be
+- `<PHI_REDACTED>` where dates of birth and insurance member IDs were
+- `<PERSON>`, `<PHONE_NUMBER>`, `<LOCATION>` where Presidio caught PII in free-text fields
 
-The trace structure is preserved — you can still see which tools were called, in what order, how long each step took, and how many tokens were used. But the PHI is gone.
+The trace structure is preserved — you can still see which tools were called, in what order, how long each step took, and how many tokens were used. The clinical data (conditions, medications, lab values) is still visible because it's useful for debugging — only the identifying information is redacted.
 
 ???+ tip "Compare the two traces"
     With both the masked and unmasked traces in Langfuse, you can directly compare them. The unmasked trace is a cautionary tale; the masked one is the pattern you'd use in production.
+
+???+ warning "You may still see some names"
+    Look carefully at the LLM generation spans. You may see the patient's first name in the model's reasoning text — Presidio's NER doesn't always catch standalone first names. This is a known limitation of classical entity extraction. In a production system, you'd add additional defenses (see the "Think about coverage" callout above).
 
 ---
 
@@ -292,7 +305,7 @@ Let's take stock of what we've added:
 
 **Full visibility into agent behavior.** Every LLM call, tool call, and decision step is captured with timing and token counts. When something goes wrong, you can trace the exact path the agent took.
 
-**PII never reaches the trace store.** Client-side masking means the data is filtered before it leaves the process. This is the strongest guarantee — even if someone compromises your Langfuse database, they won't find raw PHI.
+**Two-layer PII/PHI masking.** Pydantic model annotations handle structured data (names, DOBs, contact info) reliably regardless of string length. Presidio NER catches PII embedded in free-text fields. Both run client-side before data leaves the process — the strongest guarantee available at this layer.
 
 **Cost attribution per run.** You can see exactly what each agent run costs and where the tokens are spent. This is essential for understanding whether your agent is economically viable.
 

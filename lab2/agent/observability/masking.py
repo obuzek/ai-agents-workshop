@@ -1,100 +1,149 @@
 """
-PII masking for Langfuse traces.
+PII masking for Langfuse traces using LangChain's Presidio integration.
 
 This module provides the `mask_pii` function that Langfuse applies to all
 trace data (inputs, outputs, metadata) *before* it leaves the process.
 This is client-side masking — the strongest guarantee that sensitive data
 never reaches your trace store.
 
-The masking approach:
-1. Load patient names from the data directory at startup
-2. Apply regex-based redaction for structured PII (DOBs, phones, emails, etc.)
-3. Replace known patient names with [PATIENT_NAME]
+Two layers of defense:
+1. Field-level redaction: Pydantic models annotated with sensitivity="pii"
+   or sensitivity="phi" are redacted by field name — no NER needed.
+2. NER-based detection (Presidio via spaCy): catches PII embedded in free-text
+   fields where you can't predict the key name.
 
-This is intentionally simple. A production system would use a dedicated
-NER model or a service like Presidio for PII detection. For the workshop,
-regex + known names is sufficient to demonstrate the principle.
+Presidio is the most widely adopted open-source PII detection library
+(~4M monthly PyPI downloads, first-class LangChain integration).
 """
 
-import json
+import logging
 import os
-import re
-from glob import glob
-from pathlib import Path
 
+from langchain_experimental.data_anonymizer import PresidioAnonymizer
+from presidio_analyzer import Pattern, PatternRecognizer
+from presidio_anonymizer.entities import OperatorConfig
 from langfuse.langchain import CallbackHandler
+from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
 
 
-# --- Load known patient names from the data directory ---
+# --- Pydantic model introspection ---
 
-def _load_patient_names() -> list[str]:
-    """Load all patient and emergency contact names from data files.
+def _get_sensitive_fields(model_class: type[BaseModel]) -> dict[str, str]:
+    """Extract fields annotated with sensitivity metadata from a Pydantic model.
 
-    Returns names sorted longest-first so "Patricia Kowalski" is matched
-    before "Patricia" — preventing partial replacements.
+    Returns a dict mapping field name -> sensitivity level ("pii" or "phi").
     """
-    data_dir = Path(os.environ.get("DATA_DIR", "data/patients"))
-    names = set()
-    for filepath in sorted(data_dir.glob("patient_*.json")):
-        with open(filepath) as f:
-            patient = json.load(f)
-        demo = patient.get("demographics", {})
-        name = demo.get("name", {})
-        given = name.get("given", "")
-        family = name.get("family", "")
-        if given:
-            names.add(given)
-        if family:
-            names.add(family)
-        if given and family:
-            names.add(f"{given} {family}")
-        # Emergency contacts
-        ec = demo.get("emergencyContact", {})
-        if ec.get("name"):
-            names.add(ec["name"])
-
-    # Sort longest-first so full names match before first/last names alone
-    return sorted(names, key=len, reverse=True)
+    sensitive = {}
+    for name, field_info in model_class.model_fields.items():
+        extra = field_info.json_schema_extra
+        if isinstance(extra, dict) and "sensitivity" in extra:
+            sensitive[name] = extra["sensitivity"]
+    return sensitive
 
 
-_PATIENT_NAMES = _load_patient_names()
+# Cache to avoid re-inspecting the same model class repeatedly.
+_sensitive_fields_cache: dict[type, dict[str, str]] = {}
 
 
-# --- Regex patterns for structured PII ---
+def _sensitive_fields_for(model_class: type[BaseModel]) -> dict[str, str]:
+    if model_class not in _sensitive_fields_cache:
+        _sensitive_fields_cache[model_class] = _get_sensitive_fields(model_class)
+    return _sensitive_fields_cache[model_class]
 
-# Dates that look like DOBs: YYYY-MM-DD
-_DOB_PATTERN = re.compile(r"\b(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b")
 
-# US phone numbers: 847-555-0143, (847) 555-0143, 847.555.0143
-_PHONE_PATTERN = re.compile(
-    r"\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}"
+# --- Build the Presidio anonymizer for free-text fields ---
+
+_ANALYZED_FIELDS = [
+    "PERSON",           # Patient names, doctor names, emergency contacts
+    "EMAIL_ADDRESS",    # Patient email addresses
+    "PHONE_NUMBER",     # Patient and contact phone numbers
+    "US_SSN",           # Social Security Numbers
+    "LOCATION",         # Street addresses, cities, states
+    "DATE_TIME",        # Dates of birth, appointment dates
+    "CREDIT_CARD",      # Unlikely in EHR but good to catch
+    "URL",              # Any URLs in trace data
+]
+
+_anonymizer = PresidioAnonymizer(
+    analyzed_fields=_ANALYZED_FIELDS,
+    add_default_faker_operators=False,
 )
 
-# Email addresses
-_EMAIL_PATTERN = re.compile(
-    r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+# Custom recognizer: insurance member IDs in our data (e.g., "1EG4-TE5-MK72")
+_anonymizer.add_recognizer(
+    PatternRecognizer(
+        supported_entity="INSURANCE_MEMBER_ID",
+        patterns=[
+            Pattern(
+                name="member_id_alphanum_hyphen",
+                regex=r"\b(?=[A-Z0-9-]*[A-Z])[A-Z0-9]{2,}(?:-[A-Z0-9]{2,}){2,}\b",
+                score=0.7,
+            ),
+        ],
+    )
 )
-
-# SSN: 123-45-6789
-_SSN_PATTERN = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
-
-# Insurance member IDs: alphanumeric with hyphens, 8+ chars
-_MEMBER_ID_PATTERN = re.compile(r"\b[A-Z0-9]{2,}(?:-[A-Z0-9]{2,}){2,}\b")
+_anonymizer.add_operators({
+    "INSURANCE_MEMBER_ID": OperatorConfig("replace", {"new_value": "<INSURANCE_MEMBER_ID>"}),
+})
 
 
-def _mask_string(text: str) -> str:
-    """Apply all PII redaction rules to a single string."""
-    # Names first (longest match first to avoid partial replacements)
-    for name in _PATIENT_NAMES:
-        text = text.replace(name, "[PATIENT_NAME]")
+# --- Masking logic ---
 
-    # Structured patterns
-    text = _SSN_PATTERN.sub("[SSN]", text)
-    text = _EMAIL_PATTERN.sub("[EMAIL]", text)
-    text = _PHONE_PATTERN.sub("[PHONE]", text)
-    text = _MEMBER_ID_PATTERN.sub("[MEMBER_ID]", text)
+_PLACEHOLDER = {
+    "pii": "<PII_REDACTED>",
+    "phi": "<PHI_REDACTED>",
+}
 
-    return text
+
+def _mask_value(value, _redact_as=None):
+    """Recursively mask PII/PHI in arbitrary data structures.
+
+    Args:
+        value: The data to mask.
+        _redact_as: If set ("pii" or "phi"), this value was identified as
+            sensitive by its parent model's field annotation. Short strings
+            are replaced entirely; long strings still go through Presidio
+            (they may contain a mix of sensitive and non-sensitive content).
+    """
+    if value is None or isinstance(value, (int, float, bool)):
+        return value
+
+    if isinstance(value, str):
+        # If the parent model flagged this field as sensitive, redact directly.
+        # This handles short fields like names where NER is unreliable.
+        if _redact_as:
+            return _PLACEHOLDER.get(_redact_as, "<REDACTED>")
+        if not value.strip():
+            return value
+        return _anonymizer.anonymize(value)
+
+    if isinstance(value, dict):
+        return {k: _mask_value(v) for k, v in value.items()}
+
+    if isinstance(value, (list, tuple)):
+        return [_mask_value(item) for item in value]
+
+    # Pydantic models: use field annotations to decide what to redact.
+    if isinstance(value, BaseModel):
+        sensitive = _sensitive_fields_for(type(value))
+        dumped = value.model_dump(by_alias=True)
+        result = {}
+        # Map alias -> field name for sensitivity lookup
+        alias_to_field = {
+            (fi.alias or name): name
+            for name, fi in type(value).model_fields.items()
+        }
+        for key, val in dumped.items():
+            field_name = alias_to_field.get(key, key)
+            sensitivity = sensitive.get(field_name)
+            result[key] = _mask_value(val, _redact_as=sensitivity)
+        return result
+
+    # Unrecognized type — pass through and warn.
+    logger.warning("mask_pii: unhandled type %s, passing through unmasked", type(value).__name__)
+    return value
 
 
 def mask_pii(*, data, **kwargs):
@@ -111,13 +160,7 @@ def mask_pii(*, data, **kwargs):
     Returns:
         The masked data in the same structure.
     """
-    if isinstance(data, str):
-        return _mask_string(data)
-    elif isinstance(data, dict):
-        return {k: mask_pii(data=v) for k, v in data.items()}
-    elif isinstance(data, list):
-        return [mask_pii(data=item) for item in data]
-    return data
+    return _mask_value(data)
 
 
 def create_langfuse_handler(**kwargs) -> CallbackHandler:
@@ -130,11 +173,8 @@ def create_langfuse_handler(**kwargs) -> CallbackHandler:
 
     Any additional kwargs are passed through to CallbackHandler.
     """
-    # Import here so we can set up the client with masking
     from langfuse import Langfuse
 
-    # Configure the Langfuse client with masking enabled.
-    # This ensures ALL data — from any integration — is masked before sending.
     os.environ.setdefault("LANGFUSE_PUBLIC_KEY", "pk-lf-workshop")
     os.environ.setdefault("LANGFUSE_SECRET_KEY", "sk-lf-workshop")
     os.environ.setdefault("LANGFUSE_HOST", "http://localhost:3000")
