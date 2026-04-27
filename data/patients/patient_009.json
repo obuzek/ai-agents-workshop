@@ -1,0 +1,1181 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-009",
+  "demographics": {
+    "name": {
+      "given": "Keiko",
+      "family": "Tanaka"
+    },
+    "birthDate": "2001-12-05",
+    "gender": "female",
+    "phone": "312-555-0219",
+    "email": "keiko.tanaka@rush.edu",
+    "address": {
+      "line": "1528 W Taylor St, Apt 4F",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60607"
+    },
+    "emergencyContact": {
+      "name": "Yuki Tanaka",
+      "relationship": "Mother",
+      "phone": "847-555-0483"
+    },
+    "insurance": {
+      "type": "Commercial",
+      "planName": "UnitedHealthcare (parent's plan)",
+      "memberId": "UHC-DP-6621847"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker",
+    "alcohol": "Social, 1-2 drinks on weekends",
+    "exercise": "Runs 3x/week, intramural volleyball",
+    "notes": "Nursing student (BSN program, junior year). Lives with two roommates near campus. Originally from Skokie, IL. Parents are both in the area. Busy with clinicals and studying."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Father",
+      "condition": "Healthy, age 56",
+      "deceased": false
+    },
+    {
+      "relationship": "Mother",
+      "condition": "Migraines",
+      "deceased": false
+    },
+    {
+      "relationship": "Paternal grandfather",
+      "condition": "Colon cancer, diagnosed at 68",
+      "deceased": true
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Tree pollen",
+      "category": "environment",
+      "reaction": "Rhinitis, watery eyes",
+      "criticality": "low",
+      "status": "active"
+    },
+    {
+      "substance": "Dust mites",
+      "category": "environment",
+      "reaction": "Sneezing, congestion",
+      "criticality": "low",
+      "status": "active"
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "J30.1",
+        "display": "Allergic rhinitis due to pollen"
+      },
+      "status": "active",
+      "onsetDate": "2018-05-10",
+      "notes": "Seasonal allergic rhinitis. Symptoms primarily in spring and fall. Well-controlled with cetirizine PRN."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "N30.00",
+        "display": "Acute cystitis without hematuria"
+      },
+      "status": "resolved",
+      "onsetDate": "2025-09-18",
+      "resolvedDate": "2025-09-25",
+      "notes": "Uncomplicated UTI. Treated with nitrofurantoin 100mg BID x5 days. Symptoms resolved completely."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "1014676",
+        "display": "Cetirizine Hydrochloride 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily as needed for allergy symptoms",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2023-06-15",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "311989",
+        "display": "Nitrofurantoin 100 MG Modified Release Oral Capsule"
+      },
+      "dosage": "100 mg",
+      "frequency": "Twice daily",
+      "route": "oral",
+      "status": "completed",
+      "prescribedDate": "2025-09-18",
+      "endDate": "2025-09-23",
+      "prescriber": "Rachel Torres, NP",
+      "stopReason": "Course completed \u2014 UTI resolved"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "43",
+        "display": "Hepatitis B vaccine, adult dosage"
+      },
+      "date": "2023-06-15",
+      "site": "Left deltoid",
+      "lotNumber": "HBV2341A",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "43",
+        "display": "Hepatitis B vaccine, adult dosage"
+      },
+      "date": "2023-07-15",
+      "site": "Left deltoid",
+      "lotNumber": "HBV2341A",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "43",
+        "display": "Hepatitis B vaccine, adult dosage"
+      },
+      "date": "2023-12-15",
+      "site": "Left deltoid",
+      "lotNumber": "HBV2398C",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "03",
+        "display": "MMR vaccine"
+      },
+      "date": "2023-06-15",
+      "site": "Right deltoid",
+      "lotNumber": "MMR7821K",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "21",
+        "display": "Varicella vaccine"
+      },
+      "date": "2023-06-15",
+      "site": "Left upper arm (subcutaneous)",
+      "lotNumber": "VAR5517B",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap vaccine"
+      },
+      "date": "2023-06-15",
+      "site": "Right deltoid",
+      "lotNumber": "TD4428P",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza vaccine, quadrivalent, adjuvanted"
+      },
+      "date": "2023-10-02",
+      "site": "Left deltoid",
+      "lotNumber": "FL3382N",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza vaccine, quadrivalent, adjuvanted"
+      },
+      "date": "2024-09-27",
+      "site": "Left deltoid",
+      "lotNumber": "FL4491R",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza vaccine, quadrivalent, adjuvanted"
+      },
+      "date": "2025-10-06",
+      "site": "Left deltoid",
+      "lotNumber": "FL5518T",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30 mcg/0.3mL dose"
+      },
+      "date": "2023-10-02",
+      "site": "Right deltoid",
+      "lotNumber": "CV8834A",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30 mcg/0.3mL dose"
+      },
+      "date": "2024-09-27",
+      "site": "Right deltoid",
+      "lotNumber": "CV9102F",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30 mcg/0.3mL dose"
+      },
+      "date": "2025-10-06",
+      "site": "Right deltoid",
+      "lotNumber": "CV0247K",
+      "provider": "Rachel Torres, NP"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-009-001",
+      "date": "2023-06-15",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam / establish care; immunization catch-up for nursing clinicals",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 108,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 56,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 128,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.0,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "21-year-old female presenting to establish care. Starting BSN program at Rush and needs immunization clearance for clinicals. Reports seasonal allergies managed with OTC cetirizine as needed \u2014 primarily spring and fall symptoms (rhinorrhea, watery eyes, sneezing). No other complaints. Runs 3x/week and plays intramural volleyball. Feels well overall.",
+        "objective": "Well-appearing young woman in no acute distress. HEENT: TMs clear, oropharynx normal, no nasal polyps, mild clear rhinorrhea. Lungs: clear bilaterally. Heart: regular rate and rhythm, no murmurs. Abdomen: soft, non-tender. Skin: no concerning lesions. Musculoskeletal: full ROM all extremities.",
+        "assessment": "Healthy 21-year-old female establishing care. Allergic rhinitis (J30.1), well-controlled with PRN cetirizine. Needs immunization series for nursing clinical requirements.",
+        "plan": "1. Prescribed cetirizine 10mg PRN for allergies. 2. Administered Hep B dose #1, MMR booster, varicella booster, and Tdap today. 3. Hep B dose #2 in 1 month, dose #3 at 6 months. 4. Flu and COVID vaccines due in fall. 5. Routine labs: CBC, CMP. 6. Return in 1 month for Hep B #2, then annual."
+      },
+      "labOrders": [
+        "lab-009-001"
+      ]
+    },
+    {
+      "id": "enc-009-002",
+      "date": "2024-09-27",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical exam; flu and COVID vaccines",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 54,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 130,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.3,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "22-year-old female returning for annual physical. No new complaints. Allergies well-controlled with cetirizine \u2014 uses it mainly April through June and September through October. Running regularly, doing well in nursing program. Denies any mood changes, sleep issues, or GI complaints. Menstrual cycles regular.",
+        "objective": "Healthy-appearing female. HEENT: unremarkable. Lungs: clear. Heart: bradycardic but regular, no murmurs \u2014 consistent with athletic conditioning. Abdomen: soft, non-tender. Skin: scattered small nevi on upper back, none with concerning features. No lymphadenopathy.",
+        "assessment": "Healthy 22-year-old female. Allergic rhinitis, stable. Resting bradycardia consistent with athletic conditioning \u2014 no further workup needed.",
+        "plan": "1. Continue cetirizine PRN. 2. Administered influenza and COVID-19 vaccines today. 3. Labs: CBC, CMP, lipid panel. 4. All immunizations up to date for clinicals \u2014 provided documentation. 5. Return annually or as needed."
+      },
+      "labOrders": [
+        "lab-009-002"
+      ]
+    },
+    {
+      "id": "enc-009-003",
+      "date": "2025-09-18",
+      "type": "urgent",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Dysuria, urinary frequency x2 days",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 112,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 72,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 99.1,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 129,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.1,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "23-year-old female presenting with 2 days of burning with urination, increased urinary frequency, and suprapubic discomfort. No flank pain, no fever, no vaginal discharge. No prior history of UTIs. Denies nausea or vomiting. Last menstrual period 2 weeks ago, not sexually active currently. Knows to hydrate \u2014 mentioned she learned about uncomplicated cystitis in her med-surg course and suspected this is what she has.",
+        "objective": "Mild suprapubic tenderness on palpation. No CVA tenderness. Low-grade temp 99.1F. Otherwise unremarkable exam. UA obtained \u2014 see lab results.",
+        "assessment": "Acute uncomplicated cystitis (N30.00) in a young, otherwise healthy female. UA consistent with UTI (positive leukocyte esterase, positive nitrites, WBCs).",
+        "plan": "1. Nitrofurantoin 100mg BID x5 days (macrocrystal formulation \u2014 take with food). 2. Increase fluid intake. 3. Return if symptoms worsen, fever develops, or flank pain occurs. 4. Symptoms should improve within 48 hours. No follow-up needed if resolving."
+      },
+      "labOrders": [
+        "lab-009-003"
+      ]
+    },
+    {
+      "id": "enc-009-004",
+      "date": "2025-10-06",
+      "type": "office-visit",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Flu and COVID vaccines; brief check-in",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 106,
+          "diastolic": 66,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 58,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.3,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 128,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.0,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "24-year-old female presenting for annual flu and COVID vaccinations. Reports UTI from September resolved completely after completing nitrofurantoin course \u2014 no recurrence. Allergies starting up again with fall season, using cetirizine a few times a week. Otherwise feeling great. Clinicals going well.",
+        "objective": "Well-appearing young woman. No acute findings. Nasal mucosa slightly edematous consistent with mild allergic rhinitis. Lungs clear. Injection sites cleaned and prepped.",
+        "assessment": "Healthy 24-year-old female. Here for annual immunizations. Allergic rhinitis with mild seasonal flare, managed.",
+        "plan": "1. Administered influenza and COVID-19 vaccines today. 2. Continue cetirizine PRN for allergy symptoms. 3. Annual physical due in spring 2026. 4. Updated immunization records provided for clinical requirements."
+      },
+      "labOrders": []
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-009-001",
+      "date": "2023-06-15",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC) with Differential",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "White Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.2,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "789-8",
+                "display": "Erythrocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 4.5,
+              "unit": "10^6/uL",
+              "referenceRange": {
+                "low": 3.9,
+                "high": 5.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 41.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 245,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 82,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 12,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.8,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 18,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 21,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-009-002",
+      "date": "2024-09-27",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC) with Differential",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "White Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.8,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 4.0,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "789-8",
+                "display": "Erythrocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 4.6,
+              "unit": "10^6/uL",
+              "referenceRange": {
+                "low": 3.9,
+                "high": 5.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 14.0,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 42.0,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 238,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 85,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.7,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 139,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.3,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.6,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 16,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 19,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 168,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "Desirable: <200"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 92,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "Near optimal: <130"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 62,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": "Desirable: >40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglycerides [Mass/volume] in Serum or Plasma"
+              },
+              "value": 70,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150,
+                "text": "Normal: <150"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-009-003",
+      "date": "2025-09-18",
+      "status": "final",
+      "orderedBy": "Rachel Torres, NP",
+      "panels": [
+        {
+          "name": "Urinalysis, Complete",
+          "code": {
+            "system": "LOINC",
+            "code": "24356-8",
+            "display": "Urinalysis complete panel - Urine"
+          },
+          "results": [
+            {
+              "test": "Urine Color",
+              "code": {
+                "system": "LOINC",
+                "code": "5778-6",
+                "display": "Color of Urine"
+              },
+              "value": "Dark yellow",
+              "unit": "",
+              "referenceRange": {
+                "text": "Yellow"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Urine Appearance",
+              "code": {
+                "system": "LOINC",
+                "code": "5767-9",
+                "display": "Appearance of Urine"
+              },
+              "value": "Cloudy",
+              "unit": "",
+              "referenceRange": {
+                "text": "Clear"
+              },
+              "interpretation": "abnormal"
+            },
+            {
+              "test": "Urine pH",
+              "code": {
+                "system": "LOINC",
+                "code": "2756-5",
+                "display": "pH of Urine by Test strip"
+              },
+              "value": 6.0,
+              "unit": "pH",
+              "referenceRange": {
+                "low": 5.0,
+                "high": 8.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Urine Specific Gravity",
+              "code": {
+                "system": "LOINC",
+                "code": "2965-2",
+                "display": "Specific gravity of Urine by Test strip"
+              },
+              "value": 1.025,
+              "unit": "",
+              "referenceRange": {
+                "low": 1.005,
+                "high": 1.03
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Leukocyte Esterase",
+              "code": {
+                "system": "LOINC",
+                "code": "5799-2",
+                "display": "Leukocyte esterase [Presence] in Urine by Test strip"
+              },
+              "value": "Positive (2+)",
+              "unit": "",
+              "referenceRange": {
+                "text": "Negative"
+              },
+              "interpretation": "abnormal"
+            },
+            {
+              "test": "Nitrites",
+              "code": {
+                "system": "LOINC",
+                "code": "5802-4",
+                "display": "Nitrite [Presence] in Urine by Test strip"
+              },
+              "value": "Positive",
+              "unit": "",
+              "referenceRange": {
+                "text": "Negative"
+              },
+              "interpretation": "abnormal"
+            },
+            {
+              "test": "WBC per HPF",
+              "code": {
+                "system": "LOINC",
+                "code": "5821-4",
+                "display": "Leukocytes [#/area] in Urine sediment by Microscopy high power field"
+              },
+              "value": "20-50",
+              "unit": "/HPF",
+              "referenceRange": {
+                "low": 0,
+                "high": 5,
+                "text": "0-5 /HPF"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "Bacteria",
+              "code": {
+                "system": "LOINC",
+                "code": "5769-5",
+                "display": "Bacteria [Presence] in Urine sediment by Light microscopy"
+              },
+              "value": "Moderate",
+              "unit": "",
+              "referenceRange": {
+                "text": "None seen"
+              },
+              "interpretation": "abnormal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-009-001",
+      "date": "2025-11-12T10:22:00Z",
+      "sender": {
+        "name": "Keiko Tanaka",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "administrative",
+      "priority": "routine",
+      "subject": "Immunization records for spring clinicals",
+      "body": "Hi Dr. Kim,\n\nI hope you're doing well! I'm starting my med-surg clinical rotation in January and the nursing program requires updated documentation of the following immunizations: Hep B series (3 doses with dates and lot numbers), MMR, varicella, Tdap, current season influenza, and COVID-19. They also need a titer confirmation or attestation that the series are complete.\n\nI know I received most of these through your office \u2014 would it be possible to get an official printout of my immunization record? I can pick it up or if there's a way to download it through the portal that works too.\n\nThank you so much!",
+      "thread": [
+        {
+          "date": "2025-11-13T14:45:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Hi Keiko,\n\nGreat news \u2014 your immunization records are all complete and up to date in our system. I've prepared an official summary with dates and lot numbers for all required vaccines. You can download it from the \"Documents\" section of the patient portal, or stop by the front desk to pick up a printed copy.\n\nEverything looks good for your clinical clearance. Good luck with med-surg!\n\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-009-002",
+      "date": "2026-02-04T16:10:00Z",
+      "sender": {
+        "name": "Keiko Tanaka",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Switching from cetirizine to fexofenadine?",
+      "body": "Hi Dr. Kim,\n\nQuick question \u2014 we just covered antihistamine pharmacology in class and I learned that fexofenadine (Allegra) is considered less sedating than cetirizine because it doesn't cross the blood-brain barrier as readily. I've been on cetirizine for a while and it works fine for my allergies, but honestly I have noticed some mild drowsiness on days I take it, which isn't ideal when I'm doing 12-hour clinical shifts.\n\nWould it be reasonable to switch to fexofenadine 180mg? I know they're both second-generation H1 antagonists so the efficacy should be comparable. Just wanted to check before I make the switch on my own since they're both OTC anyway.\n\nThanks!",
+      "thread": [
+        {
+          "date": "2026-02-05T09:30:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Keiko,\n\nYou're absolutely right \u2014 fexofenadine is a great option if you're experiencing any sedation with cetirizine. The efficacy for allergic rhinitis is very comparable, and fexofenadine does have a more favorable side effect profile regarding drowsiness.\n\nYou're fine to switch to fexofenadine 180mg once daily as needed. Take it on an empty stomach if possible (it absorbs better that way \u2014 don't take it with fruit juice). If you find it's not controlling your symptoms as well during peak allergy season, let me know and we can discuss other options.\n\nSounds like pharmacology is going well!\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-009-003",
+      "date": "2026-03-19T11:45:00Z",
+      "sender": {
+        "name": "Keiko Tanaka",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Question about a mole on my shoulder",
+      "body": "Hi Dr. Kim,\n\nThis is probably nothing but I wanted to ask \u2014 I noticed a mole on my right posterior shoulder that looks a little different than I remember. We just went over skin assessment in our derm lecture and I've been practicing the ABCDEs on myself (occupational hazard of being a nursing student). The border looks slightly irregular to me and the color might be a little uneven, though it's hard to tell since I'm twisting around trying to see it in the mirror.\n\nIt's about 4-5mm, not raised, no itching or bleeding. I don't think it's changed size but honestly I never paid attention to it before. I'm probably overthinking this \u2014 is it something I should come in for or just monitor?",
+      "thread": [
+        {
+          "date": "2026-03-20T10:15:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Keiko,\n\nGood use of the ABCDEs! You're not overthinking it \u2014 it's always better to ask. That said, based on your description (small, flat, no symptoms, no definite change in size), this sounds low-risk. Slightly irregular borders can be normal in benign nevi.\n\nHere's what I'd suggest: keep an eye on it for any definite changes in size, shape, or color over the next month. If you want peace of mind, we can take a look at your next visit \u2014 or if you notice any changes before then, come in sooner. At 24 with no personal or strong family history of melanoma, your risk is low.\n\nYou'll be doing skin assessments on your patients in no time!\n\nDr. Kim"
+        }
+      ]
+    }
+  ]
+}

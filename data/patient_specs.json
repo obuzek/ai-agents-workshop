@@ -1,0 +1,512 @@
+{
+  "metadata": {
+    "description": "Diversity matrix and per-patient specs for synthetic EHR data generation",
+    "dateRange": {
+      "encountersFrom": "2023-04-01",
+      "encountersTo": "2026-04-26",
+      "messagesFrom": "2025-04-01",
+      "messagesTo": "2026-04-26"
+    },
+    "practice": {
+      "name": "Lakeview Family Medicine",
+      "providers": [
+        { "id": "prov-001", "name": "Dr. Sarah Kim, MD", "role": "Primary Care Physician", "npi": "1234567890" },
+        { "id": "prov-002", "name": "Rachel Torres, NP", "role": "Nurse Practitioner", "npi": "2345678901" },
+        { "id": "prov-003", "name": "Maria Gonzalez", "role": "Medical Assistant / Front Desk", "npi": null }
+      ]
+    }
+  },
+  "patients": [
+    {
+      "id": "patient-001",
+      "demographics": {
+        "name": { "given": "Patricia", "family": "Kowalski" },
+        "birthDate": "1953-11-14",
+        "gender": "female",
+        "occupation": "Retired librarian",
+        "insurance": { "type": "Medicare", "planName": "Medicare Part B", "memberId": "1EG4-TE5-MK72" },
+        "address": { "line": "482 Birch Lane", "city": "Evanston", "state": "IL", "postalCode": "60201" },
+        "phone": "847-555-0143",
+        "email": "pat.kowalski@gmail.com",
+        "emergencyContact": { "name": "Michael Kowalski", "relationship": "Son", "phone": "847-555-0198" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "high",
+      "messageStyle": "Formal, detailed, writes in complete paragraphs. Proper grammar and punctuation. References specific dates and details from past visits.",
+      "archetype": "Aging well with complexity",
+      "conditions": ["Osteoporosis", "Controlled hypertension", "Mild CKD stage 2"],
+      "urgency": "routine",
+      "chartCharacter": "Long history, many encounters, stable trends. Patient since 2015. Annual bone density scans, quarterly BP checks. Medications adjusted once 2 years ago, stable since.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "Occasional wine with dinner, 1-2 glasses/week",
+        "exercise": "Walks 30 min daily, water aerobics twice weekly",
+        "notes": "Lives alone since husband passed in 2019. Active in community book club."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Osteoporosis, hip fracture at 78", "deceased": true },
+        { "relationship": "Father", "condition": "Hypertension, stroke at 81", "deceased": true }
+      ],
+      "allergies": [
+        { "substance": "Sulfa drugs", "category": "medication", "reaction": "Rash", "criticality": "low" }
+      ],
+      "messageScenarios": [
+        { "category": "results_inquiry", "scenario": "Bone density results question — her T-score improved slightly, wants to understand what that means" },
+        { "category": "refill_request", "scenario": "BP medication refill for amlodipine — running low, pharmacy said they need provider authorization" },
+        { "category": "clinical_question", "scenario": "Travel vaccine inquiry — planning trip to Portugal with her book club, wants to know what she needs" },
+        { "category": "gratitude", "scenario": "Thank-you note after annual visit — mentions how thorough Dr. Kim was" }
+      ]
+    },
+    {
+      "id": "patient-002",
+      "demographics": {
+        "name": { "given": "Marcus", "family": "Chen" },
+        "birthDate": "1991-07-22",
+        "gender": "male",
+        "occupation": "Construction foreman",
+        "insurance": { "type": "Commercial", "planName": "BCBS Union Local 150", "memberId": "BCU-4419827" },
+        "address": { "line": "1107 W Division St, Apt 3B", "city": "Chicago", "state": "IL", "postalCode": "60622" },
+        "phone": "312-555-0287",
+        "email": "mchen_builds@yahoo.com",
+        "emergencyContact": { "name": "Linda Chen", "relationship": "Mother", "phone": "312-555-0341" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "low",
+      "messageStyle": "Terse, writes like texting. Abbreviations, minimal punctuation, occasional misspellings. Gets to the point fast. Sometimes forgets to include context.",
+      "archetype": "Young invincible with a scare",
+      "conditions": ["Acute low back injury (work-related)", "No chronic conditions"],
+      "urgency": "urgent",
+      "chartCharacter": "Very sparse chart — one physical 2 years ago, then nothing until the back injury 2 weeks ago. Sudden burst of activity: urgent visit, MRI ordered, follow-up pending. No established medication history.",
+      "socialHistory": {
+        "smoking": "Former smoker, quit 3 years ago (smoked ~5 years, half pack/day)",
+        "alcohol": "Social drinker, 4-6 beers on weekends",
+        "exercise": "Physically demanding job. No formal exercise routine.",
+        "notes": "Single, lives with roommate. Works 50+ hour weeks during building season."
+      },
+      "familyHistory": [
+        { "relationship": "Father", "condition": "Type 2 diabetes, diagnosed at 52", "deceased": false },
+        { "relationship": "Mother", "condition": "Healthy", "deceased": false }
+      ],
+      "allergies": [],
+      "messageScenarios": [
+        { "category": "administrative", "scenario": "Workers' comp paperwork — needs the doctor to fill out a form, doesn't understand what sections" },
+        { "category": "urgent_symptom", "scenario": "Pain not improving after 10 days, radiating down his leg now. Asking if he should go to ER. Sent at 11pm." },
+        { "category": "results_inquiry", "scenario": "Asking when MRI results will be back — been 4 days, getting anxious but trying to play it cool" }
+      ]
+    },
+    {
+      "id": "patient-003",
+      "demographics": {
+        "name": { "given": "Susan", "family": "Thornton" },
+        "birthDate": "1980-09-03",
+        "gender": "female",
+        "occupation": "Software engineer",
+        "insurance": { "type": "Commercial", "planName": "Aetna PPO", "memberId": "AET-W882145603" },
+        "address": { "line": "2200 N Lakewood Ave", "city": "Chicago", "state": "IL", "postalCode": "60614" },
+        "phone": "773-555-0462",
+        "email": "s.thornton@protonmail.com",
+        "emergencyContact": { "name": "David Thornton", "relationship": "Husband", "phone": "773-555-0463" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "very_high",
+      "messageStyle": "Data-driven, references studies and statistics. Asks precise questions. Uses medical terminology correctly. Sometimes comes across as questioning the provider's judgment (not intentionally). Includes links to PubMed abstracts.",
+      "archetype": "Over-monitored optimizer",
+      "conditions": ["Subclinical hypothyroidism", "Generalized anxiety disorder (managed)"],
+      "urgency": "routine",
+      "chartCharacter": "Frequent labs she requests herself — TSH every 3 months (provider recommended every 6). Everything is always normal or borderline. Anxiety well-managed on low-dose sertraline. Multiple encounters where provider reassures her. She tracks her own vitals with a smartwatch and brings spreadsheets.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "Rare, 1-2 drinks/month",
+        "exercise": "Runs 4x/week, tracks with Garmin. Yoga 2x/week.",
+        "notes": "Married, no children. Works remotely. Describes herself as a 'health optimizer.' Follows several medical podcasts."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Hashimoto's thyroiditis, diagnosed at 50", "deceased": false },
+        { "relationship": "Father", "condition": "Healthy, age 74", "deceased": false },
+        { "relationship": "Sister", "condition": "Anxiety disorder", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Amoxicillin", "category": "medication", "reaction": "Hives", "criticality": "low" },
+        { "substance": "Shellfish", "category": "food", "reaction": "Throat tightness", "criticality": "high" }
+      ],
+      "messageScenarios": [
+        { "category": "lab_request", "scenario": "Requesting additional thyroid labs (free T3, reverse T3) — her TSH was 3.2 and she thinks it should be under 2.5 based on a study she read" },
+        { "category": "clinical_question", "scenario": "Read a study about subclinical hypothyroidism and levothyroxine — asking whether she should start treatment even though labs are borderline" },
+        { "category": "refill_request", "scenario": "Sertraline refill — straightforward but includes a note about how she's been tracking her mood with an app and the data looks stable" },
+        { "category": "results_inquiry", "scenario": "Questioning a normal lab result — her vitamin D is 32 ng/mL and she's read that 'optimal' is above 50. Wants to discuss." },
+        { "category": "clinical_question", "scenario": "Asking about genetic testing (23andMe showed MTHFR variant) — wants to know if she should take methylfolate" }
+      ]
+    },
+    {
+      "id": "patient-004",
+      "demographics": {
+        "name": { "given": "Raj", "family": "Patel" },
+        "birthDate": "1967-12-30",
+        "gender": "male",
+        "occupation": "Long-haul truck driver",
+        "insurance": { "type": "Medicaid", "planName": "Illinois Medicaid (Meridian)", "memberId": "MCD-IL-9938271" },
+        "address": { "line": "8845 S Pulaski Rd", "city": "Chicago", "state": "IL", "postalCode": "60652" },
+        "phone": "773-555-0891",
+        "email": "rajpatel_trucker@hotmail.com",
+        "emergencyContact": { "name": "Sunita Patel", "relationship": "Wife", "phone": "773-555-0892" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "low",
+      "messageStyle": "Rambling, goes off-topic (mentions work stress, truck routes, family). Buries the real medical question at the end or in a P.S. Run-on sentences. Doesn't always answer the provider's follow-up questions directly.",
+      "archetype": "Non-compliant chronic",
+      "conditions": ["Type 2 diabetes mellitus (poorly controlled)", "Obesity (BMI ~38)", "Obstructive sleep apnea", "Hypertension"],
+      "urgency": "moderate",
+      "chartCharacter": "Missed 3 appointments in the last year. A1C trending up: 7.8 → 8.4 → 9.1. Medications changed multiple times — was on metformin alone, added glipizide, then switched to metformin + semaglutide but he stopped it due to nausea. Currently back on metformin + glipizide. CPAP prescribed but admits he doesn't use it. BP usually 145-155/90-95 despite lisinopril.",
+      "socialHistory": {
+        "smoking": "Current smoker, 1 pack/day for 30 years",
+        "alcohol": "Denies. Previous note from 2023 says '2-3 beers most nights.'",
+        "exercise": "Sedentary — sits in truck cab 10-12 hrs/day. Reports 'no time.'",
+        "notes": "Married, 3 adult children. Wife manages his appointments. Often on the road and hard to reach. Diet consists largely of truck stop food by his own report."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Type 2 diabetes, diabetic retinopathy", "deceased": true },
+        { "relationship": "Father", "condition": "MI at age 60", "deceased": true },
+        { "relationship": "Brother", "condition": "Type 2 diabetes", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Lisinopril", "category": "medication", "reaction": "Persistent dry cough", "criticality": "low", "note": "Switched to losartan but listed as allergy per patient preference" }
+      ],
+      "messageScenarios": [
+        { "category": "scheduling", "scenario": "Missed appointment reschedule (3rd time) — long explanation about a haul to Texas, asks to reschedule, doesn't propose dates" },
+        { "category": "symptom_report", "scenario": "Blood sugar 'running a little high' — checked it at a truck stop pharmacy, was 268. Mentions it casually." },
+        { "category": "refill_request", "scenario": "Ran out of metformin early because he doubled his dose on his own when his sugar was high. Needs an early refill." },
+        { "category": "urgent_symptom", "scenario": "Rambling message about work and being tired, then at the very end mentions tingling/numbness in his right foot that's been going on for 'a couple weeks maybe'" }
+      ]
+    },
+    {
+      "id": "patient-005",
+      "demographics": {
+        "name": { "given": "Elena", "family": "Vasquez" },
+        "birthDate": "1996-08-17",
+        "gender": "female",
+        "occupation": "Graduate student (PhD, Comparative Literature)",
+        "insurance": { "type": "Commercial", "planName": "UChicago Student Health Plan", "memberId": "UCHP-2026-04418" },
+        "address": { "line": "5534 S Woodlawn Ave, Apt 2", "city": "Chicago", "state": "IL", "postalCode": "60637" },
+        "phone": "773-555-0127",
+        "email": "elena.vasquez@uchicago.edu",
+        "emergencyContact": { "name": "Rosa Vasquez", "relationship": "Mother", "phone": "505-555-0334" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "medium",
+      "messageStyle": "Anxious, apologetic. Starts messages with 'Sorry to bother you' or 'I know this is probably nothing, but...' Asks permission to ask. Over-explains context. Sometimes sends a follow-up message apologizing for the first one.",
+      "archetype": "Diagnostic mystery",
+      "conditions": ["Fatigue (chronic, unexplained)", "Joint pain (migratory, workup in progress)", "Possible autoimmune — ANA pending"],
+      "urgency": "moderate",
+      "chartCharacter": "4 visits in 6 months for evolving symptoms. Initial visit was for fatigue — attributed to grad school stress. Second visit added joint pain. Third visit: labs ordered (CBC, CMP, ESR, CRP, ANA, RF). CBC/CMP normal, ESR mildly elevated (22), CRP normal, ANA and RF pending. Fourth visit: new butterfly-pattern rash on face. No diagnosis yet.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "Rare, 1-2 drinks/month socially",
+        "exercise": "Used to run — stopped 4 months ago due to joint pain and fatigue. Tries to walk when energy allows.",
+        "notes": "Lives alone. Moved from New Mexico for grad school 2 years ago. Stressed about dissertation timeline and health simultaneously. Seeing university counselor for anxiety."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Rheumatoid arthritis, diagnosed at 45", "deceased": false },
+        { "relationship": "Maternal aunt", "condition": "Lupus (SLE)", "deceased": false },
+        { "relationship": "Father", "condition": "Healthy", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Ibuprofen", "category": "medication", "reaction": "GI upset/stomach bleeding", "criticality": "high" }
+      ],
+      "messageScenarios": [
+        { "category": "symptom_report", "scenario": "New rash on her cheeks — 'Sorry I know you're busy but I noticed this rash and my aunt had something similar...' Attaches description but no photo." },
+        { "category": "results_inquiry", "scenario": "Asking what ANA test means — she Googled it and now she's terrified she has lupus. Very apologetic about asking." },
+        { "category": "frustration", "scenario": "Politely frustrated that there's no diagnosis yet after 4 visits — 'I don't mean to be difficult but I'm missing classes and I just need to know what's wrong'" },
+        { "category": "followup", "scenario": "Apologetic follow-up to the frustrated message — 'I'm sorry if my last message came across as rude, I really appreciate everything you're doing'" },
+        { "category": "referral_request", "scenario": "Asking if she should see a rheumatologist — mentions her mother's RA and aunt's lupus, wonders if it's genetic" }
+      ]
+    },
+    {
+      "id": "patient-006",
+      "demographics": {
+        "name": { "given": "Kwame", "family": "Asante" },
+        "birthDate": "1958-04-02",
+        "gender": "male",
+        "occupation": "Retired attorney (estate law)",
+        "insurance": { "type": "Medicare Advantage", "planName": "Humana Gold Plus", "memberId": "HUM-MA-7751923" },
+        "address": { "line": "1455 N State Pkwy, Unit 12C", "city": "Chicago", "state": "IL", "postalCode": "60610" },
+        "phone": "312-555-0618",
+        "email": "kasante.esq@outlook.com",
+        "emergencyContact": { "name": "Adwoa Asante", "relationship": "Wife", "phone": "312-555-0619" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "high",
+      "messageStyle": "Demanding, formal. References 'his own research' (WebMD, sometimes actual journals). Implies he'll seek a second opinion. Uses phrases like 'I expect a prompt response' and 'In my experience.' Never rude but always asserting authority. Occasionally CC's his wife.",
+      "archetype": "Polypharmacy elder",
+      "conditions": ["Atrial fibrillation (persistent)", "GERD", "Benign prostatic hyperplasia", "Osteoarthritis (bilateral knees)", "Depression (mild, on SSRI)"],
+      "urgency": "routine",
+      "chartCharacter": "8+ active medications. Frequent refill requests (batches of 3-4). INR monitoring for warfarin every 4 weeks. Multiple providers involved (cardiology, urology). Drug interaction flag between warfarin and omeprazole documented and discussed. Stable overall but complex.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "1-2 glasses of scotch, 3-4 evenings/week",
+        "exercise": "Walks with wife daily, 20 minutes. Limited by knee pain.",
+        "notes": "Married 42 years. Active in local bar association emeritus events. Well-read, brings printed articles to appointments. Organized — keeps a medication spreadsheet."
+      },
+      "familyHistory": [
+        { "relationship": "Father", "condition": "Atrial fibrillation, stroke at 72", "deceased": true },
+        { "relationship": "Mother", "condition": "Osteoarthritis, lived to 91", "deceased": true },
+        { "relationship": "Brother", "condition": "Prostate cancer, treated, in remission", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Codeine", "category": "medication", "reaction": "Severe nausea and vomiting", "criticality": "high" },
+        { "substance": "ACE inhibitors (class)", "category": "medication", "reaction": "Angioedema (lips)", "criticality": "high" }
+      ],
+      "messageScenarios": [
+        { "category": "complaint", "scenario": "Demanding to know why his omeprazole was switched to famotidine without his input — 'I've been on omeprazole for 7 years and I expect to be consulted before changes are made to my regimen'" },
+        { "category": "refill_request", "scenario": "Batch refill request for warfarin, tamsulosin, and sertraline — includes his own medication spreadsheet and notes which pharmacy to send each to" },
+        { "category": "complaint", "scenario": "Complaint about 45-minute wait at last visit — 'My time is valuable and I've never experienced this at other practices'" },
+        { "category": "clinical_question", "scenario": "Asking about fish oil and turmeric interactions with warfarin — read an article, wants 'a medical opinion, not a generic disclaimer'" },
+        { "category": "referral_request", "scenario": "Requesting referral to an orthopedic specialist for his knees — 'I've done my own research on partial knee replacement and I'd like to discuss candidacy'" },
+        { "category": "followup", "scenario": "Passive-aggressive follow-up 3 days after the referral request: 'I trust this is being processed. Please confirm at your earliest convenience.'" }
+      ]
+    },
+    {
+      "id": "patient-007",
+      "demographics": {
+        "name": { "given": "Fatima", "family": "Al-Rashid" },
+        "birthDate": "1987-06-11",
+        "gender": "female",
+        "occupation": "Restaurant manager",
+        "insurance": { "type": "Marketplace", "planName": "Ambetter Silver (Marketplace)", "memberId": "AMB-IL-3347291" },
+        "address": { "line": "3821 N Clark St, Apt 1R", "city": "Chicago", "state": "IL", "postalCode": "60613" },
+        "phone": "773-555-0553",
+        "email": "fatima.alrashid@gmail.com",
+        "emergencyContact": { "name": "Omar Al-Rashid", "relationship": "Brother", "phone": "773-555-0554" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "medium",
+      "messageStyle": "Warm, grateful, uses exclamation marks. Genuinely appreciative of care. But inconsistent follow-through — agrees to plans then doesn't follow up. Sometimes goes quiet for weeks. When she does message, she's friendly and promises to do better.",
+      "archetype": "Managed but slipping",
+      "conditions": ["Asthma (moderate persistent)", "Pre-diabetes (A1C 5.8 → 6.1)", "Obesity (BMI 33)"],
+      "urgency": "moderate",
+      "chartCharacter": "Was well-controlled on Advair and albuterol PRN. Recent ER visit for asthma exacerbation — she'd run out of Advair 3 weeks prior and didn't refill. A1C creeping up over 2 years. Agreed to dietary counseling referral 6 months ago but never scheduled it. Likeable patient who means well but struggles with follow-through due to demanding work schedule.",
+      "socialHistory": {
+        "smoking": "Never smoker. Exposed to kitchen smoke/grease at work.",
+        "alcohol": "Social drinker, 2-3 drinks on weekends",
+        "exercise": "On her feet all day at work but no structured exercise. Reports 'no time.'",
+        "notes": "Single, manages a busy restaurant. Works 6 days/week, 10-12 hour shifts. Close with her brother who lives nearby. Ramadan observer — fasting affects medication timing."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Type 2 diabetes, diagnosed at 50", "deceased": false },
+        { "relationship": "Father", "condition": "Asthma (mild)", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Aspirin", "category": "medication", "reaction": "Triggers bronchospasm (aspirin-exacerbated respiratory disease)", "criticality": "high" }
+      ],
+      "messageScenarios": [
+        { "category": "followup", "scenario": "Post-ER follow-up — thanks the team for the ER referral, says she's feeling much better, promises she won't let the inhaler lapse again" },
+        { "category": "refill_request", "scenario": "Inhaler refill request — Advair and albuterol. Cheerful tone, mentions she's 'being good about it this time!'" },
+        { "category": "clinical_question", "scenario": "Asking about diet changes for pre-diabetes ��� 'I know I should have done the nutrition referral, is there anything simple I can start with on my own?'" },
+        { "category": "scheduling", "scenario": "Apologizing for missing her 3-month follow-up — 'Things got crazy at work, can I reschedule? I promise I'll make this one!'" }
+      ]
+    },
+    {
+      "id": "patient-008",
+      "demographics": {
+        "name": { "given": "James", "family": "Hartley" },
+        "birthDate": "1974-10-28",
+        "gender": "male",
+        "occupation": "Electrician (commercial)",
+        "insurance": { "type": "Commercial", "planName": "Cigna HMO", "memberId": "CIG-8834172" },
+        "address": { "line": "6200 N Nagle Ave", "city": "Chicago", "state": "IL", "postalCode": "60646" },
+        "phone": "773-555-0776",
+        "email": "jhartley74@gmail.com",
+        "emergencyContact": { "name": "Karen Hartley", "relationship": "Wife", "phone": "773-555-0777" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "medium",
+      "messageStyle": "Matter-of-fact, minimal. Only uses the portal when something is actually wrong. Short sentences, no pleasantries. Not rude, just efficient. His wife Karen sent one of the messages (different voice — warmer, more worried).",
+      "archetype": "Silent until crisis",
+      "conditions": ["New-onset chest pain (evaluation in progress)", "Hyperlipidemia (newly diagnosed)", "Possible coronary artery disease (pending workup)"],
+      "urgency": "urgent",
+      "chartCharacter": "Almost empty chart — one visit 3 years ago for a physical (required for union). Then nothing until 2 weeks ago when he came in with exertional chest tightness. Lipid panel showed TC 278, LDL 189. EKG showed nonspecific ST changes. Stress test ordered, scheduled for next week. Started on atorvastatin and aspirin. Wife is more concerned than he is.",
+      "socialHistory": {
+        "smoking": "Former smoker, quit 10 years ago (smoked 15 years, 1 pack/day)",
+        "alcohol": "Moderate — 2-3 beers most evenings",
+        "exercise": "Physically active at work. No formal exercise.",
+        "notes": "Married, two teenage kids. Avoids doctors — 'I don't go unless something's really wrong.' Wife Karen pushed him to come in. Family history is concerning."
+      },
+      "familyHistory": [
+        { "relationship": "Father", "condition": "MI at age 53, fatal", "deceased": true },
+        { "relationship": "Mother", "condition": "Hypertension, alive at 78", "deceased": false },
+        { "relationship": "Brother", "condition": "Triple bypass at age 49", "deceased": false }
+      ],
+      "allergies": [],
+      "messageScenarios": [
+        { "category": "symptom_report", "scenario": "First-ever portal message — awkward, short. 'Hi I was in last week for the chest thing. Had another episode yesterday going up stairs. Lasted about 5 min. Is that normal or should I be worried.'" },
+        { "category": "administrative", "scenario": "Wife Karen writes: 'This is Karen, James's wife. He has the stress test Thursday. He's not supposed to eat or drink coffee before — is there anything else he needs to know? Also is it ok that he's still working? He won't listen to me.'" },
+        { "category": "results_inquiry", "scenario": "Brief message after stress test: 'Test was Thursday. When will results be ready. Thanks.'" }
+      ]
+    },
+    {
+      "id": "patient-009",
+      "demographics": {
+        "name": { "given": "Keiko", "family": "Tanaka" },
+        "birthDate": "2001-12-05",
+        "gender": "female",
+        "occupation": "Nursing student (BSN program, junior year)",
+        "insurance": { "type": "Commercial", "planName": "UnitedHealthcare (parent's plan)", "memberId": "UHC-DP-6621847" },
+        "address": { "line": "1528 W Taylor St, Apt 4F", "city": "Chicago", "state": "IL", "postalCode": "60607" },
+        "phone": "312-555-0219",
+        "email": "keiko.tanaka@rush.edu",
+        "emergencyContact": { "name": "Yuki Tanaka", "relationship": "Mother", "phone": "847-555-0483" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "very_high",
+      "messageStyle": "Uses clinical terminology (she's a nursing student). Sometimes over-interprets minor findings. Professional but you can tell she's young — occasionally adds casual asides. References what she's learning in class. Polite and concise.",
+      "archetype": "Healthy young adult",
+      "conditions": ["Seasonal allergies (allergic rhinitis)", "No chronic conditions"],
+      "urgency": "routine",
+      "chartCharacter": "Boring chart, intentionally. Annual physicals, up-to-date immunizations. The most exciting thing is seasonal allergies managed with cetirizine. One urgent care visit for UTI last year, resolved with antibiotics. She's here mainly because she needs health clearance forms for clinicals.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "Social, 1-2 drinks on weekends",
+        "exercise": "Runs 3x/week, intramural volleyball",
+        "notes": "Lives with two roommates near campus. Originally from Skokie, IL. Parents are both in the area. Busy with clinicals and studying."
+      },
+      "familyHistory": [
+        { "relationship": "Father", "condition": "Healthy, age 56", "deceased": false },
+        { "relationship": "Mother", "condition": "Migraines", "deceased": false },
+        { "relationship": "Paternal grandfather", "condition": "Colon cancer, diagnosed at 68", "deceased": true }
+      ],
+      "allergies": [
+        { "substance": "Tree pollen", "category": "environment", "reaction": "Rhinitis, watery eyes", "criticality": "low" },
+        { "substance": "Dust mites", "category": "environment", "reaction": "Sneezing, congestion", "criticality": "low" }
+      ],
+      "messageScenarios": [
+        { "category": "administrative", "scenario": "Requesting immunization records for nursing clinicals — needs proof of Hep B series, MMR, varicella, Tdap, and flu shot. Very organized request." },
+        { "category": "clinical_question", "scenario": "Asking about switching from cetirizine to fexofenadine — she learned in pharmacology that fexofenadine is less sedating and she needs to stay alert for clinicals" },
+        { "category": "symptom_report", "scenario": "Quick question about a mole on her shoulder that she thinks changed shape. 'I know about the ABCDEs from derm lecture and the border looks irregular to me. It's probably nothing but wanted to ask.'" }
+      ]
+    },
+    {
+      "id": "patient-010",
+      "demographics": {
+        "name": { "given": "William", "family": "Novak", "nickname": "Bill" },
+        "birthDate": "1949-03-21",
+        "gender": "male",
+        "occupation": "Retired farmer (corn and soybean)",
+        "insurance": { "type": "Medicare", "planName": "Medicare Parts A & B + AARP Medigap Plan F", "memberId": "1TN9-QR4-HK38" },
+        "address": { "line": "Rural Route 4, Box 112", "city": "Yorkville", "state": "IL", "postalCode": "60560" },
+        "phone": "630-555-0847",
+        "email": "novakfarm@sbcglobal.net",
+        "emergencyContact": { "name": "Dorothy Novak", "relationship": "Wife", "phone": "630-555-0848" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "low",
+      "messageStyle": "Wife Dorothy actually writes most messages. Her voice: worried but practical, rural Midwestern, uses 'Bill says...' framing. His voice (rare): very short, minimizes symptoms. Dorothy sometimes adds context he wouldn't share ('He won't tell you this but he's been sleeping in the recliner because he can't breathe lying down').",
+      "archetype": "Palliative trajectory",
+      "conditions": ["COPD (severe, GOLD stage III)", "CHF (NYHA class III)", "Former smoker (45 pack-years)", "Chronic kidney disease stage 3a"],
+      "urgency": "urgent",
+      "chartCharacter": "Declining trajectory over 3 years. FEV1 dropping. Weight loss (15 lbs in 6 months). Increasing dyspnea. On home oxygen 2L continuous, recently bumped to 3L. Multiple ER visits for exacerbations. Advance directive discussion initiated at last visit — he deflected. Cardiology and pulmonology co-manage. Lots of provider notes expressing concern about prognosis.",
+      "socialHistory": {
+        "smoking": "Former smoker — quit 8 years ago. 45 pack-year history (1.5 packs/day from age 18 to 62).",
+        "alcohol": "Rare now. Previously moderate.",
+        "exercise": "Unable — limited by dyspnea. Can walk to mailbox with rest breaks. Uses mobility scooter for longer distances.",
+        "notes": "Married 54 years to Dorothy. Lives on the family farm, now leased to a neighbor. Daughter lives 2 hours away in Springfield. Fiercely independent, resists help. Dorothy is primary caregiver and advocate."
+      },
+      "familyHistory": [
+        { "relationship": "Father", "condition": "Emphysema, died at 67", "deceased": true },
+        { "relationship": "Mother", "condition": "CHF, died at 74", "deceased": true },
+        { "relationship": "Brother", "condition": "Lung cancer (smoker), died at 63", "deceased": true }
+      ],
+      "allergies": [
+        { "substance": "Penicillin", "category": "medication", "reaction": "Anaphylaxis (documented age 30)", "criticality": "high" },
+        { "substance": "Latex", "category": "environment", "reaction": "Contact dermatitis", "criticality": "low" }
+      ],
+      "messageScenarios": [
+        { "category": "equipment", "scenario": "Dorothy writing: Oxygen concentrator is making a noise, is it supposed to do that? Also Bill's tubing keeps kinking. Who does she call — the equipment company or the clinic?" },
+        { "category": "side_effects", "scenario": "Dorothy writing: Bill started the new water pill (furosemide increase) and he's dizzy when he stands up. Also going to the bathroom constantly. 'Is this normal or should we be worried?'" },
+        { "category": "clinical_question", "scenario": "Dorothy writing, more serious tone: 'Dr. Kim mentioned an advance directive last visit. Bill doesn't want to talk about it but I think we need to. Can you send us the forms or should we come in?'" },
+        { "category": "urgent_symptom", "scenario": "Dorothy writing, clearly scared: 'Bill has lost 8 pounds this month. He's barely eating. And last night he was so short of breath I almost called 911. He says he's fine but he's NOT fine. Can we get an appointment this week?'" }
+      ]
+    },
+    {
+      "id": "patient-011",
+      "demographics": {
+        "name": { "given": "Carmen", "family": "Washington" },
+        "birthDate": "1982-07-19",
+        "gender": "female",
+        "occupation": "HR Director",
+        "insurance": { "type": "Commercial", "planName": "Employer self-funded (Optum network)", "memberId": "OPT-SF-4482910" },
+        "address": { "line": "1850 N Halsted St, Unit 3", "city": "Chicago", "state": "IL", "postalCode": "60614" },
+        "phone": "312-555-0394",
+        "email": "carmen.washington@protonmail.com",
+        "emergencyContact": { "name": "Diane Washington", "relationship": "Mother", "phone": "312-555-0395" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "high",
+      "messageStyle": "Professional, organized. Uses bullet points and numbered lists. States the question clearly up front. Wants action items and timelines. Treats the portal like a work email — efficient, polite, expects a prompt reply. Occasionally shows vulnerability underneath the professional exterior when discussing cancer risk.",
+      "archetype": "Preventive care model",
+      "conditions": ["BRCA2 positive (confirmed genetic testing)", "Migraines with aura (episodic)", "Family history of breast cancer (mother, maternal grandmother)"],
+      "urgency": "routine",
+      "chartCharacter": "Screening-heavy chart. Annual mammograms since age 30 (earlier than guidelines, per BRCA2 protocol). Alternating breast MRI every 6 months. Genetic counseling referral completed. Otherwise very healthy. Migraines managed with sumatriptan PRN and topiramate prophylaxis — reduced from 4/month to 1/month. She's proactive and organized about her care.",
+      "socialHistory": {
+        "smoking": "Never smoker",
+        "alcohol": "Moderate — 3-4 glasses of wine per week",
+        "exercise": "Pilates 3x/week, walks daily",
+        "notes": "Single, no children. Close with mother (breast cancer survivor). Handles her health with the same project-management approach she uses at work. Emotionally composed in person but her messages about BRCA2 sometimes reveal underlying anxiety."
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Breast cancer, diagnosed at 47, BRCA2+, in remission after bilateral mastectomy", "deceased": false },
+        { "relationship": "Maternal grandmother", "condition": "Breast cancer at 52, ovarian cancer at 61, deceased at 63", "deceased": true },
+        { "relationship": "Father", "condition": "Hypertension, otherwise healthy", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Erythromycin", "category": "medication", "reaction": "Severe GI distress", "criticality": "low" }
+      ],
+      "messageScenarios": [
+        { "category": "scheduling", "scenario": "Organized request about her BRCA2 screening schedule: 'Per our last discussion, I have: (1) mammogram in May, (2) breast MRI in November. Can you confirm this is correct and that referrals are in place?'" },
+        { "category": "symptom_report", "scenario": "Migraine frequency increasing from 1/month to 3/month over the past 2 months. Bullet-pointed: triggers she's identified, medications tried, days of work missed. Asks about adjusting topiramate dose." },
+        { "category": "referral_request", "scenario": "Requesting referral to genetic counselor to discuss prophylactic options — 'I've been reading about risk-reducing surgery and I want to have an informed conversation about my options. Can you refer me to Dr. [name] at Northwestern?'" },
+        { "category": "clinical_question", "scenario": "Asking about prophylactic mastectomy vs. enhanced surveillance — drops the professional tone slightly: 'I know the data supports either approach. But my grandmother didn't catch hers in time and I can't stop thinking about that. What would you recommend?'" }
+      ]
+    },
+    {
+      "id": "patient-012",
+      "demographics": {
+        "name": { "given": "Devon", "family": "Reeves" },
+        "birthDate": "1994-11-08",
+        "gender": "non-binary",
+        "occupation": "Freelance graphic designer",
+        "insurance": { "type": "Marketplace", "planName": "Ambetter Bronze (Marketplace)", "memberId": "AMB-IL-7719403" },
+        "address": { "line": "2445 W Fullerton Ave, Unit B", "city": "Chicago", "state": "IL", "postalCode": "60647" },
+        "phone": "773-555-0661",
+        "email": "devon@devonreeves.design",
+        "emergencyContact": { "name": "Sam Reeves", "relationship": "Sibling", "phone": "773-555-0662" },
+        "preferredLanguage": "English"
+      },
+      "healthLiteracy": "medium",
+      "messageStyle": "Casual, uses humor to deflect anxiety. Self-deprecating jokes about their health habits. Lowercase, conversational. Sometimes buries a genuine concern inside a jokey message. Uses 'lol' and 'tbh' occasionally. Thoughtful underneath the casual exterior.",
+      "archetype": "Mental health primary",
+      "conditions": ["ADHD (combined type)", "Generalized anxiety disorder", "Chronic insomnia"],
+      "urgency": "moderate",
+      "chartCharacter": "Diagnosed ADHD at 19, has been on stimulants since. Currently on Adderall XR 20mg but finding it less effective. GAD diagnosed 2 years ago, tried buspirone (didn't help), now on escitalopram 10mg. Insomnia is the most distressing symptom — tried melatonin, sleep hygiene, trazodone (morning grogginess). Currently on nothing for sleep. Therapy referral made but waitlisted. Medication adjustments are the main theme of this chart.",
+      "socialHistory": {
+        "smoking": "Never smoker. Uses cannabis edibles 2-3x/week for sleep (self-reports, documented).",
+        "alcohol": "Rare — 'alcohol makes my anxiety worse'",
+        "exercise": "Inconsistent — goes through phases of gym attendance. Currently not exercising. Reports difficulty with routine due to ADHD.",
+        "notes": "Lives with sibling Sam. Freelance income is variable — sometimes delays refills due to cost (Bronze plan, high deductible). Out as non-binary, uses they/them pronouns. Provider notes reflect correct pronouns. Socially active but describes feeling 'scattered.'"
+      },
+      "familyHistory": [
+        { "relationship": "Mother", "condition": "Depression, generalized anxiety", "deceased": false },
+        { "relationship": "Father", "condition": "ADHD (diagnosed in adulthood)", "deceased": false },
+        { "relationship": "Sibling (Sam)", "condition": "ADHD", "deceased": false }
+      ],
+      "allergies": [
+        { "substance": "Wellbutrin (bupropion)", "category": "medication", "reaction": "Severe anxiety, heart palpitations, insomnia worsened", "criticality": "high" }
+      ],
+      "messageScenarios": [
+        { "category": "medication_concern", "scenario": "ADHD med not working at current dose — 'hey so the adderall has kinda stopped doing its thing? like I'm back to losing my keys and staring at blank canvases for 3 hours lol. is it worth trying a higher dose or something different'" },
+        { "category": "symptom_report", "scenario": "Can't sleep even with sleep hygiene — 'ok so I did the whole no screens before bed thing for 2 weeks and I'm still lying there at 3am thinking about deadlines. the melatonin does nothing. tbh it's starting to really affect my work'" },
+        { "category": "referral_request", "scenario": "Asking about therapy referral status — 'any update on the therapy waitlist? I know it's been a while. no rush I guess (ok maybe some rush)'" },
+        { "category": "side_effects", "scenario": "Reporting side effects — dry mouth and no appetite on escitalopram. 'I've lost like 8 pounds which normally I wouldn't complain about but my sibling is getting on my case. also the dry mouth is SO annoying when I'm trying to present to clients'" },
+        { "category": "clinical_question", "scenario": "Casual check-in that masks real anxiety: 'random question — is it normal for your heart to feel like it's racing sometimes? asking for a friend (the friend is me). it happens mostly at night and it's probably just anxiety but figured I should mention it in case it's the adderall or something'" }
+      ]
+    }
+  ]
+}

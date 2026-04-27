@@ -1,0 +1,2069 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-006",
+  "demographics": {
+    "name": {
+      "given": "Kwame",
+      "family": "Asante"
+    },
+    "birthDate": "1958-04-02",
+    "gender": "male",
+    "phone": "312-555-0618",
+    "email": "kasante.esq@outlook.com",
+    "address": {
+      "line": "1455 N State Pkwy, Unit 12C",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60610"
+    },
+    "emergencyContact": {
+      "name": "Adwoa Asante",
+      "relationship": "Wife",
+      "phone": "312-555-0619"
+    },
+    "insurance": {
+      "type": "Medicare Advantage",
+      "planName": "Humana Gold Plus",
+      "memberId": "HUM-MA-7751923"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker",
+    "alcohol": "1-2 glasses of scotch, 3-4 evenings per week",
+    "exercise": "Walks with wife daily, approximately 20 minutes. Limited by bilateral knee pain from osteoarthritis.",
+    "notes": "Retired estate law attorney. Married 42 years to Adwoa. Active in local bar association emeritus events. Well-read, brings printed articles to appointments. Keeps a detailed medication spreadsheet that he updates regularly."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Father",
+      "condition": "Atrial fibrillation, stroke at age 72",
+      "deceased": true
+    },
+    {
+      "relationship": "Mother",
+      "condition": "Osteoarthritis, lived to age 91",
+      "deceased": true
+    },
+    {
+      "relationship": "Brother",
+      "condition": "Prostate cancer, treated, currently in remission",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Codeine",
+      "category": "medication",
+      "reaction": "Severe nausea and vomiting",
+      "criticality": "high",
+      "status": "active"
+    },
+    {
+      "substance": "ACE inhibitors (class)",
+      "category": "medication",
+      "reaction": "Angioedema of lips",
+      "criticality": "high",
+      "status": "active",
+      "note": "Documented reaction to lisinopril in 2015. All ACE inhibitors contraindicated. ARBs tolerated without issue."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "I48.1",
+        "display": "Persistent atrial fibrillation"
+      },
+      "status": "active",
+      "onsetDate": "2019-08-14",
+      "notes": "Persistent atrial fibrillation diagnosed after presenting with palpitations and dyspnea on exertion. CHA2DS2-VASc score 3 (age 65-74, hypertension history, vascular disease). On warfarin anticoagulation with target INR 2.0-3.0. Rate controlled with metoprolol. Father had afib and stroke at 72. Cardiology co-manages (Dr. Alan Woodford)."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "K21.0",
+        "display": "Gastro-esophageal reflux disease with esophagitis"
+      },
+      "status": "active",
+      "onsetDate": "2018-03-10",
+      "notes": "Longstanding GERD managed with omeprazole 20mg daily since 2018. Switched to famotidine 20mg BID in January 2026 due to concerns about long-term PPI use (bone density, possible warfarin metabolism interaction via CYP2C19). Patient was not consulted prior to the switch and expressed significant dissatisfaction."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "N40.0",
+        "display": "Benign prostatic hyperplasia without lower urinary tract symptoms"
+      },
+      "status": "active",
+      "onsetDate": "2020-06-15",
+      "notes": "BPH diagnosed after presenting with urinary frequency and nocturia. Managed with tamsulosin 0.4mg daily with good symptomatic relief. PSA monitored annually given brother's prostate cancer history. Urology referral to Dr. Priya Mehta for ongoing monitoring."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "M17.0",
+        "display": "Bilateral primary osteoarthritis of knee"
+      },
+      "status": "active",
+      "onsetDate": "2021-04-22",
+      "notes": "Progressive bilateral knee osteoarthritis with crepitus on exam. Pain managed with acetaminophen 500mg PRN (NSAIDs contraindicated due to warfarin). Limits walking distance. Patient has researched partial knee replacement and requested orthopedic referral. Meloxicam was briefly trialed in early 2023 but stopped after pharmacy flagged significant interaction with warfarin."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "F32.0",
+        "display": "Major depressive disorder, single episode, mild"
+      },
+      "status": "active",
+      "onsetDate": "2022-01-10",
+      "notes": "Mild depression identified during routine screening (PHQ-9 score 8). Reports low mood since retirement, loss of daily structure, occasional feelings of purposelessness. Responded well to sertraline 50mg daily. PHQ-9 improved to 4 at follow-up. Remains on SSRI with stable mood."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "855332",
+        "display": "Warfarin Sodium 5 MG Oral Tablet"
+      },
+      "dosage": "5 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2019-09-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "866924",
+        "display": "Metoprolol Succinate 50 MG Extended Release Oral Tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2019-09-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "311700",
+        "display": "Famotidine 20 MG Oral Tablet"
+      },
+      "dosage": "20 mg",
+      "frequency": "Twice daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2026-01-08",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "198189",
+        "display": "Omeprazole 20 MG Delayed Release Oral Capsule"
+      },
+      "dosage": "20 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2018-03-10",
+      "endDate": "2026-01-08",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Switched to famotidine due to concerns about long-term PPI use (>5 years): increased fracture risk, possible hypomagnesemia, and potential CYP2C19-mediated interaction affecting warfarin metabolism. Patient was not consulted before the switch and expressed strong objection."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "198032",
+        "display": "Tamsulosin Hydrochloride 0.4 MG Oral Capsule"
+      },
+      "dosage": "0.4 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2020-07-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "312940",
+        "display": "Sertraline 50 MG Oral Tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "Once daily in the morning",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2022-01-15",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "198440",
+        "display": "Acetaminophen 500 MG Oral Tablet"
+      },
+      "dosage": "500 mg",
+      "frequency": "Every 6 hours as needed for knee pain (max 2000 mg/day)",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2021-05-01",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "1295349",
+        "display": "Calcium Carbonate 600 MG / Cholecalciferol 400 UNT Oral Tablet"
+      },
+      "dosage": "600 mg calcium / 400 IU vitamin D3",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2023-06-14",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "311461",
+        "display": "Meloxicam 15 MG Oral Tablet"
+      },
+      "dosage": "15 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-02-01",
+      "endDate": "2023-02-15",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Discontinued after 2 weeks due to significant drug interaction with warfarin. INR rose to 3.8 (from baseline 2.4) while on meloxicam. Also increased GI bleeding risk in combination with anticoagulant. Switched to acetaminophen for osteoarthritis pain management."
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, high-dose, quadrivalent"
+      },
+      "date": "2025-10-15",
+      "site": "Left deltoid",
+      "lotNumber": "FL9921C",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "309",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, bivalent, 2024-2025 formula"
+      },
+      "date": "2025-10-15",
+      "site": "Right deltoid",
+      "lotNumber": "CV2025-8203",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "121",
+        "display": "Zoster (shingles) vaccine, recombinant, adjuvanted"
+      },
+      "date": "2024-06-19",
+      "site": "Left deltoid",
+      "lotNumber": "SX4417A",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap (tetanus, diphtheria, pertussis)"
+      },
+      "date": "2023-06-14",
+      "site": "Left deltoid",
+      "lotNumber": "TD4490B",
+      "provider": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "33",
+        "display": "Pneumococcal polysaccharide PPV23"
+      },
+      "date": "2023-06-14",
+      "site": "Right deltoid",
+      "lotNumber": "PN7782A",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-006-001",
+      "date": "2023-06-14",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical examination",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 128,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 198,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.6,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for annual physical. Reports feeling well overall. Knee pain bilateral, worse on stairs and after prolonged sitting. Using acetaminophen PRN with moderate relief. GERD symptoms controlled on omeprazole. Denies chest pain, dyspnea, or palpitations. Mood stable on sertraline, enjoying emeritus bar association events. Urinary symptoms improved on tamsulosin. Brought his medication spreadsheet, which is accurate and up to date.",
+        "objective": "Alert, well-appearing 65-year-old male. BP 128/76 on metoprolol. Heart irregularly irregular (atrial fibrillation), rate controlled at 78 bpm, no murmurs. Lungs CTA bilaterally. Abdomen soft, non-tender. Extremities: bilateral knee crepitus with full ROM, no effusion, no edema. DRE: prostate mildly enlarged, smooth, non-tender, no nodules. Skin intact. Neuro intact.",
+        "assessment": "1. Atrial fibrillation - persistent, rate controlled on metoprolol 50mg, anticoagulated with warfarin, INR in range. 2. GERD - controlled on omeprazole 20mg daily. Noting this is now 5+ years of PPI therapy, will continue to monitor. 3. BPH - stable on tamsulosin, PSA to be checked. 4. Bilateral knee OA - managed with acetaminophen, NSAIDs avoided due to warfarin. 5. Depression - stable on sertraline 50mg. PHQ-9 today 3.",
+        "plan": "1. Continue all current medications. 2. Annual labs ordered: INR/PT, CBC, CMP, lipid panel, PSA. 3. Tdap booster and pneumococcal vaccine administered today. 4. Referral to urology (Dr. Priya Mehta) for BPH and PSA monitoring given family history of prostate cancer in brother. 5. Next INR check in 4 weeks. 6. Return for annual physical in 12 months."
+      },
+      "labOrders": [
+        "lab-006-001"
+      ],
+      "referrals": [
+        {
+          "to": "Dr. Priya Mehta, Urology",
+          "reason": "BPH management and PSA monitoring - brother with prostate cancer history",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "enc-006-002",
+      "date": "2023-10-11",
+      "type": "office-visit",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "INR monitoring and follow-up",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 132,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 74,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 197,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.5,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for routine INR monitoring. Reports compliance with warfarin 5mg daily. No bleeding, bruising, or dark stools. Denies changes in diet or new medications. Knee pain persists, especially right knee. Mentions he has been reading about partial knee replacement and would like to discuss.",
+        "objective": "BP 132/78. Heart irregularly irregular, rate 74. No new findings. Bilateral knees with mild crepitus, right greater than left. No effusion.",
+        "assessment": "1. Atrial fibrillation - rate controlled. INR 2.3 today, in therapeutic range. 2. Bilateral knee OA - right worse than left, patient interested in surgical consultation. 3. Medications reviewed, no changes.",
+        "plan": "1. Continue warfarin 5mg daily. 2. Next INR check in 4 weeks. 3. Will discuss orthopedic referral with Dr. Kim at next visit. 4. Continue acetaminophen PRN for knee pain."
+      },
+      "labOrders": [
+        "lab-006-002"
+      ]
+    },
+    {
+      "id": "enc-006-003",
+      "date": "2024-02-14",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "INR monitoring - elevated INR episode, meloxicam interaction",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 134,
+          "diastolic": 80,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 82,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 196,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.3,
+        "respiratoryRate": {
+          "value": 18,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient called after pharmacy flagged drug interaction between recently prescribed meloxicam and warfarin. He had been started on meloxicam 15mg daily two weeks ago for worsening knee pain. No active bleeding but reports increased bruising on forearms. Denies hematemesis, melena, hematuria. States he is frustrated that the interaction was not identified at the time of prescribing.",
+        "objective": "BP 134/80. Heart irregularly irregular, rate 82. Scattered ecchymoses bilateral forearms, no active bleeding. Abdomen soft, non-tender. Stool guaiac negative. INR today 3.8, up from 2.3 at last check.",
+        "assessment": "1. Elevated INR at 3.8 - likely due to meloxicam-warfarin interaction (NSAIDs inhibit platelet function and can displace warfarin from protein binding). No active bleeding but INR above therapeutic range. 2. Atrial fibrillation - rate slightly higher today, possibly stress-related. 3. Bilateral knee OA - meloxicam must be discontinued, will return to acetaminophen.",
+        "plan": "1. DISCONTINUE meloxicam immediately. 2. Hold warfarin tonight, resume at 5mg daily tomorrow. 3. Recheck INR in 3 days. 4. Resume acetaminophen 500mg q6h PRN for knee pain. Counsel on max 2000mg/day. 5. Patient educated on NSAID-warfarin interaction and importance of checking with office before starting any new medication. 6. Will proceed with orthopedic referral for knee OA given inability to use NSAIDs. 7. Patient expressed dissatisfaction that this interaction was not caught initially - acknowledged and apologized."
+      },
+      "labOrders": [
+        "lab-006-003"
+      ]
+    },
+    {
+      "id": "enc-006-004",
+      "date": "2024-06-19",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical examination",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 126,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 76,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 195,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.2,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Annual physical. Patient reports stable overall health. INR has been consistently in range since the meloxicam episode in February. Knee pain managed with acetaminophen though he notes it provides only partial relief. Mood is good, enjoying a legal ethics lecture series at Northwestern. GERD well controlled on omeprazole, no heartburn. Urinary symptoms stable on tamsulosin. Reports sleeping well. Brought updated medication spreadsheet. Requests discussion about long-term anticoagulation options.",
+        "objective": "Well-appearing 66-year-old male. BP 126/74. Heart irregularly irregular at 76 bpm, no murmurs. Lungs CTA. Abdomen benign. Knees: bilateral crepitus, right > left, mild bony enlargement medial compartment bilaterally, no effusion. Mood and affect appropriate. Weight stable.",
+        "assessment": "1. Atrial fibrillation - stable, rate controlled, INR in range on warfarin. Patient inquired about DOACs; discussed that warfarin remains appropriate given his stable INR control and comfort with monitoring schedule. 2. GERD - controlled on omeprazole, now 6+ years on PPI. Will discuss transition plan at future visit per current guidelines. 3. BPH - stable, urology follow-up with Dr. Mehta in August. 4. Bilateral knee OA - moderate, right > left. Orthopedic referral completed, patient seen by Dr. Hendricks, conservative management recommended for now. 5. Depression - remission on sertraline. PHQ-9 score 2. 6. Health maintenance: Shingrix dose 1 administered today.",
+        "plan": "1. Continue all current medications. 2. Annual labs: INR/PT, CBC, CMP, lipid panel, PSA. 3. Shingrix dose 1 administered today, schedule dose 2 in 2-6 months. 4. Begin planning omeprazole taper/switch at next visit given prolonged PPI use. 5. Continue INR monitoring q4 weeks. 6. Follow up with Dr. Hendricks (orthopedics) as scheduled. 7. Return in 6 months or sooner as needed."
+      },
+      "labOrders": [
+        "lab-006-004"
+      ],
+      "referrals": [
+        {
+          "to": "Dr. Robert Hendricks, Orthopedic Surgery",
+          "reason": "Bilateral knee osteoarthritis evaluation, patient interested in partial knee replacement discussion",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "enc-006-005",
+      "date": "2025-03-12",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "INR monitoring, medication review, cardiology referral follow-up",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 130,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 72,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 194,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.1,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for follow-up. Reports stable health. Cardiology visit with Dr. Woodford in January confirmed continued rate-control strategy for afib, no rhythm control intervention recommended at this time. Echocardiogram showed preserved EF at 58%, mild left atrial enlargement. Patient satisfied with cardiology assessment. Knee pain unchanged. GERD symptoms stable. Mood good. States he has been researching fish oil and turmeric supplements for joint health and wants to discuss safety with warfarin.",
+        "objective": "BP 130/76. Heart irregularly irregular, rate 72. Lungs CTA. Knees: unchanged crepitus bilateral. Weight stable. INR 2.5 today.",
+        "assessment": "1. Atrial fibrillation - stable rate control, cardiology agrees with current management. Echo reassuring. 2. INR 2.5, therapeutic. 3. GERD - planning transition from omeprazole. Will implement at next visit after discussing with patient. 4. Supplement inquiry: fish oil may have mild antiplatelet effect, turmeric may inhibit warfarin metabolism - both warrant caution in anticoagulated patients.",
+        "plan": "1. Continue all current medications. 2. Advised against starting fish oil or turmeric supplements without close INR monitoring - if patient wishes to trial fish oil, would need INR checks at 1 and 2 weeks after starting. Turmeric not recommended given warfarin interaction potential. 3. Next INR in 4 weeks. 4. Plan to discuss omeprazole-to-famotidine switch at next visit. 5. Flu and COVID boosters due in fall."
+      },
+      "labOrders": [
+        "lab-006-005"
+      ],
+      "referrals": [
+        {
+          "to": "Dr. Alan Woodford, Cardiology",
+          "reason": "Atrial fibrillation management review, echocardiogram",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "enc-006-006",
+      "date": "2025-06-18",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical examination",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 124,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 74,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 194,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.1,
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Annual physical. Patient reports overall stability. Notes he has been reading about long-term PPI risks and wants to discuss the omeprazole. States he would be open to a transition if presented with the evidence but wants to be part of the decision. Knee pain is stable, manageable with acetaminophen. Mood stable. Sleep good. Still walking daily with wife Adwoa. Reports attending a retirement planning seminar and writing an article for the bar association newsletter on elder law.",
+        "objective": "Well-appearing 67-year-old male. BP 124/72, excellent control. Heart irregularly irregular at 74 bpm. Lungs CTA bilaterally. Abdomen soft, non-tender. Knees: bilateral crepitus, right > left, stable from prior exams. No edema. Skin intact. Neuro intact. PHQ-9 score 2.",
+        "assessment": "1. Atrial fibrillation - persistent, rate well controlled, INR consistently in range over the past year. 2. GERD - on omeprazole >7 years. Discussed transition to famotidine per current guidelines re long-term PPI risks. Patient receptive but wants to be involved in the timing and plan. 3. BPH - stable. PSA to be rechecked. 4. Bilateral knee OA - stable. 5. Depression - remission. 6. Good overall health for age.",
+        "plan": "1. Annual labs: INR/PT, CBC, CMP, lipid panel, PSA. 2. Discussed omeprazole-to-famotidine transition plan with patient. Agreed to taper omeprazole at January visit with 2-week overlap using famotidine. Patient prefers to be consulted on timing. 3. Continue all other medications. 4. Flu and COVID vaccines due in fall. 5. Return for INR monitoring q4 weeks. 6. Annual physical in 12 months."
+      },
+      "labOrders": [
+        "lab-006-006"
+      ]
+    },
+    {
+      "id": "enc-006-007",
+      "date": "2025-10-15",
+      "type": "follow-up",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "INR monitoring, flu and COVID vaccines",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 128,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 76,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 195,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.2,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for INR check and fall immunizations. Reports stable symptoms. Asks about timeline for omeprazole switch discussed with Dr. Kim in June. Reminds staff he wants to be notified before any changes are made.",
+        "objective": "BP 128/74. Heart irregularly irregular, rate 76. Lungs clear. No edema. INR 2.4, therapeutic. Flu and COVID vaccines administered without adverse reaction. Observed 15 minutes.",
+        "assessment": "1. Atrial fibrillation - stable, INR therapeutic. 2. Immunizations up to date after today. 3. Patient reiterated desire to be consulted before omeprazole switch. Noted in chart.",
+        "plan": "1. Continue warfarin 5mg daily. 2. INR recheck in 4 weeks. 3. Omeprazole transition to be discussed with Dr. Kim at January 2026 visit per patient preference. 4. Note added to chart: patient requests advance consultation on any medication changes."
+      },
+      "labOrders": [
+        "lab-006-007"
+      ]
+    },
+    {
+      "id": "enc-006-008",
+      "date": "2026-01-08",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "INR monitoring, medication review, omeprazole transition",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 130,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 195,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 71,
+          "unit": "in"
+        },
+        "bmi": 27.2,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for scheduled follow-up. INR monitoring and planned omeprazole transition discussion. Reports stable health. Knee pain unchanged. Mood good. GERD well controlled. States he reviewed the literature Dr. Kim shared regarding long-term PPI risks and agrees a transition is reasonable, provided it is done gradually.",
+        "objective": "BP 130/78. Heart irregularly irregular, rate 78. Lungs CTA. Abdomen soft. Knees unchanged. INR 2.6, therapeutic. Weight stable.",
+        "assessment": "1. Atrial fibrillation - stable, INR in range. 2. GERD - proceeding with omeprazole to famotidine transition today per agreed plan. 3. All other conditions stable.",
+        "plan": "1. DISCONTINUE omeprazole 20mg daily. 2. START famotidine 20mg twice daily. 3. If significant GERD symptoms return within 2 weeks, patient to contact office. May need brief omeprazole overlap. 4. Continue all other medications. 5. INR recheck in 4 weeks (famotidine has less CYP2C19 interaction than omeprazole, but will monitor INR closely during transition). 6. Note: Although the transition was discussed and agreed upon with the patient at this visit, the pharmacy received the prescription change on this date. Patient later reported via portal that he felt the change was made without adequate same-day discussion, as he expected a more detailed in-visit conversation before execution."
+      },
+      "labOrders": [
+        "lab-006-008"
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-006-001",
+      "date": "2023-06-14",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.4,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 27.1,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5,
+                "text": "Normal 11.0-13.5 sec (elevated expected on warfarin)"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.8,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 14.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 43.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 218,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 98,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 18,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.04,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.3,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 204,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 124,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 52,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Prostate-Specific Antigen",
+          "code": {
+            "system": "LOINC",
+            "code": "2857-1",
+            "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "PSA, Total",
+              "code": {
+                "system": "LOINC",
+                "code": "2857-1",
+                "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+              },
+              "value": 3.2,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "high": 4.0,
+                "text": "<4.0 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-002",
+      "date": "2023-10-11",
+      "status": "final",
+      "orderedBy": "Rachel Torres, NP",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.3,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 26.4,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-003",
+      "date": "2024-02-14",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 3.8,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "critical-high"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 42.6,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "critical-high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-004",
+      "date": "2024-06-19",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.6,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 29.4,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 7.1,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 14.5,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 42.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 225,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 95,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 19,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.06,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 198,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 118,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 54,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 132,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Prostate-Specific Antigen",
+          "code": {
+            "system": "LOINC",
+            "code": "2857-1",
+            "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "PSA, Total",
+              "code": {
+                "system": "LOINC",
+                "code": "2857-1",
+                "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+              },
+              "value": 3.5,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "high": 4.0,
+                "text": "<4.0 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-005",
+      "date": "2025-03-12",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.5,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 28.2,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-006",
+      "date": "2025-06-18",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.2,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 25.6,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.5,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 14.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 13.5,
+                "high": 17.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 42.1,
+              "unit": "%",
+              "referenceRange": {
+                "low": 38.3,
+                "high": 48.6
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 232,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 97,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 20,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.08,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.7,
+                "high": 1.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 142,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.4,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 196,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 116,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 55,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 128,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Prostate-Specific Antigen",
+          "code": {
+            "system": "LOINC",
+            "code": "2857-1",
+            "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "PSA, Total",
+              "code": {
+                "system": "LOINC",
+                "code": "2857-1",
+                "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma"
+              },
+              "value": 3.4,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "high": 4.0,
+                "text": "<4.0 ng/mL"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-007",
+      "date": "2025-10-15",
+      "status": "final",
+      "orderedBy": "Rachel Torres, NP",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.4,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 27.3,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-006-008",
+      "date": "2026-01-08",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "INR / Prothrombin Time",
+          "code": {
+            "system": "LOINC",
+            "code": "34714-6",
+            "display": "INR in Blood by Coagulation assay"
+          },
+          "results": [
+            {
+              "test": "INR",
+              "code": {
+                "system": "LOINC",
+                "code": "6301-6",
+                "display": "INR in Platelet poor plasma by Coagulation assay"
+              },
+              "value": 2.6,
+              "unit": "INR",
+              "referenceRange": {
+                "low": 2.0,
+                "high": 3.0,
+                "text": "Therapeutic range for atrial fibrillation: 2.0-3.0"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Prothrombin Time",
+              "code": {
+                "system": "LOINC",
+                "code": "5902-2",
+                "display": "Prothrombin time (PT)"
+              },
+              "value": 29.1,
+              "unit": "seconds",
+              "referenceRange": {
+                "low": 11.0,
+                "high": 13.5
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-006-001",
+      "date": "2026-01-15T08:12:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "administrative",
+      "priority": "routine",
+      "subject": "Unacceptable Change to My Omeprazole Prescription",
+      "body": "Dr. Kim,\n\nI am writing to express my deep dissatisfaction with the change made to my medication regimen during my January 8th visit. When I arrived at Walgreens to fill my prescriptions, I was informed that my omeprazole had been discontinued and replaced with famotidine. This was done without what I would consider adequate consultation.\n\nTo be clear: I have been on omeprazole for nearly eight years. It has controlled my GERD effectively, and I have experienced no adverse effects. While I recall a brief mention of long-term PPI concerns during the visit, at no point was I presented with a formal decision or given the opportunity to weigh in meaningfully before the prescription was changed at the pharmacy. I had specifically requested, in October and again in June of last year, that I be consulted before any changes were made to my regimen. This is documented in my chart.\n\nI have done my own research on this matter. The evidence regarding PPI-related bone density loss is not conclusive in patients taking calcium supplementation, and the CYP2C19 interaction with warfarin is described in the literature as clinically modest at best. I would have appreciated the opportunity to review this evidence together before a unilateral decision was made.\n\nI expect a prompt and thorough response explaining the clinical rationale for this change, and I would like to discuss whether reverting to omeprazole remains an option. I trust this can be resolved without my needing to seek a second opinion, though I am prepared to do so if necessary.\n\nRespectfully,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-01-16T10:30:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Dear Mr. Asante,\n\nThank you for your message, and I want to sincerely apologize that you felt the medication change was made without adequate consultation. I take your concern seriously, and I understand why you are frustrated. You have been a proactive and engaged participant in your care, and that should always be respected.\n\nYou are correct that we discussed this transition at your June and October visits, and my intention at the January visit was to finalize the plan we had discussed together. I recognize, however, that the execution did not match the collaborative process you had requested, and for that I apologize. The prescription change was sent to the pharmacy at the end of your visit, and I should have ensured you felt fully informed and in agreement before doing so.\n\nRegarding the clinical rationale: after 7+ years of continuous PPI therapy, current guidelines recommend reassessment. The primary concerns are (1) potential for reduced calcium absorption and bone density changes, which is relevant given your age and the calcium supplementation you take, (2) possible hypomagnesemia with long-term use, and (3) the CYP2C19-mediated interaction with warfarin metabolism. You are correct that each of these individually is modest, but taken together in a patient on anticoagulation, the risk-benefit balance favors a trial of an H2 blocker if GERD can be adequately controlled.\n\nThat said, this is your decision. If famotidine does not adequately control your symptoms after a 4-week trial, we can absolutely revisit omeprazole. I would like to schedule a brief follow-up call or visit in 2 weeks to check in on how the transition is going.\n\nPlease know that your preferences are always central to your care plan. I have added a standing note in your chart reinforcing your request to be consulted on all medication changes.\n\nWith respect,\nDr. Kim"
+        },
+        {
+          "date": "2026-01-16T14:45:00Z",
+          "sender": {
+            "name": "Kwame Asante",
+            "role": "patient"
+          },
+          "body": "Dr. Kim,\n\nThank you for your response. I appreciate the detailed clinical rationale, and I acknowledge that the aggregate risk profile you describe is reasonable. I will proceed with the famotidine trial as discussed, on the condition that we reassess at the 4-week mark. I will monitor my symptoms closely and maintain a log.\n\nI also appreciate the chart notation regarding future medication changes. That is the standard of communication I expect, and I am glad it is now formalized.\n\nI will accept a follow-up call in two weeks. Please have the office contact me at my home number to schedule a specific time.\n\nRegards,\nKwame Asante"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-002",
+      "date": "2026-02-10T09:30:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "prescription refill",
+      "priority": "routine",
+      "subject": "Batch Refill Request - Three Medications",
+      "body": "Dr. Kim,\n\nI am writing to request refills for the following three medications, which are all due within the next 10 days. I have organized the details below for your convenience, consistent with my personal medication tracking spreadsheet:\n\n1. Warfarin Sodium 5 mg - Qty 90, 90-day supply\n   Pharmacy: Walgreens #5102, 1340 N Wells St, Chicago, IL 60610\n   Last filled: November 12, 2025\n   Current supply remaining: approximately 8 tablets\n\n2. Tamsulosin 0.4 mg - Qty 90, 90-day supply\n   Pharmacy: Walgreens #5102, 1340 N Wells St, Chicago, IL 60610\n   Last filled: November 15, 2025\n   Current supply remaining: approximately 11 capsules\n\n3. Sertraline 50 mg - Qty 90, 90-day supply\n   Pharmacy: CVS #8841, 200 E Delaware Pl, Chicago, IL 60611\n   Note: My wife Adwoa picks up this prescription at CVS as it is near her hair salon. Please ensure it is sent to CVS, not Walgreens.\n\nI would appreciate confirmation that these have been processed. In my experience, delays in refill processing can result in gaps in therapy, which is particularly concerning for the warfarin.\n\nI expect these can be handled within 24-48 hours.\n\nRegards,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-02-10T14:15:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Dear Mr. Asante,\n\nAll three prescriptions have been sent to the respective pharmacies as you specified:\n\n1. Warfarin 5mg (90-day) - sent to Walgreens #5102 on Wells St\n2. Tamsulosin 0.4mg (90-day) - sent to Walgreens #5102 on Wells St\n3. Sertraline 50mg (90-day) - sent to CVS #8841 on Delaware Pl\n\nThey should be ready for pickup by tomorrow. Thank you for providing the detailed information - it made the process very efficient.\n\nBest regards,\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-003",
+      "date": "2026-02-24T11:05:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "administrative",
+      "priority": "routine",
+      "subject": "Unacceptable Wait Time at February 19th Appointment",
+      "body": "Dr. Kim,\n\nI wish to bring to your attention that at my INR monitoring appointment on February 19th, I waited 45 minutes past my scheduled appointment time before being seen. This is, to my recollection, the longest I have ever waited at your practice, and it is not a standard I find acceptable.\n\nI understand that medical practices occasionally run behind schedule due to emergencies or complex cases. However, no explanation was offered, no staff member informed me of the delay, and I was left sitting in the waiting room without any communication. My time, like yours, is valuable.\n\nIn my years as an attorney, I managed a practice of twelve associates, and I can assure you that client communication during delays was a non-negotiable standard. I would expect no less from a medical practice.\n\nI would appreciate confirmation that this feedback has been received and that steps will be taken to improve wait time communication. I remain committed to this practice, but experiences like this do cause me to consider alternatives.\n\nRespectfully,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-02-25T09:00:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Dear Mr. Asante,\n\nThank you for bringing this to my attention, and I sincerely apologize for the extended wait on February 19th. You are absolutely right that you should have been informed of the delay. We had an unexpected urgent situation that morning that put us behind, but that does not excuse the lack of communication.\n\nI have spoken with our front desk staff about ensuring that patients are informed proactively when we are running more than 15 minutes behind schedule. We are also implementing a courtesy notification system. Your feedback is valued and will directly improve the experience for all our patients.\n\nI want you to know that your loyalty to this practice over the years is not taken for granted. We will do better.\n\nWith appreciation for your candor,\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-004",
+      "date": "2026-03-08T10:20:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Fish Oil and Turmeric Supplements - Interaction with Warfarin",
+      "body": "Dr. Kim,\n\nI am following up on a topic we discussed briefly during my March 2025 visit regarding fish oil and turmeric supplements. I have continued my research on this matter and would like a more definitive answer than what I received previously.\n\nSpecifically, I have read the following:\n\n1. Fish oil (omega-3 fatty acids) at doses of 2-4 grams daily has been shown in several studies to have modest antiplatelet effects but does not significantly alter INR in most patients on stable warfarin doses. A 2013 meta-analysis in the Journal of Thrombosis and Haemostasis supports this conclusion.\n\n2. Turmeric (curcumin) is more concerning, as it may inhibit CYP enzymes involved in warfarin metabolism and has been associated with case reports of elevated INR.\n\nGiven this evidence, I would like to start fish oil at 2 grams daily for cardiovascular benefit and joint inflammation. I am willing to forgo the turmeric if you believe the evidence warrants it, but I want a medical opinion grounded in the literature, not a generic disclaimer about supplement interactions.\n\nI expect a considered response and am happy to schedule an appointment to discuss further if you prefer.\n\nRegards,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-03-10T11:00:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Dear Mr. Asante,\n\nI appreciate your thorough research, and I'm happy to give you a specific, evidence-based answer rather than a generic one.\n\nYour summary of the literature is largely accurate. Here is my clinical recommendation:\n\n1. Fish oil (2g daily): I am comfortable with you starting this. The antiplatelet effect at this dose is mild and unlikely to significantly affect your INR. However, as a precaution, I would like to check your INR at 1 week and 2 weeks after starting to confirm stability. If both checks remain in the 2.0-3.0 range, we can return to our regular 4-week schedule.\n\n2. Turmeric/curcumin: I agree with your assessment that this carries more risk. The case reports of INR elevation are concerning, and unlike fish oil, there is no well-established cardiovascular benefit that would justify the added risk in a patient on warfarin. I would recommend against this supplement.\n\nIf you would like to proceed with the fish oil, please start it after your next scheduled INR check so we have a clean baseline, and we will monitor closely.\n\nThank you for the thoughtful dialogue on this.\n\nBest regards,\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-005",
+      "date": "2026-03-22T09:45:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "appointment request",
+      "priority": "routine",
+      "subject": "Request for Updated Orthopedic Referral - Knee Replacement Consultation",
+      "body": "Dr. Kim,\n\nI am writing to request an updated referral to an orthopedic surgeon for evaluation of my bilateral knee osteoarthritis. As you know, I was seen by Dr. Hendricks in 2024, and at that time conservative management was recommended. However, my symptoms have progressed over the past year despite consistent use of acetaminophen and daily walking.\n\nSpecifically, I am experiencing the following:\n- Increased pain descending stairs, rated 6/10 on most days\n- Morning stiffness lasting 30-40 minutes (previously 15-20 minutes)\n- Reduced walking distance with my wife - we have had to shorten our daily walks by approximately half\n- Occasional giving way of the right knee, which concerns me given my age and fall risk\n\nI have done my own research on partial knee replacement (unicompartmental arthroplasty) and believe I may be a candidate based on the medial compartment involvement noted in my chart. I understand that Dr. Hendricks performs this procedure, and I would like to return to him for a reassessment.\n\nAlternatively, if you believe a different orthopedic surgeon would be more appropriate, I am open to a referral to the Midwest Orthopaedics group at Rush, which I understand has a strong joint replacement program.\n\nI would appreciate this referral being processed within the week.\n\nRegards,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-03-24T10:30:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Dear Mr. Asante,\n\nDr. Kim has reviewed your request and agrees that a reassessment by orthopedics is appropriate given your symptom progression. We have sent a referral back to Dr. Hendricks with your updated symptom information. His office should contact you within 5-7 business days to schedule.\n\nDr. Kim also wants me to note that the giving-way episodes are important to mention to Dr. Hendricks, as they may factor into his surgical assessment. In the meantime, please use caution on stairs and consider a handrail at all times.\n\nPlease let us know if you don't hear from Dr. Hendricks's office by the end of next week.\n\nBest regards,\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-006",
+      "date": "2026-03-25T15:10:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Rachel Torres, NP",
+        "role": "nurse"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Re: Request for Updated Orthopedic Referral - Confirmation Requested",
+      "body": "Ms. Torres,\n\nThank you for the update regarding the orthopedic referral. I trust that it has indeed been sent and that Dr. Hendricks's office will be in contact shortly.\n\nHowever, I want to confirm: has the referral actually been transmitted to Dr. Hendricks's office, or is it still pending internal processing? In my experience, referrals sometimes sit in a queue for days before being sent. I ask not to be difficult, but because I have learned that verifying these details prevents unnecessary delays.\n\nAdditionally, please confirm that the referral includes my most recent knee examination findings and the notation about the giving-way episodes. I would like Dr. Hendricks to have the full picture before my appointment.\n\nI trust this is being processed with appropriate urgency. Please confirm at your earliest convenience.\n\nRegards,\nKwame Asante",
+      "thread": [
+        {
+          "date": "2026-03-26T09:15:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Dear Mr. Asante,\n\nI can confirm that the referral was electronically transmitted to Dr. Hendricks's office on March 24th at 10:42 AM. It includes your encounter notes from your most recent visits, your current medication list, and a specific note from Dr. Kim regarding the giving-way episodes and your interest in discussing unicompartmental arthroplasty.\n\nI have also called Dr. Hendricks's scheduling coordinator directly to flag the referral. She confirmed receipt and said you should expect a call by early next week.\n\nPlease don't hesitate to reach out if you haven't heard from them by Wednesday, April 1st.\n\nBest regards,\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-006-007",
+      "date": "2026-04-19T08:45:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "urgent",
+      "subject": "URGENT: Pharmacy refusing to fill warfarin",
+      "body": "Dr. Kim,\n\nI am contacting you on a matter that requires your immediate attention. As of this morning, CVS pharmacy has refused to fill my warfarin prescription, stating that the prescription on file has expired. I have now been without warfarin for two days.\n\nI should not need to remind you that I have persistent atrial fibrillation with a CHA2DS2-VASc score of 3, and that discontinuation of anticoagulation places me at material risk of thromboembolic stroke. I have reviewed the pharmacokinetics myself: warfarin has an elimination half-life of approximately 40 hours, which means that after 48 hours without a dose, my plasma concentration has already dropped below the therapeutic threshold. By my calculation, my INR is falling out of range as I write this.\n\nI trust that this will be handled immediately. A new prescription needs to be called in to CVS #8841 on Delaware Place today, without delay. I should not have to go a third day without a medication that is, by any clinical standard, essential to preventing a potentially catastrophic event.\n\nI expect confirmation that this has been resolved by end of business today.\n\nRespectfully,\nKwame Asante",
+      "thread": []
+    },
+    {
+      "id": "msg-006-008",
+      "date": "2026-04-22T10:15:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "prescription refill",
+      "priority": "routine",
+      "subject": "Comprehensive medication review request",
+      "body": "Dr. Kim,\n\nI am writing to request a formal, comprehensive review of my entire medication regimen. I am currently taking eight or more daily medications, and I have recently read a compelling article in the Journal of the American Geriatrics Society regarding polypharmacy risks in patients over 65. The findings are concerning, and I believe a structured deprescribing assessment is warranted in my case.\n\nSpecifically, I would like the following addressed:\n\n- Whether the famotidine remains necessary given that my GERD was well-controlled for years and the original switch from omeprazole was not driven by symptom failure\n- Whether sertraline can be tapered, as my PHQ-9 scores have been consistently low for over two years\n- Whether the calcium/vitamin D supplement is still indicated given my current bone density status\n- A formal drug interaction review across all active prescriptions, particularly interactions involving warfarin, metoprolol, and sertraline\n\nI have identified at least three potential moderate interactions using the Lexicomp database, and I would like your clinical assessment of each.\n\nI expect this review to be thorough and evidence-based. Please advise whether this can be conducted via the portal or whether an in-person appointment is required.\n\nRegards,\nKwame Asante",
+      "thread": []
+    },
+    {
+      "id": "msg-006-009",
+      "date": "2026-04-25T14:30:00Z",
+      "sender": {
+        "name": "Kwame Asante",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "urgent",
+      "subject": "Re: Lack of response to urgent medication issue",
+      "body": "Dr. Kim,\n\nIt has now been six days since I reported that my warfarin prescription had expired and CVS was unable to fill it. I have received no response from your office. I find this silence unacceptable and, frankly, concerning from a patient safety standpoint.\n\nI am documenting this lapse in care, including the dates of each unanswered communication, for my personal records. I am well aware of my rights under federal and state regulations regarding timely response to patient communications, particularly those involving urgent medication issues.\n\nI also note that my separate request for a comprehensive medication review, sent on April 22nd, has likewise gone unanswered. I trust that both matters will be addressed promptly.\n\nI look forward to your response without further delay.\n\nKwame Asante",
+      "thread": []
+    }
+  ]
+}

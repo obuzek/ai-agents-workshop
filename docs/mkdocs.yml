@@ -3,13 +3,13 @@ INHERIT: ./base.yml
 
 # Project Information
 site_name: "AI Agents Workshop"
-site_url: "https://ibm.github.io/ai-agents-workshop/"
+site_url: "https://obuzek.github.io/ai-agents-workshop/"
 site_description: "Hands-on workshop for building AI agents"
 site_author: "IBM Research"
 
 # Repository Information
-repo_name: "IBM/ai-agents-workshop"
-repo_url: "https://github.com/IBM/ai-agents-workshop"
+repo_name: "obuzek/ai-agents-workshop"
+repo_url: "https://github.com/obuzek/ai-agents-workshop"
 
 # Copyright
 copyright: Copyright &copy; 2025- IBM Research
@@ -26,8 +26,8 @@ theme:
     - content.code.copy # Button to allow the user to copy a code block's contents to the clipboard
     # - content.tabs.link
     # - navigation.expand     # Expand left sidebar by default
-    - navigation.indexes # Attach documents to sections, useful for providing overview pages
-    - navigation.instant # Single page instant refresh
+    # - navigation.indexes # Attach documents to sections, useful for providing overview pages
+    # - navigation.instant # Single page instant refresh
     # - navigation.sections   # Top level tabs rendered in sidebar
     - navigation.tabs # Navigation tabs across top. Comment this out to have navigation on the left
     - navigation.tabs.sticky # Tab always displayed
@@ -52,6 +52,32 @@ markdown_extensions:
     toc_depth: 3
 
 plugins:
+  revealjs:
+    center: false
+    mermaid: true
+    minScale: 0.5
+    maxScale: 1.0
+    theme:
+      light:
+        hack:
+          "": { font-family: "'IBM Plex Sans', sans-serif", font-size: "28px" }
+          ".slides section": { text-align: "left", padding: "40px 0", box-sizing: "border-box", overflow: "hidden" }
+          ".slides h1": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.4em" }
+          ".slides h2": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.2em" }
+          ".slides ul, .slides ol": { display: "block", margin-left: "1.2em", width: "100%" }
+          ".slides li": { font-size: "0.8em", margin-bottom: "0.25em" }
+          ".slides p": { font-size: "0.8em" }
+          ".slides .mermaid svg": { max-width: "100% !important", max-height: "55vh", width: "100%", height: "auto" }
+      dark:
+        hack:
+          "": { font-family: "'IBM Plex Sans', sans-serif", font-size: "28px" }
+          ".slides section": { text-align: "left", padding: "40px 0", box-sizing: "border-box", overflow: "hidden" }
+          ".slides h1": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.4em" }
+          ".slides h2": { text-align: "left", margin-bottom: "0.5em", font-family: "'IBM Plex Sans', sans-serif", font-size: "1.2em" }
+          ".slides ul, .slides ol": { display: "block", margin-left: "1.2em", width: "100%" }
+          ".slides li": { font-size: "0.8em", margin-bottom: "0.25em" }
+          ".slides p": { font-size: "0.8em" }
+          ".slides .mermaid svg": { max-width: "100% !important", max-height: "55vh", width: "100%", height: "auto" }
   # Built-in blog plugin - see https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
   # blog:
   #     blog_dir: "blog"

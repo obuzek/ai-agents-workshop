@@ -1,0 +1,1318 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-007",
+  "demographics": {
+    "name": {
+      "given": "Fatima",
+      "family": "Al-Rashid"
+    },
+    "birthDate": "1987-06-11",
+    "gender": "female",
+    "phone": "773-555-0553",
+    "email": "fatima.alrashid@gmail.com",
+    "address": {
+      "line": "3821 N Clark St, Apt 1R",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60613"
+    },
+    "emergencyContact": {
+      "name": "Omar Al-Rashid",
+      "relationship": "Brother",
+      "phone": "773-555-0554"
+    },
+    "insurance": {
+      "type": "Marketplace",
+      "planName": "Ambetter Silver (Marketplace)",
+      "memberId": "AMB-IL-3347291"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker. Exposed to kitchen smoke and grease at work daily.",
+    "alcohol": "Social drinker, 2-3 drinks on weekends",
+    "exercise": "On her feet all day at work but no structured exercise. Reports 'no time' due to demanding restaurant schedule.",
+    "notes": "Restaurant manager, works 6 days/week, 10-12 hour shifts. Single, close with brother Omar who lives nearby. Ramadan observer \u2014 fasting affects medication timing (discussed at visits; needs to take inhalers before dawn and after sunset during Ramadan). Exposed to cooking fumes, strong odors, and temperature changes at work, which may contribute to asthma triggers."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Type 2 diabetes, diagnosed at age 50",
+      "deceased": false
+    },
+    {
+      "relationship": "Father",
+      "condition": "Asthma (mild, well-controlled)",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Aspirin",
+      "category": "medication",
+      "reaction": "Triggers bronchospasm (aspirin-exacerbated respiratory disease)",
+      "criticality": "high",
+      "status": "active",
+      "note": "AERD \u2014 aspirin and all NSAIDs contraindicated. Use acetaminophen for pain/fever. This allergy is clinically significant given her moderate persistent asthma. Documented after bronchospasm episode triggered by aspirin in 2019."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "J45.40",
+        "display": "Moderate persistent asthma, uncomplicated"
+      },
+      "status": "active",
+      "onsetDate": "2017-03-20",
+      "notes": "Diagnosed at age 29. Family history of asthma (father). Triggers include cold air, exercise, cooking fumes, strong odors. Known aspirin-exacerbated respiratory disease (AERD). Well-controlled on fluticasone/salmeterol 250/50 and albuterol PRN until early 2026 when she ran out of controller inhaler and did not refill for 3 weeks, resulting in ER visit for acute exacerbation in February 2026."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "R73.03",
+        "display": "Prediabetes"
+      },
+      "status": "active",
+      "onsetDate": "2024-04-10",
+      "notes": "A1C trending upward: 5.8% (April 2024), 6.0% (March 2025), 6.1% (March 2026). Family history significant \u2014 mother has T2DM. BMI trending up from 31 to 33 over 3 years. Lifestyle modification recommended. Nutrition referral placed October 2025 but patient never scheduled the appointment. No diabetes medications at this time."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "E66.09",
+        "display": "Other obesity due to excess calories"
+      },
+      "status": "active",
+      "onsetDate": "2023-09-14",
+      "notes": "BMI has trended from 31 to 33 over the past 3 years. Patient reports difficulty with diet due to long hours at the restaurant \u2014 often eats staff meals late at night. Weight gain likely contributing to worsening metabolic markers."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "896188",
+        "display": "Fluticasone propionate 0.25 MG/ACTUAT / Salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler"
+      },
+      "dosage": "1 inhalation",
+      "frequency": "Twice daily",
+      "route": "inhalation",
+      "status": "active",
+      "prescribedDate": "2023-09-14",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "245314",
+        "display": "Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler"
+      },
+      "dosage": "2 puffs",
+      "frequency": "Every 4-6 hours as needed for shortness of breath or wheezing",
+      "route": "inhalation",
+      "status": "active",
+      "prescribedDate": "2023-09-14",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "997221",
+        "display": "Montelukast sodium 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2024-04-10",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "312617",
+        "display": "Prednisone 20 MG Oral Tablet"
+      },
+      "dosage": "40 mg (2 tablets)",
+      "frequency": "Once daily for 5 days",
+      "route": "oral",
+      "status": "completed",
+      "prescribedDate": "2026-02-08",
+      "endDate": "2026-02-12",
+      "prescriber": "Dr. Michael Torres, MD (ER physician)"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, high-dose, quadrivalent"
+      },
+      "date": "2024-10-15",
+      "site": "Left deltoid",
+      "lotNumber": "FL7721C",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "309",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, bivalent, 2024-2025 formula"
+      },
+      "date": "2024-10-15",
+      "site": "Right deltoid",
+      "lotNumber": "CV2024-5539",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap (tetanus, diphtheria, pertussis)"
+      },
+      "date": "2023-09-14",
+      "site": "Left deltoid",
+      "lotNumber": "TD3318A",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-007-001",
+      "date": "2023-09-14",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical examination, new patient establishment",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 122,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 192,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 31.9,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "38-year-old female presenting as a new patient for annual physical. She recently moved to the area and has been managing asthma since her late 20s. Currently on fluticasone/salmeterol (Advair) 250/50 twice daily and albuterol PRN, which she reports using about once a week. Denies recent exacerbations. Mentions she works long hours as a restaurant manager, 6 days a week, and often eats late. Reports occasional wheezing when exposed to cooking fumes at work. Notes she is a Ramadan observer and adjusts medication timing during fasting \u2014 takes inhalers before dawn prayer and after sunset. Has a known aspirin allergy that triggers bronchospasm, diagnosed in 2019 after taking aspirin for a headache. No other complaints today.",
+        "objective": "Well-appearing female in no acute distress. BP 122/76. BMI 31.9, obese. Lungs: clear bilaterally, no wheezing, good air movement. Heart: RRR, no murmur. Abdomen: soft, non-tender. Skin: no lesions of concern. Oropharynx: mild nasal turbinate swelling.",
+        "assessment": "1. Moderate persistent asthma \u2014 appears well-controlled on current regimen. History of AERD, aspirin and NSAIDs contraindicated. 2. Obesity, BMI 31.9 \u2014 counseled on weight management. 3. New patient establishment, otherwise healthy. Tdap booster administered today.",
+        "plan": "1. Continue fluticasone/salmeterol 250/50 twice daily and albuterol PRN. 2. Refill prescriptions transferred to our office. 3. Annual labs ordered: CBC, CMP, A1C, lipid panel. 4. Tdap administered today (previous booster > 10 years ago per patient report). 5. Counseled on weight management and importance of regular exercise. 6. Discussed Ramadan medication timing \u2014 controller inhaler can be taken before suhoor and after iftar. 7. Return in 6 months or sooner if symptoms change."
+      },
+      "labOrders": [
+        "lab-007-001"
+      ]
+    },
+    {
+      "id": "enc-007-002",
+      "date": "2024-04-10",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "6-month asthma follow-up, lab review",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 124,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 76,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 197,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 32.8,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient returns for 6-month asthma follow-up. Reports asthma has been well-controlled. Using albuterol about once every 2 weeks, mostly at work around the grill station. Denies nighttime symptoms or exercise limitation. Has gained about 5 lbs since last visit \u2014 attributes this to the busy holiday season at the restaurant and eating staff meals late at night. Notes her mother was recently diagnosed with Type 2 diabetes at age 50, which concerns her. Asks about her own diabetes risk. Ramadan is approaching (mid-March to mid-April this year) and she wants to confirm her medication plan.",
+        "objective": "Well-appearing. BP 124/78. BMI 32.8, up from 31.9. Lungs: clear, no wheezing. Heart: RRR. Weight 197 lbs, up 5 lbs from September. Previous labs from September 2023: CBC and CMP normal, A1C 5.6% (normal), lipids showed TG 158 (borderline). Today's labs: A1C 5.8% \u2014 now in prediabetes range. Fasting glucose 104 mg/dL (slightly elevated).",
+        "assessment": "1. Moderate persistent asthma \u2014 well-controlled, no changes needed. 2. Prediabetes \u2014 A1C 5.8%, fasting glucose 104. Family history significant (mother with T2DM). BMI 32.8. 3. Obesity \u2014 weight trending up. 4. Borderline dyslipidemia \u2014 triglycerides slightly elevated, likely related to dietary pattern and weight.",
+        "plan": "1. Continue current asthma regimen. 2. ADD montelukast 10 mg daily at bedtime \u2014 additional controller given occupational triggers (cooking fumes). 3. Prediabetes counseling: discussed lifestyle modifications including dietary changes, portion control, reducing late-night eating, and structured exercise. Patient receptive but expresses difficulty with work schedule. 4. Ramadan plan reviewed: fluticasone/salmeterol before suhoor and after iftar, montelukast after iftar, albuterol PRN anytime. 5. Repeat A1C in 12 months. 6. Encourage 150 min/week moderate exercise. 7. Return in 6 months."
+      },
+      "labOrders": [
+        "lab-007-004"
+      ]
+    },
+    {
+      "id": "enc-007-003",
+      "date": "2024-10-15",
+      "type": "follow-up",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "6-month asthma/prediabetes follow-up, flu and COVID vaccines",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 126,
+          "diastolic": 80,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 80,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 201,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 33.4,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient here for follow-up. Reports asthma remains well-controlled on Advair and montelukast. Albuterol use about twice a month, no ER visits. Admits she has not started an exercise routine \u2014 'I keep meaning to, I promise I will!' Weight up another 4 lbs. Has not made significant dietary changes. Notes she tried reducing late-night eating but it's hard when she closes the restaurant at 11 PM. Denies any hypoglycemic symptoms. Sleep is adequate, 6-7 hours. Mood is good.",
+        "objective": "Well-appearing, pleasant. BP 126/80. BMI 33.4, up from 32.8. Lungs: clear bilaterally, no wheezing, good air movement. Heart: RRR. O2 sat 96%. Administered influenza vaccine (left deltoid) and COVID-19 bivalent booster (right deltoid). Patient tolerated both, observed 15 minutes.",
+        "assessment": "1. Moderate persistent asthma \u2014 well-controlled on current regimen. 2. Prediabetes \u2014 weight continues to trend up. A1C recheck due in April. Dietary counseling repeated. 3. Obesity \u2014 BMI 33.4, gradual weight gain over past year.",
+        "plan": "1. Continue fluticasone/salmeterol 250/50 BID, albuterol PRN, montelukast 10 mg QHS. 2. Flu and COVID vaccines administered today. 3. REFERRAL: Nutrition counseling with registered dietitian for prediabetes and weight management. Patient agrees to schedule. 4. A1C and fasting glucose to be checked at next visit (spring 2025). 5. Discussed structured walks \u2014 even 20 minutes after work would help. Patient enthusiastic but history of poor follow-through noted. 6. Return in 6 months."
+      },
+      "referrals": [
+        {
+          "to": "Nutrition counseling \u2014 Registered Dietitian",
+          "reason": "Prediabetes, obesity, dietary pattern modification",
+          "status": "declined"
+        }
+      ]
+    },
+    {
+      "id": "enc-007-004",
+      "date": "2025-03-19",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "6-month asthma/prediabetes follow-up, A1C recheck",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 120,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 74,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.0,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 203,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 33.8,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient returns for follow-up. Asthma continues to be well-controlled \u2014 denies any exacerbations, nocturnal symptoms, or increased albuterol use. Montelukast is helping with the workplace triggers. Admits she never scheduled the nutrition referral from October. 'Things got so busy at the restaurant over the holidays and then I just forgot \u2014 I'm sorry, I really do want to do it.' Weight up slightly. Ramadan starts this week and she's planning her medication timing. Reports she's been walking a bit more \u2014 parking farther from the restaurant \u2014 but no formal exercise. Denies polyuria, polydipsia, or blurred vision.",
+        "objective": "Pleasant, well-appearing female. BP 120/76. BMI 33.8. Lungs: clear bilaterally, no wheezing, good air movement. Spirometry performed in office: FEV1 82% predicted, FEV1/FVC ratio 0.76, consistent with mild obstruction \u2014 improved from 2023 baseline. Post-bronchodilator FEV1 improves to 91% predicted. Heart: RRR, no murmur.",
+        "assessment": "1. Moderate persistent asthma \u2014 well-controlled. Spirometry shows mild obstruction with good bronchodilator response. Current regimen is effective. 2. Prediabetes \u2014 A1C 6.0%, up from 5.8% last year. Fasting glucose 108. Weight continues to climb. Nutrition referral not completed. 3. Obesity \u2014 BMI 33.8. 4. Ramadan \u2014 medication timing plan reviewed.",
+        "plan": "1. Continue current asthma medications. Spirometry stable and reassuring. 2. A1C 6.0% \u2014 trending in wrong direction. Strongly encouraged dietary modification. Re-referred to nutrition counseling \u2014 patient promises to schedule this time. 3. Ramadan plan: fluticasone/salmeterol before suhoor (~5 AM) and after iftar (~7:30 PM). Montelukast after iftar. Albuterol PRN anytime \u2014 using rescue inhaler does not break the fast per Islamic guidance, which was discussed. 4. Repeat A1C in 12 months. 5. Discussed that if A1C continues to rise, we may need to consider metformin. 6. Return in 6 months or sooner if asthma worsens."
+      },
+      "labOrders": [
+        "lab-007-002"
+      ],
+      "referrals": [
+        {
+          "to": "Nutrition counseling \u2014 Registered Dietitian",
+          "reason": "Prediabetes, obesity, dietary modification (re-referral)",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-007-005",
+      "date": "2026-02-08",
+      "type": "er-visit",
+      "provider": "Dr. Michael Torres, MD (ER physician)",
+      "reasonForVisit": "Acute asthma exacerbation",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 134,
+          "diastolic": 86,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 108,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 99.1,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 208,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 34.6,
+        "respiratoryRate": {
+          "value": 24,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 91,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "38-year-old female with history of moderate persistent asthma and AERD presents to the ER with acute shortness of breath, wheezing, and chest tightness that began 2 hours ago. Reports she ran out of her Advair (fluticasone/salmeterol) approximately 3 weeks ago and did not refill it. States she 'kept meaning to call the pharmacy but work has been crazy.' Has been using albuterol rescue inhaler 4-6 times daily for the past week with diminishing relief. Tonight, she was exposed to heavy cooking smoke at the restaurant and symptoms acutely worsened. Brother Omar drove her to the ER. Denies fever, productive cough, or recent illness. No aspirin or NSAID use. Last PCP visit was March 2025.",
+        "objective": "Acutely dyspneic female, speaking in short phrases. Tachycardic at 108, tachypneic at 24, O2 sat 91% on room air. Diffuse bilateral expiratory wheezing with prolonged expiratory phase. Accessory muscle use noted. No stridor. Heart tachycardic but regular. No lower extremity edema. Chest X-ray: hyperinflation, no infiltrate or pneumothorax. Peak flow 180 L/min (predicted ~420 for age/height, approximately 43% predicted). ALLERGY ALERT: Aspirin/NSAIDs \u2014 AERD, do NOT administer. After 3 albuterol/ipratropium nebulizer treatments over 90 minutes: wheezing improved, O2 sat up to 95%, peak flow improved to 310 L/min (74% predicted). Heart rate down to 92.",
+        "assessment": "1. Acute asthma exacerbation, moderate-severe, triggered by loss of controller medication and occupational smoke exposure. 2. Moderate persistent asthma \u2014 poorly controlled due to medication non-adherence (ran out of Advair 3 weeks ago). 3. AERD \u2014 aspirin and NSAIDs strictly contraindicated. 4. Obesity.",
+        "plan": "1. Nebulizer treatments in ER with good response. 2. Prednisone 40 mg daily x 5 days (burst). 3. RESTART fluticasone/salmeterol 250/50 BID \u2014 prescription sent to pharmacy. Patient counseled extensively on importance of not letting controller inhaler lapse. 4. Continue albuterol PRN but usage should decrease once controller is re-established. 5. Continue montelukast. 6. Discharge home with brother. O2 sat 96% at discharge. 7. MUST follow up with PCP (Dr. Kim at Lakeview Family Medicine) within 1 week. 8. Return to ER if shortness of breath worsens, O2 sat drops below 92%, or no improvement within 48 hours."
+      }
+    },
+    {
+      "id": "enc-007-006",
+      "date": "2026-02-17",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Post-ER follow-up for asthma exacerbation",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 122,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 82,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 208,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 34.6,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 96,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient presents for post-ER follow-up, 9 days after ER visit for asthma exacerbation. Reports feeling 'so much better.' Completed the 5-day prednisone burst. Has been taking Advair consistently since the ER visit \u2014 'I set alarms on my phone now so I won't forget.' Albuterol use down to once daily, sometimes not at all. Denies nocturnal symptoms, chest tightness, or wheezing. Appears genuinely remorseful about letting the inhaler lapse. 'It was so scary not being able to breathe. I promise I won't let that happen again.' Notes she also never scheduled the nutrition referral. Asks about simple dietary changes she can start on her own.",
+        "objective": "Well-appearing, comfortable, in no respiratory distress. BP 122/78. O2 sat 96%. Lungs: clear bilaterally, no wheezing, good air movement. Spirometry: FEV1 78% predicted, FEV1/FVC 0.74. Slightly decreased from March 2025 (FEV1 82%), likely still recovering from exacerbation. Post-bronchodilator FEV1 88% predicted. Heart: RRR, rate 82.",
+        "assessment": "1. Moderate persistent asthma \u2014 recovering from acute exacerbation. Spirometry shows mild obstruction, slightly worse than baseline but expected post-exacerbation. Should improve with consistent controller use. 2. Medication non-adherence \u2014 patient understands severity and has implemented phone alarms. 3. Prediabetes \u2014 due for A1C recheck. 4. Obesity \u2014 BMI 34.6, weight 208 lbs, up from 203 at last visit (March 2025). 5. AERD \u2014 reinforced avoidance of aspirin/NSAIDs.",
+        "plan": "1. Continue fluticasone/salmeterol 250/50 BID \u2014 stressed must not stop without provider guidance. 2. Continue montelukast 10 mg QHS. 3. Albuterol PRN \u2014 target < 2 times/week as measure of control. 4. Repeat spirometry at next visit (target 6-8 weeks) to confirm return to baseline. 5. Labs ordered: A1C, fasting glucose, CBC, CMP. 6. Provided printed handout on prediabetes dietary modifications \u2014 simple carb reduction, increasing vegetables and protein, avoiding late-night heavy meals. 7. Discussed Ramadan timing again \u2014 approaching in approximately 4 weeks. Review medication schedule. 8. Return in 6-8 weeks. Patient instructed to call immediately if symptoms worsen or rescue inhaler use increases."
+      },
+      "labOrders": [
+        "lab-007-003"
+      ]
+    },
+    {
+      "id": "enc-007-007",
+      "date": "2026-04-14",
+      "type": "follow-up",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "8-week post-exacerbation follow-up, spirometry recheck, lab review",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 120,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 76,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 206,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 65,
+          "unit": "in"
+        },
+        "bmi": 34.3,
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 97,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient returns for 8-week post-exacerbation check. Reports asthma has been well-controlled since restarting Advair. Has not missed a single dose \u2014 'I have alarms set, morning and night!' Albuterol use down to once a week at most, mainly at work around heavy grill smoke. No nighttime symptoms, no ER visits. Has been making some dietary changes \u2014 'I'm trying to eat more vegetables and less bread at work. My brother Omar is helping me meal prep on Sundays.' Weight down 2 lbs. Ramadan started last week \u2014 she's managing medication timing with suhoor and iftar schedule. Notes she read the prediabetes handout and has been cutting back on sugary drinks at work.",
+        "objective": "Well-appearing, comfortable, no respiratory distress. BP 120/74. O2 sat 97%. Weight 206, down from 208. Lungs: clear bilaterally, no wheezing. Spirometry: FEV1 84% predicted, FEV1/FVC 0.77 \u2014 improved from post-exacerbation values (78%) and slightly above previous baseline (82%). Post-bronchodilator FEV1 93% predicted. Heart: RRR. Labs from February visit: A1C 6.1% (up from 6.0%), fasting glucose 110 mg/dL, CBC normal, CMP normal.",
+        "assessment": "1. Moderate persistent asthma \u2014 back to baseline on spirometry. Well-controlled with consistent medication adherence. 2. Prediabetes \u2014 A1C 6.1%, continuing slow upward trend despite some dietary effort. Fasting glucose 110. Not yet at diabetes threshold but concerning trajectory. 3. Obesity \u2014 BMI 34.3, slight weight loss (2 lbs) which is encouraging. 4. Ramadan \u2014 medication timing appropriate, patient managing well.",
+        "plan": "1. Continue current asthma regimen \u2014 fluticasone/salmeterol 250/50 BID, albuterol PRN, montelukast QHS. 2. Asthma action plan reviewed and printed for patient. Emphasized: never stop controller without calling us first. 3. A1C 6.1% \u2014 discussed that this is still prediabetes but the trend is concerning. If A1C reaches 6.5%, we will need to discuss metformin. Encouraged continued dietary changes. 4. RE-REFERRED to nutrition counseling \u2014 third time. Patient states she will schedule after Ramadan ends. 5. Encouraged continued meal prep and portion control. Even small weight loss (5-7%) can significantly reduce diabetes risk. 6. Return in 6 months for asthma and A1C recheck. Sooner if symptoms worsen. 7. Discussed flu vaccine in the fall \u2014 patient agrees to come in October."
+      },
+      "referrals": [
+        {
+          "to": "Nutrition counseling \u2014 Registered Dietitian",
+          "reason": "Prediabetes, obesity, dietary modification (third referral)",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-007-001",
+      "date": "2023-09-14",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 7.1,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.4,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 40.1,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 262,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose (fasting)",
+              "code": {
+                "system": "LOINC",
+                "code": "1558-6",
+                "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 98,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.82,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.1,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Total Protein",
+              "code": {
+                "system": "LOINC",
+                "code": "2885-2",
+                "display": "Protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 7.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 6.0,
+                "high": 8.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Albumin",
+              "code": {
+                "system": "LOINC",
+                "code": "1751-7",
+                "display": "Albumin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 4.3,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 5.6,
+              "unit": "%",
+              "referenceRange": {
+                "high": 5.7,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 198,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 122,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 48,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "text": ">40"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglyceride [Mass/volume] in Serum or Plasma"
+              },
+              "value": 158,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "high": 150
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-007-004",
+      "date": "2024-04-10",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 5.8,
+              "unit": "%",
+              "referenceRange": {
+                "high": 5.7,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Fasting Glucose",
+          "code": {
+            "system": "LOINC",
+            "code": "1558-6",
+            "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Fasting Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "1558-6",
+                "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 104,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "100-125 mg/dL prediabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-007-002",
+      "date": "2025-03-19",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 6.0,
+              "unit": "%",
+              "referenceRange": {
+                "high": 5.7,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Fasting Glucose",
+          "code": {
+            "system": "LOINC",
+            "code": "1558-6",
+            "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Fasting Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "1558-6",
+                "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 108,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "100-125 mg/dL prediabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-007-003",
+      "date": "2026-03-02",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Hemoglobin A1C",
+          "code": {
+            "system": "LOINC",
+            "code": "4548-4",
+            "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+          },
+          "results": [
+            {
+              "test": "Hemoglobin A1C",
+              "code": {
+                "system": "LOINC",
+                "code": "4548-4",
+                "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+              },
+              "value": 6.1,
+              "unit": "%",
+              "referenceRange": {
+                "high": 5.7,
+                "text": "<5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Fasting Glucose",
+          "code": {
+            "system": "LOINC",
+            "code": "1558-6",
+            "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Fasting Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "1558-6",
+                "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 110,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100,
+                "text": "100-125 mg/dL prediabetes"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "Complete Blood Count",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "WBC",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 7.8,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 39.5,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 271,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose (fasting)",
+              "code": {
+                "system": "LOINC",
+                "code": "1558-6",
+                "display": "Fasting glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 110,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "high"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 13,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.84,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 141,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.0,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.5,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Total Protein",
+              "code": {
+                "system": "LOINC",
+                "code": "2885-2",
+                "display": "Protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 7.0,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 6.0,
+                "high": 8.3
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Albumin",
+              "code": {
+                "system": "LOINC",
+                "code": "1751-7",
+                "display": "Albumin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 4.2,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-007-001",
+      "date": "2026-02-19T10:34:00Z",
+      "sender": {
+        "name": "Fatima Al-Rashid",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Thank you SO much for the ER follow-up!",
+      "body": "Hi Dr. Kim!\n\nI just wanted to say THANK YOU for fitting me in so quickly after my ER visit. That whole experience was honestly terrifying \u2014 I've never felt that scared not being able to breathe. Your team was so kind and I felt so much better after seeing you on Tuesday.\n\nI'm being so good about my Advair now, I promise! I set alarms on my phone for morning and night and I haven't missed a single dose. My brother Omar even checks in on me about it (he was really worried that night he drove me to the ER).\n\nI know I let things slip and I'm really sorry about that. It won't happen again. You have my word!\n\nThank you again for everything. I really appreciate you and your whole team!\n\nWarmly,\nFatima",
+      "thread": [
+        {
+          "date": "2026-02-20T09:15:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Fatima,\n\nI'm so glad you're feeling better, and I'm glad Omar was there to get you to the ER quickly. That experience, as scary as it was, is a good reminder of why that controller inhaler is so important for you.\n\nThe phone alarms are a great strategy \u2014 keep that up. And please give Omar our thanks for looking out for you.\n\nThe most important thing now is consistency. Your asthma was very well-controlled for over two years on this regimen, and it will be again. If you ever have trouble getting a refill for any reason \u2014 pharmacy issues, insurance questions, cost concerns \u2014 please call us BEFORE you run out and we will help you figure it out.\n\nWe're here for you. See you at your follow-up in April!\n\nBest,\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-007-002",
+      "date": "2026-03-10T14:22:00Z",
+      "sender": {
+        "name": "Fatima Al-Rashid",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "prescription refill",
+      "priority": "routine",
+      "subject": "Inhaler refills please! (being good about it this time!)",
+      "body": "Hi there!\n\nI'm reaching out because I need refills on both my Advair and my albuterol rescue inhaler. I checked and my Advair has about a week left, and my albuterol is getting low too. Look at me being proactive for once!!\n\nMy pharmacy is Walgreens at 3545 N Broadway, Chicago IL 60613. Phone: 773-555-0290.\n\nI've been SO good about taking everything on schedule. Haven't missed a dose since the ER visit! The alarms on my phone are working perfectly.\n\nThank you so much!\n\nFatima",
+      "thread": [
+        {
+          "date": "2026-03-11T10:45:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Hi Fatima!\n\nGreat job staying on top of your refills \u2014 that's exactly what we like to see! I've sent both prescriptions to your Walgreens on Broadway:\n\n- Fluticasone/salmeterol (Advair) 250/50, 1 inhaler (60 doses), 3 refills\n- Albuterol HFA inhaler, 1 inhaler, 5 refills\n\nThey should be ready for pickup by tomorrow. If you have any issues with your insurance covering them, let us know and we can help with prior authorization.\n\nKeep up the great work with your adherence! We'll see you at your follow-up in April.\n\nBest,\nRachel Torres, NP"
+        }
+      ]
+    },
+    {
+      "id": "msg-007-003",
+      "date": "2026-03-28T19:48:00Z",
+      "sender": {
+        "name": "Fatima Al-Rashid",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Quick question about diet for pre-diabetes?",
+      "body": "Hi Dr. Kim!\n\nSo I know we've talked about this before and I know I should have done the nutrition referral (I'm sorry, I really am!). But I was wondering \u2014 is there anything simple I can start doing on my own right now? I looked at the handout you gave me at my last visit and it makes sense, but it's hard when I'm surrounded by food at work all day!\n\nA few specific questions:\n- Is it really bad if I eat late at night? I usually don't get home until 11:30 and I'm starving\n- Are there certain foods I should absolutely avoid?\n- My mom was just put on metformin and it scared me a little. I don't want to end up there too\n\nAlso, Ramadan starts next week and I'll be fasting during the day. Does that affect my blood sugar in a good way or a bad way? I know the fasting hours are long but I usually eat a lot at iftar to make up for it, which is probably not great...\n\nThank you for being so patient with me (no pun intended!). I really am trying!\n\nFatima",
+      "thread": [
+        {
+          "date": "2026-03-30T11:20:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Fatima,\n\nThese are great questions, and I'm glad you're thinking about this! Here are some practical tips:\n\n1. Late-night eating: It's not ideal for blood sugar, but the bigger issue is WHAT you eat, not just when. If you need to eat late, choose protein and vegetables over heavy carbs. A grilled chicken salad is much better than pasta or rice at 11:30 PM.\n\n2. Foods to limit: Sugary drinks (including juices and sweetened tea), white bread/rice, fried foods, and large portions of starchy foods. You don't have to eliminate them \u2014 just reduce portions and frequency.\n\n3. Foods to increase: Vegetables, lean proteins, beans/lentils, nuts, and whole grains. Even small swaps make a difference.\n\n4. Ramadan: Fasting itself can actually help with blood sugar regulation, but the key is what you eat at suhoor and iftar. Try to break your fast with dates and water (traditional and metabolically sensible!), then eat a balanced meal rather than a large heavy one. At suhoor, include protein and complex carbs for sustained energy.\n\n5. Regarding your mom and metformin: Your A1C is 6.1% right now. You are NOT there yet, and you have a real opportunity to change the trajectory with diet and activity. Even losing 10-15 pounds can make a significant difference.\n\nI'd still love for you to see the dietitian \u2014 they can give you personalized meal plans that work with your restaurant schedule. But in the meantime, these small changes add up.\n\nYou're doing better than you think. Keep going!\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-007-004",
+      "date": "2026-04-22T08:15:00Z",
+      "sender": {
+        "name": "Fatima Al-Rashid",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Rachel Torres, NP",
+        "role": "nurse"
+      },
+      "category": "appointment request",
+      "priority": "routine",
+      "subject": "I'm SO sorry about missing my follow-up!",
+      "body": "Hi Rachel!\n\nOkay, I know I'm the worst. I had my follow-up scheduled for yesterday and I completely forgot because we had a huge catering event at the restaurant and I've been working double shifts all week. I am SO sorry!!\n\nCan I reschedule? I promise I will make the next one \u2014 I'll put it in my calendar AND set three alarms AND tell Omar to remind me. I know you guys probably shake your heads every time you see my name on the missed appointment list!\n\nEverything is going well though! Still taking all my meds on time (that part I'm actually good at now!). Breathing is great. And I've lost another pound \u2014 slowly but surely!\n\nPlease forgive me and let me reschedule? I promise promise promise I'll be there!\n\nThank you for putting up with me!\n\nFatima",
+      "thread": [
+        {
+          "date": "2026-04-22T14:30:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Hi Fatima!\n\nNo need to apologize \u2014 we know how hectic your schedule is! I'm glad to hear you're still taking your medications consistently and that your breathing is going well. That's the most important thing.\n\nI do want to get you back in soon, though. Your A1C is due for a recheck in the fall, and we want to keep an eye on your spirometry. How about we get you scheduled for a visit in May?\n\nMaria will give you a call tomorrow to find a time that works. And yes, set ALL the alarms!\n\nTake care,\nRachel Torres, NP"
+        }
+      ]
+    }
+  ]
+}

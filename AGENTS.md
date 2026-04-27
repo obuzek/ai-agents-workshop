@@ -4,250 +4,131 @@ This document contains context and instructions for AI agents working on this re
 
 ## Repository Overview
 
-This is an **AI Agents Workshop** - a hands-on educational workshop teaching developers how to build AI agents. The workshop is delivered as a static website built with MkDocs and Material theme.
+An **AI Agents Workshop** for ODSC — a 2-hour hands-on session teaching developers how to build, observe, improve, and secure AI agents. Delivered as a static website built with MkDocs.
 
-**Live Site:** https://pages.github.ibm.com/ombuzek/ai-agents-workshop/
+**Live Site:** https://obuzek.github.io/ai-agents-workshop/
 
 ## Project Structure
 
 ```
 ai-agents-workshop/
+├── pyproject.toml                 # Lab code dependencies (uv sync to install)
 ├── docs/                          # MkDocs documentation site
 │   ├── base.yml                   # Base configuration (theme, plugins, markdown)
 │   ├── mkdocs.yml                 # Workshop-specific config (inherits base.yml)
-│   ├── requirements.txt           # Python dependencies for MkDocs
-│   ├── Makefile                   # Build automation
-│   ├── README.md                  # Setup and usage instructions
-│   ├── .gitignore                 # Excludes .venv/, site/, .cache/
-│   ├── theme/                     # Custom theme assets
-│   │   ├── favicon.ico
-│   │   ├── logo.png
-│   │   └── logo-small.png
-│   └── docs/                      # Markdown content
+│   ├── README.md                  # MkDocs setup and usage instructions
+│   ├── theme/                     # Custom theme assets (favicon, logos)
+│   └── content/                   # Markdown content (docs_dir: "content")
 │       ├── .pages                 # Navigation structure (awesome-pages plugin)
 │       ├── index.md               # Workshop home page
+│       ├── slides.md              # Slide viewer (ADLC + Risks & Mitigation)
 │       ├── prerequisites.md       # Setup instructions
 │       ├── getting-started.md     # Core concepts
-│       ├── lab-1.md              # Build first simple agent
-│       ├── lab-2.md              # Add tool-using capabilities
-│       ├── lab-3.md              # Advanced patterns (placeholder)
+│       ├── lab-1.md              # Naive Agent Implementation
+│       ├── lab-2.md              # Observability
+│       ├── lab-3.md              # Improving Your Agent
+│       ├── lab-4.md              # Securing Data Used By The Agent
 │       ├── resources.md          # Papers, frameworks, learning resources
-│       ├── contributing.md       # Contribution guidelines
-│       └── images/               # Image assets
+│       └── contributing.md       # Contribution guidelines
 ├── .github/
 │   └── workflows/
-│       └── deploy-docs.yml       # GitHub Actions (disabled - enterprise restriction)
+│       └── deploy-docs.yml       # GitHub Actions: auto-deploy on push to main
+├── CLAUDE.md                     # Claude Code workflow protocol
 └── AGENTS.md                     # This file
+```
+
+## Two Separate Environments
+
+This repo deliberately keeps **two environments separate**:
+
+### 1. MkDocs (docs tooling) — global uv tool
+
+MkDocs is installed once as a global tool, not in a project venv:
+
+```bash
+uv tool install "mkdocs==1.6.1" \
+  --with "mkdocs-material==9.7.6" \
+  --with "mkdocs-awesome-pages-plugin==2.10.1" \
+  --with "mkdocs-git-revision-date-localized-plugin==1.5.1" \
+  --with "mkdocs-git-authors-plugin==0.10.0" \
+  --with "mkdocs-glightbox==0.5.2" \
+  --with "mkdocs-minify-plugin==0.8.0" \
+  --with "mkdocs-rss-plugin==1.18.0" \
+  --with "mkdocs-table-reader-plugin==3.1.0"
+```
+
+Do NOT add MkDocs or its plugins to `pyproject.toml`.
+
+### 2. Lab code — project venv via uv
+
+Lab dependencies live in `pyproject.toml` at the repo root:
+
+```bash
+uv sync
+```
+
+## Development Workflow
+
+### Docs
+
+```bash
+cd docs
+mkdocs serve        # local preview at http://127.0.0.1:8003
+mkdocs gh-deploy    # deploy to GitHub Pages
+```
+
+### Lab code
+
+```bash
+uv sync             # install/update lab dependencies
+uv run python ...   # run lab scripts
 ```
 
 ## Architecture Decisions
 
-### Configuration Pattern
+### Config Inheritance
 
-Uses **config inheritance** (from mcp-workshop template):
-- [`base.yml`](docs/base.yml) - Shared configuration for theme, plugins, markdown extensions
-- [`mkdocs.yml`](docs/mkdocs.yml) - Workshop-specific settings that inherit from base.yml
-- This pattern allows consistency across multiple workshops while enabling customization
-
-### Why This Pattern?
-
-- **Maintainability**: Update theme/plugins once in base.yml
-- **Consistency**: All workshops share the same look and feel
-- **Flexibility**: Each workshop can override specific settings
-- **Scalability**: Easy to create new workshops by copying and customizing mkdocs.yml
-
-### PDF Generation Disabled
-
-The `with-pdf` and `pdf-export` plugins are **commented out** because they require system libraries (pango, cairo) that may not be installed. This prevents build failures on systems without these dependencies.
-
-To enable PDF generation:
-1. Install system libraries: `brew install pango cairo` (macOS)
-2. Uncomment PDF plugin sections in base.yml and mkdocs.yml
-
-## Development Workflow
-
-### Local Development
-
-```bash
-cd docs
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-mkdocs serve
-# Visit http://127.0.0.1:8003
-```
-
-### Making Changes
-
-1. **Edit markdown files** in `docs/docs/`
-2. **Test locally** with `mkdocs serve`
-3. **Commit changes** to main branch
-4. **Deploy** with `mkdocs gh-deploy --remote-name mine`
+- [`base.yml`](docs/base.yml) — shared theme, plugins, markdown extensions
+- [`mkdocs.yml`](docs/mkdocs.yml) — workshop-specific settings (inherits base.yml)
 
 ### Deployment
 
-**Manual deployment** (GitHub Actions disabled due to enterprise restrictions):
+GitHub Actions (`.github/workflows/deploy-docs.yml`) auto-deploys on push to `main` when files under `docs/` change. Manual deploy: `cd docs && mkdocs gh-deploy`.
+
+### Adding a Plugin
 
 ```bash
-cd docs
-source .venv/bin/activate
-mkdocs gh-deploy --remote-name mine
+uv tool install mkdocs --with <plugin-name>
 ```
 
-This pushes to the `gh-pages` branch on the `mine` remote (user's fork).
+Add the `--with` flag to the install command in `docs/README.md`, `docs/content/contributing.md`, and `.github/workflows/deploy-docs.yml`.
 
-## Key Files to Know
+### Adding Lab Dependencies
 
-### Navigation Structure
-
-[`docs/docs/.pages`](docs/docs/.pages) - Defines navigation using awesome-pages plugin
-- Uses emoji icons for visual hierarchy
-- Organized into logical sections (Home, Getting Started, Labs, Resources)
-- Easy to reorder or add new pages
-
-### Configuration Files
-
-- [`base.yml`](docs/base.yml) - Theme, plugins, markdown extensions
-  - Line 8: `remote_name: "origin"` - Default git remote for deployment
-  - Line 150-156: PDF plugins (commented out)
-  
-- [`mkdocs.yml`](docs/mkdocs.yml) - Workshop metadata
-  - Line 6: `site_url` - Update if deploying to different URL
-  - Line 11-12: Repository links
-  - Line 64-82: PDF plugin config (commented out)
-
-### Content Guidelines
-
-When editing or adding content:
-
-1. **Use admonitions** for callouts:
-   ```markdown
-   ???+ tip "Pro Tip"
-       Content here
-   ```
-
-2. **Code blocks** with language specified:
-   ```markdown
-   ```python
-   def example():
-       pass
-   ```
-   ```
-
-3. **Mermaid diagrams** for flowcharts:
-   ```markdown
-   ```mermaid
-   flowchart LR
-       A --> B
-   ```
-   ```
-
-4. **Tabbed content** for multi-platform instructions:
-   ```markdown
-   === "macOS"
-       Instructions for macOS
-   
-   === "Linux"
-       Instructions for Linux
-   ```
+Add to `pyproject.toml` under `[project] dependencies`, then run `uv sync`.
 
 ## Common Tasks
 
 ### Add a New Lab
 
-1. Create `docs/docs/lab-N.md`
-2. Add to navigation in `docs/docs/.pages`:
-   ```yaml
-   - "🧪 Lab N: Title": lab-N.md
-   ```
-3. Test locally, commit, deploy
-
-### Update Theme Assets
-
-Replace files in `docs/theme/`:
-- `favicon.ico` - Browser tab icon
-- `logo.png` - Main logo (used in header)
-- `logo-small.png` - Small logo variant
-
-### Add a Plugin
-
-1. Add to `docs/requirements.txt`
-2. Configure in `docs/base.yml` under `plugins:`
-3. Test build: `mkdocs build --strict`
+1. Create `docs/content/lab-N.md`
+2. Add to navigation in `docs/content/.pages`
+3. Test locally with `mkdocs serve`, then deploy
 
 ### Fix Build Errors
 
-Common issues:
-- **Plugin not found**: Install with `pip install -r requirements.txt`
+- **Plugin not found**: `uv tool install mkdocs --with <plugin>`
 - **Missing file**: Check paths in `.pages` or `mkdocs.yml`
-- **YAML syntax**: Validate with `yamllint` or online validator
-- **PDF errors**: Ensure PDF plugins are commented out
-
-## Important Notes
-
-### Enterprise Environment
-
-- **GitHub Actions disabled** - Must use manual deployment
-- **IBM GitHub Enterprise** - Site hosted at `pages.github.ibm.com`
-- **Remote name**: User deploys to `mine` remote (their fork)
-
-### Template Source
-
-Based on **mcp-workshop** (most recent workshop template as of Nov 2025):
-- Advanced config inheritance pattern
-- Extensive plugin ecosystem
-- Custom theme directory
-- Production-ready setup
-
-### Dependencies
-
-All Python dependencies in [`docs/requirements.txt`](docs/requirements.txt):
-- Core: mkdocs, mkdocs-material
-- Plugins: awesome-pages, git-revision-date, git-authors, glightbox, minify, rss
-- Markdown: pymdown-extensions, markdown-blockdiag
-- PDF (optional): mkdocs-with-pdf, weasyprint (requires system libraries)
+- **YAML syntax**: `mkdocs build --strict`
 
 ## Troubleshooting
 
-### "Cannot load library 'libpango-1.0-0'"
-
-PDF plugins require system libraries. Solution: Comment out PDF plugins in base.yml and mkdocs.yml (already done).
-
-### "Plugin not installed"
-
-Run: `pip install -r docs/requirements.txt`
-
 ### Site not updating after deployment
 
-- Wait 1-2 minutes for GitHub Pages to rebuild
-- Check Settings → Pages for deployment status
-- Try force refresh (Cmd+Shift+R / Ctrl+Shift+R)
+Wait 1-2 minutes for GitHub Pages to rebuild. Check the Actions tab for errors.
 
 ### Port 8003 already in use
 
-Use different port: `mkdocs serve -a 127.0.0.1:8004`
-
-## Best Practices
-
-1. **Always test locally** before deploying
-2. **Use strict mode** to catch errors: `mkdocs build --strict`
-3. **Keep base.yml generic** - workshop-specific settings go in mkdocs.yml
-4. **Document changes** in commit messages
-5. **Update this file** when making architectural changes
-
-## Future Enhancements
-
-Potential improvements:
-- Complete Lab 3 content (currently placeholder)
-- Add more code examples and exercises
-- Create video tutorials
-- Add interactive demos
-- Implement search analytics
-- Add more diagrams and visualizations
-
-## Contact
-
-For questions about this workshop structure, refer to:
-- [MkDocs Documentation](https://www.mkdocs.org/)
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-- [mcp-workshop](../mcp-workshop/) - Template source
+```bash
+mkdocs serve -a 127.0.0.1:8004
+```

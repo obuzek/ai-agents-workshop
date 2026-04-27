@@ -1,0 +1,1142 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-005",
+  "demographics": {
+    "name": {
+      "given": "Elena",
+      "family": "Vasquez"
+    },
+    "birthDate": "1996-08-17",
+    "gender": "female",
+    "phone": "773-555-0127",
+    "email": "elena.vasquez@uchicago.edu",
+    "address": {
+      "line": "5534 S Woodlawn Ave, Apt 2",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60637"
+    },
+    "emergencyContact": {
+      "name": "Rosa Vasquez",
+      "relationship": "Mother",
+      "phone": "505-555-0334"
+    },
+    "insurance": {
+      "type": "Commercial",
+      "planName": "UChicago Student Health Plan",
+      "memberId": "UCHP-2026-04418"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker",
+    "alcohol": "Rare, 1-2 drinks/month socially",
+    "exercise": "Used to run regularly \u2014 stopped 4 months ago due to joint pain and fatigue. Tries to walk when energy allows.",
+    "notes": "Graduate student (PhD, Comparative Literature) at University of Chicago. Lives alone. Moved from New Mexico for grad school 2 years ago. Significant stress regarding dissertation timeline compounded by health concerns. Currently seeing university counselor for anxiety."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Rheumatoid arthritis, diagnosed at age 45. Currently managed with methotrexate.",
+      "deceased": false
+    },
+    {
+      "relationship": "Maternal aunt",
+      "condition": "Systemic lupus erythematosus (SLE), diagnosed at age 38",
+      "deceased": false
+    },
+    {
+      "relationship": "Father",
+      "condition": "Healthy",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Ibuprofen",
+      "category": "medication",
+      "reaction": "GI upset and stomach bleeding. Patient presented with epigastric pain and melena after 5 days of OTC ibuprofen use for headaches in 2022.",
+      "criticality": "high",
+      "status": "active",
+      "note": "Documented adverse reaction. Avoid all NSAIDs in the ibuprofen class. Naproxen tolerated per patient report. Acetaminophen is preferred first-line analgesic."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "R53.83",
+        "display": "Other fatigue"
+      },
+      "status": "active",
+      "onsetDate": "2025-10-07",
+      "notes": "Persistent fatigue for several months, progressively worsening. Initially attributed to graduate school stress and poor sleep. Not improving with rest or sleep hygiene measures. Now interfering with academic work and daily activities."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "M25.50",
+        "display": "Pain in unspecified joint"
+      },
+      "status": "active",
+      "onsetDate": "2025-12-02",
+      "notes": "Migratory arthralgia affecting wrists, knees, and small joints of hands bilaterally. No frank synovitis on exam but tenderness noted. Symptoms worse in the morning with approximately 45 minutes of stiffness. Pattern and family history raise concern for autoimmune etiology."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "L93.0",
+        "display": "Discoid lupus erythematosus"
+      },
+      "status": "suspected",
+      "onsetDate": "2026-03-10",
+      "notes": "New malar (butterfly) rash noted across both cheeks and bridge of nose. Patient reports it appeared after sun exposure during a weekend outing. Spares nasolabial folds. Consistent with lupus malar rash. Awaiting ANA and autoimmune workup results. Coded as suspected pending serologic confirmation. Consider SLE (M32.9) if confirmed."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "M35.9",
+        "display": "Systemic involvement of connective tissue, unspecified"
+      },
+      "status": "suspected",
+      "onsetDate": "2026-02-11",
+      "notes": "Constellation of fatigue, migratory arthralgia, mildly elevated ESR, new malar rash, and significant family history (mother with RA, maternal aunt with SLE) raises strong suspicion for systemic autoimmune disease, most likely SLE. ANA pending. Rheumatology referral placed."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "198013",
+        "display": "Naproxen sodium 220 MG Oral Tablet"
+      },
+      "dosage": "220 mg",
+      "frequency": "Every 12 hours as needed for joint pain",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2025-12-02",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "1233709",
+        "display": "Hydroxyzine hydrochloride 25 MG Oral Tablet"
+      },
+      "dosage": "25 mg",
+      "frequency": "Once daily at bedtime as needed for anxiety and sleep",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2026-02-11",
+      "prescriber": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, bivalent"
+      },
+      "date": "2024-10-15",
+      "site": "Left deltoid",
+      "lotNumber": "GN1234A",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, inactivated, quadrivalent"
+      },
+      "date": "2025-10-07",
+      "site": "Left deltoid",
+      "lotNumber": "UF8842K",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap vaccine"
+      },
+      "date": "2023-08-22",
+      "site": "Right deltoid",
+      "lotNumber": "TA5591B",
+      "provider": "Rachel Torres, NP"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-005-001",
+      "date": "2025-10-07",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Persistent fatigue, difficulty concentrating",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 112,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 78,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 132,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.6,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "29-year-old female graduate student presents with fatigue lasting approximately 6 weeks. Reports feeling exhausted despite sleeping 8-9 hours per night. Difficulty concentrating on dissertation work. Attributes symptoms initially to graduate school stress but notes this feels different from her typical stress response. No fevers, night sweats, or weight loss. No changes in diet. Appetite mildly decreased. Denies depressed mood but endorses anxiety about academic performance. Currently seeing university counselor.",
+        "objective": "General: Well-appearing young woman, appears tired. HEENT: Unremarkable. Neck: No lymphadenopathy, thyroid normal. Lungs: Clear bilaterally. CV: RRR, no murmurs. Abdomen: Soft, non-tender. Skin: No rashes or lesions noted. Neuro: Alert, oriented, no focal deficits.",
+        "assessment": "Fatigue, unspecified. Differential includes stress/burnout, anemia, thyroid dysfunction, depression, viral illness. Low suspicion for serious etiology at this time given age and otherwise normal exam.",
+        "plan": "1. Basic labs: CBC, CMP, TSH, iron studies, vitamin D. 2. Continue university counseling. 3. Sleep hygiene education provided. 4. Return in 6-8 weeks if symptoms persist or sooner if new symptoms develop. 5. Flu vaccine administered today."
+      },
+      "labOrders": [
+        "lab-005-001"
+      ]
+    },
+    {
+      "id": "enc-005-002",
+      "date": "2025-12-02",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Persistent fatigue, new joint pain in wrists and hands",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 84,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 129,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 22.1,
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Returns for follow-up of fatigue, which has not improved. Labs from October were normal (CBC, CMP, TSH, iron, vitamin D all within normal limits). Reports new onset joint pain over the past 3-4 weeks, primarily in bilateral wrists and MCP joints. Pain is migratory \u2014 some days the wrists are worse, other days the fingers. Morning stiffness lasting approximately 45 minutes. Reports the fatigue has worsened. She has had to reduce her teaching assistant hours. No fevers, but reports occasional low-grade sensation of warmth. Denies rash. Significant family history: mother has RA (diagnosed at 45), maternal aunt has lupus (SLE). Patient is anxious and tearful, worried something is seriously wrong.",
+        "objective": "General: Thin young woman, appears fatigued and anxious. MSK: Tenderness to palpation of bilateral wrists and 2nd-4th MCP joints bilaterally. No visible swelling or erythema. Full ROM but guarding with flexion/extension of wrists. Grip strength mildly decreased bilaterally. Knees non-tender, full ROM. Skin: No rashes. No oral ulcers. No alopecia noted. Lymph nodes: No cervical, axillary, or inguinal lymphadenopathy.",
+        "assessment": "1. Persistent fatigue with new migratory polyarthralgia. 2. Given family history (mother \u2014 RA, maternal aunt \u2014 SLE), autoimmune etiology must be considered. 3. Weight down 3 lbs from October visit. 4. Anxiety related to health concerns.",
+        "plan": "1. Prescribe naproxen sodium 220 mg PO q12h PRN for joint pain (NOTE: patient has documented ibuprofen allergy \u2014 GI bleeding. Naproxen previously tolerated per patient. Counseled on GI precautions, take with food. Avoid exceeding 660 mg/day). 2. Discussed differential including possible autoimmune disease. Explained we need more information before drawing conclusions. 3. Reassured patient while validating her concerns. 4. Follow-up in 8-10 weeks with autoimmune workup labs. 5. Encouraged continued counseling."
+      }
+    },
+    {
+      "id": "enc-005-003",
+      "date": "2026-02-11",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Follow-up fatigue and joint pain, autoimmune workup",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 108,
+          "diastolic": 68,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 88,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.8,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 127,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 21.8,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Returns for follow-up. Fatigue continues and is now significantly impacting daily functioning \u2014 patient reports she has fallen behind on her dissertation and missed several seminars. Joint pain continues, migratory, affecting wrists, hands, and now knees. Morning stiffness has increased to approximately 1 hour. Naproxen provides partial relief. Reports new symptom: intermittent low-grade fevers (measured 99.5-100.1 at home on several occasions). Hair shedding more than usual in the shower but no bald patches. Reports increasing anxiety and difficulty sleeping. Tearful during visit. States 'I just need to know what's wrong with me.' Family history reviewed again: mother with RA, maternal aunt with SLE. Patient has been reading about lupus online and is very worried.",
+        "objective": "General: Thin young woman, appears fatigued and distressed. Mild weight loss of 5 lbs over 4 months. MSK: Tenderness bilateral wrists, MCP joints 2-4 bilaterally, bilateral knees. Mild soft tissue swelling of right 3rd MCP joint. No erythema. Morning stiffness >30 min per history. Skin: No malar rash at this time. No discoid lesions. No oral ulcers on exam. Hair: Diffuse thinning noted but no discrete alopecia areata. Vitals: HR 88 \u2014 mildly elevated, likely anxiety-related.",
+        "assessment": "1. Evolving polyarthralgia with fatigue, low-grade fevers, hair thinning, and progressive functional decline. 2. Autoimmune disease high on differential \u2014 SLE given family history (maternal aunt with confirmed SLE), symptom constellation. RA also possible given mother's history. 3. Weight loss of 5 lbs over 4 months, concerning. 4. Anxiety worsening, now affecting sleep.",
+        "plan": "1. Order comprehensive autoimmune workup: CBC with differential, CMP, ESR, CRP, ANA with titer and pattern, RF (rheumatoid factor), anti-dsDNA antibodies, complement C3 and C4, urinalysis with microscopy. 2. Prescribe hydroxyzine 25 mg PO qhs PRN for anxiety and sleep \u2014 discussed with patient, preferred over benzodiazepines given her age and anxiety pattern. 3. Discussed findings thoroughly with patient. Explained what each test is for. Emphasized that we are taking her symptoms seriously and that the workup is the right next step. 4. Validated her anxiety while encouraging her to avoid self-diagnosis via internet searches. 5. Lab draw today. Results expected in 5-7 business days, some tests (ANA, anti-dsDNA) may take 10-14 days. 6. Follow-up in 4 weeks or sooner when results are available."
+      },
+      "labOrders": [
+        "lab-005-002"
+      ]
+    },
+    {
+      "id": "enc-005-004",
+      "date": "2026-03-18",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "New facial rash, review partial lab results",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 114,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 92,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 99.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 126,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 21.6,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Patient called urgently requesting appointment after developing a rash on her face 5 days ago. Describes a red rash across both cheeks and the bridge of her nose that appeared after she was outdoors for a university event on a sunny day. The rash is mildly itchy and warm to touch. She reports her aunt had a similar rash with lupus and is very frightened. Joint pain persists \u2014 now also affecting shoulders intermittently. Fatigue unchanged. Continues to have low-grade fevers. Naproxen still providing partial relief for joints. Sleeping poorly despite hydroxyzine. Reports missing a conference presentation due to symptoms.",
+        "objective": "General: Anxious young woman, malar erythema visible. Skin: Erythematous, slightly raised rash across bilateral malar eminences and bridge of nose in a butterfly distribution. Spares nasolabial folds. Blanches with pressure. No discoid lesions elsewhere. No oral ulcers. MSK: Continued tenderness of bilateral wrists and MCP joints. Mild soft tissue swelling of bilateral 2nd and 3rd MCP joints. Shoulders: pain with full abduction but no swelling. Hair: diffuse thinning unchanged from prior visit. Vitals: Low-grade temperature 99.2F. HR 92 \u2014 likely anxiety and/or inflammatory process.",
+        "assessment": "1. New malar rash in butterfly distribution, classic presentation raising high suspicion for systemic lupus erythematosus. 2. Partial lab results back: CBC and CMP within normal limits. ESR mildly elevated at 22 mm/hr. CRP normal. RF negative. ANA and anti-dsDNA still pending (sent to reference lab). 3. Constellation of findings \u2014 malar rash, polyarthralgia, fatigue, low-grade fevers, hair thinning, elevated ESR, and strong family history \u2014 is highly suggestive of SLE. Currently meets 3 of 11 revised ACR criteria clinically (malar rash, arthritis, possible hematologic/serologic pending). 4. Patient very anxious. Spent significant time counseling today.",
+        "plan": "1. Expedite ANA and anti-dsDNA results \u2014 called reference lab to request rush processing. 2. Rheumatology referral: Referring to Dr. Amara Okafor at University of Chicago Rheumatology. Urgent referral given clinical presentation. 3. Sun protection counseling: broad-spectrum SPF 50+, protective clothing, avoid prolonged sun exposure. This is critical regardless of final diagnosis. 4. Continue naproxen PRN for joint pain. 5. Continue hydroxyzine for sleep/anxiety. 6. Photo documentation of malar rash for chart. 7. Discussed findings honestly with patient. Explained that the clinical picture is concerning for lupus but that we need the lab results and rheumatology evaluation to confirm. Emphasized that if it is lupus, it is a manageable condition with proper treatment. 8. Encouraged patient to continue counseling. Offered to coordinate with university regarding medical accommodations for her program. 9. Follow-up when ANA results are available or in 2 weeks, whichever comes first."
+      },
+      "labOrders": [
+        "lab-005-002"
+      ],
+      "referrals": [
+        {
+          "to": "Dr. Amara Okafor, Rheumatology \u2014 University of Chicago Medical Center",
+          "reason": "Suspected systemic lupus erythematosus: malar rash, polyarthralgia, fatigue, elevated ESR, strong family history (maternal aunt with SLE, mother with RA). ANA pending.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-005-005",
+      "date": "2026-04-15",
+      "type": "telehealth",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Follow-up, review pending labs, pre-rheumatology visit coordination",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 110,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 86,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 126,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 64,
+          "unit": "in"
+        },
+        "bmi": 21.6,
+        "respiratoryRate": {
+          "value": 15,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Telehealth follow-up. Patient reports the malar rash has improved slightly with strict sun avoidance and SPF use but flares with any sun exposure. Joint pain continues \u2014 current worst in bilateral wrists and knees. Morning stiffness approximately 45 minutes. Fatigue remains significant but patient reports hydroxyzine is helping somewhat with sleep. She has a rheumatology appointment scheduled for April 28. She is anxious about the appointment and asks what to expect. Reports she has been documenting her symptoms in a journal as suggested. Has obtained medical accommodation from her program for extended deadlines. Mood slightly improved since last visit.",
+        "objective": "Telehealth encounter \u2014 limited physical exam. Patient appears via video: malar rash still faintly visible but less erythematous than at March visit. Patient is alert, appears less acutely distressed than prior encounters. Self-reported vitals from home (BP cuff and pulse oximeter provided by university health center).",
+        "assessment": "1. Suspected SLE \u2014 clinical picture unchanged. ANA results still pending from reference lab (sent 2026-02-11, result expected any day). Will be available for rheumatology appointment. 2. Malar rash improving with photoprotection. 3. Polyarthralgia persistent but stable. 4. Anxiety improving with hydroxyzine and counseling support. 5. Rheumatology appointment appropriately scheduled.",
+        "plan": "1. Continue current medications (naproxen PRN, hydroxyzine qhs PRN). 2. Reminded patient to bring symptom journal and family history details to rheumatology appointment. 3. Will forward all labs, encounter notes, and referral documentation to Dr. Okafor's office prior to April 28 appointment. 4. Discussed what to expect at rheumatology: likely additional labs (anti-Smith, anti-RNP, antiphospholipid antibodies), possible joint imaging. 5. Reassured patient that she is doing everything right and that seeing a specialist is an important next step. 6. Follow-up after rheumatology visit or sooner if ANA results return."
+      }
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-005-001",
+      "date": "2025-10-07",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC) with Differential",
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
+          "results": [
+            {
+              "test": "White Blood Cell Count",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.2,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.4,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 39.8,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelet Count",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 245,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 88,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.8,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 18,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Thyroid Stimulating Hormone",
+          "code": {
+            "system": "LOINC",
+            "code": "11580-8",
+            "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 2.1,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.0
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Iron Studies",
+          "code": {
+            "system": "LOINC",
+            "code": "2498-4",
+            "display": "Iron [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Serum Iron",
+              "code": {
+                "system": "LOINC",
+                "code": "2498-4",
+                "display": "Iron [Mass/volume] in Serum or Plasma"
+              },
+              "value": 85,
+              "unit": "ug/dL",
+              "referenceRange": {
+                "low": 60,
+                "high": 170
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Ferritin",
+              "code": {
+                "system": "LOINC",
+                "code": "2276-4",
+                "display": "Ferritin [Mass/volume] in Serum or Plasma"
+              },
+              "value": 48,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 12,
+                "high": 150
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Vitamin D",
+          "code": {
+            "system": "LOINC",
+            "code": "1989-3",
+            "display": "25-Hydroxyvitamin D [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "25-Hydroxyvitamin D",
+              "code": {
+                "system": "LOINC",
+                "code": "1989-3",
+                "display": "25-Hydroxyvitamin D [Mass/volume] in Serum or Plasma"
+              },
+              "value": 28,
+              "unit": "ng/mL",
+              "referenceRange": {
+                "low": 30,
+                "high": 100,
+                "text": "20-29 ng/mL considered insufficient"
+              },
+              "interpretation": "low"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-005-002",
+      "date": "2026-02-11",
+      "status": "pending",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC) with Differential",
+          "code": {
+            "system": "LOINC",
+            "code": "57021-8",
+            "display": "CBC W Auto Differential panel - Blood"
+          },
+          "results": [
+            {
+              "test": "White Blood Cell Count",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 5.1,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 12.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 12.0,
+                "high": 16.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 38.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 36.0,
+                "high": 46.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelet Count",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 218,
+              "unit": "10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 84,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.79,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 12,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 20,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Erythrocyte Sedimentation Rate",
+          "code": {
+            "system": "LOINC",
+            "code": "30341-2",
+            "display": "Erythrocyte sedimentation rate"
+          },
+          "results": [
+            {
+              "test": "ESR",
+              "code": {
+                "system": "LOINC",
+                "code": "30341-2",
+                "display": "Erythrocyte sedimentation rate"
+              },
+              "value": 22,
+              "unit": "mm/hr",
+              "referenceRange": {
+                "low": 0,
+                "high": 20,
+                "text": "Female <50 years: 0-20 mm/hr"
+              },
+              "interpretation": "high"
+            }
+          ]
+        },
+        {
+          "name": "C-Reactive Protein",
+          "code": {
+            "system": "LOINC",
+            "code": "1988-5",
+            "display": "C reactive protein [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "CRP",
+              "code": {
+                "system": "LOINC",
+                "code": "1988-5",
+                "display": "C reactive protein [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 1.0,
+                "text": "<1.0 mg/dL normal"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Rheumatoid Factor",
+          "code": {
+            "system": "LOINC",
+            "code": "11572-5",
+            "display": "Rheumatoid factor [Units/volume] in Serum"
+          },
+          "results": [
+            {
+              "test": "Rheumatoid Factor (RF)",
+              "code": {
+                "system": "LOINC",
+                "code": "11572-5",
+                "display": "Rheumatoid factor [Units/volume] in Serum"
+              },
+              "value": "<10",
+              "unit": "IU/mL",
+              "referenceRange": {
+                "low": 0,
+                "high": 14,
+                "text": "<14 IU/mL negative"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Antinuclear Antibody (ANA)",
+          "code": {
+            "system": "LOINC",
+            "code": "8061-4",
+            "display": "Antinuclear Ab [Titer] in Serum by Immunofluorescence"
+          },
+          "results": [
+            {
+              "test": "ANA Titer",
+              "code": {
+                "system": "LOINC",
+                "code": "8061-4",
+                "display": "Antinuclear Ab [Titer] in Serum by Immunofluorescence"
+              },
+              "value": "Pending",
+              "unit": "titer",
+              "referenceRange": {
+                "text": "Negative: <1:40"
+              },
+              "interpretation": "pending"
+            },
+            {
+              "test": "ANA Pattern",
+              "code": {
+                "system": "LOINC",
+                "code": "13320-3",
+                "display": "Antinuclear Ab pattern [Identifier] in Serum by Immunofluorescence"
+              },
+              "value": "Pending",
+              "unit": "",
+              "referenceRange": {
+                "text": "Reported with positive ANA"
+              },
+              "interpretation": "pending"
+            }
+          ]
+        },
+        {
+          "name": "Anti-dsDNA Antibody",
+          "code": {
+            "system": "LOINC",
+            "code": "35396-2",
+            "display": "Anti-dsDNA Ab [Units/volume] in Serum"
+          },
+          "results": [
+            {
+              "test": "Anti-dsDNA Antibody",
+              "code": {
+                "system": "LOINC",
+                "code": "35396-2",
+                "display": "Anti-dsDNA Ab [Units/volume] in Serum"
+              },
+              "value": "Pending",
+              "unit": "IU/mL",
+              "referenceRange": {
+                "low": 0,
+                "high": 25,
+                "text": "<25 IU/mL negative"
+              },
+              "interpretation": "pending"
+            }
+          ]
+        },
+        {
+          "name": "Complement C3",
+          "code": {
+            "system": "LOINC",
+            "code": "4485-9",
+            "display": "Complement C3 [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Complement C3",
+              "code": {
+                "system": "LOINC",
+                "code": "4485-9",
+                "display": "Complement C3 [Mass/volume] in Serum or Plasma"
+              },
+              "value": "Pending",
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 90,
+                "high": 180
+              },
+              "interpretation": "pending"
+            }
+          ]
+        },
+        {
+          "name": "Complement C4",
+          "code": {
+            "system": "LOINC",
+            "code": "4498-2",
+            "display": "Complement C4 [Mass/volume] in Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Complement C4",
+              "code": {
+                "system": "LOINC",
+                "code": "4498-2",
+                "display": "Complement C4 [Mass/volume] in Serum or Plasma"
+              },
+              "value": "Pending",
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "pending"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-005-001",
+      "date": "2026-03-12T19:42:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "urgent",
+      "subject": "New rash on my face - sorry to bother you",
+      "body": "Hi Dr. Kim,\n\nI'm so sorry to message you on a Thursday evening. I know you're probably not checking these right now and I feel terrible about bothering you, but I didn't know what else to do.\n\nI noticed a rash on my face about two days ago. It's on both of my cheeks and across my nose, kind of like a butterfly shape? It got worse today after I was outside for a department event. It's red and a little warm and it's honestly scaring me because my aunt \u2014 the one with lupus that I told you about \u2014 she had something that looked exactly like this. My mom saw a photo I sent her and she got really quiet on the phone which made me even more worried.\n\nI know we're still waiting on those lab results and I know I shouldn't be Googling things but I couldn't help it and now I can't sleep.\n\nI'm sorry if this is an overreaction. It's probably nothing. But could I possibly come in to have you look at it? I can come any time \u2014 I'll skip seminar if I need to.\n\nThank you so much and again I'm really sorry for the late message.\n\nElena",
+      "thread": [
+        {
+          "date": "2026-03-13T08:15:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Elena,\n\nPlease don't apologize \u2014 this is exactly the kind of thing I want you to reach out about. You're not bothering me at all.\n\nA new facial rash, especially with the pattern you're describing and your family history, is something I want to see promptly. I'm going to have Maria call you this morning to get you scheduled this week, ideally within the next day or two.\n\nIn the meantime: try to avoid direct sun exposure, and if you need to be outside, wear a wide-brimmed hat and apply SPF 50 sunscreen. Don't scrub or put any harsh products on the rash.\n\nYou're doing the right thing by telling me. We'll figure this out together.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-005-002",
+      "date": "2026-03-20T14:18:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "test results",
+      "priority": "routine",
+      "subject": "Question about the ANA test - what does it mean?",
+      "body": "Dr. Kim,\n\nI hope this is okay to ask. I know you explained the tests at my appointment but I was so anxious that honestly I don't think I absorbed everything you said, and I feel embarrassed asking again.\n\nYou mentioned the ANA test is still pending. I looked it up and it says it's an 'antinuclear antibody' test and that a positive result can mean lupus. But then other websites say it can be positive for lots of reasons and doesn't necessarily mean lupus? I'm really confused.\n\nI guess my question is: if the ANA comes back positive, does that mean I definitely have lupus? And if it's negative, does that mean I definitely don't? My aunt is convinced I have it and she keeps calling me which is honestly making my anxiety worse, but I also can't tell her to stop because she's just worried about me.\n\nI'm sorry for all the questions. I know you're busy with lots of patients who probably have much more serious problems than mine. I just can't stop thinking about it.\n\nThank you for being so patient with me (no pun intended, sorry).\n\nElena",
+      "thread": [
+        {
+          "date": "2026-03-21T09:30:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Elena,\n\nNever apologize for asking questions \u2014 understanding your own health is important, and I'd rather you ask me than rely on Google.\n\nYou've actually understood the key point: a positive ANA doesn't automatically mean lupus, and the test needs to be interpreted alongside your symptoms, exam findings, and other lab results. About 15-20% of healthy people can have a low-positive ANA. That's exactly why we ordered several tests together \u2014 the full picture matters more than any single result.\n\nIf the ANA is positive, we'll look at the titer (how strong the signal is) and the pattern, along with the anti-dsDNA result and your complement levels. All of that together, plus your symptoms and exam, is what a rheumatologist will use to make or rule out a diagnosis.\n\nIf it's negative, that makes lupus less likely, but we'd still want the rheumatologist to evaluate you given your symptoms.\n\nEither way, you're getting the right workup and you'll be seeing a specialist. Try to hold off on drawing conclusions until we have all the information.\n\nRegarding your aunt \u2014 her concern comes from a good place, but it's okay to set boundaries. You might tell her you'll share updates after your rheumatology appointment.\n\nHang in there. We're getting closer to answers.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-005-003",
+      "date": "2026-04-02T22:05:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "Feeling frustrated - I'm sorry",
+      "body": "Dr. Kim,\n\nI want to start by saying that I really, really appreciate everything you've done for me. I know you've been thorough and I know these things take time. So please don't take this the wrong way.\n\nBut I'm struggling. It's been almost 6 months since my first appointment for the fatigue and I still don't have a diagnosis. I've had four appointments, multiple blood draws, and I still don't know what's wrong with me. The ANA is STILL pending and I don't understand why a lab test takes this long.\n\nMeanwhile I'm falling behind in my program. I had to miss a conference presentation. My advisor is starting to ask questions and I don't even know what to tell her because I don't have a diagnosis to explain why I'm falling apart. I can't run anymore. My hands hurt so much in the morning that I can barely type. And now I have this rash that won't go away.\n\nI don't mean to be difficult and I'm not blaming you or your office. I just need to know what's wrong with me. Is there any way to speed things up? Can I call the lab directly? Should I just go to the ER?\n\nI'm sorry. I know this sounds dramatic. I'm just exhausted in every possible way.\n\nElena",
+      "thread": [
+        {
+          "date": "2026-04-03T08:45:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Elena,\n\nYou don't need to apologize, and you are not being difficult. Your frustration is completely valid, and honestly, I share it \u2014 I wish we had answers for you already too.\n\nHere's what I can tell you: the ANA and anti-dsDNA were sent to a reference laboratory because they require specialized testing (immunofluorescence), which is why they take longer than standard bloodwork. I called the lab last week to flag your case as urgent, and I've asked them to expedite. I expect results within the next 7-10 days.\n\nIn the meantime, your rheumatology referral to Dr. Okafor is in process. Her office should be calling you to schedule. If you haven't heard from them by Friday, please let me know and I'll follow up directly.\n\nRegarding your program: I can provide a letter documenting that you are undergoing evaluation for a medical condition that is affecting your functional capacity. You don't need a final diagnosis for that \u2014 the symptoms and ongoing workup are sufficient for academic accommodation. Just say the word and I'll prepare it.\n\nYou are not being dramatic. You're a 29-year-old dealing with real, measurable symptoms that are disrupting your life. Advocating for yourself is exactly what you should be doing.\n\nLet's set up a telehealth check-in next week so we can touch base. Maria will send you a scheduling link.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-005-004",
+      "date": "2026-04-03T07:12:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "I'm sorry about my last message",
+      "body": "Dr. Kim,\n\nI woke up this morning and re-read the message I sent last night and I am mortified. I was upset and tired and I think I came across as really ungrateful and demanding, which is the last thing I want.\n\nYou have been so kind and so thorough through all of this. I know you're doing everything you can and I know lab results take however long they take. I shouldn't have asked about calling the lab myself or going to the ER \u2014 that was my anxiety talking.\n\nPlease know that I trust you completely and I'm sorry if my message made it seem otherwise. I was just having a really bad night. My hands were hurting, I couldn't sleep, and I spiraled.\n\nThank you for putting up with me. I promise I'm not usually like this.\n\nElena",
+      "thread": [
+        {
+          "date": "2026-04-03T09:02:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Elena,\n\nI just replied to your earlier message \u2014 please read that first. But I want you to hear this clearly: you have nothing to apologize for. Your message last night was honest and appropriate. You're allowed to be frustrated.\n\nBeing a good patient doesn't mean being silent when you're struggling. It means communicating \u2014 which is exactly what you did.\n\nPlease stop worrying about how your messages come across to me. I'd much rather hear from you when you're upset than have you suffer in silence.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-005-005",
+      "date": "2026-04-18T11:30:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "appointment request",
+      "priority": "routine",
+      "subject": "Rheumatology appointment - a few questions if that's okay",
+      "body": "Hi Dr. Kim,\n\nI hope you're having a good week. Sorry to message again \u2014 I know we just had the telehealth visit but I thought of a few more things after we hung up and I didn't want to forget.\n\nMy rheumatology appointment with Dr. Okafor is on April 28 and I'm really nervous. A few questions if you don't mind:\n\n1. Should I bring anything specific? I've been keeping the symptom journal you suggested \u2014 dates, which joints hurt, fatigue levels, photos of the rash on different days. Is that helpful or is it too much?\n\n2. My mom wants to come with me. She's offering to fly in from New Mexico. Is that weird for a 29-year-old? I kind of want her there but I also don't want to seem like I can't handle this on my own.\n\n3. Should I mention my aunt's lupus and my mom's RA, or will Dr. Okafor already have that from my chart?\n\n4. This is probably a silly question, but \u2014 if Dr. Okafor does diagnose me with lupus, is it... manageable? I keep reading different things and some of it is really scary. I know you said it's treatable but I just need to hear it again I think.\n\nI'm sorry for all the questions. Thank you for everything.\n\nElena",
+      "thread": [
+        {
+          "date": "2026-04-18T16:20:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Elena, great questions \u2014 all of them.\n\n1. Your symptom journal is exactly the kind of thing rheumatologists love. Bring it. The photos of the rash are especially helpful. It's not too much \u2014 it's thorough.\n\n2. Bring your mom. It is not weird at all. Having a support person at an important specialist visit is smart at any age, and given your family history, your mom may have relevant information to share. Dr. Okafor will welcome her.\n\n3. Mention the family history even though it's in your chart. Hearing it directly from you adds context, and your mom can fill in details I may not have captured.\n\n4. Not a silly question. Yes \u2014 if it is lupus, it is manageable. Treatments have improved enormously. Most people with lupus live full, active lives with proper management. The key is early diagnosis and consistent follow-up, which is exactly the path you're on. There will be things to learn and adjust to, but it is not the frightening diagnosis it was 30 years ago.\n\nYou're going to do great on the 28th. I'll make sure Dr. Okafor has your complete records beforehand.\n\nDr. Kim"
+        }
+      ]
+    },
+    {
+      "id": "msg-005-006",
+      "date": "2026-04-23T19:47:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "New rash - should I be worried?",
+      "body": "Hi Dr. Kim,\n\nI'm sorry to bother you again, and I know my rheumatology appointment is only five days away, so maybe I should just wait \u2014 but I wanted to ask if it's okay to tell you about something new.\n\nA few days ago I noticed a rash across my cheeks and the bridge of my nose. It's red and kind of flat, and it seems to get noticeably worse when I've been in the sun. I've been trying to follow your advice about sun protection but I had to walk across campus for a meeting and even that short time outside seemed to make it flare up.\n\nI know I shouldn't be Googling things \u2014 I'm sorry, I really did try not to \u2014 but I came across something called a \"butterfly rash\" and it said it can be connected to lupus. I'm trying really hard not to spiral but I'd be lying if I said I wasn't scared. It looks a lot like the pictures I saw, and it looks like what my aunt described having.\n\nDoes this change anything about the workup or should I come in before the rheumatology appointment? I'm still waiting on the ANA results too. I'm sorry if I'm overreacting \u2014 I just didn't want to ignore something that might be important and then regret it.\n\nThank you so much for everything. I'm sorry for all the messages.\n\nElena",
+      "thread": []
+    }
+  ]
+}

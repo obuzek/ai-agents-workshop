@@ -1,11 +1,11 @@
 # DO NOT EDIT, see mkdocs.yml
 
 # Repository Information
-edit_uri: "edit/main/docs/docs"
-docs_dir: "docs"
+edit_uri: "edit/main/docs/content"
+docs_dir: "content"
 site_dir: "site"
 remote_branch: "gh-pages"
-remote_name: "origin"
+remote_name: "github"
 
 # Server info
 dev_addr: "127.0.0.1:8003"
@@ -36,7 +36,9 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-  font: false
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
   favicon: "favicon.ico"
   logo: "logo.png"
 
@@ -137,6 +139,7 @@ markdown_extensions:
 
 plugins:
   search: {}
+  revealjs: {}
   # inline-svg: {}
   table-reader: {}
   git-revision-date-localized:

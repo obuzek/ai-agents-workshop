@@ -1,0 +1,1108 @@
+{
+  "resourceType": "Patient",
+  "id": "patient-012",
+  "demographics": {
+    "name": {
+      "given": "Devon",
+      "family": "Reeves"
+    },
+    "birthDate": "1994-11-08",
+    "gender": "non-binary",
+    "phone": "773-555-0661",
+    "email": "devon@devonreeves.design",
+    "address": {
+      "line": "2445 W Fullerton Ave, Unit B",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60647"
+    },
+    "emergencyContact": {
+      "name": "Sam Reeves",
+      "relationship": "Sibling",
+      "phone": "773-555-0662"
+    },
+    "insurance": {
+      "type": "Marketplace",
+      "planName": "Ambetter Bronze (Marketplace)",
+      "memberId": "AMB-IL-7719403"
+    },
+    "preferredLanguage": "English"
+  },
+  "socialHistory": {
+    "smoking": "Never smoker. Uses cannabis edibles 2-3x/week for sleep (self-reported, documented).",
+    "alcohol": "Rare \u2014 patient reports alcohol worsens anxiety symptoms.",
+    "exercise": "Inconsistent. Goes through phases of gym attendance, currently not exercising. Reports difficulty maintaining routine due to ADHD symptoms.",
+    "notes": "Freelance graphic designer with variable income \u2014 sometimes delays medication refills due to cost (Bronze plan, high deductible). Lives with sibling Sam. Out as non-binary, uses they/them pronouns. Socially active but describes feeling 'scattered.' Cannabis edibles used 2-3x/week at bedtime as self-medication for insomnia."
+  },
+  "familyHistory": [
+    {
+      "relationship": "Mother",
+      "condition": "Depression and generalized anxiety disorder",
+      "deceased": false
+    },
+    {
+      "relationship": "Father",
+      "condition": "ADHD, diagnosed in adulthood",
+      "deceased": false
+    },
+    {
+      "relationship": "Sibling (Sam)",
+      "condition": "ADHD",
+      "deceased": false
+    }
+  ],
+  "allergies": [
+    {
+      "substance": "Bupropion (Wellbutrin)",
+      "category": "medication",
+      "reaction": "Severe anxiety, heart palpitations, worsened insomnia. Patient trialed bupropion XL 150mg in August 2023 for combined ADHD/depression benefit. Within 5 days developed severe agitation, resting heart rate elevated to 110-120 bpm, and complete inability to sleep. Discontinued immediately.",
+      "criticality": "high",
+      "status": "active",
+      "note": "Documented adverse drug reaction. Do not re-challenge. Patient is particularly sensitive to noradrenergic agents. Bupropion and all formulations are contraindicated."
+    }
+  ],
+  "conditions": [
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "F90.2",
+        "display": "Attention-deficit hyperactivity disorder, combined type"
+      },
+      "status": "active",
+      "onsetDate": "2013-09-15",
+      "notes": "Diagnosed at age 19 during college. Longstanding symptoms of inattention, impulsivity, and hyperactivity dating to childhood but not formally evaluated until college academic struggles prompted assessment. Has been on stimulant medication since diagnosis. Currently on Adderall XR 20mg but reporting decreased efficacy over the past several months."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "F41.1",
+        "display": "Generalized anxiety disorder"
+      },
+      "status": "active",
+      "onsetDate": "2024-03-12",
+      "notes": "Diagnosed during a period of increased freelance work stress and financial instability. Symptoms include persistent worry, muscle tension, difficulty concentrating (distinct from ADHD-related inattention), and irritability. Tried buspirone without benefit. Currently managed with escitalopram 10mg with partial response. Patient uses humor to deflect but reports significant impairment. Therapy referral placed but patient is waitlisted."
+    },
+    {
+      "code": {
+        "system": "ICD-10",
+        "code": "G47.00",
+        "display": "Insomnia, unspecified"
+      },
+      "status": "active",
+      "onsetDate": "2023-06-01",
+      "notes": "Chronic sleep-onset insomnia. Patient reports lying awake 2-3 hours most nights with racing thoughts about deadlines and finances. Tried melatonin (ineffective), sleep hygiene measures (minimal benefit), and trazodone 50mg (stopped due to excessive morning grogginess interfering with work). Currently using cannabis edibles 2-3x/week as self-medication. No current prescription sleep aid. Insomnia significantly exacerbates both ADHD and anxiety symptoms."
+    }
+  ],
+  "medications": [
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "854838",
+        "display": "Amphetamine aspartate / Amphetamine sulfate / Dextroamphetamine saccharate / Dextroamphetamine sulfate 5 MG Extended Release Oral Capsule [Adderall XR]"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily in the morning",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-04-18",
+      "endDate": "2024-01-09",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Dose increase \u2014 patient reported benefit but insufficient duration of effect and persistent afternoon inattention. Increased to 20mg."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "854848",
+        "display": "Amphetamine aspartate / Amphetamine sulfate / Dextroamphetamine saccharate / Dextroamphetamine sulfate 10 MG Extended Release Oral Capsule [Adderall XR]"
+      },
+      "dosage": "20 mg",
+      "frequency": "Once daily in the morning",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2024-01-09",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "993536",
+        "display": "Bupropion hydrochloride 150 MG Extended Release Oral Tablet [Wellbutrin XL]"
+      },
+      "dosage": "150 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-08-15",
+      "endDate": "2023-08-20",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Adverse reaction \u2014 severe anxiety, heart palpitations (resting HR 110-120 bpm), and worsened insomnia within 5 days. Documented as allergy. Do not re-challenge."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "104894",
+        "display": "Buspirone hydrochloride 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Twice daily",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2024-03-12",
+      "endDate": "2024-06-18",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Ineffective after 3-month adequate trial. Patient reported no meaningful reduction in anxiety symptoms. Switched to escitalopram."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "310384",
+        "display": "Escitalopram 10 MG Oral Tablet"
+      },
+      "dosage": "10 mg",
+      "frequency": "Once daily",
+      "route": "oral",
+      "status": "active",
+      "prescribedDate": "2024-06-18",
+      "prescriber": "Dr. Sarah Kim, MD"
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "197363",
+        "display": "Trazodone hydrochloride 50 MG Oral Tablet"
+      },
+      "dosage": "50 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-10-03",
+      "endDate": "2024-01-09",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Excessive morning grogginess and sedation persisting into late morning. Patient reported difficulty meeting freelance deadlines due to impaired morning function. Discontinued at patient request."
+    },
+    {
+      "code": {
+        "system": "RxNorm",
+        "code": "1087930",
+        "display": "Melatonin 3 MG Oral Tablet"
+      },
+      "dosage": "3 mg",
+      "frequency": "Once daily at bedtime",
+      "route": "oral",
+      "status": "stopped",
+      "prescribedDate": "2023-06-20",
+      "endDate": "2023-08-15",
+      "prescriber": "Dr. Sarah Kim, MD",
+      "stopReason": "Ineffective. Patient trialed for 8 weeks with no meaningful improvement in sleep latency."
+    }
+  ],
+  "immunizations": [
+    {
+      "code": {
+        "system": "CVX",
+        "code": "213",
+        "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, bivalent, preservative free"
+      },
+      "date": "2023-10-15",
+      "site": "Left deltoid",
+      "lotNumber": "GK9823",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "197",
+        "display": "Influenza, inactivated, quadrivalent, adjuvanted"
+      },
+      "date": "2025-10-22",
+      "site": "Left deltoid",
+      "lotNumber": "FL8847",
+      "provider": "Rachel Torres, NP"
+    },
+    {
+      "code": {
+        "system": "CVX",
+        "code": "115",
+        "display": "Tdap (tetanus, diphtheria, acellular pertussis)"
+      },
+      "date": "2023-10-03",
+      "site": "Right deltoid",
+      "lotNumber": "TP4421",
+      "provider": "Dr. Sarah Kim, MD"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-012-001",
+      "date": "2023-04-18",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Establish care, ADHD medication management, insomnia evaluation",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 118,
+          "diastolic": 74,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 82,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 152,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 23.8,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon Reeves is a 28-year-old non-binary patient (they/them) establishing care after moving to the area. They have a history of ADHD combined type diagnosed at age 19, currently managed with Adderall XR 10mg daily prescribed by their previous provider. They report the medication is helpful but wears off by early afternoon, leading to significant inattention and difficulty completing freelance design projects. They also report worsening insomnia over the past 10 months \u2014 difficulty falling asleep with sleep latency of 2-3 hours most nights. They describe racing thoughts about work deadlines and finances. They have tried OTC melatonin 3mg without benefit. They use cannabis edibles 2-3 times per week at bedtime which they say 'takes the edge off' but does not reliably improve sleep onset. They deny snoring or witnessed apneas. They live with their sibling Sam. Freelance income is variable which sometimes affects ability to fill prescriptions promptly.",
+        "objective": "Alert, well-appearing individual in no acute distress. Affect is bright with some psychomotor restlessness noted \u2014 fidgeting with phone throughout interview. Speech is rapid but coherent. Mood described as 'okay, I guess, if you don't count the 3am ceiling-staring.' Vital signs within normal limits. Physical exam unremarkable. PHQ-9: 8 (mild depression). GAD-7: 6 (mild anxiety). ASRS v1.1 Part A: 5/6 positive (consistent with ADHD).",
+        "assessment": "1. ADHD, combined type (F90.2) \u2014 established diagnosis, currently on Adderall XR 10mg with partial response. Afternoon wear-off is a common complaint at this dose. 2. Insomnia (G47.00) \u2014 chronic, likely multifactorial: ADHD-related hyperarousal, stimulant effect, and possible anxiety component. Melatonin failed. Cannabis use noted but not providing consistent relief. 3. Review of sleep hygiene discussed.",
+        "plan": "1. Continue Adderall XR 10mg for now; will reassess dose at follow-up. 2. Start melatonin 5mg (increased dose) at bedtime \u2014 trial for 6 weeks. 3. Sleep hygiene counseling provided: consistent wake time, no screens 1 hour before bed, cool/dark room. 4. Discussed cannabis use \u2014 counseled that while it may help with sleep onset, it can disrupt sleep architecture and worsen next-day ADHD symptoms. Patient acknowledges but not ready to stop. 5. Follow-up in 8 weeks to reassess sleep and ADHD medication effectiveness."
+      }
+    },
+    {
+      "id": "enc-012-002",
+      "date": "2023-08-15",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "ADHD and insomnia follow-up, discuss additional treatment options",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 120,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 86,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 150,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 23.5,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon returns for follow-up. They report melatonin at the higher dose (5mg) was still ineffective and they stopped it after 6 weeks. Insomnia persists \u2014 still averaging 2-3 hours to fall asleep. They are interested in trying something prescription-strength for sleep. Regarding ADHD, they report the Adderall XR 10mg continues to wear off by 1-2 PM and they are struggling with afternoon productivity. They ask about bupropion, which they read online can help both ADHD and mood. They deny depressed mood but report increasing frustration and irritability, which they attribute to poor sleep. Cannabis edible use unchanged at 2-3x/week.",
+        "objective": "Appears tired but in good spirits. Mild dark circles under eyes. Fidgeting with pen. Vital signs stable. Weight down 2 lbs from last visit. PHQ-9: 7 (mild). GAD-7: 8 (mild anxiety \u2014 slightly increased from baseline).",
+        "assessment": "1. ADHD, combined type (F90.2) \u2014 suboptimal control on current dose. Afternoon wear-off continues. 2. Insomnia (G47.00) \u2014 persistent, melatonin trial failed at both 3mg and 5mg doses. Impacting daytime function and mood. 3. Mild anxiety symptoms, possibly secondary to chronic sleep deprivation. Will monitor.",
+        "plan": "1. Trial bupropion XL 150mg daily \u2014 may provide dual benefit for focus and mood, and is less likely to worsen insomnia than increasing stimulant dose. Discussed common side effects. 2. Continue Adderall XR 10mg \u2014 will reassess once bupropion is on board for 4 weeks. 3. Hold on sleep medication for now \u2014 bupropion may indirectly improve sleep by reducing anxiety. 4. Follow-up in 4 weeks or sooner if any adverse effects. Patient instructed to call if experiencing palpitations, worsening anxiety, or insomnia."
+      }
+    },
+    {
+      "id": "enc-012-003",
+      "date": "2023-10-03",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Urgent follow-up: bupropion adverse reaction, insomnia management, medication adjustment",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 122,
+          "diastolic": 78,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 88,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 148,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 23.2,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon called the office 5 days after starting bupropion reporting severe anxiety, heart palpitations, and complete inability to sleep. They were advised to stop the medication immediately and did so. They are now 6 weeks post-discontinuation. They report the palpitations resolved within 3 days of stopping, and anxiety returned to baseline within about 2 weeks. However, insomnia remains severe \u2014 they describe it as 'the worst it's ever been' during the bupropion trial and it hasn't fully recovered. They are exhausted and frustrated. They say 'I feel like I've tried everything and nothing works.' They are interested in trying trazodone, which a friend recommended. They also want to discuss increasing the Adderall dose since they are still struggling with afternoon focus.",
+        "objective": "Visibly fatigued. Affect flat compared to previous visits \u2014 less joking, more subdued. Dark circles prominent. HR 88 at rest (slightly elevated for this patient, improved from reported 110-120 on bupropion). Weight down 4 lbs from initial visit. PHQ-9: 10 (moderate \u2014 increased). GAD-7: 11 (moderate anxiety \u2014 increased). Reviewed bupropion reaction: documented as allergy \u2014 severe anxiety, palpitations, insomnia. Tdap administered today (due for booster).",
+        "assessment": "1. Adverse drug reaction to bupropion \u2014 documented as allergy. Severe anxiety, tachycardia (HR 110-120), and worsened insomnia. Consistent with noradrenergic hypersensitivity. Bupropion contraindicated going forward. 2. ADHD, combined type (F90.2) \u2014 still suboptimally controlled on Adderall XR 10mg. 3. Insomnia (G47.00) \u2014 chronic, worsened during bupropion trial, has not returned to baseline. Failed melatonin. Significantly impacting mood and function. 4. Anxiety symptoms increasing \u2014 likely exacerbated by sleep deprivation. Monitor; if persistent, may warrant formal GAD diagnosis and treatment.",
+        "plan": "1. Bupropion added to allergy list \u2014 high criticality. 2. Start trazodone 50mg at bedtime for insomnia. Counseled on potential morning sedation \u2014 take at least 8 hours before planned wake time. 3. Continue Adderall XR 10mg for now \u2014 prefer to address sleep first, as poor sleep worsens ADHD symptoms. Will consider dose increase at next visit. 4. Sleep hygiene reinforced. Discussed reducing cannabis edible use on nights taking trazodone to avoid excessive sedation. 5. Follow-up in 6 weeks."
+      }
+    },
+    {
+      "id": "enc-012-004",
+      "date": "2024-01-09",
+      "type": "follow-up",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Medication management: trazodone assessment, Adderall dose adjustment",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 116,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 84,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 149,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 23.3,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon reports trazodone 50mg helps them fall asleep \u2014 sleep latency improved from 2-3 hours to about 45 minutes. However, they are experiencing significant morning grogginess lasting until 10-11 AM, which is impacting their ability to work on freelance projects. They describe it as 'trading one problem for another.' They have tried taking it earlier in the evening but then the effect wears off before they get to bed. They want to stop the trazodone and try something else. Regarding ADHD: they are firmly requesting a dose increase for Adderall. They report that they are losing contracts because they cannot focus in the afternoon. They describe staring at a blank canvas for hours and losing their keys daily.",
+        "objective": "Appears better rested than last visit but reports subjective grogginess. Affect is brighter \u2014 more humor and engagement. Weight stable. PHQ-9: 7 (improved from 10). GAD-7: 9 (slightly improved). ASRS Part A rescored: 5/6 positive \u2014 ADHD symptoms remain prominent despite adequate sleep on trazodone nights.",
+        "assessment": "1. Insomnia (G47.00) \u2014 trazodone 50mg partially effective for sleep onset but intolerable morning sedation. Will discontinue. 2. ADHD, combined type (F90.2) \u2014 persistent symptoms despite improved sleep. Dose increase warranted. 3. Anxiety \u2014 mild-moderate, stable. Monitoring.",
+        "plan": "1. Discontinue trazodone 50mg \u2014 morning sedation outweighs benefit for this patient's work schedule. 2. Increase Adderall XR from 10mg to 20mg daily. Discussed potential for increased HR, appetite suppression, and worsened insomnia at higher dose. Patient understands risks. Will obtain baseline EKG before or at next visit. 3. No current sleep medication \u2014 will rely on sleep hygiene and cannabis edibles PRN for now. Discussed that this is not ideal long-term. 4. Follow-up in 8 weeks to assess Adderall dose increase and revisit sleep management."
+      }
+    },
+    {
+      "id": "enc-012-005",
+      "date": "2024-06-18",
+      "type": "office-visit",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Anxiety worsening, ADHD follow-up, possible GAD diagnosis",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 118,
+          "diastolic": 76,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 90,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.2,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 147,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 23.0,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon presents reporting worsening anxiety over the past 3-4 months. They describe persistent worry about finances (freelance income has been inconsistent), work performance, and health. They report muscle tension in their neck and shoulders, difficulty concentrating beyond what they attribute to ADHD, irritability, and restless sleep. Symptoms present most days. They note these symptoms are distinct from their ADHD-related inattention \u2014 'the ADHD is like my brain won't start; the anxiety is like it won't stop.' Regarding Adderall XR 20mg: they report good improvement in focus and duration of effect. They can now work productively until 4-5 PM. Appetite is mildly decreased but manageable. Regarding buspirone: tried 10mg BID for the past 3 months per their previous provider's prescription that overlapped. They report no benefit \u2014 'I honestly can't tell I'm taking anything.' Insomnia persists, worsened by anxiety. EKG obtained today.",
+        "objective": "Anxious-appearing but cooperative. Fidgeting more than usual. Muscle tension palpable in bilateral trapezius. HR 90 \u2014 slightly elevated, likely combination of stimulant and anxiety. Weight trending down (152 -> 147 lbs over 14 months). EKG: normal sinus rhythm, rate 88, no ST changes, no QTc prolongation (QTc 412ms). PHQ-9: 8. GAD-7: 14 (moderate-severe anxiety \u2014 significant increase).",
+        "assessment": "1. Generalized anxiety disorder (F41.1) \u2014 newly diagnosed. Meets DSM-5 criteria: excessive worry more days than not for >6 months, with associated muscle tension, difficulty concentrating, irritability, and sleep disturbance. Symptoms are causing significant functional impairment. Buspirone trial was ineffective. 2. ADHD, combined type (F90.2) \u2014 improved on Adderall XR 20mg. Good focus duration. EKG reassuring. 3. Insomnia (G47.00) \u2014 likely significantly anxiety-driven. Treating anxiety may improve sleep. 4. Weight loss \u2014 mild, 5 lbs over 14 months. Monitor. Likely multifactorial: stimulant appetite suppression, anxiety.",
+        "plan": "1. Discontinue buspirone \u2014 ineffective after adequate 3-month trial. 2. Start escitalopram 10mg daily for GAD. Discussed that full effect may take 4-6 weeks. Common side effects reviewed: nausea, dry mouth, appetite changes, sexual side effects. Escitalopram chosen over sertraline due to slightly more favorable side effect profile for this patient's concerns. 3. Continue Adderall XR 20mg \u2014 working well. 4. Therapy referral placed \u2014 CBT for anxiety and insomnia (CBT-I). Referred to Chicago Anxiety Center. 5. Discussed that sleep may improve as anxiety is treated. Will revisit dedicated sleep medication if insomnia persists after escitalopram is at steady state. 6. Follow-up in 6 weeks."
+      },
+      "labOrders": [
+        "lab-012-002"
+      ],
+      "referrals": [
+        {
+          "to": "Chicago Anxiety Center \u2014 CBT/CBT-I",
+          "reason": "Generalized anxiety disorder and chronic insomnia. Patient would benefit from CBT for anxiety and CBT-I for insomnia.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "enc-012-006",
+      "date": "2025-10-22",
+      "type": "annual-physical",
+      "provider": "Dr. Sarah Kim, MD",
+      "reasonForVisit": "Annual physical examination and medication management",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 114,
+          "diastolic": 70,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 88,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.4,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 143,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 22.4,
+        "respiratoryRate": {
+          "value": 14,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 99,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Devon presents for their annual physical. Overall, they feel 'better than last year but not great.' They report escitalopram 10mg has helped their anxiety \u2014 worry is less constant and they can 'talk themselves down' from spirals more easily. However, they note side effects: persistent dry mouth (especially bothersome during client presentations) and decreased appetite. They report losing about 9 lbs since starting escitalopram, which their sibling Sam has noticed and commented on. Adderall XR 20mg continues to provide good focus but they have noticed decreasing efficacy over the past 2-3 months \u2014 'it used to feel like it flipped a switch and now it's more like a dimmer.' Insomnia remains problematic \u2014 they still take 1-2 hours to fall asleep most nights. They are not on any sleep medication. Cannabis edible use is down to 1-2x/week. Therapy waitlist: they were told it would be 3-4 months; it has now been over 4 months with no opening. They are frustrated but trying to stay patient. Flu shot administered today. Review of systems otherwise negative. No chest pain, no syncope, no palpitations at rest (patient will later message about this \u2014 see portal messages).",
+        "objective": "Well-appearing, well-nourished non-binary individual. Appears mildly underweight compared to previous visits. Dry oral mucosa noted. HEENT otherwise normal. Lungs clear bilaterally. Heart regular rate and rhythm, no murmurs. Abdomen soft, non-tender. Neurologic exam grossly intact. Skin clear. Mood 'okay.' Affect congruent, brighter than visits in 2023. PHQ-9: 6 (mild). GAD-7: 9 (mild-moderate, improved from 14). Weight 143 lbs (down from 152 at initial visit \u2014 9 lb total loss over 2.5 years, 4 lbs since escitalopram start). Annual labs ordered. EKG repeated: normal sinus rhythm, rate 86, QTc 408ms, unchanged from prior.",
+        "assessment": "1. ADHD, combined type (F90.2) \u2014 controlled but patient reporting decreased stimulant efficacy. This is common with long-term use and may warrant dose adjustment or medication holiday discussion. 2. GAD (F41.1) \u2014 improved on escitalopram 10mg. GAD-7 down from 14 to 9. Side effects (dry mouth, appetite suppression) are bothersome but patient prefers to continue given anxiety benefit. 3. Insomnia (G47.00) \u2014 chronic, persistent. No active pharmacologic treatment. Therapy/CBT-I referral still waitlisted. 4. Weight loss \u2014 9 lbs total, BMI 22.4 (still normal). Likely combination of stimulant and SSRI appetite suppression. Not yet clinically concerning but will monitor closely. 5. Annual labs ordered including thyroid panel to rule out thyroid contribution to anxiety, fatigue, and weight loss. 6. Preventive care: flu vaccine administered. Tdap up to date (2023). COVID booster discussed \u2014 patient will schedule separately.",
+        "plan": "1. Continue escitalopram 10mg \u2014 benefit outweighs side effects per patient. Recommended sugar-free lozenges and increased water intake for dry mouth. 2. Continue Adderall XR 20mg \u2014 will discuss options at next visit if efficacy continues to decline (options include dose increase to 25-30mg, switching to Vyvanse, or structured medication holiday). 3. Annual labs ordered: CBC, CMP, lipid panel, TSH, free T4. 4. Therapy referral: will contact Chicago Anxiety Center to check waitlist status. Also provided patient with list of alternative CBT providers accepting Ambetter. 5. Nutritional counseling discussed \u2014 encouraged regular meals, protein-rich snacks, calorie-dense foods. Sibling Sam can help with meal reminders. 6. Influenza vaccine administered. 7. Follow-up in 3 months or sooner if ADHD medication concerns worsen."
+      },
+      "labOrders": [
+        "lab-012-001"
+      ]
+    },
+    {
+      "id": "enc-012-007",
+      "date": "2026-03-17",
+      "type": "telehealth",
+      "provider": "Rachel Torres, NP",
+      "reasonForVisit": "Medication management follow-up, telehealth visit",
+      "vitals": {
+        "bloodPressure": {
+          "systolic": 116,
+          "diastolic": 72,
+          "unit": "mmHg"
+        },
+        "heartRate": {
+          "value": 92,
+          "unit": "bpm"
+        },
+        "temperature": {
+          "value": 98.6,
+          "unit": "\u00b0F"
+        },
+        "weight": {
+          "value": 141,
+          "unit": "lbs"
+        },
+        "height": {
+          "value": 67,
+          "unit": "in"
+        },
+        "bmi": 22.1,
+        "respiratoryRate": {
+          "value": 16,
+          "unit": "breaths/min"
+        },
+        "oxygenSaturation": {
+          "value": 98,
+          "unit": "%"
+        }
+      },
+      "notes": {
+        "subjective": "Telehealth visit. Devon connects from their home studio. They report the Adderall XR 20mg is 'definitely losing steam' \u2014 they describe needing to re-read paragraphs multiple times, missing deadlines again, and increased fidgeting. They are interested in discussing next steps. They also report intermittent episodes of heart racing, mostly at night when lying in bed. They describe it as 'my heart just starts pounding out of nowhere and it freaks me out.' Episodes last 5-10 minutes and resolve spontaneously. They deny chest pain, shortness of breath, or lightheadedness. They note these episodes have been happening 2-3 times per week for the past month. They are unsure if this is anxiety or medication-related and report they sent a message about it through the portal. Weight self-reported at 141 lbs \u2014 down 2 more lbs. Insomnia unchanged. Still waitlisted for therapy \u2014 they got a call that they are 'next on the list.' Dry mouth and appetite suppression persist.",
+        "objective": "Telehealth encounter \u2014 limited physical exam. Patient appears well via video. Speech rapid. Appears fidgety \u2014 shifting in chair frequently. Self-reported vitals from home BP cuff: 116/72, HR 92. Reviewed recent portal message regarding heart racing episodes. Given history of bupropion-induced tachycardia, these episodes warrant in-person evaluation. However, clinical presentation is most consistent with anxiety-related palpitations (nocturnal, associated with worry, no hemodynamic symptoms).",
+        "assessment": "1. ADHD, combined type (F90.2) \u2014 decreasing stimulant efficacy on Adderall XR 20mg. Has been on this dose for 14 months. Options discussed. 2. GAD (F41.1) \u2014 stable on escitalopram but nocturnal palpitation episodes are concerning to patient and warrant evaluation. Most likely anxiety-related but given stimulant use and bupropion history, should obtain in-person EKG and vitals. 3. Insomnia (G47.00) \u2014 unchanged, still no pharmacologic treatment. CBT-I remains the preferred approach but access is limited. 4. Weight trending down \u2014 141 lbs, BMI 22.1. Continued monitoring. 5. Therapy referral \u2014 patient reports they are next on the waitlist.",
+        "plan": "1. Adderall XR 20mg \u2014 continue for now. Schedule in-person visit in 4-6 weeks to perform EKG and discuss medication change. Options to present: (a) increase to 25mg, (b) switch to lisdexamfetamine (Vyvanse) 30mg for smoother coverage, (c) add short-acting booster in afternoon. 2. Palpitations \u2014 schedule in-person visit for EKG. In the meantime, patient to track episodes (time of day, duration, associated symptoms, caffeine intake). If any episode is accompanied by chest pain, dyspnea, or lightheadedness, go to ER. 3. Continue escitalopram 10mg. 4. Continue monitoring weight \u2014 discussed importance of regular meals. 5. Therapy: encouraged patient to accept the appointment when called. Also discussed self-guided CBT-I resources (Sleepstation app, VA CBT-I Coach app) in the interim. 6. Follow-up in-person in 4-6 weeks."
+      },
+      "referrals": [
+        {
+          "to": "Chicago Anxiety Center \u2014 CBT/CBT-I",
+          "reason": "Generalized anxiety disorder and chronic insomnia \u2014 previously referred, patient remains waitlisted",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab-012-001",
+      "date": "2025-10-22",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Complete Blood Count (CBC)",
+          "code": {
+            "system": "LOINC",
+            "code": "58410-2",
+            "display": "CBC panel - Blood by Automated count"
+          },
+          "results": [
+            {
+              "test": "White Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 6.8,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 4.5,
+                "high": 11.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Red Blood Cells",
+              "code": {
+                "system": "LOINC",
+                "code": "789-8",
+                "display": "Erythrocytes [#/volume] in Blood by Automated count"
+              },
+              "value": 4.5,
+              "unit": "x10^6/uL",
+              "referenceRange": {
+                "low": 3.8,
+                "high": 5.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hemoglobin",
+              "code": {
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+              },
+              "value": 13.8,
+              "unit": "g/dL",
+              "referenceRange": {
+                "low": 11.5,
+                "high": 15.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Hematocrit",
+              "code": {
+                "system": "LOINC",
+                "code": "4544-3",
+                "display": "Hematocrit [Volume Fraction] of Blood by Automated count"
+              },
+              "value": 41.2,
+              "unit": "%",
+              "referenceRange": {
+                "low": 35.0,
+                "high": 45.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Platelets",
+              "code": {
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+              },
+              "value": 248,
+              "unit": "x10^3/uL",
+              "referenceRange": {
+                "low": 150,
+                "high": 400
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Comprehensive Metabolic Panel (CMP)",
+          "code": {
+            "system": "LOINC",
+            "code": "24323-8",
+            "display": "Comprehensive metabolic 2000 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Glucose",
+              "code": {
+                "system": "LOINC",
+                "code": "2345-7",
+                "display": "Glucose [Mass/volume] in Serum or Plasma"
+              },
+              "value": 88,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 70,
+                "high": 100
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "BUN",
+              "code": {
+                "system": "LOINC",
+                "code": "3094-0",
+                "display": "Urea nitrogen [Mass/volume] in Serum or Plasma"
+              },
+              "value": 14,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 7,
+                "high": 20
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Creatinine",
+              "code": {
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+              },
+              "value": 0.82,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0.6,
+                "high": 1.2
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Sodium",
+              "code": {
+                "system": "LOINC",
+                "code": "2951-2",
+                "display": "Sodium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 140,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 136,
+                "high": 145
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Potassium",
+              "code": {
+                "system": "LOINC",
+                "code": "2823-3",
+                "display": "Potassium [Moles/volume] in Serum or Plasma"
+              },
+              "value": 4.2,
+              "unit": "mEq/L",
+              "referenceRange": {
+                "low": 3.5,
+                "high": 5.1
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Calcium",
+              "code": {
+                "system": "LOINC",
+                "code": "17861-6",
+                "display": "Calcium [Mass/volume] in Serum or Plasma"
+              },
+              "value": 9.4,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 8.5,
+                "high": 10.5
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "ALT",
+              "code": {
+                "system": "LOINC",
+                "code": "1742-6",
+                "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 22,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 7,
+                "high": 56
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "AST",
+              "code": {
+                "system": "LOINC",
+                "code": "1920-8",
+                "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+              },
+              "value": 19,
+              "unit": "U/L",
+              "referenceRange": {
+                "low": 10,
+                "high": 40
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Lipid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24331-1",
+            "display": "Lipid 1996 panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "Total Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2093-3",
+                "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+              },
+              "value": 178,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 200,
+                "text": "<200 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "LDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2089-1",
+                "display": "Cholesterol in LDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 102,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 130,
+                "text": "<130 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "HDL Cholesterol",
+              "code": {
+                "system": "LOINC",
+                "code": "2085-9",
+                "display": "Cholesterol in HDL [Mass/volume] in Serum or Plasma"
+              },
+              "value": 58,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 40,
+                "high": 999,
+                "text": ">40 desirable"
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Triglycerides",
+              "code": {
+                "system": "LOINC",
+                "code": "2571-8",
+                "display": "Triglycerides [Mass/volume] in Serum or Plasma"
+              },
+              "value": 90,
+              "unit": "mg/dL",
+              "referenceRange": {
+                "low": 0,
+                "high": 150,
+                "text": "<150 desirable"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        },
+        {
+          "name": "Thyroid Panel",
+          "code": {
+            "system": "LOINC",
+            "code": "24348-5",
+            "display": "Thyroid panel - Serum or Plasma"
+          },
+          "results": [
+            {
+              "test": "TSH",
+              "code": {
+                "system": "LOINC",
+                "code": "11580-8",
+                "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+              },
+              "value": 2.1,
+              "unit": "mIU/L",
+              "referenceRange": {
+                "low": 0.4,
+                "high": 4.0
+              },
+              "interpretation": "normal"
+            },
+            {
+              "test": "Free T4",
+              "code": {
+                "system": "LOINC",
+                "code": "3024-7",
+                "display": "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+              },
+              "value": 1.2,
+              "unit": "ng/dL",
+              "referenceRange": {
+                "low": 0.8,
+                "high": 1.8
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab-012-002",
+      "date": "2024-06-18",
+      "status": "final",
+      "orderedBy": "Dr. Sarah Kim, MD",
+      "panels": [
+        {
+          "name": "Electrocardiogram",
+          "code": {
+            "system": "LOINC",
+            "code": "11524-6",
+            "display": "EKG study"
+          },
+          "results": [
+            {
+              "test": "EKG Interpretation",
+              "code": {
+                "system": "LOINC",
+                "code": "8601-7",
+                "display": "EKG impression"
+              },
+              "value": "Normal sinus rhythm. Rate 88 bpm. Normal axis. No ST-T wave changes. QTc 412ms (normal). No evidence of ventricular hypertrophy or conduction abnormality.",
+              "unit": "narrative",
+              "referenceRange": {
+                "text": "Normal sinus rhythm, QTc <470ms"
+              },
+              "interpretation": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-012-001",
+      "date": "2025-08-12T14:22:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "prescription refill",
+      "priority": "routine",
+      "subject": "adderall question",
+      "body": "hey dr kim, so the adderall has kinda stopped doing its thing? like I used to take it and feel like a functional human being and now I take it and I'm still losing my keys and staring at blank canvases for 3 hours lol. my brain just feels foggy again by like 1pm. is it worth trying a higher dose or switching to something different? I know there are options but honestly I don't know what's what. no rush but also kind of a rush because I keep missing freelance deadlines and my clients are starting to notice. tbh it's stressing me out which is probably making the adhd worse which is making the stress worse which is... you get it.",
+      "thread": [
+        {
+          "date": "2025-08-13T09:45:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Devon, thank you for reaching out about this. What you're describing \u2014 the Adderall feeling less effective over time \u2014 is something we see fairly often with stimulant medications. It doesn't necessarily mean the medication has stopped working entirely, but it may mean we need to make an adjustment. I'd like to discuss a few options with you at your next visit: we could try increasing the dose, switching to a different stimulant like Vyvanse (which has a smoother, longer-lasting effect), or adding a small afternoon booster dose. Before we make any changes, I also want to check in on your sleep and anxiety, since both of those can significantly affect how well the Adderall works. Can you schedule a follow-up in the next few weeks? We can sort this out together."
+        }
+      ]
+    },
+    {
+      "id": "msg-012-002",
+      "date": "2025-11-03T23:47:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "sleep is still a disaster",
+      "body": "ok so I know it's almost midnight and I'm sending a message to my doctor's portal which is probably ironic given the subject line but here we are. I did the whole no screens before bed thing for like 2 weeks straight. I got the blue light glasses. I made my room cold and dark like a little cave. I even tried that meditation app my sibling sam keeps pushing on me. and I'm STILL lying here at 3am thinking about deadlines and whether I remembered to invoice that client from september. the melatonin never did anything and I stopped the trazodone because it made mornings impossible. I'm running out of ideas tbh. it's starting to really affect my work \u2014 I can't focus when I'm running on 4 hours of sleep and the adderall can only do so much. is there anything else we can try? I know you mentioned the cbt-i therapy thing but I'm still on the waitlist.",
+      "thread": [
+        {
+          "date": "2025-11-04T10:12:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Devon, I'm sorry you're still struggling with sleep \u2014 I can hear how frustrating this is, and I want you to know we're not giving up on finding something that works. You've done a really good job trying the behavioral strategies, and the fact that they haven't been enough tells me there's a significant anxiety/hyperarousal component driving the insomnia. A few things I want to address: First, I'm going to call the Chicago Anxiety Center this week to check on the waitlist \u2014 CBT-I really is the most effective long-term treatment and I want to make sure you're moving up the list. Second, I've also compiled a list of alternative therapists who accept Ambetter and offer CBT-I \u2014 I'll have Maria send that to you. Third, in the meantime, there are some good self-guided CBT-I apps (the VA's CBT-I Coach is free and evidence-based). It's not the same as working with a therapist but it can help. Let's also talk about other medication options at your next visit \u2014 there are some things we haven't tried yet. Hang in there."
+        }
+      ]
+    },
+    {
+      "id": "msg-012-003",
+      "date": "2026-01-15T11:30:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "appointment request",
+      "priority": "routine",
+      "subject": "therapy waitlist update?",
+      "body": "hey! any update on the therapy waitlist situation? I know it's been a while and I'm trying to be patient (pun intended lol) but it's been like 7 months now and I kind of really need to talk to someone who isn't my sibling or my cat. I downloaded that cbt-i app you recommended and it's actually decent but I think I need the real thing. no rush I guess (ok maybe some rush). also I looked at that list of other therapists maria sent and most of them aren't taking new patients either which is... cool and normal and fine. let me know if there's anything else I should be doing in the meantime.",
+      "thread": [
+        {
+          "date": "2026-01-16T08:55:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "provider"
+          },
+          "body": "Hi Devon, Rachel here \u2014 I'm following up on this for Dr. Kim. I called the Chicago Anxiety Center yesterday and they said you should be next on the list. They expect an opening within the next 2-4 weeks and will call you directly. I know 7 months is a really long wait and I'm sorry it's taken this long \u2014 the demand for therapy right now is just overwhelming. In the meantime, I'm glad the CBT-I app has been somewhat helpful. Keep using it. I also found one more provider who may have availability \u2014 Dr. Amara Okonkwo at Lakeshore Behavioral Health. They accept Ambetter and specialize in ADHD and anxiety in adults. I'll send you their contact info separately. Hang in there \u2014 you're doing the right things."
+        }
+      ]
+    },
+    {
+      "id": "msg-012-004",
+      "date": "2026-02-20T16:05:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "escitalopram side effects check in",
+      "body": "hey dr kim, wanted to check in about some side effects from the escitalopram. the anxiety is definitely better which is great but two things are bugging me: 1) the dry mouth is SO annoying. like I'm constantly drinking water and it's still there. it's especially bad when I'm doing client presentations because I keep having to stop and drink water and it's awkward lol. 2) I've lost like 8 pounds since starting it which normally I wouldn't complain about but my sibling sam is getting on my case about it. they keep making me protein shakes and giving me concerned looks. I looked it up and apparently appetite loss is a side effect? is this something I should be worried about or will it level off? I don't want to stop the escitalopram because the anxiety stuff is actually working but I also don't want to waste away into nothing. thanks!",
+      "thread": [
+        {
+          "date": "2026-02-21T09:30:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Hi Devon, thanks for flagging these \u2014 both are known side effects of escitalopram and I appreciate you keeping me in the loop. Regarding the dry mouth: this is one of the more common SSRI side effects and unfortunately it doesn't always go away completely. Some things that can help: sugar-free lozenges or gum (especially ones with xylitol), a dry mouth rinse like Biotene, and staying hydrated (which it sounds like you're already doing). For presentations, keeping a lozenge handy beforehand can help. Regarding the weight loss: you're right that appetite suppression can happen with escitalopram, and you're also on Adderall which can compound that effect. An 8-pound loss over several months isn't dangerous at your current weight, but I don't want it to continue trending down. Sam is right to be paying attention. I'd recommend: eating on a schedule even when you're not hungry (set alarms if it helps \u2014 I know the ADHD brain needs reminders), focusing on calorie-dense foods like nuts, avocados, and smoothies, and having Sam keep making those protein shakes. Let's weigh you at your next visit and if the trend continues we'll need to discuss options. I'm glad the anxiety benefit is real \u2014 let's try to keep you on it while managing these side effects."
+        }
+      ]
+    },
+    {
+      "id": "msg-012-005",
+      "date": "2026-03-08T22:14:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "random question probably nothing",
+      "body": "hey so random question \u2014 is it normal for your heart to feel like it's racing sometimes? asking for a friend (the friend is me lol). it happens mostly at night when I'm lying in bed trying to sleep. like my heart just starts pounding really hard and fast out of nowhere and it lasts maybe 5-10 minutes and then goes away. it's been happening 2-3 times a week for the past month or so. it's probably just anxiety right? I know I had that whole thing with the bupropion and the palpitations so I get a little nervous when my heart does weird stuff. it's probably nothing. I'm sure it's nothing. but figured I should mention it just in case it's the adderall or something? or the combination of adderall and escitalopram? idk. sorry for the late night message I'm just lying here and it's happening right now and I figured I'd ask while I was thinking about it. it's fine. I'm fine. probably.",
+      "thread": [
+        {
+          "date": "2026-03-09T08:20:00Z",
+          "sender": {
+            "name": "Dr. Sarah Kim, MD",
+            "role": "provider"
+          },
+          "body": "Devon, I'm really glad you messaged about this \u2014 and I want you to know this is absolutely worth bringing up, not a random or silly question. Given your history with bupropion and the fact that you're on a stimulant, I take any cardiac symptoms seriously. Here's what I want you to know: heart palpitations at night are very common with anxiety, and that's the most likely explanation here. However, I don't want to just assume that without checking. I'd like to do the following: 1) Schedule a telehealth visit with you soon so we can talk through the episodes in more detail. 2) When we do an in-person visit, we'll repeat your EKG (your last one in October was normal, which is reassuring). 3) In the meantime, I want you to keep a log of when the episodes happen \u2014 what time, how long they last, what you were doing/thinking, whether you had caffeine or cannabis that day. This will help us figure out if it's anxiety-driven or something we need to investigate further. IMPORTANT: if you ever have palpitations with chest pain, shortness of breath, dizziness, or fainting, go to the ER immediately. Don't wait to message me. But based on what you're describing, this sounds manageable and I'm not alarmed \u2014 I just want to be thorough. You did the right thing by telling me. Let's get that telehealth visit on the books."
+        },
+        {
+          "date": "2026-03-09T10:45:00Z",
+          "sender": {
+            "name": "Devon Reeves",
+            "role": "patient"
+          },
+          "body": "ok thank you. that actually makes me feel a lot better. I'll start keeping the log. and yeah I'll schedule the telehealth thing this week. sorry for the dramatic midnight message lol. sam told me to message you about it like a month ago and I kept putting it off because I figured I was being ridiculous. appreciate you taking it seriously."
+        }
+      ]
+    },
+    {
+      "id": "msg-012-006",
+      "date": "2026-04-21T22:15:00Z",
+      "sender": {
+        "name": "Devon Reeves",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Rachel Torres, NP",
+        "role": "nurse"
+      },
+      "category": "medical question",
+      "priority": "routine",
+      "subject": "sleep stuff + weird heart thing",
+      "body": "hey rachel, so fun update from the land of never-sleeping: the insomnia is somehow getting WORSE?? like I didn't think that was physically possible but here we are, setting new personal records. I genuinely have not slept more than 3 hours a night in over a week. I'm basically a ghost with a creative cloud subscription at this point. my brain just will not shut off no matter what I do and the CBT-i app is like 'have you tried relaxing' and I'm like wow thanks I'm cured lol. anyway I'm struggling and I think the current situation isn't cutting it medication-wise. oh also my heart has been doing this weird racing thing again, like it randomly speeds up for no reason? it'll just be sitting there doing its job and then suddenly it's like I just sprinted up six flights of stairs. probably just anxiety lol but figured I'd mention it since we talked about it before. anyway lmk if there's anything we can adjust for the sleep situation, I am begging.",
+      "thread": [
+        {
+          "date": "2026-04-22T10:30:00Z",
+          "sender": {
+            "name": "Rachel Torres, NP",
+            "role": "nurse"
+          },
+          "body": "Hi Devon, thanks for reaching out \u2014 I'm sorry to hear the insomnia has gotten worse. Not sleeping more than 3 hours a night for a week is really rough, and I want to help you get some relief. It's possible the current approach just isn't enough and we may need to look at a dosage adjustment or try a different sleep medication. Before your next visit, I'd like you to think about your sleep hygiene routine \u2014 are you still keeping a consistent wake time, limiting screens before bed, and keeping caffeine to mornings only? Sometimes small drift in those habits can make a big difference. I'd also like to schedule a follow-up so we can talk through your options in more detail and find something that actually works for you. You can call the front desk or message Maria to get on the books. Hang in there \u2014 we'll figure this out."
+        }
+      ]
+    }
+  ]
+}
