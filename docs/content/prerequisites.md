@@ -219,7 +219,7 @@ ollama pull ibm/granite3.2-guardian:3b
 3. Install the optional Python dependency:
 
 ```bash
-uv sync --extra guardian
+uv sync --all-extras
 ```
 
 Verify Ollama has the model:
@@ -250,16 +250,13 @@ You should see three providers: Dr. Sarah Kim, MD; Rachel Torres, NP; and Maria 
 
 ```bash
 # Install the Python Postgres driver
-uv sync --extra postgres
+uv sync --all-extras
 ```
 
 ???+ tip "Pre-pull the Postgres image"
     ```bash
     docker pull postgres:16
     ```
-
-???+ note "No Docker? Lab 4 still works"
-    Without Docker, Lab 4 falls back to the same JSON file store used in Labs 1-3. You'll miss the RLS demo and role switching, but the concern stability and tool scoping features still work. Just skip the `DATABASE_URL` environment variable.
 
 ---
 

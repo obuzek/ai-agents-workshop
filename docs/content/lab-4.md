@@ -59,7 +59,7 @@ You should see:
 ### Install the Postgres driver
 
 ```bash
-uv sync --extra postgres
+uv sync --all-extras
 ```
 
 ### Start the servers
@@ -75,7 +75,6 @@ uv run uvicorn app.api:app --reload --port 8000
 **Terminal 2 — Agent API (with Postgres):**
 
 ```bash
-DATABASE_URL="postgresql://app_user:app_user_dev@localhost:5433/agent_store" \
 uv run uvicorn lab4.agent.api:app --port 8001
 ```
 
@@ -85,8 +84,8 @@ uv run uvicorn lab4.agent.api:app --port 8001
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
-???+ note "No Docker?"
-    If you can't run Docker, Lab 4 still works — just skip the `DATABASE_URL` variable. The agent falls back to the JSON file store from Labs 1-3. You'll miss the RLS demo and role switching, but concern stability and tool scoping still work.
+!!! tip "No role dropdown?"
+    If the **Active Role** dropdown doesn't appear, refresh the page. The UI loads before the agent API finishes connecting to Postgres, so the first request for providers returns empty. A page refresh fixes it.
 
 ---
 
@@ -102,7 +101,7 @@ Open `lab4/agent/store.py`. Instead of `load_store()` / `save_store()` working o
 - `save_concerns(patient_id, provider_id, concerns)` — upserts: updates existing concern IDs, inserts new ones, leaves unmentioned concerns untouched
 - `share_concern(concern_id, shared_with, shared_by)` — creates an explicit share grant
 
-Every database operation sets `SET LOCAL app.provider_id` on the connection. This is how the application tells Postgres "who's asking" — and Postgres uses it to enforce RLS policies.
+Every database operation calls `set_config('app.provider_id', ...)` on the connection. This is how the application tells Postgres "who's asking" — and Postgres uses it to enforce RLS policies.
 
 ### 2. Tools are scoped to one patient
 
@@ -134,7 +133,7 @@ This means running the agent twice doesn't wipe out previous work — it builds 
 
 ## Step 1: Run the Agent as Dr. Kim
 
-In the UI, you should see a **role switcher** dropdown (bottom of the page, next to the masking and grounding toggles). It should show "Dr. Sarah Kim, MD."
+In the UI, you should see an **Active Role** dropdown at the top of the page, above the patient list. It should show "Dr. Sarah Kim, MD."
 
 Pick a patient and click **Run Agent**. Watch the concerns appear.
 
@@ -174,17 +173,15 @@ CREATE POLICY provider_concern_access ON concerns
 
 Rachel Torres can only see concerns where `provider_id = 'rachel_torres'` or the concern was explicitly shared with them. Dr. Kim's concerns are invisible — **even though they're in the same table, for the same patients.**
 
-This is the teaching moment: **a bug in your Python code cannot leak Dr. Kim's concerns to Rachel Torres.** The database prevents it. Application-layer access control can always be bypassed by a code bug. Database-layer access control cannot.
+???+ question "What does RLS buy us if the app sets the identity?"
+    Good question. The application calls `set_config('app.provider_id', ...)` on every connection — so a Python bug that sets the wrong provider ID *would* leak data. RLS doesn't give us true identity-level isolation here; for that, each provider would need their own database role, and the policy would check `current_user` instead of a session variable.
 
-???+ question "What if we just filtered in Python?"
-    You could write `WHERE provider_id = :provider_id` in every query. But:
+    What RLS *does* buy us: **you can't forget the filter.** Compare these two approaches:
 
-    - A developer could forget the filter in one query
-    - An ORM might load related objects without the filter
-    - A debugging endpoint might bypass the filter
-    - A migration might drop the filter
+    - **Application-layer filtering:** every query must include `WHERE provider_id = :provider_id`. Forget it in one query �� an ORM eager-load, a debug endpoint, a migration — and data leaks silently.
+    - **RLS:** the policy applies to **every query**, including ones you haven't written yet. A new developer can write `SELECT * FROM concerns` and only see what the session allows.
 
-    With RLS, the policy applies to **every query**, including ones you haven't written yet. The database is the last line of defense.
+    RLS centralizes the access rule in one place (the policy) instead of distributing it across every query in the codebase. It's defense-in-depth, not a complete security boundary. In production, you'd pair it with proper authentication — JWT claims flowing into database roles — so the identity assertion doesn't depend on application code.
 
 ---
 
@@ -241,29 +238,23 @@ This is **least-privilege tool scoping**. The agent can see who's in the practic
 
 ## Step 6: Verify Concern Stability
 
-Run the agent again for the same patient as Dr. Kim. Compare the concern IDs before and after:
+Pick a patient you already ran as Dr. Kim. Note the concerns in the UI — titles, urgency, count. Now click **Run Agent** again.
 
-```bash
-docker compose exec postgres psql -U agent -d agent_store \
-  -c "SELECT id, title, last_updated FROM concerns
-      WHERE patient_id = 'patient-001' AND provider_id = 'dr_kim'
-      ORDER BY id;"
-```
-
-Concerns with the same underlying issue keep their IDs — the `last_updated` timestamp changes but the `id` is stable. New concerns get new IDs. Old concerns that the agent didn't mention are left untouched.
+Since no new data has arrived, the concerns should come back the same (or very similar). The agent receives its previous concerns as context and reuses their IDs rather than generating new ones from scratch each time.
 
 This matters because downstream systems (notification triggers, audit logs, care coordination) can reference concern IDs and know they're stable.
 
 ---
 
-## What's Still Broken
+## Taking It to Production
 
-Lab 4 addresses data isolation and tool scoping, but it's not a complete security solution:
+The workshop system works, but a production deployment would add several layers. Because we've used structured outputs consistently — every concern is a typed Pydantic model with explicit fields — many of these are easier to implement than they'd be in a fully unstructured system.
 
-- **No real authentication.** Roles are simulated with a dropdown. A production system needs JWT tokens or OAuth, with the identity flowing from the auth layer to the Postgres session variable.
-- **The agent can still be manipulated.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
-- **Sharing is binary.** You can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows.
-- **Concern stability depends on the LLM.** The agent *usually* reuses existing IDs, but it's not guaranteed. A production system would add a deterministic reconciliation step after the agent runs.
+- **Real authentication.** Roles are simulated with a dropdown, and the application tells Postgres who's asking via `set_config()`. A Python bug that sets the wrong provider ID would leak data — RLS centralizes the filter, but doesn't verify the identity. In production, each provider would authenticate via JWT/OAuth, and the identity would flow into a per-provider database role so the policy checks `current_user` instead of trusting a session variable.
+- **Input hardening.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
+- **Granular sharing.** Right now sharing is binary — you can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows. Structured concerns make this straightforward: the schema already separates the fields you'd want to control access to.
+- **Deterministic reconciliation.** The agent *usually* reuses existing concern IDs, but it's not guaranteed. A production system would add a post-agent reconciliation step that matches concerns by content rather than trusting the LLM to preserve IDs. Structured output makes this feasible — you can compare typed fields instead of parsing free text.
+- **Trace visibility.** We secured agent *output* with RLS, but the Langfuse traces from Lab 2 are still visible to anyone with access to the Langfuse instance. In production, use [Langfuse's RBAC](https://langfuse.com/docs/rbac) to scope trace visibility per provider — the same identity that flows into `app.provider_id` should determine who can see which traces.
 
 ---
 
@@ -271,7 +262,7 @@ Lab 4 addresses data isolation and tool scoping, but it's not a complete securit
 
 | Principle | Implementation |
 |---|---|
-| **Access control in the data layer** | Postgres RLS — the database enforces isolation even if the application has bugs |
+| **Centralized access control** | Postgres RLS — one policy enforces filtering on every query, not scattered WHERE clauses |
 | **Agent output inherits identity** | Concerns are scoped to the provider who ran the agent |
 | **Default deny, explicit grant** | RLS blocks all access; sharing creates targeted exceptions |
 | **Least-privilege tools** | Agent can only access the patient it's authorized for |

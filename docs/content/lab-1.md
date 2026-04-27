@@ -240,7 +240,7 @@ This is the **contract** between the agent and the UI. The agent fills it in; th
 
 ## Step 3: Run the Agent
 
-Make sure you've configured your LLM provider in `.env` (see [Prerequisites](./prerequisites.md#llm-provider-setup)).
+Make sure you've configured your LLM provider in `.env` (see [Prerequisites](./prerequisites.md#3-llm-provider-setup)).
 
 Start the agent API (in addition to the two terminals from Step 1):
 

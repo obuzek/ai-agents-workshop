@@ -63,7 +63,6 @@ def stores_match(a: ConcernsStore, b: ConcernsStore) -> bool:
 
 
 def main():
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     logger.info("=== Lab 2: Observable Agent ===")
     logger.info("Starting concern extraction loop...")
 

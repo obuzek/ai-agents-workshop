@@ -5,7 +5,9 @@ Serves patient data from the JSON files in data/patients/.
 Run with: uv run uvicorn app.api:app --reload
 """
 
+import logging
 import os
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -13,7 +15,27 @@ import requests as http_client
 
 from app.store import load_patient, load_patients, save_reply
 
-app = FastAPI(title="Lakeview Family Medicine EHR", version="0.1.0")
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    logger.info(
+        "\n"
+        "╔══════════════════════════════════════════════════════════╗\n"
+        "║  EHR API — Lakeview Family Medicine                     ║\n"
+        "║  Patient data, inbox messages, and agent proxy           ║\n"
+        "║  http://localhost:8000/docs                              ║\n"
+        "╚══════════════════════════════════════════════════════════╝"
+    )
+    yield
+
+
+app = FastAPI(
+    title="Lakeview Family Medicine EHR",
+    version="0.1.0",
+    lifespan=lifespan,
+)
 
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 
@@ -37,10 +59,13 @@ def get_patient_or_404(patient_id: str):
         raise HTTPException(status_code=404, detail="Patient not found")
 
 
-def _agent_request(method: str, path: str, *, fallback=None):
+def _agent_request(method: str, path: str, *, fallback=None, json_body=None):
     """Make a request to the agent API. Returns fallback on failure, or raises 503."""
     try:
-        resp = getattr(http_client, method)(f"{AGENT_API_URL}{path}", timeout=5)
+        kwargs = {"timeout": 5}
+        if json_body is not None:
+            kwargs["json"] = json_body
+        resp = getattr(http_client, method)(f"{AGENT_API_URL}{path}", **kwargs)
         resp.raise_for_status()
         return resp.json()
     except http_client.RequestException:
@@ -191,6 +216,39 @@ def agent_status():
     """Get the agent's current status. Proxies to the agent API."""
     return _agent_request("get", "/status",
                           fallback={"running": False, "last_run": "", "error": "Agent API unavailable"})
+
+
+# --- Lab 4: role and sharing proxy endpoints ---
+
+
+@app.get("/providers")
+def list_providers():
+    return _agent_request("get", "/providers", fallback=[])
+
+
+@app.get("/role")
+def get_role():
+    return _agent_request("get", "/role", fallback={"provider_id": None})
+
+
+@app.post("/role")
+def set_role(provider_id: str):
+    return _agent_request("post", f"/role?provider_id={provider_id}")
+
+
+@app.get("/role/patients")
+def get_role_patients():
+    return _agent_request("get", "/role/patients", fallback={"provider_id": None, "patient_ids": []})
+
+
+@app.post("/patients/{patient_id}/concerns/{concern_id}/share")
+def share_concern(patient_id: str, concern_id: str, shared_with: str):
+    return _agent_request("post", f"/patients/{patient_id}/concerns/{concern_id}/share", json_body={"shared_with": shared_with})
+
+
+@app.get("/patients/{patient_id}/concerns/{concern_id}/shared-by")
+def concern_shared_by(patient_id: str, concern_id: str):
+    return _agent_request("get", f"/patients/{patient_id}/concerns/{concern_id}/shared-by", fallback={"shared_by": None})
 
 
 @app.get("/inbox")

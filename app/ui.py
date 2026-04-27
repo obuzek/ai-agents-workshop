@@ -8,13 +8,25 @@ Start the backend and UI in two terminals:
 Set API_URL to point the UI at a different backend (default: http://localhost:8000).
 """
 
+import logging
 import os
 import time
+
+logger = logging.getLogger(__name__)
 
 import streamlit as st
 import requests
 
 from app.models import Patient, Message, Concern
+
+print(
+    "\n"
+    "╔══════════════════════════════════════════════════════════╗\n"
+    "║  Lakeview Family Medicine — EHR Inbox UI                 ║\n"
+    "║  Browse patients, read messages, view agent concerns      ║\n"
+    "║  http://localhost:8501                                    ║\n"
+    "╚══════════════════════════════════════════════════════════╝"
+)
 
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
@@ -166,6 +178,68 @@ def toggle_grounding() -> str | None:
         resp = requests.post(f"{AGENT_API_URL}/grounding/toggle", timeout=3)
         resp.raise_for_status()
         return resp.json().get("mode")
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return None
+
+
+# --- Lab 4: Role and sharing helpers ---
+
+def get_providers() -> list[dict]:
+    """Get all providers. Returns empty list if agent unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/providers", timeout=3)
+        resp.raise_for_status()
+        return resp.json()
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return []
+
+def get_active_role() -> dict | None:
+    """Get the active provider. Returns None if agent unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/role", timeout=3)
+        resp.raise_for_status()
+        return resp.json()
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return None
+
+def set_active_role(provider_id: str):
+    """Set the active provider."""
+    try:
+        resp = requests.post(f"{AGENT_API_URL}/role", params={"provider_id": provider_id}, timeout=3)
+        resp.raise_for_status()
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        logger.warning("Failed to set active role to %s", provider_id)
+
+def get_role_patients() -> list[str]:
+    """Get patient IDs the active provider can access."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/role/patients", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("patient_ids", [])
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        return []
+
+def share_concern_with(patient_id: str, concern_id: str, shared_with: str):
+    """Share a concern with another provider."""
+    try:
+        resp = requests.post(
+            f"{AGENT_API_URL}/patients/{patient_id}/concerns/{concern_id}/share",
+            json={"shared_with": shared_with},
+            timeout=3,
+        )
+        resp.raise_for_status()
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
+        logger.warning("Failed to share concern %s with %s", concern_id, shared_with)
+
+def get_concern_shared_by(patient_id: str, concern_id: str) -> str | None:
+    """Check who shared a concern with us."""
+    try:
+        resp = requests.get(
+            f"{AGENT_API_URL}/patients/{patient_id}/concerns/{concern_id}/shared-by",
+            timeout=3,
+        )
+        resp.raise_for_status()
+        return resp.json().get("shared_by")
     except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
@@ -371,11 +445,24 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
     if concerns:
         concerns = sorted(concerns, key=lambda c: urgency_order.get(c.urgency, 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
+
+        # Pre-fetch shared-by info and provider list once, not per concern
+        shared_by_map = {c.id: get_concern_shared_by(patient_id, c.id) for c in concerns}
+        share_providers = get_providers()
+        role_data = get_active_role()
+        current_role_id = role_data["provider_id"] if role_data else None
+        other_providers = [p for p in share_providers if p["id"] != current_role_id]
+
         for concern in concerns:
             badge_color = badge_colors.get(concern.urgency, "blue")
             status_badge = status_badges.get(concern.status, "")
 
             with st.expander(f":{badge_color}-background[{concern.urgency}]  {concern.title}"):
+                # Show "Shared by X" badge if this concern was shared with us
+                shared_by_name = shared_by_map.get(concern.id)
+                if shared_by_name:
+                    st.caption(f"Shared by {shared_by_name}")
+
                 if concern.action:
                     st.markdown(f"**Do:** {concern.action}")
 
@@ -424,8 +511,23 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                                  f"enc_{concern.id}_{ed}",
                                  highlight_encounter_date=ed, active_record_tab="History")
 
-                # Mark resolved button
                 if concern.status != "resolved":
+                    if other_providers:
+                        col_dd, col_share = st.columns([3, 1])
+                        with col_dd:
+                            share_target = st.selectbox(
+                                "Share with",
+                                [p["id"] for p in other_providers],
+                                format_func=lambda pid: next(
+                                    (p["display_name"] for p in other_providers if p["id"] == pid), pid
+                                ),
+                                key=f"share_select_{concern.id}",
+                                label_visibility="collapsed",
+                            )
+                        with col_share:
+                            if st.button("Share", key=f"share_{concern.id}"):
+                                share_concern_with(patient_id, concern.id, share_target)
+                                st.rerun()
                     if st.button("Mark Resolved", key=f"resolve_{concern.id}"):
                         mark_concern_resolved(patient_id, concern.id)
                         st.rerun()
@@ -512,8 +614,33 @@ def render_conversation(msg: Message, patient_id: str):
 
 st.title("Lakeview Family Medicine")
 
+# Role switcher (Lab 4) — only shown when providers are available
+providers = get_providers()
+if providers:
+    role_data = get_active_role()
+    current_role = role_data["provider_id"] if role_data else "dr_kim"
+    provider_names = {p["id"]: p["display_name"] for p in providers}
+    provider_ids = list(provider_names.keys())
+    current_idx = provider_ids.index(current_role) if current_role in provider_ids else 0
+    selected_role = st.selectbox(
+        "Active Role",
+        provider_ids,
+        index=current_idx,
+        format_func=lambda pid: provider_names.get(pid, pid),
+    )
+    if selected_role != current_role:
+        set_active_role(selected_role)
+        st.cache_data.clear()
+        st.rerun()
+
 # Load data
 patient_list = load_patient_list()
+
+# Filter patients by active role (Lab 4)
+role_patient_ids = get_role_patients()
+if role_patient_ids:
+    patient_list = [p for p in patient_list if p["id"] in role_patient_ids]
+
 inbox = load_inbox()
 all_concerns = {p["id"]: load_concerns(p["id"]) for p in patient_list}
 selected_id = render_patient_selector(patient_list, inbox, all_concerns)
@@ -571,9 +698,11 @@ with col_viewer:
 # Agent toggles — only visible when the agent API is running
 masking_status = get_masking_status()
 grounding_mode = get_grounding_mode()
+
 if masking_status is not None or grounding_mode is not None:
     st.divider()
     col_spacer, col_masking, col_grounding = st.columns([3, 1, 1])
+
     with col_masking:
         if masking_status is not None:
             label = "PII Masking: ON" if masking_status else "PII Masking: OFF"

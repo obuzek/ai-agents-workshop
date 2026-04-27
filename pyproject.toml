@@ -24,8 +24,11 @@ anthropic = ["langchain-anthropic>=0.3"]
 guardian = ["ollama>=0.4"]
 postgres = ["psycopg[binary]>=3.1", "psycopg_pool>=3.1"]
 
+[project.scripts]
+reset-db = "scripts.reset_db:main"
+
 [tool.hatch.build.targets.wheel]
-packages = ["app", "lab1", "lab2", "lab3", "lab4"]
+packages = ["app", "lab1", "lab2", "lab3", "lab4", "scripts"]
 
 [build-system]
 requires = ["hatchling"]
