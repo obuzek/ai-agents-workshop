@@ -150,6 +150,26 @@ def toggle_masking() -> bool | None:
         return None
 
 
+def get_grounding_mode() -> str | None:
+    """Check which grounding mode is active. Returns None if agent is unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/grounding", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("mode")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
+
+
+def toggle_grounding() -> str | None:
+    """Toggle grounding mode. Returns new mode, or None if agent is unavailable."""
+    try:
+        resp = requests.post(f"{AGENT_API_URL}/grounding/toggle", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("mode")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
+
+
 # ======================
 # UI components
 # ======================
@@ -523,13 +543,21 @@ with col_viewer:
         st.subheader("Conversation")
         st.info("Select a patient to view messages.")
 
-# PII masking toggle — only visible when the agent API is running (Lab 2+)
+# Agent toggles — only visible when the agent API is running
 masking_status = get_masking_status()
-if masking_status is not None:
+grounding_mode = get_grounding_mode()
+if masking_status is not None or grounding_mode is not None:
     st.divider()
-    col_spacer, col_toggle = st.columns([4, 1])
-    with col_toggle:
-        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
-        if st.button(label, type="secondary" if masking_status else "primary"):
-            toggle_masking()
-            st.rerun()
+    col_spacer, col_masking, col_grounding = st.columns([3, 1, 1])
+    with col_masking:
+        if masking_status is not None:
+            label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
+            if st.button(label, type="secondary" if masking_status else "primary"):
+                toggle_masking()
+                st.rerun()
+    with col_grounding:
+        if grounding_mode is not None:
+            label = f"Grounding: {grounding_mode.upper()}"
+            if st.button(label, type="secondary"):
+                toggle_grounding()
+                st.rerun()
