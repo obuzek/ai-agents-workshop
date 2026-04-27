@@ -11,10 +11,11 @@ dependencies = [
     "openai>=1.0",
     "langgraph>=0.4",
     "langchain-openai>=0.3",
+    "langfuse>=2.0",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["app", "lab1"]
+packages = ["app", "lab1", "lab2"]
 
 [build-system]
 requires = ["hatchling"]
