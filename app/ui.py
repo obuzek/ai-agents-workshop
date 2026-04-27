@@ -126,7 +126,7 @@ def get_agent_status() -> dict:
         resp = requests.get(f"{API_URL}/agent/status", timeout=3)
         resp.raise_for_status()
         return resp.json()
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return {"running": False, "last_run": "", "error": "Agent unavailable"}
 
 
@@ -136,7 +136,7 @@ def get_masking_status() -> bool | None:
         resp = requests.get(f"{AGENT_API_URL}/masking", timeout=3)
         resp.raise_for_status()
         return resp.json().get("enabled")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
@@ -146,7 +146,7 @@ def toggle_masking() -> bool | None:
         resp = requests.post(f"{AGENT_API_URL}/masking/toggle", timeout=3)
         resp.raise_for_status()
         return resp.json().get("enabled")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
@@ -156,7 +156,7 @@ def get_grounding_mode() -> str | None:
         resp = requests.get(f"{AGENT_API_URL}/grounding", timeout=3)
         resp.raise_for_status()
         return resp.json().get("mode")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
@@ -166,7 +166,7 @@ def toggle_grounding() -> str | None:
         resp = requests.post(f"{AGENT_API_URL}/grounding/toggle", timeout=3)
         resp.raise_for_status()
         return resp.json().get("mode")
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
         return None
 
 
