@@ -219,7 +219,7 @@ ollama pull ibm/granite3.2-guardian:3b
 3. Install the optional Python dependency:
 
 ```bash
-uv sync --extra guardian
+uv sync --all-extras
 ```
 
 Verify Ollama has the model:
@@ -250,7 +250,7 @@ You should see three providers: Dr. Sarah Kim, MD; Rachel Torres, NP; and Maria 
 
 ```bash
 # Install the Python Postgres driver
-uv sync --extra postgres
+uv sync --all-extras
 ```
 
 ???+ tip "Pre-pull the Postgres image"

@@ -59,7 +59,7 @@ You should see:
 ### Install the Postgres driver
 
 ```bash
-uv sync --extra postgres
+uv sync --all-extras
 ```
 
 ### Start the servers
@@ -101,7 +101,7 @@ Open `lab4/agent/store.py`. Instead of `load_store()` / `save_store()` working o
 - `save_concerns(patient_id, provider_id, concerns)` — upserts: updates existing concern IDs, inserts new ones, leaves unmentioned concerns untouched
 - `share_concern(concern_id, shared_with, shared_by)` — creates an explicit share grant
 
-Every database operation sets `SET LOCAL app.provider_id` on the connection. This is how the application tells Postgres "who's asking" — and Postgres uses it to enforce RLS policies.
+Every database operation calls `set_config('app.provider_id', ...)` on the connection. This is how the application tells Postgres "who's asking" — and Postgres uses it to enforce RLS policies.
 
 ### 2. Tools are scoped to one patient
 
@@ -133,7 +133,7 @@ This means running the agent twice doesn't wipe out previous work — it builds 
 
 ## Step 1: Run the Agent as Dr. Kim
 
-In the UI, you should see a **role switcher** dropdown (bottom of the page, next to the masking and grounding toggles). It should show "Dr. Sarah Kim, MD."
+In the UI, you should see an **Active Role** dropdown at the top of the page, above the patient list. It should show "Dr. Sarah Kim, MD."
 
 Pick a patient and click **Run Agent**. Watch the concerns appear.
 
@@ -263,6 +263,7 @@ Lab 4 addresses data isolation and tool scoping, but it's not a complete securit
 - **The agent can still be manipulated.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
 - **Sharing is binary.** You can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows.
 - **Concern stability depends on the LLM.** The agent *usually* reuses existing IDs, but it's not guaranteed. A production system would add a deterministic reconciliation step after the agent runs.
+- **Traces aren't scoped by provider.** We secured agent *output* with RLS, but the Langfuse traces from Lab 2 are still visible to anyone with access to the Langfuse instance. In production, use [Langfuse's RBAC](https://langfuse.com/docs/rbac) to scope trace visibility per provider — the same identity that flows into `app.provider_id` should determine who can see which traces.
 
 ---
 
