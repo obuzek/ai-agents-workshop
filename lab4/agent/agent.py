@@ -23,7 +23,7 @@ from langfuse.langchain import CallbackHandler
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import create_react_agent
 
-from lab4.agent.tools import ALL_TOOLS
+from lab4.agent.tools import create_tools
 from lab4.agent.models import PatientConcerns
 from lab4.agent.observability import create_langfuse_handler
 from lab4.agent.grounding import check_grounding, GroundingResult
@@ -82,6 +82,7 @@ class ReviewState(TypedDict):
     """
     patient_id: str                  # Which patient we're reviewing
     concerns: PatientConcerns | None # The primary agent's structured output
+    existing_concerns: str           # JSON of previously-stored concerns for stability
     tool_context: str                # Raw tool call results (grounding source-of-truth)
     revision_feedback: str           # Critic feedback for the next revision pass
     revision_count: int              # How many revision loops we've completed
@@ -91,12 +92,14 @@ class ReviewState(TypedDict):
 # --- Graph nodes ---
 
 
-_react_agent = create_react_agent(
-    model=ChatOpenAI(model=MODEL, max_retries=3),
-    tools=ALL_TOOLS,
-    prompt=SYSTEM_PROMPT,
-    response_format=PatientConcerns,
-)
+def _create_react_agent(patient_id: str):
+    """Create a ReAct agent with tools scoped to a specific patient."""
+    return create_react_agent(
+        model=ChatOpenAI(model=MODEL, max_retries=3),
+        tools=create_tools(patient_id),
+        prompt=SYSTEM_PROMPT,
+        response_format=PatientConcerns,
+    )
 
 # Initialize the Langfuse singleton with PII masking on import.
 # The returned handler isn't used directly — each node creates its own —
@@ -132,14 +135,26 @@ def primary_agent_node(state: ReviewState) -> dict:
         "Start by looking at their messages and record, then investigate "
         "any concerns you find. When done, output your findings."
     )
+    if state.get("existing_concerns"):
+        user_message += (
+            "\n\nEXISTING CONCERNS (from your previous runs):\n"
+            + state["existing_concerns"]
+            + "\n\nINSTRUCTIONS FOR EXISTING CONCERNS:\n"
+            "- If an existing concern is still valid, include it in your output "
+            "with the SAME id. Update fields if evidence has changed.\n"
+            "- If you find a new concern, create it with a new unique id.\n"
+            "- Do not duplicate existing concerns under a different id.\n"
+            "- Concerns you omit will remain in the store unchanged."
+        )
     if state["revision_feedback"]:
         user_message += (
             "\n\nREVISION REQUESTED — a reviewer found issues with your "
             "previous output. Fix them:\n" + state["revision_feedback"]
         )
 
+    agent = _create_react_agent(state["patient_id"])
     handler = CallbackHandler()
-    result = _react_agent.invoke(
+    result = agent.invoke(
         {"messages": [{"role": "user", "content": user_message}]},
         config={
             "callbacks": [handler],
@@ -238,17 +253,31 @@ _review_graph = _build_review_graph()
 
 
 @observe(name="Patient Review")
-def process_patient(patient_id: str) -> PatientConcerns:
+def process_patient(
+    patient_id: str,
+    existing_concerns: list | None = None,
+) -> PatientConcerns:
     """Entry point: run the full review graph for a patient.
 
     Invokes the compiled graph with initial state, then normalizes the
     output (fills in patient_id, timestamps) before returning.
+
+    If existing_concerns are provided (from a previous run), they are
+    serialized and passed to the agent so it can preserve stable IDs.
     """
     logger.info("[%s] Starting agent run", patient_id)
+
+    existing_json = ""
+    if existing_concerns:
+        existing_json = json.dumps(
+            [c.model_dump() if hasattr(c, "model_dump") else c for c in existing_concerns],
+            indent=2,
+        )
 
     result = _review_graph.invoke({
         "patient_id": patient_id,
         "concerns": None,
+        "existing_concerns": existing_json,
         "tool_context": "",
         "revision_feedback": "",
         "revision_count": 0,

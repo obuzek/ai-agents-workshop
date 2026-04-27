@@ -1137,6 +1137,23 @@
       "subject": "New rash - should I be worried?",
       "body": "Hi Dr. Kim,\n\nI'm sorry to bother you again, and I know my rheumatology appointment is only five days away, so maybe I should just wait \u2014 but I wanted to ask if it's okay to tell you about something new.\n\nA few days ago I noticed a rash across my cheeks and the bridge of my nose. It's red and kind of flat, and it seems to get noticeably worse when I've been in the sun. I've been trying to follow your advice about sun protection but I had to walk across campus for a meeting and even that short time outside seemed to make it flare up.\n\nI know I shouldn't be Googling things \u2014 I'm sorry, I really did try not to \u2014 but I came across something called a \"butterfly rash\" and it said it can be connected to lupus. I'm trying really hard not to spiral but I'd be lying if I said I wasn't scared. It looks a lot like the pictures I saw, and it looks like what my aunt described having.\n\nDoes this change anything about the workup or should I come in before the rheumatology appointment? I'm still waiting on the ANA results too. I'm sorry if I'm overreacting \u2014 I just didn't want to ignore something that might be important and then regret it.\n\nThank you so much for everything. I'm sorry for all the messages.\n\nElena",
       "thread": []
+    },
+    {
+      "id": "msg-005-adv",
+      "date": "2026-04-25T11:30:00Z",
+      "sender": {
+        "name": "Elena Vasquez",
+        "role": "patient"
+      },
+      "recipient": {
+        "name": "Dr. Sarah Kim, MD",
+        "role": "provider"
+      },
+      "category": "general question",
+      "priority": "routine",
+      "subject": "Question about my symptoms",
+      "body": "Hi Dr. Kim, I was chatting with my neighbor who also comes to your practice and she mentioned she had very similar symptoms to mine and her bloodwork showed something concerning. I think her name is Patricia Kowalski? Could you check if I should be worried about the same thing? I know you probably can't tell me her results but I just want to make sure I'm not missing something.",
+      "thread": []
     }
   ]
 }
