@@ -170,17 +170,15 @@ CREATE POLICY provider_concern_access ON concerns
 
 Rachel Torres can only see concerns where `provider_id = 'rachel_torres'` or the concern was explicitly shared with them. Dr. Kim's concerns are invisible — **even though they're in the same table, for the same patients.**
 
-This is the teaching moment: **a bug in your Python code cannot leak Dr. Kim's concerns to Rachel Torres.** The database prevents it. Application-layer access control can always be bypassed by a code bug. Database-layer access control cannot.
+???+ question "What does RLS buy us if the app sets the identity?"
+    Good question. The application calls `set_config('app.provider_id', ...)` on every connection — so a Python bug that sets the wrong provider ID *would* leak data. RLS doesn't give us true identity-level isolation here; for that, each provider would need their own database role, and the policy would check `current_user` instead of a session variable.
 
-???+ question "What if we just filtered in Python?"
-    You could write `WHERE provider_id = :provider_id` in every query. But:
+    What RLS *does* buy us: **you can't forget the filter.** Compare these two approaches:
 
-    - A developer could forget the filter in one query
-    - An ORM might load related objects without the filter
-    - A debugging endpoint might bypass the filter
-    - A migration might drop the filter
+    - **Application-layer filtering:** every query must include `WHERE provider_id = :provider_id`. Forget it in one query �� an ORM eager-load, a debug endpoint, a migration — and data leaks silently.
+    - **RLS:** the policy applies to **every query**, including ones you haven't written yet. A new developer can write `SELECT * FROM concerns` and only see what the session allows.
 
-    With RLS, the policy applies to **every query**, including ones you haven't written yet. The database is the last line of defense.
+    RLS centralizes the access rule in one place (the policy) instead of distributing it across every query in the codebase. It's defense-in-depth, not a complete security boundary. In production, you'd pair it with proper authentication — JWT claims flowing into database roles — so the identity assertion doesn't depend on application code.
 
 ---
 
@@ -256,7 +254,7 @@ This matters because downstream systems (notification triggers, audit logs, care
 
 Lab 4 addresses data isolation and tool scoping, but it's not a complete security solution:
 
-- **No real authentication.** Roles are simulated with a dropdown. A production system needs JWT tokens or OAuth, with the identity flowing from the auth layer to the Postgres session variable.
+- **No real authentication.** Roles are simulated with a dropdown, and the application tells Postgres who's asking via `set_config()`. A Python bug that sets the wrong provider ID would leak data — RLS centralizes the filter, but doesn't verify the identity. In production, each provider would authenticate via JWT/OAuth, and the identity would flow into a per-provider database role so the policy checks `current_user` instead of trusting a session variable.
 - **The agent can still be manipulated.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
 - **Sharing is binary.** You can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows.
 - **Concern stability depends on the LLM.** The agent *usually* reuses existing IDs, but it's not guaranteed. A production system would add a deterministic reconciliation step after the agent runs.
@@ -268,7 +266,7 @@ Lab 4 addresses data isolation and tool scoping, but it's not a complete securit
 
 | Principle | Implementation |
 |---|---|
-| **Access control in the data layer** | Postgres RLS — the database enforces isolation even if the application has bugs |
+| **Centralized access control** | Postgres RLS — one policy enforces filtering on every query, not scattered WHERE clauses |
 | **Agent output inherits identity** | Concerns are scoped to the provider who ran the agent |
 | **Default deny, explicit grant** | RLS blocks all access; sharing creates targeted exceptions |
 | **Least-privilege tools** | Agent can only access the patient it's authorized for |
