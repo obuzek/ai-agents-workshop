@@ -13,13 +13,14 @@ from app.models import (
 
 
 class PatientConcerns(BaseModel):
-    """All concerns for one patient."""
+    """All concerns for one patient, from one provider's perspective."""
     patient_id: str
     patient_name: str = _pii()
     concerns: list[Concern] = []
 
 
-class ConcernsStore(BaseModel):
-    """The full agent output — all patients' concerns. Written as a flat JSON file."""
-    patients: dict[str, PatientConcerns] = {}
-    last_run: str = ""
+class Provider(BaseModel):
+    """A clinical role that can run the agent and view concerns."""
+    id: str
+    display_name: str
+    role: str
