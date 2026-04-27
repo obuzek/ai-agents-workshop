@@ -84,6 +84,9 @@ uv run uvicorn lab4.agent.api:app --port 8001
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
+!!! tip "No role dropdown?"
+    If the **Active Role** dropdown doesn't appear, refresh the page. The UI loads before the agent API finishes connecting to Postgres, so the first request for providers returns empty. A page refresh fixes it.
+
 ---
 
 ## What Changed from Lab 3
