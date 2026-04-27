@@ -223,15 +223,19 @@ NER is excellent at finding names embedded in paragraphs ("Dear Dr. Kim, I've be
 
     For this workshop, our two-layer approach demonstrates the pattern. Production systems need more.
 
-### Re-enable masking
+### Toggling masking at runtime
 
-Undo the change from Step 3 — restore the mask in `create_langfuse_handler`:
+You don't need to edit code to switch between masked and unmasked traces. The UI has a **PII Masking** toggle button in the top-right corner. Click it to toggle masking on or off — the change takes effect on the next agent run, no restart needed.
+
+This lets you run the agent once with masking off (to see the raw data problem), toggle it on, and run again (to see the fix) — all without leaving the browser.
+
+If you commented out the mask in Step 3, restore it now:
 
 ```python
 Langfuse(mask=mask_pii)
 ```
 
-Restart the agent API (Terminal 3), then run the agent again for the same patient.
+Then restart the agent API (Terminal 3).
 
 ---
 
@@ -257,16 +261,91 @@ The trace structure is preserved — you can still see which tools were called, 
 
 ## Step 7: Explore the Langfuse UI
 
-Now that you have traces, spend a few minutes exploring what Langfuse gives you:
+Now that you have traces (ideally both masked and unmasked), let's walk through what Langfuse reveals about your agent. This is where observability goes from "nice to have" to essential.
 
-### Trace timeline
+### 7.1 Reading a trace
 
-Click into a trace and look at the nested spans. You should see:
+Click into **Traces** in the left sidebar and open your most recent trace. The trace view shows a **nested timeline** of everything that happened during the agent run:
 
 - The **root span** covering the entire `process_patient` call
-- **LLM generation spans** for each reasoning step — with token counts (input + output)
-- **Tool call spans** for each tool the agent invoked — with inputs and outputs (now masked)
-- **Latency** for each span, so you can see where time is spent
+- **LLM generation spans** for each reasoning step — with token counts (input + output) and latency
+- **Tool call spans** for each tool the agent invoked — with the full inputs and outputs
+- **Cost** calculated automatically from model and token counts
+
+Click on any span to see its details. This is the primary debugging interface — when something goes wrong in production, you trace the exact path the agent took.
+
+### 7.2 The sequence of agent calls
+
+Expand the trace and look at the **order** of spans. The ReAct loop is visible: the LLM reasons, decides to call a tool, receives the result, reasons again, calls another tool, and so on until it produces its final output.
+
+Pay attention to:
+
+- **How many LLM calls** the agent makes — each one is a decision point (and a cost)
+- **Which tools** get called and in what order — is the agent's strategy sensible?
+- **Whether the same tool** gets called multiple times — that might indicate confusion
+
+???+ question "Think about this"
+    Run the agent twice on the same patient and compare the traces. Does the agent call the same tools in the same order? If not, what does that tell you about the reliability of the agent's strategy?
+
+### 7.3 The implicit summary problem
+
+Look at the final LLM generation — the one that produces the structured concerns. Now compare it to the tool call outputs that preceded it.
+
+The agent is performing an **implicit summarization**: it reads the full patient record via tool calls, then synthesizes that into structured concerns. Every layer of summarization is an opportunity for:
+
+- **Hallucination**: the agent claims something that isn't in the data
+- **Omission**: the agent misses something clinically important
+- **Distortion**: the agent changes the meaning or severity of a finding
+
+This is visible in the traces. Compare what the tools returned (ground truth) with what the agent concluded (the concerns). You can spot discrepancies by eye — in Lab 3, we'll automate this.
+
+### 7.4 Too much data from simple tools
+
+Look at the **output** of the `get_patient_record` tool call. It returns the *entire* patient record — demographics, conditions, medications, labs, encounters, messages, everything — in a single blob.
+
+This creates two problems:
+
+1. **For the agent**: it has to reason over a huge context window. More data means more tokens, more cost, more latency, and more opportunities to get confused or hallucinate.
+2. **For tracing**: that entire patient record is now captured in your trace store. Even with masking, you're storing a lot of clinical data. In production, this has retention, compliance, and storage cost implications.
+
+???+ question "Think about tool design"
+    What if instead of one `get_patient_record` tool, you had separate tools for `get_demographics`, `get_conditions`, `get_medications`, `get_labs`, `get_messages`? The agent could request only what it needs. How would that change the traces? How would it change the cost? We'll revisit this in Lab 3.
+
+### 7.5 The invisible user message
+
+Click on the first LLM generation span and look at the **input messages**. You'll see a system prompt and a "user" message — something like *"Review the patient record for patient-001 and identify any concerns..."*
+
+But the doctor never wrote that message. The patient never wrote it either. It's a **synthetic prompt** constructed by the agent's `process_patient` function. The "conversation" between user and assistant is happening entirely behind the scenes.
+
+This is important to understand:
+
+- The doctor sees *concerns* in the UI — they never see this prompt
+- The prompt shapes everything the agent does — but it's invisible to the end user
+- If the prompt is poorly written or biased, the doctor has no way to know
+
+Traces make this visible. In a production system, you'd want to version-control your prompts and track which prompt version produced which traces.
+
+### 7.6 Datasets and annotations
+
+Langfuse has two built-in features for **human learning from agent behavior**:
+
+- **Add to Dataset**: on any trace or span, click "Add to dataset" to save it as a labeled example. Over time, you build a collection of real agent behaviors — good and bad — that you can use for evaluation, fine-tuning, or training new team members.
+
+- **Annotate**: add free-text notes or structured scores to any trace. When a clinician reviews the agent's output and spots a problem, they can annotate the trace with what went wrong. This creates a feedback loop from domain experts back to the engineering team.
+
+Neither of these requires any code changes — they're built into the Langfuse UI. The traces you're generating right now could become the foundation of your evaluation dataset.
+
+### 7.7 Scores and LLM-as-Judge (conceptual)
+
+Langfuse supports **scores** — numeric or categorical ratings attached to traces. You can assign scores manually (human evaluation) or programmatically (automated evaluation).
+
+One powerful pattern is **LLM-as-Judge**: use a second LLM to evaluate the first LLM's output. For example:
+
+- *"Does this concern have evidence in the patient record, or is it hallucinated?"*
+- *"Does the urgency level match the clinical severity?"*
+- *"Did the agent overstep by making a diagnosis instead of flagging a concern?"*
+
+We haven't implemented this yet — it's conceptual in this lab. But the traces you're capturing here are exactly the input you'd need. In Lab 3, we'll build evaluation checks that could feed scores back into Langfuse.
 
 ### Cost tracking
 

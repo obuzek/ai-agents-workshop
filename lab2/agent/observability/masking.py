@@ -146,12 +146,18 @@ def _mask_value(value, _redact_as=None):
     return value
 
 
+# --- Runtime toggle ---
+# Masking can be enabled/disabled at runtime via the agent API,
+# so participants can compare masked vs. unmasked traces without restarting.
+masking_enabled = True
+
+
 def mask_pii(*, data, **kwargs):
     """Mask PII in trace data before it's sent to Langfuse.
 
     This function is passed to the Langfuse client via the `mask` parameter.
     It is called on every piece of data (inputs, outputs, metadata) before
-    transmission. Data never leaves the process unmasked.
+    transmission. When masking_enabled is False, data passes through unchanged.
 
     Args:
         data: The value to mask — can be a string, dict, list, or other type.
@@ -160,6 +166,8 @@ def mask_pii(*, data, **kwargs):
     Returns:
         The masked data in the same structure.
     """
+    if not masking_enabled:
+        return data
     return _mask_value(data)
 
 

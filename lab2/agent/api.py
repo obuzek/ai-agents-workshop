@@ -67,3 +67,21 @@ def mark_resolved(patient_id: str, concern_id: str):
     if not resolve_concern(patient_id, concern_id):
         raise HTTPException(status_code=404, detail="Concern not found")
     return {"status": "resolved"}
+
+
+# --- Masking toggle ---
+# Lets participants compare masked vs. unmasked traces without restarting.
+
+@app.get("/masking")
+def get_masking():
+    """Check whether PII masking is currently enabled."""
+    from lab2.agent.observability.masking import masking_enabled
+    return {"enabled": masking_enabled}
+
+
+@app.post("/masking/toggle")
+def toggle_masking():
+    """Toggle PII masking on/off. Takes effect on the next agent run."""
+    import lab2.agent.observability.masking as m
+    m.masking_enabled = not m.masking_enabled
+    return {"enabled": m.masking_enabled}

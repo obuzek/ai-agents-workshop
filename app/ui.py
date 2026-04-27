@@ -17,6 +17,7 @@ import requests
 from app.models import Patient, Message
 
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
+AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 
@@ -127,6 +128,26 @@ def get_agent_status() -> dict:
         return resp.json()
     except (requests.ConnectionError, requests.Timeout):
         return {"running": False, "last_run": "", "error": "Agent unavailable"}
+
+
+def get_masking_status() -> bool | None:
+    """Check whether PII masking is enabled on the agent. Returns None if agent is unavailable."""
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/masking", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("enabled")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
+
+
+def toggle_masking() -> bool | None:
+    """Toggle PII masking on the agent. Returns new state, or None if agent is unavailable."""
+    try:
+        resp = requests.post(f"{AGENT_API_URL}/masking/toggle", timeout=3)
+        resp.raise_for_status()
+        return resp.json().get("enabled")
+    except (requests.ConnectionError, requests.Timeout):
+        return None
 
 
 # ======================
@@ -453,7 +474,18 @@ def render_conversation(msg: Message, patient_id: str):
 # ======================
 
 
-st.title("Lakeview Family Medicine")
+col_title, col_masking = st.columns([4, 1])
+with col_title:
+    st.title("Lakeview Family Medicine")
+with col_masking:
+    masking_status = get_masking_status()
+    if masking_status is not None:
+        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
+        if st.button(label, type="secondary" if masking_status else "primary"):
+            toggle_masking()
+            st.rerun()
+    else:
+        st.caption("Agent offline")
 
 # Load data
 patient_list = load_patient_list()
