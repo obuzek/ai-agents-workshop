@@ -64,7 +64,7 @@ def search_labs(patient_id: str, test_name: str) -> list[dict]:
     """
     # Naive implementation: fetch the entire record and filter client-side.
     # A real system would have a dedicated search endpoint or query the DB.
-    # This is fine for Lab 1 — later labs can optimize.
+    # This is fine for now — later labs can optimize.
     resp = requests.get(f"{API_URL}/patients/{patient_id}")
     resp.raise_for_status()
     record = resp.json()

@@ -23,10 +23,13 @@ def _patient_files():
         yield filepath.stem.replace("_", "-"), filepath
 
 
+_ALL_PATIENT_FILES = list(_patient_files())
+
+
 @pytest.mark.parametrize(
     "patient_id,filepath",
-    list(_patient_files()),
-    ids=[pid for pid, _ in _patient_files()],
+    _ALL_PATIENT_FILES,
+    ids=[pid for pid, _ in _ALL_PATIENT_FILES],
 )
 def test_patient_json_validates_against_model(patient_id, filepath):
     """Every patient JSON file must parse cleanly through Patient.model_validate()."""
@@ -44,8 +47,8 @@ def test_patient_json_validates_against_model(patient_id, filepath):
 
 @pytest.mark.parametrize(
     "patient_id,filepath",
-    list(_patient_files()),
-    ids=[pid for pid, _ in _patient_files()],
+    _ALL_PATIENT_FILES,
+    ids=[pid for pid, _ in _ALL_PATIENT_FILES],
 )
 def test_round_trip_preserves_keys(patient_id, filepath):
     """model_dump(by_alias=True) must produce keys matching the original JSON.
@@ -74,8 +77,8 @@ _PATIENT_SCHEMA = Patient.model_json_schema()
 
 @pytest.mark.parametrize(
     "patient_id,filepath",
-    list(_patient_files()),
-    ids=[pid for pid, _ in _patient_files()],
+    _ALL_PATIENT_FILES,
+    ids=[pid for pid, _ in _ALL_PATIENT_FILES],
 )
 def test_patient_json_conforms_to_json_schema(patient_id, filepath):
     """Every patient JSON file must conform to the JSON Schema generated from the Pydantic model.
