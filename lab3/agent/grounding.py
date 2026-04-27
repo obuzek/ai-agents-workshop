@@ -17,6 +17,8 @@ import logging
 import os
 
 from langchain_openai import ChatOpenAI
+from langfuse import observe
+from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -24,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 # --- Runtime toggle ---
 # "llm" = LLM-as-judge, "guardian" = Granite Guardian via Ollama
-grounding_mode: str = "guardian"
+grounding_mode: str = "llm"
 
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 GUARDIAN_MODEL = os.environ.get("GUARDIAN_MODEL", "ibm/granite3.2-guardian")
@@ -68,6 +70,7 @@ EVIDENCE CLAIMS:
 """
 
 
+@observe(name="Grounding: LLM-as-Judge")
 def _check_llm_judge(evidence: list[str], context: str) -> list[EvidenceVerdict]:
     """Use the same OpenAI model to evaluate groundedness."""
     model = os.environ.get("OPENAI_MODEL", "gpt-4o")
@@ -76,18 +79,27 @@ def _check_llm_judge(evidence: list[str], context: str) -> list[EvidenceVerdict]
             "__annotations__": {"verdicts": list[EvidenceVerdict]},
         })
     )
-    result = llm.invoke(_JUDGE_PROMPT.format(
-        context=context,
-        evidence=json.dumps(evidence),
-    ))
+    handler = CallbackHandler()
+    result = llm.invoke(
+        _JUDGE_PROMPT.format(context=context, evidence=json.dumps(evidence)),
+        config={"callbacks": [handler]},
+    )
     return result.verdicts
 
 
 # --- Granite Guardian implementation ---
 
 
+@observe(name="Grounding: Granite Guardian")
 def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
-    """Use Granite Guardian via Ollama for groundedness detection."""
+    """Use Granite Guardian via Ollama for groundedness detection.
+
+    Uses the canonical Granite Guardian message format:
+    - system: "groundedness" (selects the groundedness risk detector)
+    - user: "Context: ...\n\nClaim: ..." (the evidence to verify)
+
+    Guardian outputs Yes (risk detected = hallucination) or No (grounded).
+    """
     import ollama
 
     client = ollama.Client(host=OLLAMA_BASE_URL)
@@ -97,20 +109,19 @@ def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
         response = client.chat(
             model=GUARDIAN_MODEL,
             messages=[
+                {"role": "system", "content": "groundedness"},
                 {
                     "role": "user",
-                    "content": (
-                        f"Check if the following claim is supported by the context.\n\n"
-                        f"Context: {context}\n\n"
-                        f"Claim: {claim}"
-                    ),
+                    "content": f"Context: {context}\n\nClaim: {claim}",
                 },
             ],
             options={"temperature": 0.0},
         )
         text = response["message"]["content"]
-        # Granite Guardian outputs Yes (risk = hallucination) or No (grounded)
-        is_hallucinated = "yes" in text.lower().split("</think>")[-1].lower()
+        # Guardian outputs "Yes" (risk = hallucination) or "No" (grounded).
+        # Strip any <think> reasoning tags if present.
+        answer = text.split("</think>")[-1].strip().lower()
+        is_hallucinated = "yes" in answer
         verdicts.append(EvidenceVerdict(
             evidence=claim,
             supported=not is_hallucinated,
@@ -123,6 +134,7 @@ def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
 # --- Public API ---
 
 
+@observe(name="Grounding Check")
 def check_grounding(concern_title: str, evidence: list[str], context: str) -> GroundingResult:
     """Check whether evidence claims are grounded in source data.
 

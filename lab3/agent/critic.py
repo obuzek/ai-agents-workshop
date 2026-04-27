@@ -16,6 +16,8 @@ import logging
 import os
 
 from langchain_openai import ChatOpenAI
+from langfuse import observe
+from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
 
 from lab3.agent.grounding import GroundingResult
@@ -69,6 +71,7 @@ GROUNDING RESULTS:
 """
 
 
+@observe(name="Critic Evaluation")
 def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> CriticResult:
     """Run the critic on the primary agent's output."""
     model = os.environ.get("OPENAI_MODEL", "gpt-4o")
@@ -76,7 +79,11 @@ def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> Cr
 
     grounding_json = "\n".join(r.model_dump_json() for r in grounding_results)
 
-    return llm.invoke(_CRITIC_PROMPT.format(
-        concerns=concerns_json,
-        grounding=grounding_json or "(no grounding results)",
-    ))
+    handler = CallbackHandler()
+    return llm.invoke(
+        _CRITIC_PROMPT.format(
+            concerns=concerns_json,
+            grounding=grounding_json or "(no grounding results)",
+        ),
+        config={"callbacks": [handler]},
+    )

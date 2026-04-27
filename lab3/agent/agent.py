@@ -17,6 +17,8 @@ import os
 from datetime import datetime, timezone
 
 from langchain_openai import ChatOpenAI
+from langfuse import observe
+from langfuse.langchain import CallbackHandler
 from langgraph.prebuilt import create_react_agent
 
 from lab3.agent.tools import ALL_TOOLS
@@ -79,6 +81,8 @@ def _build_agent():
 
 
 _agent = _build_agent()
+
+# Initialize Langfuse with PII masking on import (side effect sets up the singleton).
 _langfuse_handler = create_langfuse_handler()
 
 
@@ -95,6 +99,7 @@ def _extract_tool_context(messages: list) -> str:
     return "\n---\n".join(chunks)
 
 
+@observe(name="Primary Agent")
 def _run_primary_agent(patient_id: str, revision_feedback: str = "") -> tuple[PatientConcerns, str]:
     """Run the primary agent, optionally with revision feedback from the critic."""
     user_message = (
@@ -108,10 +113,12 @@ def _run_primary_agent(patient_id: str, revision_feedback: str = "") -> tuple[Pa
             "previous output. Fix them:\n" + revision_feedback
         )
 
+    # CallbackHandler() auto-nests under the current @observe span.
+    handler = CallbackHandler()
     result = _agent.invoke(
         {"messages": [{"role": "user", "content": user_message}]},
         config={
-            "callbacks": [_langfuse_handler],
+            "callbacks": [handler],
             "metadata": {
                 "langfuse_session_id": f"patient-review-{patient_id}",
                 "langfuse_tags": ["lab3", patient_id],
@@ -124,6 +131,7 @@ def _run_primary_agent(patient_id: str, revision_feedback: str = "") -> tuple[Pa
     return structured, context
 
 
+@observe(name="Patient Review")
 def process_patient(patient_id: str) -> PatientConcerns:
     """Run the agent loop: primary agent → grounding → critic → revise.
 

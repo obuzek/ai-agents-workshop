@@ -35,9 +35,9 @@ By the end of this lab, you will:
 
 ---
 
-## Prerequisites
+## Prerequisites (optional)
 
-This lab requires **Ollama** for running Granite Guardian locally.
+Granite Guardian grounding is **optional** — the lab works out of the box with LLM-as-judge grounding. If you want to compare both approaches, install Ollama:
 
 1. Install [Ollama](https://ollama.com/)
 2. Pull the Granite Guardian model:
@@ -153,8 +153,8 @@ Open `lab3/agent/grounding.py`. It has one job: given evidence claims and source
 Two implementations behind a toggle:
 
 ```python
-# "llm" = LLM-as-judge, "guardian" = Granite Guardian via Ollama
-grounding_mode: str = "guardian"
+# "llm" = LLM-as-judge (default), "guardian" = Granite Guardian via Ollama
+grounding_mode: str = "llm"
 ```
 
 The **LLM-as-judge** path sends the evidence and source data to the same OpenAI model:
@@ -166,17 +166,20 @@ def _check_llm_judge(evidence: list[str], context: str) -> list[EvidenceVerdict]
     return result.verdicts
 ```
 
-The **Granite Guardian** path uses a purpose-built model via Ollama:
+The **Granite Guardian** path uses a purpose-built model via Ollama. It uses Guardian's canonical message format — the system message selects the `groundedness` risk detector, and the user message provides context and claim:
 
 ```python
 def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
     client = ollama.Client(host=OLLAMA_BASE_URL)
     for claim in evidence:
-        response = client.chat(model=GUARDIAN_MODEL, messages=[...])
-        # Guardian outputs Yes (hallucination) or No (grounded)
+        response = client.chat(model=GUARDIAN_MODEL, messages=[
+            {"role": "system", "content": "groundedness"},
+            {"role": "user", "content": f"Context: {context}\n\nClaim: {claim}"},
+        ])
+        # Guardian outputs Yes (risk = hallucination) or No (grounded)
 ```
 
-Granite Guardian is a separate model fine-tuned specifically for groundedness detection. It avoids the self-evaluation problem — a different model with different training checks the work.
+Granite Guardian is a [separate model fine-tuned specifically for groundedness detection](https://www.ibm.com/granite/docs/models/guardian/). It avoids the self-evaluation problem — a different model with different training checks the work. See the [Granite Guardian cookbook](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks) for more usage examples.
 
 ### The critic module
 
@@ -233,34 +236,61 @@ uv run streamlit run app/ui.py --server.port 8501
 uv run uvicorn lab3.agent.api:app --port 8001
 ```
 
-???+ tip "Make sure Ollama is running"
-    The default grounding mode is Granite Guardian, which needs Ollama. Start Ollama before running the agent, or toggle to LLM-as-judge mode using the UI button.
+???+ tip "Ollama is optional"
+    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. If you installed Ollama and want to try Granite Guardian, toggle the grounding mode using the UI button.
 
 Select a patient and click **Run Agent**. The agent will take longer than Lab 2 — it's running the full loop (primary agent → grounding → critic → possibly revise).
 
 ---
 
-## Step 4: Compare in Langfuse
+## Step 4: Read the Trace in Langfuse
 
-Open Langfuse at [http://localhost:3000](http://localhost:3000) and look at the new trace. You'll see more spans than in Lab 2:
+Open Langfuse at [http://localhost:3000](http://localhost:3000) and find the new trace. Each component is a **named span** — a labeled block in the trace timeline that shows what ran, what it received, and what it produced.
 
-- **Primary agent** spans (tool calls + reasoning)
-- **Grounding check** spans (one per concern)
-- **Critic** span (evaluation + feedback)
-- If revisions happened: a second round of all three
+Here's what to look for, top to bottom:
 
-???+ question "Compare traces"
-    Run the agent with both grounding modes and compare the traces:
+### The "Patient Review" span (outermost)
 
-    1. Run with **Granite Guardian** (default)
-    2. Toggle to **LLM** mode using the button at the bottom of the UI
-    3. Run again on the same patient
+This is the full agent run. Expand it to see the three inner components.
 
-    Look at the grounding check spans. How do the two modes differ? Does one catch hallucinations the other misses? What's the latency difference?
+### The "Primary Agent" span
+
+This is the LangGraph ReAct agent — the same structure as Lab 2, but now with **focused search tools**. Look at the tool calls:
+
+- **What tools did it call?** You should see `search_conditions`, `search_labs`, `search_medications` — not `get_patient_record`.
+- **What keywords did it search for?** The agent had to decide what was relevant. Compare this to Lab 2, where it got everything at once.
+- **How many tokens?** Check the token count. Focused tools mean less data in context, lower cost.
+
+### The "Grounding Check" spans (one per concern)
+
+Each concern's evidence gets checked against the tool output. Look inside:
+
+- **Input:** The evidence strings the agent claimed, plus the raw tool output.
+- **Output:** A verdict per evidence string — `supported: true/false` with a reason.
+- **Did it catch anything?** If the agent hallucinated a lab value or date, you'll see `supported: false` here.
+
+The span will be labeled **"Grounding: LLM-as-Judge"** or **"Grounding: Granite Guardian"** depending on the active mode.
+
+### The "Critic Evaluation" span
+
+The critic sees the concerns plus grounding verdicts and decides: approve or revise?
+
+- **Input:** The full concerns JSON plus grounding results.
+- **Output:** Per-concern feedback (on-task? grounded? revision needed?) and an overall `approved: true/false`.
+- **If approved:** The loop ends here. One pass.
+- **If not approved:** Look for a second "Primary Agent" span — the agent re-ran with the critic's feedback injected into the prompt.
+
+???+ question "Things to notice"
+    1. How many revision rounds happened? Was the first attempt good enough, or did the critic catch something?
+    2. Look at the revision feedback — what did the critic flag? Compare the first and second "Primary Agent" outputs.
+    3. Check the grounding verdicts — are there evidence strings marked `supported: false`? Do they match real hallucinations when you compare against the tool output?
 
 ---
 
 ## Step 5: Toggle Grounding Modes
+
+???+ tip "Granite Guardian requires Ollama"
+    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running with the model pulled (see [Prerequisites](#prerequisites-optional)).
 
 The **Grounding** button at the bottom of the UI toggles between `LLM` and `GUARDIAN` modes. This follows the same pattern as Lab 2's PII masking toggle — a runtime flag on the agent API:
 
@@ -275,13 +305,13 @@ def toggle_grounding():
 
 Try both modes on the same patient and compare the results in Langfuse. The key tradeoff:
 
-| | LLM-as-Judge | Granite Guardian |
+| | LLM-as-Judge | [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) |
 |---|---|---|
-| **Model** | Same OpenAI model | Purpose-built IBM model |
+| **Model** | Same OpenAI model | [Purpose-built IBM model](https://github.com/ibm-granite/granite-guardian) |
 | **Self-evaluation bias** | Yes — checking its own work | No — separate model |
 | **Cost** | Uses your OpenAI API quota | Free (local via Ollama) |
 | **Latency** | Fast (API call) | Depends on hardware |
-| **Accuracy** | Good at reasoning, prone to bias | Trained for this specific task |
+| **Accuracy** | Good at reasoning, prone to bias | [Trained for this specific task](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b) |
 
 ---
 
@@ -293,7 +323,7 @@ Three targeted improvements, driven by what we found in the traces:
 
 **The critic loop catches problems.** Hallucinated evidence and off-task behavior get flagged and revised. You can see the revision feedback in the traces — the agent's second attempt is typically better than its first.
 
-**Granite Guardian provides independent grounding.** A separate model checking the agent's evidence avoids the self-evaluation problem. You can compare both approaches in the traces and see the difference.
+**Granite Guardian provides independent grounding.** A separate model checking the agent's evidence avoids the self-evaluation problem. You can compare both approaches in the traces — each is a named span ("Grounding: LLM-as-Judge" vs. "Grounding: Granite Guardian") so you can see exactly what each one did.
 
 ---
 
