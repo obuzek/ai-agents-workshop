@@ -172,8 +172,10 @@ The labs need an LLM API key. Pick **one** provider and install its dependencies
 === "Google Gemini (recommended)"
     **Free tier, no credit card required** — just a Google account.
 
-    1. Go to [Google AI Studio](https://aistudio.google.com/apikey) and create an API key
-    2. Install dependencies and configure your key:
+    1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
+    2. When prompted to select a project, use the **default project** (usually called "Default Gemini Project" or "Generative Language Client"). Don't create a new project — the Gemini API is already enabled on the default one.
+    3. Click **Create API key** and copy it
+    4. Install dependencies and configure your key:
 
     ```bash
     uv sync --extra gemini
@@ -182,6 +184,9 @@ The labs need an LLM API key. Pick **one** provider and install its dependencies
     ```
 
     The free tier is generous enough for a classroom of 30+ concurrent users.
+
+    !!! warning "Created a new Google Cloud project?"
+        If you created your key in a new project, you'll get an `API_KEY_INVALID` error. Either recreate the key in the default project, or enable the [Generative Language API](https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com) on your project.
 
 === "OpenAI"
     Requires an [OpenAI Platform](https://platform.openai.com/) account (pay-as-you-go).
