@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 
-from lab2.agent.models import ConcernsStore, PatientConcerns
+from lab2.agent.models import Concern, ConcernsStore, PatientConcerns
 
 STORE_PATH = Path(os.environ.get("AGENT_STORE", "data/agent_output.json"))
 
@@ -29,13 +29,13 @@ def save_store(store: ConcernsStore):
         json.dump(store.model_dump(), f, indent=2)
 
 
-def get_concerns(patient_id: str) -> list[dict]:
-    """Get concerns for a single patient. Returns list of dicts (API-ready)."""
+def get_concerns(patient_id: str) -> list[Concern]:
+    """Get concerns for a single patient."""
     store = load_store()
     patient_concerns = store.patients.get(patient_id)
     if patient_concerns is None:
         return []
-    return [c.model_dump() for c in patient_concerns.concerns]
+    return patient_concerns.concerns
 
 
 def resolve_concern(patient_id: str, concern_id: str) -> bool:

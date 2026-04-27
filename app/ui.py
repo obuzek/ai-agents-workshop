@@ -189,10 +189,11 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
             return f"{icon} {p['name']}"
         return f"{icon} {p['name']} ({count} new)"
 
+    patient_map = {p["id"]: p for p in patients}
     return st.selectbox(
         "Patient",
         options=[p["id"] for p in patients],
-        format_func=lambda pid: label(next(p for p in patients if p["id"] == pid)),
+        format_func=lambda pid: label(patient_map[pid]),
     )
 
 
@@ -277,6 +278,17 @@ def render_history(patient: Patient):
         st.caption(patient.social_history.notes)
 
 
+def _related_row(text: str, button_key: str, **session_updates):
+    """Render a related-item row with a label and an Open button."""
+    col_l, col_b = st.columns([3, 1])
+    with col_l:
+        st.markdown(f"- {text}")
+    with col_b:
+        if st.button("Open", key=button_key):
+            st.session_state.update(session_updates)
+            st.rerun()
+
+
 def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Message] = None):
     """Render the concerns panel (populated by the agent)."""
     st.subheader("Concerns")
@@ -306,14 +318,16 @@ def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Mes
 
     # Display concerns sorted by urgency
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
+    badge_colors = {"urgent": "red", "soon": "orange", "routine": "blue"}
+    status_badges = {"unresolved": ":orange-background[needs reply]",
+                     "monitoring": ":blue-background[monitoring]",
+                     "resolved": ":green-background[resolved]"}
     if concerns:
         concerns = sorted(concerns, key=lambda c: urgency_order.get(c.urgency, 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
         for concern in concerns:
-            badge_color = {"urgent": "red", "soon": "orange", "routine": "blue"}.get(concern.urgency, "blue")
-            status_badge = {"unresolved": ":orange-background[needs reply]",
-                            "monitoring": ":blue-background[monitoring]",
-                            "resolved": ":green-background[resolved]"}.get(concern.status, "")
+            badge_color = badge_colors.get(concern.urgency, "blue")
+            status_badge = status_badges.get(concern.status, "")
 
             with st.expander(f":{badge_color}-background[{concern.urgency}]  {concern.title}"):
                 if concern.action:
@@ -345,43 +359,24 @@ def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Mes
                     st.markdown("**Related:**")
 
                 for mid in related.message_ids:
-                    subject = msg_subjects.get(mid, mid)
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- {subject}")
-                    with col_btn:
-                        if st.button("Open", key=f"jump_{concern.id}_{mid}"):
-                            st.session_state["jump_to_message"] = mid
-                            st.rerun()
+                    _related_row(msg_subjects.get(mid, mid),
+                                 f"jump_{concern.id}_{mid}",
+                                 jump_to_message=mid)
 
                 for ld in related.lab_dates:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- Labs from {ld}")
-                    with col_btn:
-                        if st.button("Open", key=f"lab_{concern.id}_{ld}"):
-                            st.session_state["highlight_lab_date"] = ld
-                            st.session_state["active_record_tab"] = "Labs"
-                            st.rerun()
+                    _related_row(f"Labs from {ld}",
+                                 f"lab_{concern.id}_{ld}",
+                                 highlight_lab_date=ld, active_record_tab="Labs")
 
                 for cond in related.conditions:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- {cond}")
-                    with col_btn:
-                        if st.button("Open", key=f"cond_{concern.id}_{cond}"):
-                            st.session_state["active_record_tab"] = "Conditions"
-                            st.rerun()
+                    _related_row(cond,
+                                 f"cond_{concern.id}_{cond}",
+                                 active_record_tab="Conditions")
 
                 for ed in related.encounter_dates:
-                    col_label, col_btn = st.columns([3, 1])
-                    with col_label:
-                        st.markdown(f"- Visit {ed}")
-                    with col_btn:
-                        if st.button("Open", key=f"enc_{concern.id}_{ed}"):
-                            st.session_state["highlight_encounter_date"] = ed
-                            st.session_state["active_record_tab"] = "History"
-                            st.rerun()
+                    _related_row(f"Visit {ed}",
+                                 f"enc_{concern.id}_{ed}",
+                                 highlight_encounter_date=ed, active_record_tab="History")
 
                 # Mark resolved button
                 if concern.status != "resolved":

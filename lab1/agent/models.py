@@ -5,22 +5,17 @@ Any service that serves or consumes concerns must use these models.
 The main API proxies to the agent API; both sides agree on this schema.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from app.models import (
-    Concern, ConcernType, ConcernStatus, Urgency, RelatedData,
+    Concern, ConcernType, ConcernStatus, Urgency, RelatedData, _pii,
 )
-
-__all__ = [
-    "Concern", "ConcernType", "ConcernStatus", "Urgency", "RelatedData",
-    "PatientConcerns", "ConcernsStore",
-]
 
 
 class PatientConcerns(BaseModel):
     """All concerns for one patient."""
     patient_id: str
-    patient_name: str = Field(json_schema_extra={"sensitivity": "pii"})
+    patient_name: str = _pii()
     concerns: list[Concern] = []
 
 
