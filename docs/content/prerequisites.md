@@ -170,7 +170,7 @@ cd ai-agents-workshop
 The labs need an LLM API key. Pick **one** provider and install its dependencies:
 
 === "Google Gemini (recommended)"
-    **Free tier, no credit card required** — just a Google account.
+    **Free tier, no credit card required** — just a Google account. Good for Labs 1 and 2.
 
     1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
     2. When prompted to select a project, use the **default project** (usually called "Default Gemini Project" or "Generative Language Client"). Don't create a new project — the Gemini API is already enabled on the default one.
@@ -183,13 +183,16 @@ The labs need an LLM API key. Pick **one** provider and install its dependencies
     # Edit .env → set GOOGLE_API_KEY=your-key
     ```
 
-    The free tier is generous enough for a classroom of 30+ concurrent users.
+    Default model is `gemini-2.5-flash`. Set `LLM_MODEL=gemini-2.5-flash-lite` in `.env` for higher rate limits (15 RPM vs 10 RPM).
 
     !!! warning "Created a new Google Cloud project?"
         If you created your key in a new project, you'll get an `API_KEY_INVALID` error. Either recreate the key in the default project, or enable the [Generative Language API](https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com) on your project.
 
+    !!! warning "Rate limits for Labs 3+"
+        The Gemini free tier allows 10-15 requests per minute. Lab 3's multi-node agent (ReAct + grounding + critic) makes 10-15+ LLM calls per patient, so you'll likely hit rate limits. For Lab 3 onward, use a paid provider or ask your instructor for a shared API key.
+
 === "OpenAI"
-    Requires an [OpenAI Platform](https://platform.openai.com/) account (pay-as-you-go).
+    Requires an [OpenAI Platform](https://platform.openai.com/) account (pay-as-you-go). Works well for all labs — GPT-4o is a few cents per run.
 
     ```bash
     uv sync --extra openai
@@ -211,8 +214,19 @@ See `.env-example` for all available configuration options.
 !!! tip "Switching providers mid-workshop"
     Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
 
+???+ note "Free-tier alternatives"
+    If you don't want to pay for an API key, here are your options. All support tool calling and structured output.
+
+    | Provider | Free RPM | Free RPD | Best model | Catches |
+    |----------|---------|---------|------------|---------|
+    | [Google Gemini](https://aistudio.google.com/apikey) | 10-15 | 250-1,000 | `gemini-2.5-flash-lite` | Enough for Labs 1-2; too slow for Lab 3+ |
+    | [Groq](https://console.groq.com/) | 30 | 1,000 | `llama-4-scout-17b-16e-instruct` | 30K token/min limit; no credit card needed |
+    | [Cerebras](https://cloud.cerebras.ai/) | 30 | 14,400 | `llama-3.3-70b` | 8K context window cap — test whether your prompts fit |
+
+    For Groq or Cerebras, you'll need to add a LangChain integration package and a new provider branch in `app/llm.py`. PRs welcome!
+
 ???+ note "Instructor note: rate limits"
-    The Gemini free tier handles 30-40 concurrent users comfortably. If you hit rate limits mid-session, have attendees switch to a different provider — changing `LLM_PROVIDER` in `.env` is all it takes.
+    The Gemini free tier is fine for Labs 1-2 but **will hit rate limits on Lab 3+** (10-15 RPM vs 10-15+ calls per agent run). Plan to hand out a shared OpenAI API key with a usage cap ($20 covers a full classroom easily — GPT-4o costs a few cents per run). Attendees switch by setting `LLM_PROVIDER=openai` and `OPENAI_API_KEY` in their `.env`.
 
 ## Start the EHR Inbox
 
