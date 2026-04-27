@@ -20,9 +20,10 @@ dependencies = [
 
 [project.optional-dependencies]
 guardian = ["ollama>=0.4"]
+postgres = ["psycopg[binary]>=3.1", "psycopg_pool>=3.1"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["app", "lab1", "lab2", "lab3"]
+packages = ["app", "lab1", "lab2", "lab3", "lab4"]
 
 [build-system]
 requires = ["hatchling"]
