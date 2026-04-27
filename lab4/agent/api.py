@@ -19,6 +19,7 @@ from app.llm import check_llm_config
 from lab4.agent.models import Concern
 from lab4.agent.store import (
     get_concerns,
+    init_pool,
     resolve_concern,
     share_concern,
     get_providers,
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app):
     check_llm_config()
+    init_pool()
     store = "Postgres (RLS enabled)" if using_postgres() else "JSON fallback (no RLS)"
     logger.info(
         "\n"

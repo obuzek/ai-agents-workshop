@@ -329,6 +329,14 @@ def get_shared_by(concern_id: str, provider_id: str) -> str | None:
     return None
 
 
+def init_pool() -> None:
+    """Eagerly initialize the connection pool. Call on server startup."""
+    if DATABASE_URL:
+        pool = _get_pool()
+        pool.wait()
+        logger.info("Postgres connection pool ready")
+
+
 def shutdown_pool() -> None:
     """Close the connection pool. Call on server shutdown."""
     global _pool
