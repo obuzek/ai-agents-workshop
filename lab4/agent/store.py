@@ -9,16 +9,13 @@ the same flat JSON file used in Labs 1-3 (no RLS, single-user mode).
 import json
 import logging
 import os
+import threading
+from contextlib import contextmanager
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 load_dotenv()
-
-try:
-    import psycopg.rows
-except ImportError:
-    psycopg = None  # Postgres not available — JSON fallback only
 
 from app.models import Concern, RelatedData
 
@@ -26,20 +23,52 @@ logger = logging.getLogger(__name__)
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
+if DATABASE_URL:
+    try:
+        import psycopg.rows
+        import psycopg_pool  # noqa: F401 — verify it's installed
+    except ImportError:
+        logger.error(
+            "DATABASE_URL is set but psycopg is not installed.\n"
+            "  Run:  uv sync --all-extras"
+        )
+        raise SystemExit(1)
+else:
+    try:
+        import psycopg.rows
+    except ImportError:
+        psycopg = None  # Postgres not available — JSON fallback only
+
 # ============================================================
 # Postgres backend
 # ============================================================
 
 _pool = None
+_pool_lock = threading.Lock()
 
 
 def _get_pool():
-    """Lazy-init the connection pool."""
+    """Lazy-init the connection pool (thread-safe)."""
     global _pool
     if _pool is None:
-        from psycopg_pool import ConnectionPool
-        _pool = ConnectionPool(DATABASE_URL, min_size=2, max_size=10)
+        with _pool_lock:
+            if _pool is None:
+                from psycopg_pool import ConnectionPool
+                _pool = ConnectionPool(DATABASE_URL, min_size=2, max_size=10)
     return _pool
+
+
+@contextmanager
+def _pg_conn(provider_id: str | None = None):
+    """Get a pooled connection with dict_row. Optionally set the RLS provider."""
+    pool = _get_pool()
+    with pool.connection() as conn:
+        conn.row_factory = psycopg.rows.dict_row
+        if provider_id is not None:
+            conn.execute(
+                "SELECT set_config('app.provider_id', %s, true)", (provider_id,)
+            )
+        yield conn
 
 
 def _row_to_concern(row: dict) -> Concern:
@@ -67,10 +96,7 @@ def _row_to_concern(row: dict) -> Concern:
 
 def _pg_get_concerns(patient_id: str, provider_id: str) -> list[Concern]:
     """Fetch concerns visible to this provider for this patient."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
-        conn.row_factory = psycopg.rows.dict_row
+    with _pg_conn(provider_id) as conn:
         rows = conn.execute(
             "SELECT * FROM concerns WHERE patient_id = %s ORDER BY last_updated DESC",
             (patient_id,),
@@ -82,9 +108,7 @@ def _pg_save_concerns(
     patient_id: str, provider_id: str, concerns: list[Concern]
 ) -> None:
     """Upsert concerns: update existing IDs, insert new ones, leave others untouched."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
+    with _pg_conn(provider_id) as conn:
         for c in concerns:
             conn.execute(
                 """
@@ -138,9 +162,7 @@ def _pg_save_concerns(
 
 def _pg_resolve_concern(patient_id: str, concern_id: str, provider_id: str) -> bool:
     """Mark a concern as resolved. RLS ensures you can only resolve your own or shared."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
+    with _pg_conn(provider_id) as conn:
         result = conn.execute(
             "UPDATE concerns SET status = 'resolved' WHERE id = %s AND patient_id = %s",
             (concern_id, patient_id),
@@ -150,10 +172,8 @@ def _pg_resolve_concern(patient_id: str, concern_id: str, provider_id: str) -> b
 
 def _pg_share_concern(concern_id: str, shared_with: str, shared_by: str) -> bool:
     """Share a concern with another provider."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        conn.execute("SELECT set_config('app.provider_id', %s, true)", (shared_by,))
-        conn.execute(
+    with _pg_conn(shared_by) as conn:
+        result = conn.execute(
             """
             INSERT INTO shared_concerns (concern_id, shared_with, shared_by)
             VALUES (%s, %s, %s)
@@ -161,42 +181,37 @@ def _pg_share_concern(concern_id: str, shared_with: str, shared_by: str) -> bool
             """,
             (concern_id, shared_with, shared_by),
         )
-        return True
+        return result.rowcount > 0
 
 
 def _pg_get_providers() -> list[dict]:
     """Get all providers (for the role switcher)."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        rows = conn.execute(
+    with _pg_conn() as conn:
+        return conn.execute(
             "SELECT id, display_name, role FROM providers ORDER BY role, display_name"
         ).fetchall()
-        return [{"id": r[0], "display_name": r[1], "role": r[2]} for r in rows]
 
 
 def _pg_get_provider_patients(provider_id: str) -> list[str]:
     """Get the patient IDs this provider is authorized for."""
-    pool = _get_pool()
-    with pool.connection() as conn:
+    with _pg_conn() as conn:
         rows = conn.execute(
             "SELECT patient_id FROM provider_patients WHERE provider_id = %s ORDER BY patient_id",
             (provider_id,),
         ).fetchall()
-        return [r[0] for r in rows]
+        return [r["patient_id"] for r in rows]
 
 
 def _pg_get_shared_by(concern_id: str, provider_id: str) -> str | None:
     """If this concern was shared with the provider, return who shared it."""
-    pool = _get_pool()
-    with pool.connection() as conn:
-        conn.execute("SELECT set_config('app.provider_id', %s, true)", (provider_id,))
+    with _pg_conn(provider_id) as conn:
         row = conn.execute(
             "SELECT p.display_name FROM shared_concerns sc "
             "JOIN providers p ON sc.shared_by = p.id "
             "WHERE sc.concern_id = %s AND sc.shared_with = %s",
             (concern_id, provider_id),
         ).fetchone()
-        return row[0] if row else None
+        return row["display_name"] if row else None
 
 
 # ============================================================
@@ -312,6 +327,15 @@ def get_shared_by(concern_id: str, provider_id: str) -> str | None:
     if DATABASE_URL:
         return _pg_get_shared_by(concern_id, provider_id)
     return None
+
+
+def shutdown_pool() -> None:
+    """Close the connection pool. Call on server shutdown."""
+    global _pool
+    with _pool_lock:
+        if _pool is not None:
+            _pool.close()
+            _pool = None
 
 
 def using_postgres() -> bool:
