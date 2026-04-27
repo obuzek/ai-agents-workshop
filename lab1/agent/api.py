@@ -13,6 +13,7 @@ import threading
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 
+from app.llm import check_llm_config
 from lab1.agent.models import Concern
 from lab1.agent.store import get_concerns, load_store, resolve_concern
 
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app):
+    check_llm_config()
     logger.info(
         "\n"
         "╔══════════════════════════════════════════════════════════╗\n"

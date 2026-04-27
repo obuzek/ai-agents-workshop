@@ -13,10 +13,14 @@ Each provider reads its own API key from the environment automatically
 override the default model for any provider.
 """
 
+import logging
 import os
+import sys
 
 from dotenv import load_dotenv
 from langchain_core.language_models.chat_models import BaseChatModel
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -25,6 +29,20 @@ _DEFAULT_MODELS = {
     "openai": "gpt-4o-mini",
     "anthropic": "claude-haiku-4-5-20251001",
 }
+
+
+def check_llm_config():
+    """Verify the LLM provider package is installed. Call at agent startup."""
+    provider = os.environ.get("LLM_PROVIDER", "gemini").lower()
+    try:
+        get_chat_model()
+    except ImportError:
+        logger.error(
+            "LLM_PROVIDER='%s' but the required package is not installed.\n"
+            "  Run:  uv sync --all-extras",
+            provider,
+        )
+        sys.exit(1)
 
 
 def get_chat_model(**kwargs) -> BaseChatModel:

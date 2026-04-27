@@ -16,6 +16,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from lab4.agent.models import Concern
+from app.llm import check_llm_config
 from lab4.agent.store import (
     get_concerns,
     resolve_concern,
@@ -24,6 +25,7 @@ from lab4.agent.store import (
     get_provider_patients,
     get_shared_by,
     using_postgres,
+    shutdown_pool,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,6 +33,7 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app):
+    check_llm_config()
     store = "Postgres (RLS enabled)" if using_postgres() else "JSON fallback (no RLS)"
     logger.info(
         "\n"
@@ -43,6 +46,7 @@ async def lifespan(app):
         store,
     )
     yield
+    shutdown_pool()
 
 
 app = FastAPI(title="Lab 4 Agent API", version="0.1.0", lifespan=lifespan)
