@@ -190,7 +190,7 @@ Know of a great resource that should be included? Please:
 ## Related Workshop Pages
 
 - [Prerequisites](./prerequisites.md) - Setup instructions
-- [Getting Started](./getting-started.md) - Core concepts
 - [Lab 1](./lab-1.md) - Build your first agent
-- [Lab 2](./lab-2.md) - Add tool capabilities
-- [Lab 3](./lab-3.md) - Advanced patterns
+- [Lab 2](./lab-2.md) - Add observability
+- [Lab 3](./lab-3.md) - Improve reliability
+- [Lab 4](./lab-4.md) - Secure agent data
