@@ -15,8 +15,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from lab4.agent.models import Concern
 from app.llm import check_llm_config
+from lab4.agent.models import Concern
 from lab4.agent.store import (
     get_concerns,
     resolve_concern,
