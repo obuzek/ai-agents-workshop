@@ -73,7 +73,7 @@ uv sync
 
 ## 3. LLM Provider Setup
 
-The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs well under $1).
+The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs under $5).
 
 === "OpenAI (recommended)"
     The best option for the full workshop. Cheap, fast, high rate limits.
@@ -92,7 +92,7 @@ The labs call LLMs via API. You need an API key from **one** provider. Labs 1 an
     | | |
     |---|---|
     | **Model** | `gpt-4o-mini` (default) |
-    | **Cost** | ~$0.15 per 1M input tokens — the entire workshop costs well under $1 |
+    | **Cost** | ~$0.15 per 1M input tokens — the entire workshop costs under $5 |
     | **Rate limits** | 500+ requests/min (pay-as-you-go Tier 1) |
     | **Works for** | All labs |
 
