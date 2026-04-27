@@ -214,6 +214,7 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
         "Patient",
         options=[p["id"] for p in patients],
         format_func=lambda pid: label(patient_map[pid]),
+        key="selected_patient",
     )
 
 
@@ -309,32 +310,55 @@ def _related_row(text: str, button_key: str, **session_updates):
             st.rerun()
 
 
-def render_concerns(concerns: list[Concern], patient_id: str, messages: list[Message] = None):
-    """Render the concerns panel (populated by the agent)."""
+@st.fragment
+def render_concerns(patient_id: str, messages: list[Message] = None):
+    """Render the concerns panel (populated by the agent).
+
+    This is a Streamlit fragment — it can rerun independently without
+    rerunning the whole page. This lets the agent status poll without
+    blocking navigation in the rest of the UI.
+    """
     st.subheader("Concerns")
 
     # Agent controls
     status = get_agent_status()
+    # Treat "just triggered" the same as "running" — the background thread
+    # may not have acquired the lock by the time this rerun checks status.
+    is_running = status.get("running") or st.session_state.get("agent_just_triggered")
     col_btn, col_status = st.columns([1, 2])
     with col_btn:
-        if status.get("running"):
+        if is_running:
             st.button("Agent Running...", disabled=True)
         else:
             if st.button("Run Agent"):
                 trigger_agent(patient_id)
-                st.rerun()
+                st.session_state["agent_just_triggered"] = True
+                st.rerun(scope="fragment")
     with col_status:
-        if status.get("running"):
+        if is_running:
             st.caption("Agent is processing patients...")
         elif status.get("last_run"):
             st.caption(f"Last run: {status['last_run'][:19]}")
         if status.get("error"):
             st.caption(f"Error: {status['error']}")
 
-    # Auto-refresh while agent is running
+    # Clear the trigger flag once the status endpoint confirms running
     if status.get("running"):
+        st.session_state.pop("agent_just_triggered", None)
+
+    # Auto-refresh while agent is running (fragment-scoped, doesn't block the page)
+    if is_running:
+        st.session_state["agent_was_running"] = True
         time.sleep(3)
-        st.rerun()
+        st.rerun(scope="fragment")
+
+    # Agent just finished — clear cache so we pick up new concerns
+    if st.session_state.pop("agent_was_running", False):
+        st.cache_data.clear()
+        st.rerun(scope="fragment")
+
+    # Fetch concerns fresh (fragment may rerun independently of the page)
+    concerns = load_concerns(patient_id)
 
     # Display concerns sorted by urgency
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
@@ -496,7 +520,6 @@ st.divider()
 
 patient = load_patient(selected_id)
 messages = load_messages(selected_id)
-concerns = all_concerns.get(selected_id, [])
 
 # Row 1: Medical record + Concerns
 col_record, col_concerns = st.columns([3, 2])
@@ -527,7 +550,7 @@ with col_record:
         render_history(patient)
 
 with col_concerns:
-    render_concerns(concerns, selected_id, messages)
+    render_concerns(selected_id, messages)
 
 # Row 2: Inbox + Conversation viewer
 st.divider()

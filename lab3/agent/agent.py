@@ -5,9 +5,9 @@ What changed from Lab 2:
 - Focused search tools instead of get_patient_record (see tools.py)
 - Grounding check verifies evidence against tool output (see grounding.py)
 - Critic evaluates on-task behavior and grounding (see critic.py)
-- All three run in a loop: agent → grounding → critic → revise → repeat
+- All three are nodes in a LangGraph StateGraph that loops until approved
 
-The loop continues until the critic approves or MAX_REVISIONS is reached.
+The graph: primary_agent → grounding → critic →(revise?)→ primary_agent
 The full back-and-forth is visible in Langfuse traces.
 """
 
@@ -15,10 +15,12 @@ import json
 import logging
 import os
 from datetime import datetime, timezone
+from typing import Annotated, TypedDict
 
 from langchain_openai import ChatOpenAI
 from langfuse import observe
 from langfuse.langchain import CallbackHandler
+from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import create_react_agent
 
 from lab3.agent.tools import ALL_TOOLS
@@ -69,27 +71,42 @@ OUTPUT RULES:
 """
 
 
-def _build_agent():
-    """Build the LangGraph ReAct agent with focused search tools."""
-    llm = ChatOpenAI(model=MODEL)
-    return create_react_agent(
-        model=llm,
-        tools=ALL_TOOLS,
-        prompt=SYSTEM_PROMPT,
-        response_format=PatientConcerns,
-    )
+# --- State schema ---
 
 
-_agent = _build_agent()
+class ReviewState(TypedDict):
+    """State that flows through the review graph.
+
+    Each node receives the full state and returns a partial dict of updates.
+    LangGraph merges the updates into the state before the next node runs.
+    """
+    patient_id: str                  # Which patient we're reviewing
+    concerns: PatientConcerns | None # The primary agent's structured output
+    tool_context: str                # Raw tool call results (grounding source-of-truth)
+    revision_feedback: str           # Critic feedback for the next revision pass
+    revision_count: int              # How many revision loops we've completed
+    approved: bool                   # Whether the critic approved the output
+
+
+# --- Graph nodes ---
+
+
+_react_agent = create_react_agent(
+    model=ChatOpenAI(model=MODEL, max_retries=3),
+    tools=ALL_TOOLS,
+    prompt=SYSTEM_PROMPT,
+    response_format=PatientConcerns,
+)
 
 # Initialize Langfuse with PII masking on import (side effect sets up the singleton).
 _langfuse_handler = create_langfuse_handler()
 
 
 def _extract_tool_context(messages: list) -> str:
-    """Extract tool call results from the agent's message history.
+    """Extract tool call results from the ReAct agent's LangGraph message history.
 
-    This becomes the source-of-truth context for grounding checks —
+    Filters for ToolMessage objects (the raw data each tool returned) and
+    joins them. This becomes the source-of-truth for grounding checks —
     did the agent's evidence actually come from these tool outputs?
     """
     chunks = []
@@ -100,75 +117,143 @@ def _extract_tool_context(messages: list) -> str:
 
 
 @observe(name="Primary Agent")
-def _run_primary_agent(patient_id: str, revision_feedback: str = "") -> tuple[PatientConcerns, str]:
-    """Run the primary agent, optionally with revision feedback from the critic."""
+def primary_agent_node(state: ReviewState) -> dict:
+    """Run the ReAct agent to generate or revise concerns.
+
+    On the first pass, the agent investigates the patient record from scratch.
+    On revision passes, the critic's feedback is appended to the prompt so
+    the agent knows what to fix. Returns updated concerns and the raw tool
+    output that the grounding check will verify against.
+    """
     user_message = (
-        f"Please review patient {patient_id}. "
+        f"Please review patient {state['patient_id']}. "
         "Start by looking at their messages and record, then investigate "
         "any concerns you find. When done, output your findings."
     )
-    if revision_feedback:
+    if state["revision_feedback"]:
         user_message += (
             "\n\nREVISION REQUESTED — a reviewer found issues with your "
-            "previous output. Fix them:\n" + revision_feedback
+            "previous output. Fix them:\n" + state["revision_feedback"]
         )
 
-    # CallbackHandler() auto-nests under the current @observe span.
     handler = CallbackHandler()
-    result = _agent.invoke(
+    result = _react_agent.invoke(
         {"messages": [{"role": "user", "content": user_message}]},
         config={
             "callbacks": [handler],
             "metadata": {
-                "langfuse_session_id": f"patient-review-{patient_id}",
-                "langfuse_tags": ["lab3", patient_id],
+                "langfuse_session_id": f"patient-review-{state['patient_id']}",
+                "langfuse_tags": ["lab3", state["patient_id"]],
             },
         },
     )
 
-    structured = result["structured_response"]
-    context = _extract_tool_context(result["messages"])
-    return structured, context
+    return {
+        "concerns": result["structured_response"],
+        "tool_context": _extract_tool_context(result["messages"]),
+    }
+
+
+def grounding_node(state: ReviewState) -> dict:
+    """Run grounding checks and the critic in sequence.
+
+    First, an LLM extracts specific medical claims from each concern
+    (summary, action, evidence). Then each claim is verified against
+    the raw tool output. Finally the critic evaluates whether concerns
+    are on-task and grounded. If approved, sets approved=True.
+    Otherwise, builds revision feedback for the next pass.
+    """
+    grounding_results: list[GroundingResult] = []
+    for concern in state["concerns"].concerns:
+        result = check_grounding(concern, state["tool_context"])
+        grounding_results.append(result)
+
+    concerns_json = json.dumps(
+        [c.model_dump() for c in state["concerns"].concerns], indent=2
+    )
+    critic_result = critic_evaluate(concerns_json, grounding_results)
+
+    if critic_result.approved:
+        logger.info("[%s] Critic approved on revision %d",
+                    state["patient_id"], state["revision_count"])
+        return {"approved": True}
+
+    # Build revision feedback for the next primary agent pass
+    logger.info("[%s] Critic requested revision %d: %s",
+                state["patient_id"], state["revision_count"] + 1,
+                critic_result.summary)
+    feedback_parts = [critic_result.summary]
+    for fb in critic_result.concern_feedback:
+        if fb.revision_needed:
+            feedback_parts.append(f"- {fb.concern_title}: {fb.feedback}")
+
+    return {
+        "approved": False,
+        "revision_feedback": "\n".join(feedback_parts),
+        "revision_count": state["revision_count"] + 1,
+    }
+
+
+def should_revise(state: ReviewState) -> str:
+    """Conditional edge: route back to the primary agent or finish.
+
+    Returns "done" if the critic approved or we've hit MAX_REVISIONS.
+    Returns "revise" to send the agent through another pass with feedback.
+    """
+    if state["approved"]:
+        return "done"
+    if state["revision_count"] >= MAX_REVISIONS:
+        logger.warning("[%s] Max revisions reached, using last output", state["patient_id"])
+        return "done"
+    return "revise"
+
+
+# --- Build the graph ---
+
+
+def _build_review_graph():
+    """Build the review graph: primary_agent → evaluate → (revise or done)."""
+    graph = StateGraph(ReviewState)
+
+    graph.add_node("primary_agent", primary_agent_node)
+    graph.add_edge(START, "primary_agent")
+
+    graph.add_node("evaluate", grounding_node)
+    graph.add_edge("primary_agent", "evaluate")
+
+    graph.add_conditional_edges("evaluate", should_revise, {
+        "revise": "primary_agent",
+        "done": END,
+    })
+
+    return graph.compile()
+
+
+_review_graph = _build_review_graph()
+
+
+# --- Public API ---
 
 
 @observe(name="Patient Review")
 def process_patient(patient_id: str) -> PatientConcerns:
-    """Run the agent loop: primary agent → grounding → critic → revise.
+    """Entry point: run the full review graph for a patient.
 
-    The loop continues until the critic approves or MAX_REVISIONS is reached.
+    Invokes the compiled graph with initial state, then normalizes the
+    output (fills in patient_id, timestamps) before returning.
     """
     logger.info("[%s] Starting agent run", patient_id)
 
-    structured, context = _run_primary_agent(patient_id)
+    result = _review_graph.invoke({
+        "patient_id": patient_id,
+        "concerns": None,
+        "tool_context": "",
+        "revision_feedback": "",
+        "revision_count": 0,
+        "approved": False,
+    })
 
-    for revision in range(MAX_REVISIONS):
-        # Grounding: check each concern's evidence against tool output
-        grounding_results: list[GroundingResult] = []
-        for concern in structured.concerns:
-            result = check_grounding(concern.title, concern.evidence, context)
-            grounding_results.append(result)
-
-        # Critic: evaluate on-task behavior + grounding
-        concerns_json = json.dumps(
-            [c.model_dump() for c in structured.concerns], indent=2
-        )
-        critic_result = critic_evaluate(concerns_json, grounding_results)
-
-        if critic_result.approved:
-            logger.info("[%s] Critic approved after %d revision(s)", patient_id, revision)
-            break
-
-        # Build revision feedback and re-run
-        logger.info("[%s] Critic requested revision %d: %s", patient_id, revision + 1, critic_result.summary)
-        feedback_parts = [critic_result.summary]
-        for fb in critic_result.concern_feedback:
-            if fb.revision_needed:
-                feedback_parts.append(f"- {fb.concern_title}: {fb.feedback}")
-        structured, context = _run_primary_agent(
-            patient_id, revision_feedback="\n".join(feedback_parts)
-        )
-    else:
-        logger.warning("[%s] Max revisions reached, using last output", patient_id)
+    structured = result["concerns"]
 
     # Normalize patient_id and timestamps
     now = datetime.now(timezone.utc).isoformat()

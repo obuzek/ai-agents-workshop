@@ -7,9 +7,11 @@
 
 ---
 
-## The Improvement Cycle
+## Where We Are in the ADLC
 
-Agent development is iterative. The cycle looks like this:
+The AI Development Lifecycle (ADLC) from the slides describes five phases: **Problem Definition → Data Collection → Model Development → Deployment → Operations & Governance**. Agent-based systems add dimensions at every phase — tool access, autonomy level, memory, and observability.
+
+Lab 1 was **Model Development** — building the agent. Lab 2 was **Operations** — adding observability so you can see what the agent does. Lab 3 is the feedback loop between the two: use what you observe to improve what you build.
 
 ```mermaid
 graph LR
@@ -19,7 +21,7 @@ graph LR
     D --> A
 ```
 
-Lab 2 gave you the **inspect** step. Lab 3 gives you the **fix** step.
+This is the inner loop of the ADLC's Operations & Governance phase — monitor, detect issues, fix, redeploy. Lab 2 gave you the **inspect** step. Lab 3 gives you the **fix** step.
 
 ---
 
@@ -43,7 +45,7 @@ Granite Guardian grounding is **optional** — the lab works out of the box with
 2. Pull the Granite Guardian model:
 
 ```bash
-ollama pull ibm/granite3.2-guardian
+ollama pull ibm/granite3.2-guardian:3b
 ```
 
 ???+ tip "Why Ollama?"
@@ -198,26 +200,34 @@ The critic returns structured feedback per concern — what's wrong and how to f
 
 ### Wiring it together
 
-Open `lab3/agent/agent.py`. The `process_patient` function runs the loop:
+Open `lab3/agent/agent.py`. The loop is a LangGraph `StateGraph` — the same framework as the primary agent, now orchestrating the full review cycle:
 
 ```python
-for revision in range(MAX_REVISIONS):
-    grounding_results = [
-        check_grounding(c.title, c.evidence, context)
-        for c in structured.concerns
-    ]
-    critic_result = critic_evaluate(concerns_json, grounding_results)
+class ReviewState(TypedDict):
+    patient_id: str
+    concerns: PatientConcerns | None
+    tool_context: str
+    revision_feedback: str
+    revision_count: int
+    approved: bool
 
-    if critic_result.approved:
-        break
+graph = StateGraph(ReviewState)
+graph.add_node("primary_agent", primary_agent_node)
+graph.add_node("evaluate", grounding_node)
 
-    # Re-run primary agent with revision feedback
-    structured, context = _run_primary_agent(
-        patient_id, revision_feedback="\n".join(feedback_parts)
-    )
+graph.add_edge(START, "primary_agent")
+graph.add_edge("primary_agent", "evaluate")
+graph.add_conditional_edges("evaluate", should_revise, {
+    "revise": "primary_agent",
+    "done": END,
+})
 ```
 
-Each module has one job. The grounding module doesn't know about the critic. The critic doesn't know about tools. The agent module wires them together. When you read one file, you understand one thing.
+The `primary_agent` node runs the ReAct agent. The `evaluate` node runs grounding checks and the critic. The conditional edge `should_revise` routes back to the primary agent if the critic requests revision, or to `END` if approved (or max revisions reached).
+
+State flows through the graph as a `ReviewState` dict — no manual variable juggling, no bookkeeping bugs. LangGraph handles the loop, the state threading, and the conditional routing.
+
+Each module has one job. The grounding module doesn't know about the critic. The critic doesn't know about tools. The graph wires them together. When you read one file, you understand one thing.
 
 ---
 
@@ -261,12 +271,14 @@ This is the LangGraph ReAct agent — the same structure as Lab 2, but now with 
 - **What keywords did it search for?** The agent had to decide what was relevant. Compare this to Lab 2, where it got everything at once.
 - **How many tokens?** Check the token count. Focused tools mean less data in context, lower cost.
 
-### The "Grounding Check" spans (one per concern)
+### The "Claim Extraction" and "Grounding Check" spans
 
-Each concern's evidence gets checked against the tool output. Look inside:
+Grounding happens in two steps. First, a **Claim Extraction** span — an LLM reads the concern's summary, action, and evidence fields and extracts every specific medical claim that can be verified: "Patient's HbA1c is 8.2%", "TSH trending from 3.1 to 4.8", etc. Vague descriptions like "recent message about X" get filtered out — they'd trivially pass any grounding check.
 
-- **Input:** The evidence strings the agent claimed, plus the raw tool output.
-- **Output:** A verdict per evidence string — `supported: true/false` with a reason.
+Then the **Grounding Check** spans (one per concern) verify each extracted claim against the raw tool output. Look inside:
+
+- **Input:** The extracted claims, plus the tool call results (the source of truth).
+- **Output:** A verdict per claim — `supported: true/false` with a reason.
 - **Did it catch anything?** If the agent hallucinated a lab value or date, you'll see `supported: false` here.
 
 The span will be labeled **"Grounding: LLM-as-Judge"** or **"Grounding: Granite Guardian"** depending on the active mode.

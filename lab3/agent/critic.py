@@ -20,7 +20,7 @@ from langfuse import observe
 from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
 
-from lab3.agent.grounding import GroundingResult
+from lab3.agent.grounding import GroundingResult, ClaimVerdict
 
 logger = logging.getLogger(__name__)
 
@@ -73,17 +73,29 @@ GROUNDING RESULTS:
 
 @observe(name="Critic Evaluation")
 def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> CriticResult:
-    """Run the critic on the primary agent's output."""
+    """Run the critic on the primary agent's output.
+
+    On failure (rate limits, timeouts), approves the output as-is —
+    better to surface unreviewed concerns than to crash the run.
+    """
     model = os.environ.get("OPENAI_MODEL", "gpt-4o")
-    llm = ChatOpenAI(model=model).with_structured_output(CriticResult)
+    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(CriticResult)
 
     grounding_json = "\n".join(r.model_dump_json() for r in grounding_results)
 
-    handler = CallbackHandler()
-    return llm.invoke(
-        _CRITIC_PROMPT.format(
-            concerns=concerns_json,
-            grounding=grounding_json or "(no grounding results)",
-        ),
-        config={"callbacks": [handler]},
-    )
+    try:
+        handler = CallbackHandler()
+        return llm.invoke(
+            _CRITIC_PROMPT.format(
+                concerns=concerns_json,
+                grounding=grounding_json or "(no grounding results)",
+            ),
+            config={"callbacks": [handler]},
+        )
+    except Exception:
+        logger.warning("Critic evaluation failed, auto-approving", exc_info=True)
+        return CriticResult(
+            concern_feedback=[],
+            approved=True,
+            summary="Critic unavailable — output accepted without review.",
+        )
