@@ -540,10 +540,10 @@ with col_viewer:
         st.subheader("Conversation")
         st.info("Select a patient to view messages.")
 
-# PII masking toggle — at the bottom so it doesn't distract before Lab 2
-st.divider()
+# PII masking toggle — only visible when the agent API is running (Lab 2+)
 masking_status = get_masking_status()
 if masking_status is not None:
+    st.divider()
     col_spacer, col_toggle = st.columns([4, 1])
     with col_toggle:
         label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
