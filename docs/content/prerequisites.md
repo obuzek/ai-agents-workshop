@@ -2,6 +2,93 @@
 
 Complete these steps **before the workshop** to make sure your environment is ready.
 
+## LLM Provider Setup
+
+The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs well under $1).
+
+=== "OpenAI (recommended)"
+    The best option for the full workshop. Cheap, fast, high rate limits.
+
+    1. Sign up at [platform.openai.com](https://platform.openai.com/)
+    2. Add a payment method (credit card required) and set a **usage limit** — $5 is more than enough for the entire workshop
+    3. Go to [API Keys](https://platform.openai.com/api-keys) and create a new secret key
+    4. Install dependencies and configure your key:
+
+    ```bash
+    uv sync --extra openai
+    cp .env-example .env
+    # Edit .env → uncomment the OpenAI section, set OPENAI_API_KEY=your-key
+    ```
+
+    | | |
+    |---|---|
+    | **Model** | `gpt-4o-mini` (default) |
+    | **Cost** | ~$0.15 per 1M input tokens — the entire workshop costs well under $1 |
+    | **Rate limits** | 500+ requests/min (pay-as-you-go Tier 1) |
+    | **Works for** | All labs |
+
+=== "Google Gemini (free)"
+    **Free tier, no credit card required** — just a Google account. Good for Labs 1 and 2.
+
+    1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
+    2. When prompted to select a project, use the **default project** (usually called "Default Gemini Project" or "Generative Language Client"). Don't create a new project — the Gemini API is already enabled on the default one.
+    3. Click **Create API key** and copy it
+    4. Install dependencies and configure your key:
+
+    ```bash
+    uv sync --extra gemini
+    cp .env-example .env
+    # Edit .env → set GOOGLE_API_KEY=your-key
+    ```
+
+    | | |
+    |---|---|
+    | **Model** | `gemini-2.5-flash-lite` (default) |
+    | **Cost** | Free |
+    | **Rate limits** | 15 requests/min, 1,000 requests/day |
+    | **Works for** | Labs 1-2 |
+
+    !!! warning "Created a new Google Cloud project?"
+        If you created your key in a new project, you'll get an `API_KEY_INVALID` error. Either recreate the key in the default project, or enable the [Generative Language API](https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com) on your project.
+
+    !!! warning "Rate limits for Labs 3+"
+        The free tier allows 15 requests per minute. Lab 3's multi-node agent (ReAct + grounding + critic) makes 10-15+ LLM calls per patient, so you'll hit rate limits. For Lab 3 onward, switch to a paid provider (OpenAI is recommended).
+
+=== "Anthropic"
+    1. Sign up at [console.anthropic.com](https://console.anthropic.com/)
+    2. Add a payment method and go to [API Keys](https://console.anthropic.com/settings/keys) to create a key
+    3. Install dependencies and configure your key:
+
+    ```bash
+    uv sync --extra anthropic
+    cp .env-example .env
+    # Edit .env → uncomment the Anthropic section, set ANTHROPIC_API_KEY=your-key
+    ```
+
+    | | |
+    |---|---|
+    | **Model** | `claude-haiku-4-5-20251001` (default) |
+    | **Cost** | ~$1 per 1M input tokens — the entire workshop should cost under $5 |
+    | **Rate limits** | 50+ requests/min (pay-as-you-go) |
+    | **Works for** | All labs |
+
+The total LLM cost for the entire workshop should not exceed **$5** on any paid provider. The workshop uses cheap, fast models — not frontier models — because the goal is learning agent patterns, not benchmarking LLM quality.
+
+See `.env-example` for all available configuration options.
+
+!!! tip "Switching providers mid-workshop"
+    Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
+
+???+ note "Other free-tier options"
+    If you don't want to pay for an API key, these providers offer free tiers with tool calling and structured output. They aren't pre-configured in `app/llm.py` but could be added.
+
+    | Provider | Free RPM | Free RPD | Best model | Catches |
+    |----------|---------|---------|------------|---------|
+    | [Groq](https://console.groq.com/) | 30 | 1,000 | `llama-4-scout-17b-16e-instruct` | 30K token/min limit; no credit card needed |
+    | [Cerebras](https://cloud.cerebras.ai/) | 30 | 14,400 | `llama-3.3-70b` | 8K context window cap — test whether your prompts fit |
+
+---
+
 ## Required for All Labs
 
 ### Python 3.11+
@@ -164,94 +251,6 @@ uv sync --extra postgres
 git clone https://github.com/obuzek/ai-agents-workshop.git
 cd ai-agents-workshop
 ```
-
-### LLM Provider Setup
-
-The labs need an LLM API key. Pick **one** provider and install its dependencies:
-
-=== "Google Gemini (free)"
-    **Free tier, no credit card required** — just a Google account. Good for Labs 1 and 2.
-
-    1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
-    2. When prompted to select a project, use the **default project** (usually called "Default Gemini Project" or "Generative Language Client"). Don't create a new project — the Gemini API is already enabled on the default one.
-    3. Click **Create API key** and copy it
-    4. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra gemini
-    cp .env-example .env
-    # Edit .env → set GOOGLE_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `gemini-2.5-flash-lite` (default) |
-    | **Cost** | Free |
-    | **Rate limits** | 15 requests/min, 1,000 requests/day |
-    | **Works for** | Labs 1-2 |
-
-    !!! warning "Created a new Google Cloud project?"
-        If you created your key in a new project, you'll get an `API_KEY_INVALID` error. Either recreate the key in the default project, or enable the [Generative Language API](https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com) on your project.
-
-    !!! warning "Rate limits for Labs 3+"
-        The free tier allows 15 requests per minute. Lab 3's multi-node agent (ReAct + grounding + critic) makes 10-15+ LLM calls per patient, so you'll hit rate limits. For Lab 3 onward, switch to a paid provider (OpenAI is recommended). If using your own LLM key presents a hardship for you, please message the instructor for access to a shared key. This key will be revoked after the workshop.
-
-=== "OpenAI (recommended)"
-    The best option for the full workshop. Cheap, fast, high rate limits.
-
-    1. Sign up at [platform.openai.com](https://platform.openai.com/)
-    2. Add a payment method (credit card required) and set a **usage limit** — $5 is more than enough for the entire workshop
-    3. Go to [API Keys](https://platform.openai.com/api-keys) and create a new secret key
-    4. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra openai
-    cp .env-example .env
-    # Edit .env → uncomment the OpenAI section, set OPENAI_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `gpt-4o-mini` (default) |
-    | **Cost** | ~$0.15 per 1M input tokens — the entire workshop costs well under $1 |
-    | **Rate limits** | 500+ requests/min (pay-as-you-go Tier 1) |
-    | **Works for** | All labs |
-
-=== "Anthropic"
-    1. Sign up at [console.anthropic.com](https://console.anthropic.com/)
-    2. Add a payment method and go to [API Keys](https://console.anthropic.com/settings/keys) to create a key
-    3. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra anthropic
-    cp .env-example .env
-    # Edit .env → uncomment the Anthropic section, set ANTHROPIC_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `claude-haiku-4-5-20251001` (default) |
-    | **Cost** | ~$1 per 1M input tokens — the entire workshop should cost under $5 |
-    | **Rate limits** | 50+ requests/min (pay-as-you-go) |
-    | **Works for** | All labs |
-
-The total LLM cost for the entire workshop should not exceed **$5** on any paid provider. The workshop uses cheap, fast models — not frontier models — because the goal is learning agent patterns, not benchmarking LLM quality.
-
-See `.env-example` for all available configuration options.
-
-!!! tip "Switching providers mid-workshop"
-    Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
-
-???+ note "Other free-tier options"
-    If you don't want to pay for an API key, these providers offer free tiers with tool calling and structured output. They aren't pre-configured in `app/llm.py` but could be added.
-
-    | Provider | Free RPM | Free RPD | Best model | Catches |
-    |----------|---------|---------|------------|---------|
-    | [Groq](https://console.groq.com/) | 30 | 1,000 | `llama-4-scout-17b-16e-instruct` | 30K token/min limit; no credit card needed |
-    | [Cerebras](https://cloud.cerebras.ai/) | 30 | 14,400 | `llama-3.3-70b` | 8K context window cap — test whether your prompts fit |
-
-???+ note "Instructor note: shared API key"
-    The Gemini free tier works for Labs 1-2 but **will hit rate limits on Lab 3+** (10-15 RPM vs 10-15+ calls per agent run). Have a shared OpenAI API key ready for attendees who don't have their own paid key. Set a usage limit of $20 on the key (actual cost will be far less — `gpt-4o-mini` is ~$0.15/1M input tokens). Revoke the key after the workshop. Attendees switch by setting `LLM_PROVIDER=openai` and `OPENAI_API_KEY` in their `.env`.
 
 ## Start the EHR Inbox
 
