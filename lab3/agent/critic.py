@@ -13,9 +13,8 @@ This is a single LLM call with structured output — not a tool-calling agent.
 """
 
 import logging
-import os
 
-from langchain_openai import ChatOpenAI
+from app.llm import get_chat_model
 from langfuse import observe
 from langfuse.langchain import CallbackHandler
 from pydantic import BaseModel
@@ -78,8 +77,7 @@ def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> Cr
     On failure (rate limits, timeouts), approves the output as-is —
     better to surface unreviewed concerns than to crash the run.
     """
-    model = os.environ.get("OPENAI_MODEL", "gpt-4o")
-    llm = ChatOpenAI(model=model, max_retries=3).with_structured_output(CriticResult)
+    llm = get_chat_model(max_retries=3).with_structured_output(CriticResult)
 
     grounding_json = "\n".join(r.model_dump_json() for r in grounding_results)
 

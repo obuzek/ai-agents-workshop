@@ -143,7 +143,7 @@ Before grounding, an LLM reads each concern's summary, action, and evidence fiel
 ```python
 @observe(name="Claim Extraction")
 def _extract_claims(title, summary, action, evidence) -> list[str]:
-    llm = ChatOpenAI(model=model).with_structured_output(ExtractedClaims)
+    llm = get_chat_model().with_structured_output(ExtractedClaims)
     return llm.invoke(_EXTRACT_PROMPT.format(...)).claims
 ```
 
@@ -158,12 +158,12 @@ Open `lab3/agent/grounding.py`. It takes the extracted claims and the tool outpu
 grounding_mode: str = "llm"
 ```
 
-The **LLM-as-judge** path sends the claims and tool output to the same OpenAI model:
+The **LLM-as-judge** path sends the claims and tool output to the configured LLM:
 
 ```python
 @observe(name="Grounding: LLM-as-Judge")
 def _check_llm_judge(claims: list[str], context: str) -> list[ClaimVerdict]:
-    llm = ChatOpenAI(model=model).with_structured_output(...)
+    llm = get_chat_model().with_structured_output(...)
     result = llm.invoke(_JUDGE_PROMPT.format(context=context, claims=...))
     return result.verdicts
 ```
@@ -193,7 +193,7 @@ Open `lab3/agent/critic.py`. The critic receives concerns plus grounding results
 
 ```python
 def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> CriticResult:
-    llm = ChatOpenAI(model=model).with_structured_output(CriticResult)
+    llm = get_chat_model().with_structured_output(CriticResult)
     return llm.invoke(_CRITIC_PROMPT.format(
         concerns=concerns_json,
         grounding=grounding_json,

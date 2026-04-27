@@ -163,8 +163,51 @@ uv sync --extra postgres
 ```bash
 git clone https://github.com/obuzek/ai-agents-workshop.git
 cd ai-agents-workshop
-uv sync
 ```
+
+### LLM Provider Setup
+
+The labs need an LLM API key. Pick **one** provider and install its dependencies:
+
+=== "Google Gemini (recommended)"
+    **Free tier, no credit card required** — just a Google account.
+
+    1. Go to [Google AI Studio](https://aistudio.google.com/apikey) and create an API key
+    2. Install dependencies and configure your key:
+
+    ```bash
+    uv sync --extra gemini
+    cp .env-example .env
+    # Edit .env → set GOOGLE_API_KEY=your-key
+    ```
+
+    The free tier is generous enough for a classroom of 30+ concurrent users.
+
+=== "OpenAI"
+    Requires an [OpenAI Platform](https://platform.openai.com/) account (pay-as-you-go).
+
+    ```bash
+    uv sync --extra openai
+    cp .env-example .env
+    # Edit .env → uncomment the OpenAI section, set OPENAI_API_KEY=your-key
+    ```
+
+=== "Anthropic"
+    Requires an [Anthropic Console](https://console.anthropic.com/) account (pay-as-you-go).
+
+    ```bash
+    uv sync --extra anthropic
+    cp .env-example .env
+    # Edit .env → uncomment the Anthropic section, set ANTHROPIC_API_KEY=your-key
+    ```
+
+See `.env-example` for all available configuration options.
+
+!!! tip "Switching providers mid-workshop"
+    Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
+
+???+ note "Instructor note: rate limits"
+    The Gemini free tier handles 30-40 concurrent users comfortably. If you hit rate limits mid-session, have attendees switch to a different provider — changing `LLM_PROVIDER` in `.env` is all it takes.
 
 ## Start the EHR Inbox
 
