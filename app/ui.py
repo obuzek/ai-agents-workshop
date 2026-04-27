@@ -8,8 +8,11 @@ Start the backend and UI in two terminals:
 Set API_URL to point the UI at a different backend (default: http://localhost:8000).
 """
 
+import logging
 import os
 import time
+
+logger = logging.getLogger(__name__)
 
 import streamlit as st
 import requests
@@ -205,7 +208,7 @@ def set_active_role(provider_id: str):
         resp = requests.post(f"{AGENT_API_URL}/role", params={"provider_id": provider_id}, timeout=3)
         resp.raise_for_status()
     except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
-        pass
+        logger.warning("Failed to set active role to %s", provider_id)
 
 def get_role_patients() -> list[str]:
     """Get patient IDs the active provider can access."""
@@ -226,7 +229,7 @@ def share_concern_with(patient_id: str, concern_id: str, shared_with: str):
         )
         resp.raise_for_status()
     except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
-        pass
+        logger.warning("Failed to share concern %s with %s", concern_id, shared_with)
 
 def get_concern_shared_by(patient_id: str, concern_id: str) -> str | None:
     """Check who shared a concern with us."""
@@ -442,13 +445,21 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
     if concerns:
         concerns = sorted(concerns, key=lambda c: urgency_order.get(c.urgency, 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
+
+        # Pre-fetch shared-by info and provider list once, not per concern
+        shared_by_map = {c.id: get_concern_shared_by(patient_id, c.id) for c in concerns}
+        share_providers = get_providers()
+        role_data = get_active_role()
+        current_role_id = role_data["provider_id"] if role_data else None
+        other_providers = [p for p in share_providers if p["id"] != current_role_id]
+
         for concern in concerns:
             badge_color = badge_colors.get(concern.urgency, "blue")
             status_badge = status_badges.get(concern.status, "")
 
             with st.expander(f":{badge_color}-background[{concern.urgency}]  {concern.title}"):
                 # Show "Shared by X" badge if this concern was shared with us
-                shared_by_name = get_concern_shared_by(patient_id, concern.id)
+                shared_by_name = shared_by_map.get(concern.id)
                 if shared_by_name:
                     st.caption(f"Shared by {shared_by_name}")
 
@@ -499,12 +510,6 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                     _related_row(f"Visit {ed}",
                                  f"enc_{concern.id}_{ed}",
                                  highlight_encounter_date=ed, active_record_tab="History")
-
-                # Action buttons
-                share_providers = get_providers()
-                role_data = get_active_role()
-                current_role_id = role_data["provider_id"] if role_data else None
-                other_providers = [p for p in share_providers if p["id"] != current_role_id]
 
                 if concern.status != "resolved":
                     if other_providers:
