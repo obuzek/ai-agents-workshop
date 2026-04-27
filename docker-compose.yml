@@ -1,0 +1,25 @@
+# Lab 4: Postgres for agent concern storage with Row-Level Security.
+# Start with: docker compose up -d
+# Stop with: docker compose down
+# Reset data: docker compose down -v && docker compose up -d
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: agent_store
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agent_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./lab4/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent -d agent_store"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:
