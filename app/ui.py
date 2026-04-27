@@ -19,6 +19,10 @@ from app.models import Patient, Message
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 
+# Concern urgency / status values — must match lab*/agent/models.py
+URGENT, SOON, ROUTINE = "urgent", "soon", "routine"
+RESOLVED = "resolved"
+
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 
 # Style radio buttons to look like tabs
@@ -167,20 +171,20 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
     def max_urgency(pid: str) -> str:
         """Return the highest urgency among unresolved concerns for a patient."""
         concerns = all_concerns.get(pid, [])
-        urgencies = {c.get("urgency", "routine") for c in concerns
-                     if c.get("status") != "resolved"}
-        if "urgent" in urgencies:
-            return "urgent"
-        if "soon" in urgencies:
-            return "soon"
+        urgencies = {c.get("urgency", ROUTINE) for c in concerns
+                     if c.get("status") != RESOLVED}
+        if URGENT in urgencies:
+            return URGENT
+        if SOON in urgencies:
+            return SOON
         return "none"
 
     def label(p):
         count = new_counts.get(p["id"], 0)
         urgency = max_urgency(p["id"])
-        if urgency == "urgent":
+        if urgency == URGENT:
             icon = "\U0001f534"
-        elif urgency == "soon":
+        elif urgency == SOON:
             icon = "\U0001f7e1"
         elif count > 0:
             icon = "\U0001f4e8"  # envelope — unread messages but no flagged concerns
@@ -306,17 +310,17 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
         st.rerun()
 
     # Display concerns sorted by urgency
-    urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
+    urgency_order = {URGENT: 0, SOON: 1, ROUTINE: 2}
     if concerns:
-        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.get("urgency", "routine"), 99))
+        concerns = sorted(concerns, key=lambda c: urgency_order.get(c.get("urgency", ROUTINE), 99))
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
         for concern in concerns:
-            urgency = concern.get("urgency", "routine")
+            urgency = concern.get("urgency", ROUTINE)
             status_val = concern.get("status", "")
-            badge_color = {"urgent": "red", "soon": "orange", "routine": "blue"}.get(urgency, "blue")
+            badge_color = {URGENT: "red", SOON: "orange", ROUTINE: "blue"}.get(urgency, "blue")
             status_badge = {"unresolved": ":orange-background[needs reply]",
                             "monitoring": ":blue-background[monitoring]",
-                            "resolved": ":green-background[resolved]"}.get(status_val, "")
+                            RESOLVED: ":green-background[resolved]"}.get(status_val, "")
 
             with st.expander(f":{badge_color}-background[{urgency}]  {concern.get('title', 'Concern')}"):
                 # Action — the most important line
@@ -396,7 +400,7 @@ def render_concerns(concerns: list, patient_id: str, messages: list[Message] = N
                             st.rerun()
 
                 # Mark resolved button
-                if concern.get("status") != "resolved":
+                if concern.get("status") != RESOLVED:
                     if st.button("Mark Resolved", key=f"resolve_{concern.get('id', '')}"):
                         mark_concern_resolved(patient_id, concern.get("id", ""))
                         st.rerun()

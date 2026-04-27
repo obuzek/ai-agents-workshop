@@ -18,6 +18,11 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 
+class _AliasModel(BaseModel):
+    """Base for models that use camelCase aliases but accept snake_case too."""
+    model_config = {"populate_by_name": True}
+
+
 # --- Helpers ---
 
 def _pii(**kwargs):
@@ -74,13 +79,11 @@ class Message(BaseModel):
 # --- Clinical models ---
 
 
-class Condition(BaseModel):
+class Condition(_AliasModel):
     code: Coding = Coding()
     status: str = ""
     onset_date: str = Field(default="", alias="onsetDate")
     notes: str = ""
-
-    model_config = {"populate_by_name": True}
 
     @property
     def display(self) -> str:
@@ -95,7 +98,7 @@ class Allergy(BaseModel):
     status: str = ""
 
 
-class Medication(BaseModel):
+class Medication(_AliasModel):
     code: Coding = Coding()
     dosage: str = ""
     frequency: str = ""
@@ -104,22 +107,18 @@ class Medication(BaseModel):
     prescribed_date: str = Field(default="", alias="prescribedDate")
     prescriber: str = ""
 
-    model_config = {"populate_by_name": True}
-
     @property
     def display(self) -> str:
         return self.code.display
 
 
-class LabResult(BaseModel):
+class LabResult(_AliasModel):
     test: str = ""
     code: Coding | None = None
     value: str | int | float = ""
     unit: str = ""
     reference_range: dict[str, Any] | None = Field(default=None, alias="referenceRange")
     interpretation: str = ""
-
-    model_config = {"populate_by_name": True}
 
 
 class LabPanel(BaseModel):
@@ -128,24 +127,20 @@ class LabPanel(BaseModel):
     results: list[LabResult] = []
 
 
-class Lab(BaseModel):
+class Lab(_AliasModel):
     id: str = ""
     date: str = ""
     status: str = ""
     ordered_by: str = Field(default="", alias="orderedBy")
     panels: list[LabPanel] = []
 
-    model_config = {"populate_by_name": True}
 
-
-class Immunization(BaseModel):
+class Immunization(_AliasModel):
     code: Coding = Coding()
     date: str = ""
     site: str = ""
     lot_number: str = Field(default="", alias="lotNumber")
     provider: str = ""
-
-    model_config = {"populate_by_name": True}
 
 
 class SOAPNotes(BaseModel):
@@ -160,7 +155,7 @@ class Vitals(BaseModel):
     model_config = {"extra": "allow"}
 
 
-class Encounter(BaseModel):
+class Encounter(_AliasModel):
     id: str = ""
     date: str = ""
     type: str = ""
@@ -169,8 +164,6 @@ class Encounter(BaseModel):
     vitals: Vitals | None = None
     notes: SOAPNotes = SOAPNotes()
     lab_orders: list[str] = Field(default=[], alias="labOrders")
-
-    model_config = {"populate_by_name": True}
 
     @property
     def reason(self) -> str:
@@ -185,13 +178,11 @@ class Name(BaseModel):
     family: str = _pii()
 
 
-class Address(BaseModel):
+class Address(_AliasModel):
     line: str = _pii(default="")
     city: str = _pii(default="")
     state: str = _pii(default="")
     postal_code: str = _pii(default="", alias="postalCode")
-
-    model_config = {"populate_by_name": True}
 
 
 class EmergencyContact(BaseModel):
@@ -200,15 +191,13 @@ class EmergencyContact(BaseModel):
     phone: str = _pii(default="")
 
 
-class Insurance(BaseModel):
+class Insurance(_AliasModel):
     type: str = ""
     plan_name: str = Field(default="", alias="planName")
     member_id: str = _phi(default="", alias="memberId")
 
-    model_config = {"populate_by_name": True}
 
-
-class Demographics(BaseModel):
+class Demographics(_AliasModel):
     name: Name
     birth_date: str = _phi(default="", alias="birthDate")
     gender: str = ""
@@ -220,8 +209,6 @@ class Demographics(BaseModel):
     )
     insurance: Insurance = Insurance()
     preferred_language: str = Field(default="English", alias="preferredLanguage")
-
-    model_config = {"populate_by_name": True}
 
 
 class SocialHistory(BaseModel):
@@ -240,7 +227,7 @@ class FamilyHistoryEntry(BaseModel):
 # --- Patient (top-level) ---
 
 
-class Patient(BaseModel):
+class Patient(_AliasModel):
     resource_type: str = Field(default="Patient", alias="resourceType")
     id: str
     demographics: Demographics = Demographics(name=Name(given="", family=""))
@@ -253,8 +240,6 @@ class Patient(BaseModel):
     immunizations: list[Immunization] = []
     encounters: list[Encounter] = []
     messages: list[Message] = []
-
-    model_config = {"populate_by_name": True}
 
     @property
     def name(self) -> str:
