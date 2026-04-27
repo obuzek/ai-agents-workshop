@@ -44,7 +44,6 @@ def run_pass(provider_id: str = "dr_kim"):
 
 
 def main():
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     logger.info("=== Lab 4: Securing Agent Data ===")
     logger.info("Starting concern extraction...")
 

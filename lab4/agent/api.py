@@ -8,7 +8,9 @@ however it wants, as long as it serves the same Concern schema.
 Run with: uv run uvicorn lab4.agent.api:app --port 8001
 """
 
+import logging
 import threading
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -24,7 +26,26 @@ from lab4.agent.store import (
     using_postgres,
 )
 
-app = FastAPI(title="Lab 4 Agent API", version="0.1.0")
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    store = "Postgres (RLS enabled)" if using_postgres() else "JSON fallback (no RLS)"
+    logger.info(
+        "\n"
+        "╔══════════════════════════════════════════════════════════╗\n"
+        "║  Lab 4 Agent — Securing Agent Data                      ║\n"
+        "║  Scoped tools, concern stability, provider isolation     ║\n"
+        "║  Store: %-48s ║\n"
+        "║  http://localhost:8001/docs                              ║\n"
+        "╚══════════════════════════════════════════════════════════╝",
+        store,
+    )
+    yield
+
+
+app = FastAPI(title="Lab 4 Agent API", version="0.1.0", lifespan=lifespan)
 
 _run_lock = threading.Lock()
 _run_error: str | None = None

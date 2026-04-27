@@ -5,7 +5,9 @@ Serves patient data from the JSON files in data/patients/.
 Run with: uv run uvicorn app.api:app --reload
 """
 
+import logging
 import os
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -13,7 +15,27 @@ import requests as http_client
 
 from app.store import load_patient, load_patients, save_reply
 
-app = FastAPI(title="Lakeview Family Medicine EHR", version="0.1.0")
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    logger.info(
+        "\n"
+        "╔══════════════════════════════════════════════════════════╗\n"
+        "║  EHR API — Lakeview Family Medicine                     ║\n"
+        "║  Patient data, inbox messages, and agent proxy           ║\n"
+        "║  http://localhost:8000/docs                              ║\n"
+        "╚══════════════════════════════════════════════════════════╝"
+    )
+    yield
+
+
+app = FastAPI(
+    title="Lakeview Family Medicine EHR",
+    version="0.1.0",
+    lifespan=lifespan,
+)
 
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 

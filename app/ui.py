@@ -16,6 +16,15 @@ import requests
 
 from app.models import Patient, Message, Concern
 
+print(
+    "\n"
+    "╔══════════════════════════════════════════════════════════╗\n"
+    "║  Lakeview Family Medicine — EHR Inbox UI                 ║\n"
+    "║  Browse patients, read messages, view agent concerns      ║\n"
+    "║  http://localhost:8501                                    ║\n"
+    "╚══════════════════════════════════════════════════════════╝"
+)
+
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 

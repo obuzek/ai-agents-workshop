@@ -8,13 +8,31 @@ however it wants, as long as it serves the same Concern schema.
 Run with: uv run uvicorn lab2.agent.api:app --port 8001
 """
 
+import logging
 import threading
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 
 from lab2.agent.models import Concern
 from lab2.agent.store import get_concerns, load_store, resolve_concern
 
-app = FastAPI(title="Lab 2 Agent API", version="0.1.0")
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    logger.info(
+        "\n"
+        "╔══════════════════════════════════════════════════════════╗\n"
+        "║  Lab 2 Agent — Observability                            ║\n"
+        "║  ReAct agent with Langfuse tracing and PII masking       ║\n"
+        "║  http://localhost:8001/docs                              ║\n"
+        "╚══════════════════════════════════════════════════════════╝"
+    )
+    yield
+
+
+app = FastAPI(title="Lab 2 Agent API", version="0.1.0", lifespan=lifespan)
 
 _run_lock = threading.Lock()
 _run_error: str | None = None
