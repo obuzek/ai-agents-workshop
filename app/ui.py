@@ -14,10 +14,7 @@ import time
 import streamlit as st
 import requests
 
-from app.models import (
-    Patient, Message, Condition, Allergy, Medication,
-    Lab, LabPanel, LabResult, Encounter, SOAPNotes, Sender, ThreadEntry,
-)
+from app.models import Patient, Message
 
 API_URL = os.environ.get("API_URL", "http://localhost:8000")
 
@@ -74,74 +71,12 @@ def _post(endpoint: str, payload: dict):
     st.cache_data.clear()
 
 
-def _parse_sender(data: dict) -> Sender:
-    return Sender(name=data["name"], role=data["role"])
-
-
 def _parse_message(data: dict) -> Message:
-    return Message(
-        id=data["id"],
-        date=data["date"],
-        sender=_parse_sender(data["sender"]),
-        category=data["category"],
-        subject=data["subject"],
-        body=data["body"],
-        thread=[
-            ThreadEntry(date=t["date"], sender=_parse_sender(t["sender"]), body=t["body"])
-            for t in data.get("thread", [])
-        ],
-    )
+    return Message.model_validate(data)
 
 
 def _parse_patient(data: dict) -> Patient:
-    demo = data["demographics"]
-    social = data.get("socialHistory", "")
-    if isinstance(social, dict):
-        social = social.get("notes", "")
-
-    return Patient(
-        id=data["id"],
-        given_name=demo["name"]["given"],
-        family_name=demo["name"]["family"],
-        birth_date=demo["birthDate"],
-        language=demo.get("preferredLanguage", "English"),
-        conditions=[
-            Condition(display=c["display"], status=c["status"],
-                      notes=c.get("notes", ""), onset_date=c.get("onsetDate", ""))
-            for c in data.get("conditions", [])
-        ],
-        allergies=[
-            Allergy(substance=a["substance"], reaction=a["reaction"])
-            for a in data.get("allergies", [])
-        ],
-        medications=[
-            Medication(display=m["display"], dosage=m["dosage"], frequency=m["frequency"],
-                       prescriber=m["prescriber"], status=m["status"])
-            for m in data.get("medications", [])
-        ],
-        labs=[
-            Lab(date=lab["date"], ordered_by=lab["orderedBy"], panels=[
-                LabPanel(name=p["name"], results=[
-                    LabResult(test=r["test"], value=r["value"], unit=r.get("unit", ""),
-                              interpretation=r.get("interpretation", ""))
-                    for r in p.get("results", [])
-                ])
-                for p in lab.get("panels", [])
-            ])
-            for lab in data.get("labs", [])
-        ],
-        encounters=[
-            Encounter(date=e["date"], reason=e.get("reasonForVisit", "Visit"), notes=SOAPNotes(
-                subjective=e.get("notes", {}).get("subjective", ""),
-                objective=e.get("notes", {}).get("objective", ""),
-                assessment=e.get("notes", {}).get("assessment", ""),
-                plan=e.get("notes", {}).get("plan", ""),
-            ))
-            for e in data.get("encounters", [])
-        ],
-        messages=[_parse_message(m) for m in data.get("messages", [])],
-        social_history=social,
-    )
+    return Patient.model_validate(data)
 
 
 def load_patient_list() -> list[dict]:
@@ -310,9 +245,9 @@ def render_history(patient: Patient):
     if highlight_date:
         del st.session_state["highlight_encounter_date"]
 
-    if patient.social_history:
+    if patient.social_history and patient.social_history.notes:
         st.markdown("**Social History**")
-        st.caption(patient.social_history)
+        st.caption(patient.social_history.notes)
 
 
 def render_concerns(concerns: list, patient_id: str, messages: list[Message] = None):
