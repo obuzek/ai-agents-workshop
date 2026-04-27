@@ -11,7 +11,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests as http_client
 
-from app.store import load_patient, load_patients
+from app.store import load_patient, load_patients, save_reply
 
 app = FastAPI(title="Lakeview Family Medicine EHR", version="0.1.0")
 
@@ -142,7 +142,6 @@ def reply_to_message(patient_id: str, message_id: str, reply: ReplyRequest):
     if not any(m.id == message_id for m in patient.messages):
         raise HTTPException(status_code=404, detail="Message not found")
 
-    from app.store import save_reply
     save_reply(
         patient_id=patient_id,
         message_id=message_id,

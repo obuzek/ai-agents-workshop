@@ -178,7 +178,14 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
     def label(p):
         count = new_counts.get(p["id"], 0)
         urgency = max_urgency(p["id"])
-        icon = {"urgent": "\U0001f534", "soon": "\U0001f7e1", "none": "\u2705"}[urgency]
+        if urgency == "urgent":
+            icon = "\U0001f534"
+        elif urgency == "soon":
+            icon = "\U0001f7e1"
+        elif count > 0:
+            icon = "\U0001f4e8"  # envelope — unread messages but no flagged concerns
+        else:
+            icon = "\u2705"
         if count == 0:
             return f"{icon} {p['name']}"
         return f"{icon} {p['name']} ({count} new)"
@@ -474,18 +481,7 @@ def render_conversation(msg: Message, patient_id: str):
 # ======================
 
 
-col_title, col_masking = st.columns([4, 1])
-with col_title:
-    st.title("Lakeview Family Medicine")
-with col_masking:
-    masking_status = get_masking_status()
-    if masking_status is not None:
-        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
-        if st.button(label, type="secondary" if masking_status else "primary"):
-            toggle_masking()
-            st.rerun()
-    else:
-        st.caption("Agent offline")
+st.title("Lakeview Family Medicine")
 
 # Load data
 patient_list = load_patient_list()
@@ -543,3 +539,14 @@ with col_viewer:
     else:
         st.subheader("Conversation")
         st.info("Select a patient to view messages.")
+
+# PII masking toggle — at the bottom so it doesn't distract before Lab 2
+st.divider()
+masking_status = get_masking_status()
+if masking_status is not None:
+    col_spacer, col_toggle = st.columns([4, 1])
+    with col_toggle:
+        label = "PII Masking: ON" if masking_status else "PII Masking: OFF"
+        if st.button(label, type="secondary" if masking_status else "primary"):
+            toggle_masking()
+            st.rerun()

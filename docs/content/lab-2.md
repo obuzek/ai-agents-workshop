@@ -5,7 +5,7 @@
 ???+ abstract "What You'll Add"
     The naive agent from Lab 1 is a black box — you can see its output (concerns), but not how it got there. Which tools did it call? What data did it see? How long did each step take? How much did it cost?
 
-    In this lab you'll instrument the agent with **Langfuse**, an open-source LLM observability platform. You'll see every decision the agent makes — and then you'll discover that your traces contain patient PHI, and fix it.
+    In this lab you'll instrument the agent with **Langfuse**, an open-source LLM observability platform. You'll see every decision the agent makes — and then figure out what you can make better.
 
 ---
 
@@ -54,6 +54,7 @@ By the end of this lab, you will:
 Langfuse runs locally via Docker Compose. All data stays on your machine — nothing is sent to the cloud.
 
 ```bash
+cd ai-agents-workshop
 docker compose -f docker-compose.langfuse.yml up -d
 ```
 
@@ -99,34 +100,13 @@ result = _agent.invoke(
 )
 ```
 
-That's it. The `CallbackHandler` hooks into LangChain's callback system, which LangGraph propagates to every LLM call and tool call in the ReAct loop. No manual instrumentation of individual steps needed.
-
-???+ question "Think about this"
-    The `config` dict also passes `metadata` with a session ID and tags. Why might you want to tag traces with the patient ID? What would you search for in the Langfuse UI after a doctor reports a problem with a specific patient's concerns?
+That's it. The `CallbackHandler` hooks into LangChain's callback system, which LangGraph propagates to every LLM call and tool call in the ReAct loop.
 
 ---
 
-## Step 3: Run the Agent (Without Masking)
+## Step 3: Run the Agent
 
-First, let's see what happens when we trace **without** PII masking. We'll temporarily disable it.
-
-Open `lab2/agent/observability/masking.py` and find the `create_langfuse_handler` function. Temporarily comment out the mask:
-
-```python
-def create_langfuse_handler(**kwargs) -> CallbackHandler:
-    from langfuse import Langfuse
-
-    os.environ.setdefault("LANGFUSE_PUBLIC_KEY", "pk-lf-workshop")
-    os.environ.setdefault("LANGFUSE_SECRET_KEY", "sk-lf-workshop")
-    os.environ.setdefault("LANGFUSE_HOST", "http://localhost:3000")
-
-    # Langfuse(mask=mask_pii)    # <-- comment this out temporarily
-    Langfuse()                    # <-- use this instead
-
-    return CallbackHandler(**kwargs)
-```
-
-Now start the system (you need three terminals, just like Lab 1):
+Start the system (you need three terminals, just like Lab 1):
 
 ```bash
 # Terminal 1: Main API
@@ -150,21 +130,13 @@ After the agent finishes, go to the Langfuse UI at [http://localhost:3000](http:
 Click into **Traces** in the left sidebar. You should see a new trace. Click on it.
 
 ???+ warning "Look at the trace data"
-    Expand the spans and look at the tool call inputs and outputs. You'll see:
-
-    - **Patient names** in full (e.g., "Patricia Kowalski")
-    - **Dates of birth** (e.g., "1953-11-14")
-    - **Phone numbers** (e.g., "847-555-0143")
-    - **Email addresses** (e.g., "pat.kowalski@gmail.com")
-    - **Home addresses** (e.g., "482 Birch Lane, Evanston, IL 60201")
-    - **Insurance member IDs** (e.g., "1EG4-TE5-MK72")
-    - **Full medical records** — conditions, medications, lab values
+    Expand the spans and look at the tool call inputs and outputs. You'll see patient names, dates of birth, phone numbers, email addresses, home addresses, insurance member IDs, and full medical records — all in plain text.
 
     All of this is now sitting in your Langfuse database. Anyone with access to this Langfuse instance can see it.
 
     In a real system under HIPAA, this would be a **reportable breach**. Your observability platform just became an unauthorized copy of the patient record.
 
-This is the core teaching point of Lab 2: **observability must not become a data leak.** The solution is to filter sensitive data *before* it ever reaches the trace store.
+The core point of this lab is learning to evaluate and improve your agent — but you can't do that responsibly if your instrumentation is leaking sensitive data.
 
 ---
 
@@ -189,13 +161,13 @@ class Demographics(BaseModel):
     email: str = _pii(default="")                             # PII — contact info
 ```
 
-When the mask function encounters a Pydantic model, it reads these annotations and replaces the values with placeholders (`<PII_REDACTED>`, `<PHI_REDACTED>`) — no NER needed. This is reliable even for short values like names where NER would struggle.
+When the mask function encounters a Pydantic model, it reads these annotations and replaces the values with placeholders (`<PII_REDACTED>`, `<PHI_REDACTED>`) — no named entity recognition (NER) needed. This is reliable even for short values like names where NER would struggle.
 
 **Layer 2: NER-based detection for free text.** For string fields that aren't annotated (message bodies, clinical notes, LLM reasoning), we use [Microsoft Presidio](https://github.com/microsoft/presidio) via LangChain's `PresidioAnonymizer`. Presidio combines:
 
-- **spaCy NER**: identifies names, locations, and other contextual entities in natural language
+- **[spaCy](https://spacy.io/) NER**: identifies names, locations, and other contextual entities in natural language
 - **Regex patterns**: catches structured PII — SSNs, email addresses, phone numbers
-- **Custom recognizers**: we add one for insurance member IDs (e.g., `1EG4-TE5-MK72`)
+- **Custom recognizers**: we add one for insurance member IDs
 
 ```python
 from langchain_experimental.data_anonymizer import PresidioAnonymizer
@@ -223,19 +195,9 @@ NER is excellent at finding names embedded in paragraphs ("Dear Dr. Kim, I've be
 
     For this workshop, our two-layer approach demonstrates the pattern. Production systems need more.
 
-### Toggling masking at runtime
+### Enable masking
 
-You don't need to edit code to switch between masked and unmasked traces. The UI has a **PII Masking** toggle button in the top-right corner. Click it to toggle masking on or off — the change takes effect on the next agent run, no restart needed.
-
-This lets you run the agent once with masking off (to see the raw data problem), toggle it on, and run again (to see the fix) — all without leaving the browser.
-
-If you commented out the mask in Step 3, restore it now:
-
-```python
-Langfuse(mask=mask_pii)
-```
-
-Then restart the agent API (Terminal 3).
+Toggle the **PII Masking** button at the bottom of the UI to **ON**, then run the agent again for the same patient.
 
 ---
 
@@ -323,7 +285,7 @@ This is important to understand:
 - The prompt shapes everything the agent does — but it's invisible to the end user
 - If the prompt is poorly written or biased, the doctor has no way to know
 
-Traces make this visible. In a production system, you'd want to version-control your prompts and track which prompt version produced which traces.
+Traces make this visible — you can see the exact prompt in every trace.
 
 ### 7.6 Datasets and annotations
 
@@ -388,8 +350,6 @@ Let's take stock of what we've added:
 
 **Cost attribution per run.** You can see exactly what each agent run costs and where the tokens are spent. This is essential for understanding whether your agent is economically viable.
 
-**Zero changes to agent behavior.** The agent produces the same output as Lab 1. We added three lines of integration code. Observability is additive — it shouldn't change what the system does.
-
 ---
 
 ## What's Still Broken
@@ -416,9 +376,10 @@ Now that you can see what the agent is doing, the next step is to make it do the
 
 | Lab | Problem | Solution |
 |---|---|---|
-| ~~Lab 2~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
-| **Lab 3** | Unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
-| **Lab 4** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
+| ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
+| **[Lab 3](lab-3.md)** | Unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
+| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
 
 ???+ tip "Further reading"
     For a deep dive into agent observability governance — data retention, compliance frameworks (HIPAA, GDPR, SOC 2), and the full tooling landscape — see `docs/agent-observability-governance-reference.md` in this repository.

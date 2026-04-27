@@ -149,7 +149,7 @@ def _mask_value(value, _redact_as=None):
 # --- Runtime toggle ---
 # Masking can be enabled/disabled at runtime via the agent API,
 # so participants can compare masked vs. unmasked traces without restarting.
-masking_enabled = True
+masking_enabled = False
 
 
 def mask_pii(*, data, **kwargs):

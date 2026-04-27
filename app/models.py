@@ -167,7 +167,7 @@ class Encounter(BaseModel):
     provider: str = ""
     reason_for_visit: str = Field(default="", alias="reasonForVisit")
     vitals: Vitals | None = None
-    notes: SOAPNotes | dict = SOAPNotes()
+    notes: SOAPNotes = SOAPNotes()
     lab_orders: list[str] = Field(default=[], alias="labOrders")
 
     model_config = {"populate_by_name": True}

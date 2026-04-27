@@ -341,9 +341,10 @@ In the remaining labs, we'll fix them:
 
 | Lab | Problem | Solution |
 |---|---|---|
-| **Lab 2** | No visibility into what the agent is doing | Observability: tracing, logging, cost tracking |
-| **Lab 3** | Unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
-| **Lab 4** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
+| ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
+| **[Lab 2](lab-2.md)** | No visibility into what the agent is doing | Observability: tracing, logging, cost tracking |
+| **[Lab 3](lab-3.md)** | Unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
+| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
 
 ???+ tip "Keep your notes"
     The issues you wrote down in Step 4 are your personal roadmap for the next three labs. As we add observability, evaluation, and security, check whether each improvement addresses something you noticed.
