@@ -17,10 +17,9 @@ inside the ReAct loop — no manual instrumentation of individual steps needed.
 """
 
 import logging
-import os
 from datetime import datetime, timezone
 
-from langchain_openai import ChatOpenAI
+from app.llm import get_chat_model
 from langgraph.prebuilt import create_react_agent
 
 from lab2.agent.tools import ALL_TOOLS
@@ -28,8 +27,6 @@ from lab2.agent.models import PatientConcerns
 from lab2.agent.observability import create_langfuse_handler
 
 logger = logging.getLogger(__name__)
-
-MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o")
 
 # System prompt is identical to Lab 1 — we're adding observability,
 # not changing agent behavior.
@@ -72,7 +69,7 @@ OUTPUT RULES:
 
 def _build_agent():
     """Build the LangGraph ReAct agent (identical to Lab 1)."""
-    llm = ChatOpenAI(model=MODEL)
+    llm = get_chat_model()
     return create_react_agent(
         model=llm,
         tools=ALL_TOOLS,

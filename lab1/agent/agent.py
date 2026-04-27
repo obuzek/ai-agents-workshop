@@ -11,12 +11,12 @@ and structured output ensures we get valid JSON every time.
 """
 
 import logging
-import os
 from datetime import datetime, timezone
 
-# ChatOpenAI is LangChain's wrapper around the OpenAI chat API.
-# It reads OPENAI_API_KEY from the environment automatically.
-from langchain_openai import ChatOpenAI
+# get_chat_model() returns the LangChain chat model for whatever provider
+# is configured via LLM_PROVIDER env var (default: Gemini).
+# See app/llm.py for provider details and .env-example for configuration.
+from app.llm import get_chat_model
 
 # create_react_agent builds a full ReAct agent graph:
 #   1. Send messages to the LLM
@@ -29,9 +29,6 @@ from lab1.agent.tools import ALL_TOOLS
 from lab1.agent.models import PatientConcerns
 
 logger = logging.getLogger(__name__)
-
-# Which model to use — override with OPENAI_MODEL env var
-MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o")
 
 # The system prompt defines the agent's persona and output expectations.
 # This is the single most important piece of the agent — it controls what
@@ -82,13 +79,13 @@ def _build_agent():
     - The tools (what the LLM can do)
     - The response format (what shape the final answer must be)
     """
-    llm = ChatOpenAI(model=MODEL)
+    llm = get_chat_model()
     return create_react_agent(
         model=llm,
         tools=ALL_TOOLS,
         # The system prompt is injected at the start of every conversation
         prompt=SYSTEM_PROMPT,
-        # response_format tells LangGraph to use OpenAI's structured output
+        # response_format tells LangGraph to use the LLM's structured output
         # mode. After the agent finishes calling tools, LangGraph makes one
         # final LLM call with constrained decoding so the output is guaranteed
         # to be valid JSON matching our Pydantic model. No parsing needed.

@@ -182,7 +182,7 @@ Open `lab1/agent/agent.py`. The core is surprisingly short:
 
 ```python
 def _build_agent():
-    llm = ChatOpenAI(model=MODEL)
+    llm = get_chat_model()
     return create_react_agent(
         model=llm,
         tools=ALL_TOOLS,
@@ -240,11 +240,7 @@ This is the **contract** between the agent and the UI. The agent fills it in; th
 
 ## Step 3: Run the Agent
 
-Make sure you have an OpenAI API key set:
-
-```bash
-export OPENAI_API_KEY=your-api-key-here
-```
+Make sure you've configured your LLM provider in `.env` (see [Prerequisites](./prerequisites.md#llm-provider-setup)).
 
 Start the agent API (in addition to the two terminals from Step 1):
 
