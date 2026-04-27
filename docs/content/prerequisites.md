@@ -66,6 +66,7 @@ Complete these steps **before the workshop** to make sure your environment is re
 ```bash
 git clone https://github.com/obuzek/ai-agents-workshop.git
 cd ai-agents-workshop
+uv sync
 ```
 
 ---
