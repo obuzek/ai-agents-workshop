@@ -197,7 +197,24 @@ def _build_agent():
 2. If the LLM returns tool calls → execute them, feed results back, go to 1
 3. If the LLM is done → make one final call with **Structured Outputs** to produce a `PatientConcerns` object
 
-That last point is key: `response_format=PatientConcerns` tells the API to use **constrained decoding**. The model literally cannot produce invalid JSON — the token probabilities are masked during generation so only schema-valid tokens are sampled. No parsing, no retries, no code-fence stripping.
+That last point is key: `response_format=PatientConcerns` tells the API to use **Structured Outputs**. Let's unpack what that means.
+
+### Structured Outputs and constrained decoding
+
+LLMs generate text one token at a time. Normally, every token in the vocabulary is a candidate at each step. **Constrained decoding** changes this: before each token is sampled, the API masks out every token that would make the output invalid according to your schema. The model literally cannot produce malformed JSON — it's not a "try and retry" approach, it's a hard constraint on generation.
+
+When you pass `response_format=PatientConcerns` (a Pydantic model), the API converts it to a JSON schema and enforces it during generation. This gives you:
+
+**Correctness for free.** Every field will be present, every enum value will be valid, every list will be a list. No parsing code, no fallback logic, no stripping markdown code fences from LLM output that decided to be "helpful."
+
+**Fewer tokens, lower cost.** Without structured outputs, you'd need to describe the exact JSON format you want *in the prompt* — field names, types, enum values, examples. That's easily 200-400 extra tokens of instructions on every call, and the model might still get it wrong, requiring a retry (which doubles your cost). Constrained decoding moves all of that into the schema, so you don't pay for it in prompt tokens *or* retry tokens.
+
+**Background agents need this.** In a chat interface, a human can look at malformed output and ask "try again." A background agent has no human in the loop — if the output doesn't parse, the pipeline fails silently or crashes. Structured Outputs guarantee that every agent run produces a valid `PatientConcerns` object, even at 3 AM with no one watching.
+
+???+ info "How is this different from asking nicely?"
+    You might have seen prompts that say "respond in JSON with these fields..." — that's **prompting for structure**. It works most of the time, but the model can always surprise you with a markdown wrapper, a missing field, or a creative reinterpretation of your enum values.
+
+    Structured Outputs are fundamentally different: the constraint is enforced at the token level during generation. It's the difference between asking someone to drive the speed limit and installing a speed governor on the engine.
 
 ### The output contract
 
