@@ -150,7 +150,7 @@ See `.env-example` for all available configuration options.
 After setting up your `.env` file, confirm the LLM is reachable:
 
 ```bash
-uv run python -c "from app.llm import get_chat_model; print(get_chat_model().invoke('Say hello in exactly three words.').content)"
+uv run python scripts/check_llm.py
 ```
 
 You should see a short greeting. If you get an authentication error, double-check your API key in `.env`.
