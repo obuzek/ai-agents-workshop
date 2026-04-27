@@ -133,47 +133,64 @@ Focused tools reduce noise, but the agent can still hallucinate and go off-task.
 
 The naive approach is to use the same LLM to evaluate its own output (LLM-as-judge). The problem: the LLM has the same biases and failure modes when judging as when generating. It's checking its own homework.
 
-Lab 3 addresses this with a **two-part evaluation loop**:
+Lab 3 addresses this with a **three-part evaluation loop**:
 
-1. **Grounding check** — verifies that evidence strings are supported by tool output data
-2. **Critic** — evaluates whether the agent stayed on task
+1. **Claim extraction** — an LLM reads each concern and extracts specific, verifiable medical claims
+2. **Grounding check** — each extracted claim is verified against the raw tool output
+3. **Critic** — evaluates whether the agent stayed on task and the grounding results are acceptable
 
-Both run inside a loop with the primary agent:
+All three run inside a loop with the primary agent:
 
 ```mermaid
 graph LR
-    A[Primary Agent] --> B[Grounding Check]
-    B --> C[Critic]
-    C -->|revisions needed| A
-    C -->|approved| D[Save Results]
+    A[Primary Agent] --> B[Extract Claims]
+    B --> C[Grounding Check]
+    C --> D[Critic]
+    D -->|revisions needed| A
+    D -->|approved| E[Save Results]
 ```
+
+### Claim extraction
+
+The agent's output contains a mix of specific facts ("TSH 4.8 mIU/L on 2026-04-01") and vague descriptions ("recent lab results"). A vague description will trivially pass any grounding check — you can't verify something that doesn't assert anything specific.
+
+Before grounding, an LLM reads each concern's summary, action, and evidence fields and extracts every specific medical claim that can actually be checked:
+
+```python
+@observe(name="Claim Extraction")
+def _extract_claims(title, summary, action, evidence) -> list[str]:
+    llm = ChatOpenAI(model=model).with_structured_output(ExtractedClaims)
+    return llm.invoke(_EXTRACT_PROMPT.format(...)).claims
+```
+
+The extraction prompt filters out internal IDs (like `msg-002-003`) and vague references — claims must be self-contained factual assertions that a grounding model can evaluate without looking anything up.
 
 ### The grounding module
 
-Open `lab3/agent/grounding.py`. It has one job: given evidence claims and source data, determine which claims are supported.
-
-Two implementations behind a toggle:
+Open `lab3/agent/grounding.py`. It takes the extracted claims and the tool output, and determines which claims are supported. Two implementations behind a toggle:
 
 ```python
 # "llm" = LLM-as-judge (default), "guardian" = Granite Guardian via Ollama
 grounding_mode: str = "llm"
 ```
 
-The **LLM-as-judge** path sends the evidence and source data to the same OpenAI model:
+The **LLM-as-judge** path sends the claims and tool output to the same OpenAI model:
 
 ```python
-def _check_llm_judge(evidence: list[str], context: str) -> list[EvidenceVerdict]:
+@observe(name="Grounding: LLM-as-Judge")
+def _check_llm_judge(claims: list[str], context: str) -> list[ClaimVerdict]:
     llm = ChatOpenAI(model=model).with_structured_output(...)
-    result = llm.invoke(_JUDGE_PROMPT.format(context=context, evidence=...))
+    result = llm.invoke(_JUDGE_PROMPT.format(context=context, claims=...))
     return result.verdicts
 ```
 
-The **Granite Guardian** path uses a purpose-built model via Ollama. It uses Guardian's canonical message format — the system message selects the `groundedness` risk detector, and the user message provides context and claim:
+The **Granite Guardian** path uses a purpose-built model via Ollama. It uses Guardian's canonical message format — the system message selects the `groundedness` risk detector, and the user message provides the tool output as context and each claim to verify:
 
 ```python
-def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
+@observe(name="Grounding: Granite Guardian")
+def _check_guardian(claims: list[str], context: str) -> list[ClaimVerdict]:
     client = ollama.Client(host=OLLAMA_BASE_URL)
-    for claim in evidence:
+    for claim in claims:
         response = client.chat(model=GUARDIAN_MODEL, messages=[
             {"role": "system", "content": "groundedness"},
             {"role": "user", "content": f"Context: {context}\n\nClaim: {claim}"},
@@ -182,6 +199,9 @@ def _check_guardian(evidence: list[str], context: str) -> list[EvidenceVerdict]:
 ```
 
 Granite Guardian is a [separate model fine-tuned specifically for groundedness detection](https://www.ibm.com/granite/docs/models/guardian/). It avoids the self-evaluation problem — a different model with different training checks the work. See the [Granite Guardian cookbook](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks) for more usage examples.
+
+???+ question "Why not skip claim extraction and check the whole concern at once?"
+    Guardian evaluates **one claim** against **one context** and returns a binary Yes/No. It can't tell you *which part* of a multi-sentence concern is hallucinated. By extracting individual claims first, we get a verdict per assertion — "TSH 4.8" is grounded, but "patient reported dizziness" is not. The critic can then give targeted revision feedback.
 
 ### The critic module
 
@@ -271,17 +291,19 @@ This is the LangGraph ReAct agent — the same structure as Lab 2, but now with 
 - **What keywords did it search for?** The agent had to decide what was relevant. Compare this to Lab 2, where it got everything at once.
 - **How many tokens?** Check the token count. Focused tools mean less data in context, lower cost.
 
-### The "Claim Extraction" and "Grounding Check" spans
+### The "Grounding Check" spans
 
-Grounding happens in two steps. First, a **Claim Extraction** span — an LLM reads the concern's summary, action, and evidence fields and extracts every specific medical claim that can be verified: "Patient's HbA1c is 8.2%", "TSH trending from 3.1 to 4.8", etc. Vague descriptions like "recent message about X" get filtered out — they'd trivially pass any grounding check.
+There's one **Grounding Check** span per concern. Expand it and you'll see two nested steps:
 
-Then the **Grounding Check** spans (one per concern) verify each extracted claim against the raw tool output. Look inside:
+1. **Claim Extraction** — an LLM reads the concern's summary, action, and evidence fields and extracts every specific medical claim that can be verified: "Patient's HbA1c is 8.2%", "TSH trending from 3.1 to 4.8", etc. Vague descriptions like "recent message about X" get filtered out — they'd trivially pass any grounding check.
+
+2. **Grounding: LLM-as-Judge** or **Grounding: Granite Guardian** (depending on the active mode) — each extracted claim is verified against the raw tool output.
+
+Look inside:
 
 - **Input:** The extracted claims, plus the tool call results (the source of truth).
 - **Output:** A verdict per claim — `supported: true/false` with a reason.
 - **Did it catch anything?** If the agent hallucinated a lab value or date, you'll see `supported: false` here.
-
-The span will be labeled **"Grounding: LLM-as-Judge"** or **"Grounding: Granite Guardian"** depending on the active mode.
 
 ### The "Critic Evaluation" span
 

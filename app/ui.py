@@ -352,10 +352,12 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
         time.sleep(3)
         st.rerun(scope="fragment")
 
-    # Agent just finished — clear cache so we pick up new concerns
+    # Agent just finished — clear cache so we pick up new concerns.
+    # Full rerun here (not fragment-scoped) so the patient selector
+    # urgency badges also update with the new concerns.
     if st.session_state.pop("agent_was_running", False):
         st.cache_data.clear()
-        st.rerun(scope="fragment")
+        st.rerun()
 
     # Fetch concerns fresh (fragment may rerun independently of the page)
     concerns = load_concerns(patient_id)
