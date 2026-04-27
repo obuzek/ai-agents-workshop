@@ -141,7 +141,7 @@ docker compose up -d
 docker compose exec postgres psql -U agent -d agent_store -c "SELECT id, display_name FROM providers;"
 ```
 
-You should see three providers: Dr. Sarah Kim, Nurse Jordan Lopez, and MA Riley Davis.
+You should see three providers: Dr. Sarah Kim, MD; Rachel Torres, NP; and Maria Gonzalez.
 
 ```bash
 # Install the Python Postgres driver

@@ -74,9 +74,9 @@ passed to the agent API, which sets it as a Postgres session variable.
 
 ```sql
 CREATE TABLE providers (
-    id TEXT PRIMARY KEY,          -- 'dr_kim', 'nurse_lopez', 'ma_davis'
+    id TEXT PRIMARY KEY,          -- 'dr_kim', 'rachel_torres', 'maria_gonzalez'
     display_name TEXT NOT NULL,
-    role TEXT NOT NULL             -- 'physician', 'nurse', 'medical_assistant'
+    role TEXT NOT NULL             -- 'physician', 'nurse_practitioner', 'medical_assistant'
 );
 
 CREATE TABLE provider_patients (
