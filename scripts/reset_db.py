@@ -43,5 +43,5 @@ def main():
 
     owner_url = _owner_url(database_url)
     with psycopg.connect(owner_url) as conn:
-        conn.execute("TRUNCATE concerns, shared_concerns, agent_runs")
-        print("Done. Cleared all concerns, shares, and agent runs.")
+        conn.execute("TRUNCATE concerns, shared_concerns")
+        print("Done. Cleared all concerns and shares.")

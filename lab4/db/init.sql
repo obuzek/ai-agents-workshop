@@ -44,15 +44,6 @@ CREATE TABLE shared_concerns (
     PRIMARY KEY (concern_id, shared_with)
 );
 
-CREATE TABLE agent_runs (
-    id SERIAL PRIMARY KEY,
-    provider_id TEXT NOT NULL REFERENCES providers(id),
-    patient_id TEXT NOT NULL,
-    started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    finished_at TIMESTAMPTZ,
-    concern_count INTEGER DEFAULT 0
-);
-
 -- Row-Level Security
 ALTER TABLE concerns ENABLE ROW LEVEL SECURITY;
 
