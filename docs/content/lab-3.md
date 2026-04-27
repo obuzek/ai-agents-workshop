@@ -250,8 +250,8 @@ uv run streamlit run app/ui.py --server.port 8501
 uv run uvicorn lab3.agent.api:app --port 8001
 ```
 
-???+ tip "Ollama is optional"
-    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. If you installed Ollama and want to try Granite Guardian, toggle the grounding mode using the UI button.
+!!! warning "Don't toggle to Guardian without installing it"
+    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. The **Grounding** toggle in the UI will switch to Guardian mode, but the agent will error if you haven't completed the [optional Ollama setup](prerequisites.md#ollama-granite-guardian). Only toggle if you installed Ollama, pulled the model, and ran `uv sync --extra guardian`.
 
 Select a patient and click **Run Agent**. The agent will take longer than Lab 2 — it's running the full loop (primary agent → grounding → critic → possibly revise).
 
@@ -307,8 +307,8 @@ The critic sees the concerns plus grounding verdicts and decides: approve or rev
 
 ## Step 5: Toggle Grounding Modes
 
-???+ tip "Granite Guardian requires Ollama"
-    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running with the model pulled (see [Prerequisites](prerequisites.md#ollama-granite-guardian)).
+!!! warning "Granite Guardian requires Ollama"
+    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running, the model pulled, and the optional dependency installed — see [Prerequisites](prerequisites.md#ollama-granite-guardian). **Do not toggle to Guardian mode unless you completed those steps**, or the agent will error.
 
 The **Grounding** button at the bottom of the UI toggles between `LLM` and `GUARDIAN` modes. This follows the same pattern as Lab 2's PII masking toggle — a runtime flag on the agent API:
 

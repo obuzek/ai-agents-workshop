@@ -108,11 +108,20 @@ Lab 3 includes a grounding check that compares LLM-as-judge vs. [Granite Guardia
 ollama pull ibm/granite3.2-guardian:3b
 ```
 
-Verify it's working:
+3. Install the optional Python dependency:
+
+```bash
+uv sync --extra guardian
+```
+
+Verify Ollama has the model:
 
 ```bash
 ollama list | grep guardian
 ```
+
+!!! warning "Don't toggle without installing"
+    The **Grounding** toggle in Lab 3's UI will switch to Guardian mode, but the agent will crash if `ollama` isn't installed or the model isn't pulled. Only flip the toggle if you completed these steps.
 
 ???+ tip "Why Ollama?"
     Granite Guardian runs locally — no API keys, no cloud dependency. Your patient data never leaves your machine, which matters when you're building hallucination detection for healthcare data.

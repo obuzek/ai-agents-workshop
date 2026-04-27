@@ -24,13 +24,17 @@ dependencies = [
     { name = "langchain-openai" },
     { name = "langfuse" },
     { name = "langgraph" },
-    { name = "ollama" },
     { name = "openai" },
     { name = "presidio-analyzer" },
     { name = "presidio-anonymizer" },
     { name = "requests" },
     { name = "streamlit" },
     { name = "uvicorn" },
+]
+
+[package.optional-dependencies]
+guardian = [
+    { name = "ollama" },
 ]
 
 [package.dev-dependencies]
@@ -46,7 +50,7 @@ requires-dist = [
     { name = "langchain-openai", specifier = ">=0.3" },
     { name = "langfuse", specifier = ">=2.0" },
     { name = "langgraph", specifier = ">=0.4" },
-    { name = "ollama", specifier = ">=0.4" },
+    { name = "ollama", marker = "extra == 'guardian'", specifier = ">=0.4" },
     { name = "openai", specifier = ">=1.0" },
     { name = "presidio-analyzer", specifier = ">=2.2" },
     { name = "presidio-anonymizer", specifier = ">=2.2" },
@@ -54,6 +58,7 @@ requires-dist = [
     { name = "streamlit", specifier = ">=1.45" },
     { name = "uvicorn", specifier = ">=0.34" },
 ]
+provides-extras = ["guardian"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=8.0" }]

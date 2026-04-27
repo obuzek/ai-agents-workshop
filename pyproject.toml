@@ -16,8 +16,10 @@ dependencies = [
     "langfuse>=2.0",
     "presidio-analyzer>=2.2",
     "presidio-anonymizer>=2.2",
-    "ollama>=0.4",
 ]
+
+[project.optional-dependencies]
+guardian = ["ollama>=0.4"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["app", "lab1", "lab2", "lab3"]
