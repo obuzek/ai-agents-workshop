@@ -243,15 +243,15 @@ This matters because downstream systems (notification triggers, audit logs, care
 
 ---
 
-## What's Still Broken
+## Taking It to Production
 
-Lab 4 addresses data isolation and tool scoping, but it's not a complete security solution:
+The workshop system works, but a production deployment would add several layers. Because we've used structured outputs consistently — every concern is a typed Pydantic model with explicit fields — many of these are easier to implement than they'd be in a fully unstructured system.
 
-- **No real authentication.** Roles are simulated with a dropdown, and the application tells Postgres who's asking via `set_config()`. A Python bug that sets the wrong provider ID would leak data — RLS centralizes the filter, but doesn't verify the identity. In production, each provider would authenticate via JWT/OAuth, and the identity would flow into a per-provider database role so the policy checks `current_user` instead of trusting a session variable.
-- **The agent can still be manipulated.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
-- **Sharing is binary.** You can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows.
-- **Concern stability depends on the LLM.** The agent *usually* reuses existing IDs, but it's not guaranteed. A production system would add a deterministic reconciliation step after the agent runs.
-- **Traces aren't scoped by provider.** We secured agent *output* with RLS, but the Langfuse traces from Lab 2 are still visible to anyone with access to the Langfuse instance. In production, use [Langfuse's RBAC](https://langfuse.com/docs/rbac) to scope trace visibility per provider — the same identity that flows into `app.provider_id` should determine who can see which traces.
+- **Real authentication.** Roles are simulated with a dropdown, and the application tells Postgres who's asking via `set_config()`. A Python bug that sets the wrong provider ID would leak data — RLS centralizes the filter, but doesn't verify the identity. In production, each provider would authenticate via JWT/OAuth, and the identity would flow into a per-provider database role so the policy checks `current_user` instead of trusting a session variable.
+- **Input hardening.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
+- **Granular sharing.** Right now sharing is binary — you can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows. Structured concerns make this straightforward: the schema already separates the fields you'd want to control access to.
+- **Deterministic reconciliation.** The agent *usually* reuses existing concern IDs, but it's not guaranteed. A production system would add a post-agent reconciliation step that matches concerns by content rather than trusting the LLM to preserve IDs. Structured output makes this feasible — you can compare typed fields instead of parsing free text.
+- **Trace visibility.** We secured agent *output* with RLS, but the Langfuse traces from Lab 2 are still visible to anyone with access to the Langfuse instance. In production, use [Langfuse's RBAC](https://langfuse.com/docs/rbac) to scope trace visibility per provider — the same identity that flows into `app.provider_id` should determine who can see which traces.
 
 ---
 
