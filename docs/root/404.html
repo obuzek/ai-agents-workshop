@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page not found · AI Agents Workshop</title>
+  <script>
+    // GitHub Pages serves this file for any missing path. Before the site was split into
+    // editions, pages lived at the root (e.g. /ai-agents-workshop/lab-1/), so send any path
+    // outside a known edition to the same page under /oss/, keeping query and hash
+    // (slide links like slides/#/5 depend on the hash).
+    (function () {
+      var BASE = "/ai-agents-workshop/";
+      var EDITIONS = ["oss", "ibm"];
+      var path = location.pathname;
+      if (path.indexOf(BASE) !== 0) return;
+      var rest = path.slice(BASE.length);
+      var edition = rest.split("/")[0];
+      if (EDITIONS.indexOf(edition) !== -1) return;
+      location.replace(BASE + "oss/" + rest + location.search + location.hash);
+    })();
+  </script>
+</head>
+<body>
+  <h1>Page not found</h1>
+  <p>Try the <a href="/ai-agents-workshop/oss/">open-source edition</a>
+     or the <a href="/ai-agents-workshop/ibm/">IBM edition</a> of the AI Agents Workshop.</p>
+</body>
+</html>
