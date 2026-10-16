@@ -8,7 +8,7 @@ An **AI Agents Workshop** for ODSC — a 2-hour hands-on session teaching develo
 
 **Live Site:** two editions, each a self-contained MkDocs project under `docs/`:
 
-- Open source (`docs/opensource/`): https://obuzek.github.io/ai-agents-workshop/opensource/ — the bare URL and all pre-split links redirect here
+- Open source (`docs/oss/`): https://obuzek.github.io/ai-agents-workshop/oss/ — the bare URL and all pre-split links redirect here
 - IBM / watsonx (`docs/ibm/`): https://obuzek.github.io/ai-agents-workshop/ibm/
 
 The editions are intentionally duplicated, not shared — a change to one does not apply to the other.
@@ -22,8 +22,8 @@ ai-agents-workshop/
 │   ├── README.md                  # MkDocs setup and usage instructions
 │   ├── build.sh                   # Builds all editions + root redirects into docs/site/
 │   ├── root/                      # Site-root index.html / 404.html redirects
-│   ├── ibm/                       # IBM edition (same layout as opensource/)
-│   └── opensource/                # Open-source edition
+│   ├── ibm/                       # IBM edition (same layout as oss/)
+│   └── oss/                       # Open-source edition
 │       ├── base.yml               # Base configuration (theme, plugins, markdown)
 │       ├── mkdocs.yml             # Edition-specific config (inherits base.yml)
 │       ├── theme/                 # Custom theme assets (favicon, logos)
@@ -81,7 +81,7 @@ uv sync
 ### Docs
 
 ```bash
-cd docs/opensource && mkdocs serve   # local preview at http://127.0.0.1:8003
+cd docs/oss && mkdocs serve          # local preview at http://127.0.0.1:8003
 cd docs/ibm && mkdocs serve          # local preview at http://127.0.0.1:8004
 docs/build.sh                        # build both editions + root redirects into docs/site/
 ```

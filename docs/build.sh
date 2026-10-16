@@ -4,7 +4,7 @@
 set -euo pipefail
 
 cd "$(dirname "$0")"
-EDITIONS=(opensource ibm)
+EDITIONS=(oss ibm)
 
 rm -rf site
 for edition in "${EDITIONS[@]}"; do

@@ -161,7 +161,7 @@ def process_data(input_data: Dict) -> Dict:
 Test your documentation changes locally:
 
 ```bash
-cd docs/opensource
+cd docs/oss
 mkdocs serve
 ```
 

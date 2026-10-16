@@ -3,7 +3,7 @@ INHERIT: ./base.yml
 
 # Project Information
 site_name: "AI Agents Workshop"
-site_url: "https://obuzek.github.io/ai-agents-workshop/opensource/"
+site_url: "https://obuzek.github.io/ai-agents-workshop/oss/"
 site_description: "Hands-on workshop for building AI agents"
 site_author: "IBM Research"
 

@@ -6,12 +6,12 @@ The site is published in two editions, each a fully independent MkDocs project:
 
 | Edition | Source | URL |
 |---|---|---|
-| Open source | `docs/opensource/` | https://obuzek.github.io/ai-agents-workshop/opensource/ |
+| Open source | `docs/oss/` | https://obuzek.github.io/ai-agents-workshop/oss/ |
 | IBM (watsonx / TechZone) | `docs/ibm/` | https://obuzek.github.io/ai-agents-workshop/ibm/ |
 
 The bare URL (https://obuzek.github.io/ai-agents-workshop/) redirects to the open-source
 edition, and so does any link from before the split (e.g. `/ai-agents-workshop/lab-1/` →
-`/ai-agents-workshop/opensource/lab-1/`). That redirect logic lives in `root/`.
+`/ai-agents-workshop/oss/lab-1/`). That redirect logic lives in `root/`.
 
 ## Setup (one-time)
 
@@ -39,7 +39,7 @@ This installs `mkdocs` once globally. You do not need a virtual environment for 
 **Serve one edition locally:**
 
 ```bash
-cd docs/opensource && mkdocs serve   # http://127.0.0.1:8003
+cd docs/oss && mkdocs serve          # http://127.0.0.1:8003
 cd docs/ibm && mkdocs serve          # http://127.0.0.1:8004
 ```
 
@@ -59,9 +59,9 @@ wipe the other one.
 ```
 docs/
 ├── build.sh              # Builds all editions + root redirects into site/
-├── root/                 # Site-root index.html / 404.html (redirect to /opensource/)
-├── ibm/                  # IBM edition — same layout as opensource/
-└── opensource/
+├── root/                 # Site-root index.html / 404.html (redirect to /oss/)
+├── ibm/                  # IBM edition — same layout as oss/
+└── oss/
     ├── base.yml          # Base MkDocs configuration (theme, plugins, extensions)
     ├── mkdocs.yml        # Edition-specific configuration (inherits from base.yml)
     ├── theme/            # Custom theme files (favicon, logos)

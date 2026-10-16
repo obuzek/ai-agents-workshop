@@ -17,7 +17,7 @@ import requests
 #   1. Registers the function as a LangChain tool
 #   2. Generates a JSON schema from the type hints + docstring
 #   3. Makes the function callable by the LLM via tool-calling
-# Compare this to the manual approach (see docs/opensource/content/reference/manual-agent.md)
+# Compare this to the manual approach (see docs/oss/content/reference/manual-agent.md)
 # where you'd write both the function AND a separate JSON schema by hand.
 from langchain_core.tools import tool
 
