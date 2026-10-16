@@ -2,6 +2,17 @@
 
 This directory contains the MkDocs-based static site for the AI Agents Workshop.
 
+The site is published in two editions, each a fully independent MkDocs project:
+
+| Edition | Source | URL |
+|---|---|---|
+| Open source | `docs/opensource/` | https://obuzek.github.io/ai-agents-workshop/opensource/ |
+| IBM (watsonx / TechZone) | `docs/ibm/` | https://obuzek.github.io/ai-agents-workshop/ibm/ |
+
+The bare URL (https://obuzek.github.io/ai-agents-workshop/) redirects to the open-source
+edition, and so does any link from before the split (e.g. `/ai-agents-workshop/lab-1/` →
+`/ai-agents-workshop/opensource/lab-1/`). That redirect logic lives in `root/`.
+
 ## Setup (one-time)
 
 MkDocs is managed as a global `uv` tool, separate from the lab code environment.
@@ -25,32 +36,36 @@ This installs `mkdocs` once globally. You do not need a virtual environment for 
 
 ## Development
 
-**Serve locally** (from the `docs/` directory):
+**Serve one edition locally:**
 
 ```bash
-cd docs
-mkdocs serve
+cd docs/opensource && mkdocs serve   # http://127.0.0.1:8003
+cd docs/ibm && mkdocs serve          # http://127.0.0.1:8004
 ```
 
-Visit `http://127.0.0.1:8003` to view the site.
-
-**Deploy to GitHub Pages:**
+**Build everything** (both editions plus the root redirects) into `docs/site/`:
 
 ```bash
-cd docs
-mkdocs gh-deploy
+docs/build.sh            # extra args are passed to mkdocs build
 ```
 
-This builds the site and pushes it to the `gh-pages` branch, making it available at `https://obuzek.github.io/ai-agents-workshop/`.
+**Deploy:** GitHub Actions (`.github/workflows/deploy-docs.yml`) runs `build.sh` and pushes
+`docs/site/` to the `gh-pages` branch on every push to `main` that touches `docs/`.
+`mkdocs gh-deploy` no longer works here — it only publishes a single edition and would
+wipe the other one.
 
 ## Project Structure
 
 ```
 docs/
-├── base.yml              # Base MkDocs configuration (theme, plugins, extensions)
-├── mkdocs.yml            # Workshop-specific configuration (inherits from base.yml)
-├── theme/                # Custom theme files (favicon, logos)
-└── content/              # Documentation content (docs_dir in base.yml)
+├── build.sh              # Builds all editions + root redirects into site/
+├── root/                 # Site-root index.html / 404.html (redirect to /opensource/)
+├── ibm/                  # IBM edition — same layout as opensource/
+└── opensource/
+    ├── base.yml          # Base MkDocs configuration (theme, plugins, extensions)
+    ├── mkdocs.yml        # Edition-specific configuration (inherits from base.yml)
+    ├── theme/            # Custom theme files (favicon, logos)
+    └── content/          # Documentation content (docs_dir in base.yml)
     ├── .pages            # Navigation structure
     ├── index.md          # Home page
     ├── slides.md         # Presentation page (iframe wrapper)
@@ -68,7 +83,7 @@ docs/
 
 ## Editing slides
 
-Slides live in `content/slides.md` and are rendered by the
+Slides live in `<edition>/content/slides.md` and are rendered by the
 [mkdocs-revealjs](https://pypi.org/project/mkdocs-revealjs/) plugin.
 Edit the file and the dev server picks up changes automatically.
 

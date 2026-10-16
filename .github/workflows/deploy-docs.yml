@@ -42,14 +42,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build and deploy to GitHub Pages
+      - name: Build all editions
+        run: docs/build.sh
+
+      # mkdocs gh-deploy only publishes a single site, so push the combined build directly.
+      - name: Deploy to GitHub Pages
         run: |
-          cd docs
-          mkdocs gh-deploy --force --clean --verbose --remote-name origin
+          uvx ghp-import==2.1.0 --no-jekyll --push --force --remote origin \
+            --branch gh-pages --message "Deploy docs from ${{ github.sha }}" docs/site
 
       - name: Summary
         run: |
           echo "✅ Documentation deployed successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🌐 Site URL: https://obuzek.github.io/ai-agents-workshop/" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 Open-source edition: https://obuzek.github.io/ai-agents-workshop/opensource/" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 IBM edition: https://obuzek.github.io/ai-agents-workshop/ibm/" >> $GITHUB_STEP_SUMMARY
           echo "📝 Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
