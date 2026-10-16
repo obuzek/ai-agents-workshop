@@ -56,8 +56,6 @@ plugins:
     center: false
     hash: true
     mermaid: true
-    width: 1280
-    height: 720
     minScale: 0.3
     maxScale: 2.0
     theme:
