@@ -9,7 +9,7 @@ revealjs:
 
 <p style="font-size:0.7em;letter-spacing:0.08em;text-transform:uppercase;color:#78a9ff;margin-top:1em">IBM TechXchange 2026</p>
 
-<h1 style="color:#ffffff;text-transform:none;font-weight:300;font-size:2.4em;line-height:1.1;margin-top:0.6em">Building <span style="color:#78a9ff;font-weight:600">Responsible</span><br>AI Agents with Open Source</h1>
+<h1 style="color:#ffffff;text-transform:none;font-weight:300;font-size:2.4em;line-height:1.1;margin-top:0.6em">Building <span style="color:#78a9ff;font-weight:600">Responsible</span><br>AI Agents</h1>
 
 <div class="push-bottom" style="border-left:4px solid #0f62fe;padding-left:0.8em;margin-bottom:1.2em">
 <p style="font-size:0.85em;font-weight:600;margin:0;color:#ffffff">Olivia Buzek</p>
