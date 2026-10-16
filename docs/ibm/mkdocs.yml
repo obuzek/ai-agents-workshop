@@ -17,6 +17,22 @@ copyright: Copyright &copy; 2025- IBM Research
 # Theme settings
 theme:
   language: en
+  # IBM Carbon colors; the custom palette values live in content/stylesheets/carbon.css
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - announce.dismiss # Button to dismiss the current temporary announcement
     - content.action.edit
@@ -38,6 +54,9 @@ theme:
     - toc.integrate # Integrate page TOC in left sidebar - wider page
   icon:
     edit: "material/pencil-outline"
+
+extra_css:
+  - stylesheets/carbon.css
 
 markdown_extensions:
   pymdownx.magiclink:
