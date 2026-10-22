@@ -13,7 +13,7 @@ import threading
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 
-from app.llm import check_llm_config
+from lab1.agent.agent import check_orchestrate_config
 from lab1.agent.models import Concern
 from lab1.agent.store import get_concerns, load_store, resolve_concern
 
@@ -22,12 +22,12 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app):
-    check_llm_config()
+    check_orchestrate_config()
     logger.info(
         "\n"
         "╔══════════════════════════════════════════════════════════╗\n"
         "║  Lab 1 Agent — The Naive Agent                          ║\n"
-        "║  Runs the ReAct agent and stores concerns as JSON        ║\n"
+        "║  ReAct agent on watsonx Orchestrate; concerns as JSON    ║\n"
         "║  http://localhost:8001/docs                              ║\n"
         "╚══════════════════════════════════════════════════════════╝"
     )

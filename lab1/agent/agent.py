@@ -1,101 +1,150 @@
 """
-The naive agent — a ReAct tool-calling loop powered by LangGraph.
+The naive agent — a ReAct tool-calling loop running on IBM watsonx Orchestrate.
 
 The agent receives a patient ID and a goal. It decides which tools to call,
 in what order, and how to interpret the results. When it has gathered enough
 information, it returns structured concerns.
 
-This is the core of Lab 1: a real agent loop where the LLM drives the
-investigation. LangGraph manages the ReAct cycle (observe, reason, act)
-and structured output ensures we get valid JSON every time.
+Unlike a LangGraph agent, the loop does not run in this process. The agent
+(agent.yaml) and its tools (tools.py) are deployed to Orchestrate with
+deploy.py; Orchestrate runs the ReAct cycle (observe, reason, act) on its
+side. This module is just a client: it sends one message over the REST API,
+waits for the run to finish, and validates the answer.
 """
 
 import logging
+import os
+import sys
+import time
 from datetime import datetime, timezone
 
-# get_chat_model() returns the LangChain chat model for whatever provider
-# is configured via LLM_PROVIDER env var (default: Gemini).
-# See app/llm.py for provider details and .env-example for configuration.
-from app.llm import get_chat_model
+import requests
+from dotenv import load_dotenv
+from pydantic import ValidationError
 
-# create_react_agent builds a full ReAct agent graph:
-#   1. Send messages to the LLM
-#   2. If the LLM returns tool calls → execute them, append results, go to 1
-#   3. If the LLM returns text → done
-# This replaces ~100 lines of manual loop code.
-from langgraph.prebuilt import create_react_agent
-
-from lab1.agent.tools import ALL_TOOLS
 from lab1.agent.models import PatientConcerns
 
+load_dotenv()
 logger = logging.getLogger(__name__)
 
-# The system prompt defines the agent's persona and output expectations.
-# This is the single most important piece of the agent — it controls what
-# the LLM investigates, how it reasons, and what format it returns.
-# Getting this right is an iterative process (and a big part of the workshop).
-SYSTEM_PROMPT = """\
-You are a clinical inbox assistant for a primary care practice. You review a
-patient's record and portal messages, then surface actionable concerns for the
-doctor. Think of yourself as a resident pre-rounding: your job is to organize
-what the attending needs to see, not to make decisions.
+# Where the agent lives. WXO_INSTANCE_URL is the "API endpoint" shown under
+# Settings -> API details in the Orchestrate UI. WXO_API_KEY is an IBM Cloud
+# API key for a user with access to that instance.
+WXO_INSTANCE_URL = os.environ.get("WXO_INSTANCE_URL", "").rstrip("/")
+WXO_API_KEY = os.environ.get("WXO_API_KEY", "")
+WXO_AGENT_NAME = os.environ.get("WXO_AGENT_NAME", "lakeview_inbox_agent")
 
-A "concern" is anything that needs the doctor's attention:
-- A patient message that hasn't been answered
-- An abnormal or trending lab value
-- A medication issue (expiring refill, reported side effect)
-- An overdue follow-up or screening
-- A symptom the patient reports
-- An administrative request (scheduling, referral, records)
+IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
+RUN_TIMEOUT = 300  # seconds to wait for one agent run
+POLL_INTERVAL = 2  # seconds between run status checks
+FINAL_STATUSES = {"completed", "failed", "cancelled", "expired", "requires_input"}
 
-HOW TO INVESTIGATE:
-Use the available tools to explore the patient's record. You decide what to
-look at and in what order. Check labs, encounters, medications — whatever is
-relevant to the concerns you find. Gather evidence before concluding.
-
-OUTPUT RULES:
-- "summary" must be ONE sentence. State the clinical fact, not a paragraph.
-  Good: "TSH trending up from 3.1 to 4.8 over 6 months with new resting HR increase."
-  Bad: "The patient has been experiencing a gradual increase in TSH levels..."
-- "action" must say what the DOCTOR needs to do. Be specific.
-  Good: "Reply to portal message — patient is requesting levothyroxine trial"
-  Good: "Review TSH trend and correlate with HR increase at next visit"
-  Bad: "Monitor" or "Follow up"
-- "evidence" should be specific values and dates, not descriptions.
-  Good: "TSH 4.8 mIU/L (2026-04-01), up from 3.1 (2025-06-18)"
-  Bad: "Patient has elevated TSH"
-- "related" MUST include the specific message_ids, lab_dates, conditions, and
-  encounter_dates that are relevant. These become links in the UI.
-- Only surface information that is IN the record. Do not infer diagnoses.
-- Do not draft replies or make clinical recommendations.
-"""
+# Orchestrate's react_core agents do not support constrained decoding the way
+# LangGraph's response_format does, so the model can return malformed JSON.
+# When that happens we tell it what was wrong and ask once more.
+MAX_FORMAT_RETRIES = 1
 
 
-def _build_agent():
-    """Build the LangGraph ReAct agent.
-
-    This wires together three things:
-    - The LLM (what does the thinking)
-    - The tools (what the LLM can do)
-    - The response format (what shape the final answer must be)
-    """
-    llm = get_chat_model()
-    return create_react_agent(
-        model=llm,
-        tools=ALL_TOOLS,
-        # The system prompt is injected at the start of every conversation
-        prompt=SYSTEM_PROMPT,
-        # response_format tells LangGraph to use the LLM's structured output
-        # mode. After the agent finishes calling tools, LangGraph makes one
-        # final LLM call with constrained decoding so the output is guaranteed
-        # to be valid JSON matching our Pydantic model. No parsing needed.
-        response_format=PatientConcerns,
-    )
+def check_orchestrate_config():
+    """Verify the Orchestrate connection settings exist. Call at agent startup."""
+    missing = [name for name in ("WXO_INSTANCE_URL", "WXO_API_KEY") if not os.environ.get(name)]
+    if missing:
+        logger.error(
+            "Missing %s in .env. See .env-example (watsonx Orchestrate section).",
+            ", ".join(missing),
+        )
+        sys.exit(1)
 
 
-# Build the agent once at import time and reuse it across calls.
-# The agent is stateless — all state lives in the messages we pass in.
-_agent = _build_agent()
+class _OrchestrateClient:
+    """Minimal client for the Orchestrate runs API, authenticated via IBM Cloud IAM."""
+
+    def __init__(self):
+        self._token = ""
+        self._token_expires = 0.0
+        self._agent_id = ""
+
+    def _headers(self) -> dict:
+        # IAM tokens last an hour; refresh a minute early.
+        if time.time() > self._token_expires - 60:
+            resp = requests.post(
+                IAM_TOKEN_URL,
+                data={"grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": WXO_API_KEY},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            body = resp.json()
+            self._token = body["access_token"]
+            self._token_expires = body["expiration"]
+        return {"Authorization": f"Bearer {self._token}"}
+
+    def _get_agent_id(self) -> str:
+        if not self._agent_id:
+            resp = requests.get(f"{WXO_INSTANCE_URL}/v1/orchestrate/agents", headers=self._headers(), timeout=30)
+            resp.raise_for_status()
+            matches = [a["id"] for a in resp.json() if a["name"] == WXO_AGENT_NAME]
+            if not matches:
+                raise RuntimeError(
+                    f"Agent '{WXO_AGENT_NAME}' not found on Orchestrate. "
+                    "Deploy it first: uv run python -m lab1.agent.deploy"
+                )
+            self._agent_id = matches[0]
+        return self._agent_id
+
+    def run(self, message: str, thread_id: str | None = None) -> tuple[str, str]:
+        """Send one message to the agent and wait for its reply.
+
+        Returns (reply_text, thread_id). Pass thread_id back in to continue
+        the same conversation.
+        """
+        payload = {"agent_id": self._get_agent_id(), "message": {"role": "user", "content": message}}
+        if thread_id:
+            payload["thread_id"] = thread_id
+        resp = requests.post(f"{WXO_INSTANCE_URL}/v1/orchestrate/runs", headers=self._headers(), json=payload, timeout=30)
+        resp.raise_for_status()
+        run = resp.json()
+
+        # Runs are asynchronous: poll until Orchestrate finishes the ReAct loop.
+        deadline = time.time() + RUN_TIMEOUT
+        while True:
+            resp = requests.get(
+                f"{WXO_INSTANCE_URL}/v1/orchestrate/runs/{run['run_id']}", headers=self._headers(), timeout=30
+            )
+            resp.raise_for_status()
+            status = resp.json()
+            if status.get("status") in FINAL_STATUSES:
+                break
+            if time.time() > deadline:
+                raise TimeoutError(f"Orchestrate run {run['run_id']} did not finish in {RUN_TIMEOUT}s")
+            time.sleep(POLL_INTERVAL)
+
+        if status["status"] != "completed":
+            raise RuntimeError(f"Orchestrate run {status['status']}: {status.get('last_error')}")
+
+        reply = status["result"]["data"]["message"]
+        _log_tool_calls(reply)
+        text = "".join(part.get("text", "") for part in reply["content"] if part.get("response_type") == "text")
+        return text, run["thread_id"]
+
+
+def _log_tool_calls(reply: dict):
+    """Log which tools the agent chose, from the run's step history."""
+    for step in reply.get("step_history") or []:
+        for detail in step.get("step_details", []):
+            for call in detail.get("tool_calls", []) if detail.get("type") == "tool_calls" else []:
+                logger.info("  tool call: %s(%s)", call["name"], call.get("args", {}))
+
+
+def _strip_code_fence(text: str) -> str:
+    """Remove a ```json ... ``` wrapper if the model added one despite instructions."""
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1] if "\n" in text else ""
+        text = text.rsplit("```", 1)[0]
+    return text.strip()
+
+
+_client = _OrchestrateClient()
 
 
 def process_patient(patient_id: str) -> PatientConcerns:
@@ -109,19 +158,25 @@ def process_patient(patient_id: str) -> PatientConcerns:
         "any concerns you find. When done, output your findings."
     )
 
-    logger.info("[%s] Starting agent run", patient_id)
+    logger.info("[%s] Starting agent run on Orchestrate", patient_id)
+    text, thread_id = _client.run(user_message)
 
-    # invoke() runs the full ReAct loop to completion:
-    #   user message → LLM → tool calls → tool results → LLM → ... → structured output
-    # The result dict contains "messages" (full conversation) and
-    # "structured_response" (the parsed PatientConcerns object).
-    result = _agent.invoke(
-        {"messages": [{"role": "user", "content": user_message}]},
-    )
-
-    # The structured response is already a PatientConcerns instance —
-    # no JSON parsing, no code fence stripping, no manual field mapping.
-    structured = result["structured_response"]
+    # The agent's instructions ask for JSON matching PatientConcerns. Validate
+    # it here; if it's malformed, show the model the error and ask again.
+    for attempt in range(MAX_FORMAT_RETRIES + 1):
+        try:
+            structured = PatientConcerns.model_validate_json(_strip_code_fence(text))
+            break
+        except ValidationError as e:
+            if attempt == MAX_FORMAT_RETRIES:
+                raise
+            logger.warning("[%s] Reply was not valid PatientConcerns JSON; asking again", patient_id)
+            text, thread_id = _client.run(
+                "Your reply was not valid JSON for the required schema. Error:\n"
+                f"{e}\n"
+                "Reply again with ONLY the corrected JSON object.",
+                thread_id=thread_id,
+            )
 
     # Patch in the patient_id and timestamps — the LLM sometimes gets
     # these wrong or leaves them empty, so we normalize here.
