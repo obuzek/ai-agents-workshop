@@ -104,8 +104,15 @@ The script:
 
 - Finds `~/Downloads/apikey.json`, and asks you to confirm before using it.
 - Checks the key with IBM Cloud and shows the user and account it belongs to.
-- Asks for the **Orchestrate instance URL**, which your instructor provides.
+- Asks which **watsonx Orchestrate instance** to use (see below).
 - Saves everything into `.env`, creating `.env` from `.env-example` if needed.
+
+When it asks for the Orchestrate instance:
+
+1. In cloud.ibm.com, open the **Resource list** from the menu on the left.
+2. Expand **AI / Machine Learning** and click the workshop's **watsonx Orchestrate** instance.
+3. In the details panel, copy the **CRN**. It starts with `crn:v1:` and has a copy button next to it.
+4. Paste it into the script. If you already have the instance's API endpoint URL, which starts with `https://api.`, you can paste that instead.
 
 You should see:
 
@@ -115,7 +122,7 @@ You should see:
 ✓ Orchestrate instance is reachable with this key
 ```
 
-If the file is somewhere else, pass its path: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`. If you don't have the file, run the script without arguments and paste the key when it asks. The key won't appear on screen as you paste it. You can re-run the script at any time to change the key or the instance URL.
+If the file is somewhere else, pass its path: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`. If you don't have the file, run the script without arguments and paste the key when it asks. The key won't appear on screen as you paste it. You can re-run the script at any time to change the key or the instance.
 
 ??? tip "Using the `ibmcloud` CLI too?"
     You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same key file:

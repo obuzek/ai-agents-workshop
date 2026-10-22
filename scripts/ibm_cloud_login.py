@@ -7,7 +7,7 @@ Safe to re-run: it updates the existing values and leaves the rest of .env alone
 Usage:
     uv run python scripts/ibm_cloud_login.py                      # looks for ~/Downloads/apikey.json, else asks
     uv run python scripts/ibm_cloud_login.py path/to/apikey.json
-    uv run python scripts/ibm_cloud_login.py --instance-url https://api.<region>.watson-orchestrate.cloud.ibm.com/instances/<id>
+    uv run python scripts/ibm_cloud_login.py --instance crn:v1:bluemix:public:watsonx-orchestrate:<region>:a/<account>:<guid>::
 """
 
 import argparse
@@ -72,6 +72,25 @@ def describe_token(token: str) -> str:
     return f"{who} (account {account})"
 
 
+def resolve_instance_url(value: str) -> str:
+    """Turn what the user pasted (an instance CRN or the API endpoint URL) into the API endpoint URL.
+
+    The endpoint is https://api.<region>.watson-orchestrate.cloud.ibm.com/instances/<guid>, and an
+    instance CRN is crn:v1:bluemix:public:<service>:<region>:a/<account>:<guid>::, so the CRN has
+    everything needed.
+    """
+    value = value.strip()
+    if value.startswith("https://"):
+        return value.rstrip("/")
+    if value.startswith("crn:"):
+        parts = value.split(":")
+        if len(parts) >= 8 and parts[5] and parts[7]:
+            region, guid = parts[5], parts[7]
+            return f"https://api.{region}.watson-orchestrate.cloud.ibm.com/instances/{guid}"
+        sys.exit("That doesn't look like a complete CRN. Copy it again from the Orchestrate instance's details.")
+    sys.exit("Paste either the instance's CRN (starts with crn:) or its API endpoint URL (starts with https://).")
+
+
 def check_instance(instance_url: str, token: str) -> str | None:
     """Read-only call to the Orchestrate instance. Returns an error message, or None if it worked."""
     try:
@@ -106,7 +125,7 @@ def set_env_value(text: str, key: str, value: str) -> str:
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("key_file", nargs="?", type=Path, help="path to the apikey.json you downloaded")
-    parser.add_argument("--instance-url", help="Orchestrate API endpoint (Settings -> API details)")
+    parser.add_argument("--instance", help="Orchestrate instance CRN, or its API endpoint URL")
     args = parser.parse_args()
 
     if not ENV_FILE.exists():
@@ -118,13 +137,19 @@ def main():
     token = get_iam_token(api_key)
     print(f"✓ API key works: {describe_token(token)}")
 
-    instance_url = args.instance_url
-    if not instance_url:
+    instance = args.instance
+    if not instance:
+        # Ignore the .env-example placeholder; only offer a real saved value as the default.
         existing = current.get("WXO_INSTANCE_URL") or ""
-        prompt = "Orchestrate instance URL"
-        prompt += f" [{existing}]: " if existing else " (from your instructor; Enter to skip): "
-        instance_url = input(prompt).strip() or existing
-    instance_url = instance_url.rstrip("/")
+        existing = "" if "<" in existing else existing
+        print(
+            "\nNext, the workshop's watsonx Orchestrate instance. In cloud.ibm.com: Resource list ->\n"
+            "AI / Machine Learning -> the Orchestrate instance -> copy its CRN from the details panel."
+        )
+        prompt = "Paste the instance CRN (or its API endpoint URL)"
+        prompt += f" [Enter keeps {existing}]: " if existing else ": "
+        instance = input(prompt).strip() or existing
+    instance_url = resolve_instance_url(instance) if instance else ""
 
     text = ENV_FILE.read_text()
     text = set_env_value(text, "WXO_API_KEY", api_key)
@@ -135,7 +160,7 @@ def main():
     print(f"✓ Saved WXO_API_KEY{' and WXO_INSTANCE_URL' if instance_url else ''} to {ENV_FILE}")
 
     if not instance_url:
-        print("! No Orchestrate instance URL set. Re-run with --instance-url once you have it.")
+        print("! No Orchestrate instance URL set. Re-run the script once you have its CRN.")
         return
     error = check_instance(instance_url, token)
     if error:
