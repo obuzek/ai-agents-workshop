@@ -1,0 +1,10 @@
+# Code Engine local-source uploads — only the EHR API needs to ship.
+*
+!deploy/
+!deploy/**
+!app/
+!app/**
+!data/
+!data/patients/
+!data/patients/**
+**/__pycache__
