@@ -1,14 +1,14 @@
 # DO NOT EDIT, see mkdocs.yml
 
 # Repository Information
-edit_uri: "edit/main/docs/content"
+edit_uri: "edit/main/docs/ibm/content"
 docs_dir: "content"
 site_dir: "site"
 remote_branch: "gh-pages"
 remote_name: "github"
 
 # Server info
-dev_addr: "127.0.0.1:8003"
+dev_addr: "127.0.0.1:8004"
 
 # Theme
 theme:

@@ -161,7 +161,7 @@ def process_data(input_data: Dict) -> Dict:
 Test your documentation changes locally:
 
 ```bash
-cd docs
+cd docs/oss
 mkdocs serve
 ```
 
@@ -172,7 +172,8 @@ Visit `http://127.0.0.1:8003` to preview your changes.
 Ensure the site builds without errors:
 
 ```bash
-mkdocs build
+cd docs
+./build.sh
 ```
 
 ## Pull Request Process

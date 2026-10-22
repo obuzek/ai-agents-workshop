@@ -1,0 +1,280 @@
+# Lab 4: Securing Data Used By The Agent
+
+**Duration:** ~25 minutes
+
+???+ abstract "What You'll Secure"
+    Labs 1-3 store all agent output in a single JSON file with no access control. Any code path can read or overwrite any patient's concerns. Lab 4 moves the concern store to Postgres with Row-Level Security, scopes agent tools to authorized patients, and makes concerns stable across runs.
+
+---
+
+## Where We Are in the ADLC
+
+Lab 1 built the agent. Lab 2 made it observable. Lab 3 improved its reliability. Lab 4 is **Governance** — ensuring the agent's output is as protected as the data it reads.
+
+The key insight: **agent-generated artifacts are sensitive data too.** The agent reads patient records and produces clinical concerns. Those concerns contain PHI. They need the same access control as the source data — and in a multi-provider practice, they need *more*, because each provider's agent may reach different conclusions about the same patient.
+
+---
+
+## Learning Objectives
+
+By the end of this lab, you will:
+
+- [x] Move agent output from a flat file to Postgres with Row-Level Security
+- [x] Understand why access control belongs in the data layer, not the application layer
+- [x] Scope agent tools to a single patient to prevent cross-patient data leakage
+- [x] Test an adversarial prompt injection that tries to access another patient's data
+- [x] Make concerns stable across agent runs (update by ID, not replace wholesale)
+- [x] Share concerns between providers with explicit, auditable grants
+
+---
+
+## Setup
+
+### Start Postgres
+
+Lab 4 stores concerns in Postgres. Start it with Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+Verify it's running:
+
+```bash
+docker compose exec postgres psql -U agent -d agent_store \
+  -c "SELECT id, display_name, role FROM providers ORDER BY id;"
+```
+
+You should see:
+
+```
+      id       |    display_name     |        role
+---------------+---------------------+---------------------
+ dr_kim        | Dr. Sarah Kim, MD   | physician
+ maria_gonzalez| Maria Gonzalez      | medical_assistant
+ rachel_torres | Rachel Torres, NP   | nurse_practitioner
+(3 rows)
+```
+
+### Install the Postgres driver
+
+```bash
+uv sync --all-extras
+```
+
+### Start the servers
+
+You need two terminals for Lab 4:
+
+**Terminal 1 — UI (auto-starts the EHR API):**
+
+```bash
+uv run streamlit run app/ui.py --server.port 8501
+```
+
+**Terminal 2 — Agent API (with Postgres):**
+
+```bash
+uv run uvicorn lab4.agent.api:app --port 8001
+```
+
+!!! tip "No role dropdown?"
+    If the **Active Role** dropdown doesn't appear, refresh the page. The UI loads before the agent API finishes connecting to Postgres, so the first request for providers returns empty. A page refresh fixes it.
+
+???+ note "No Docker?"
+    If you can't run Docker, Lab 4 still works — just skip the `DATABASE_URL` variable. The agent falls back to the JSON file store from Labs 1-3. You'll miss the RLS demo and role switching, but concern stability and tool scoping still work.
+
+---
+
+## What Changed from Lab 3
+
+Open the Lab 4 code side by side with Lab 3. Three things changed:
+
+### 1. The store moved to Postgres
+
+Open `lab4/agent/store.py`. Instead of `load_store()` / `save_store()` working on a flat JSON file, you'll see:
+
+- `get_concerns(patient_id, provider_id)` — fetches concerns from Postgres, filtered by RLS
+- `save_concerns(patient_id, provider_id, concerns)` — upserts: updates existing concern IDs, inserts new ones, leaves unmentioned concerns untouched
+- `share_concern(concern_id, shared_with, shared_by)` — creates an explicit share grant
+
+Every database operation calls `set_config('app.provider_id', ...)` on the connection. This is how the application tells Postgres "who's asking" — and Postgres uses it to enforce RLS policies.
+
+### 2. Tools are scoped to one patient
+
+Open `lab4/agent/tools.py`. Instead of a flat list of tools, there's a factory:
+
+```python
+def create_tools(authorized_patient_id: str) -> list:
+```
+
+Every data-access tool checks `patient_id == authorized_patient_id` before making the API call. If the agent tries to access another patient's data, it gets an explicit denial.
+
+### 3. Concerns are stable across runs
+
+Open `lab4/agent/agent.py` and look at `primary_agent_node`. The agent receives its previous concerns as context:
+
+```
+EXISTING CONCERNS (from your previous runs):
+[... JSON list of current concerns with IDs ...]
+
+INSTRUCTIONS FOR EXISTING CONCERNS:
+- If an existing concern is still valid, include it with the SAME id.
+- If you find a new concern, create it with a new unique id.
+- Concerns you omit will remain in the store unchanged.
+```
+
+This means running the agent twice doesn't wipe out previous work — it builds on it.
+
+---
+
+## Step 1: Run the Agent as Dr. Kim
+
+In the UI, you should see an **Active Role** dropdown at the top of the page, above the patient list. It should show "Dr. Sarah Kim, MD."
+
+Pick a patient and click **Run Agent**. Watch the concerns appear.
+
+Now open a `psql` session and verify the concerns are in the database:
+
+```bash
+docker compose exec postgres psql -U agent -d agent_store \
+  -c "SELECT id, title, provider_id FROM concerns LIMIT 5;"
+```
+
+Every concern has `provider_id = 'dr_kim'` — because Dr. Kim's agent created them.
+
+---
+
+## Step 2: See RLS in Action
+
+Switch the role to **Rachel Torres, NP** using the dropdown.
+
+Two things happen:
+
+1. The **patient list** shrinks — Rachel Torres only has access to patients 1-6
+2. The **concerns panel** is empty — even for patients Rachel Torres can access
+
+Why? Because RLS. Look at the policy in `lab4/db/init.sql`:
+
+```sql
+CREATE POLICY provider_concern_access ON concerns
+    FOR ALL
+    USING (
+        provider_id = current_setting('app.provider_id', true)
+        OR id IN (
+            SELECT concern_id FROM shared_concerns
+            WHERE shared_with = current_setting('app.provider_id', true)
+        )
+    );
+```
+
+Rachel Torres can only see concerns where `provider_id = 'rachel_torres'` or the concern was explicitly shared with them. Dr. Kim's concerns are invisible — **even though they're in the same table, for the same patients.**
+
+???+ question "What does RLS buy us if the app sets the identity?"
+    Good question. The application calls `set_config('app.provider_id', ...)` on every connection — so a Python bug that sets the wrong provider ID *would* leak data. RLS doesn't give us true identity-level isolation here; for that, each provider would need their own database role, and the policy would check `current_user` instead of a session variable.
+
+    What RLS *does* buy us: **you can't forget the filter.** Compare these two approaches:
+
+    - **Application-layer filtering:** every query must include `WHERE provider_id = :provider_id`. Forget it in one query �� an ORM eager-load, a debug endpoint, a migration — and data leaks silently.
+    - **RLS:** the policy applies to **every query**, including ones you haven't written yet. A new developer can write `SELECT * FROM concerns` and only see what the session allows.
+
+    RLS centralizes the access rule in one place (the policy) instead of distributing it across every query in the codebase. It's defense-in-depth, not a complete security boundary. In production, you'd pair it with proper authentication — JWT claims flowing into database roles — so the identity assertion doesn't depend on application code.
+
+---
+
+## Step 3: Run the Agent as Rachel Torres
+
+While still in the Rachel Torres role, run the agent on one of the available patients (1-6).
+
+Rachel Torres's agent generates its own concerns — independently of Dr. Kim's. Check the database:
+
+```bash
+docker compose exec postgres psql -U agent -d agent_store \
+  -c "SELECT id, title, provider_id FROM concerns WHERE patient_id = 'patient-001' ORDER BY provider_id;"
+```
+
+You'll see two sets of concerns for the same patient — one from `dr_kim`, one from `rachel_torres`. The agent is a **delegate** — its output inherits the identity of whoever invoked it.
+
+---
+
+## Step 4: Share a Concern
+
+Switch back to Dr. Kim. Find a concern and click **Share** → select Rachel Torres.
+
+Now switch to Rachel Torres. The shared concern appears alongside Rachel Torres's own concerns, with a "Shared by Dr. Sarah Kim, MD" label.
+
+Check the database:
+
+```bash
+docker compose exec postgres psql -U agent -d agent_store \
+  -c "SELECT sc.concern_id, p.display_name as shared_by, sc.shared_with
+      FROM shared_concerns sc JOIN providers p ON sc.shared_by = p.id;"
+```
+
+Sharing is an **explicit, auditable grant**. The default is isolation. Access requires a deliberate action — and that action is logged.
+
+---
+
+## Step 5: Test Tool Scoping
+
+Open patient Elena Vasquez (patient-005) and run the agent. Look at the Langfuse trace for this run.
+
+Elena's messages include one that mentions her neighbor Patricia Kowalski (patient-001) and asks the doctor to check if they should worry about the same thing. Watch the trace to see what happens:
+
+1. The agent reads Elena's messages and sees the mention of Patricia Kowalski
+2. The agent calls `list_patients()` — this succeeds (the clinic directory is unscoped)
+3. The agent may try to call a data tool for Patricia's patient ID — and gets: `"Access denied: you are only authorized to access patient patient-005"`
+4. The agent recovers and explains it can't access other patients' records
+
+This is **least-privilege tool scoping**. The agent can see who's in the practice but cannot pull clinical data for unauthorized patients.
+
+???+ note "In production"
+    In a production system, you'd log the denial to Langfuse silently rather than returning it as a tool response. The doctor doesn't need to see that the agent tried and failed — but the security team does.
+
+---
+
+## Step 6: Verify Concern Stability
+
+Pick a patient you already ran as Dr. Kim. Note the concerns in the UI — titles, urgency, count. Now click **Run Agent** again.
+
+Since no new data has arrived, the concerns should come back the same (or very similar). The agent receives its previous concerns as context and reuses their IDs rather than generating new ones from scratch each time.
+
+This matters because downstream systems (notification triggers, audit logs, care coordination) can reference concern IDs and know they're stable.
+
+---
+
+## Taking It to Production
+
+The workshop system works, but a production deployment would add several layers. Because we've used structured outputs consistently — every concern is a typed Pydantic model with explicit fields — many of these are easier to implement than they'd be in a fully unstructured system.
+
+- **Real authentication.** Roles are simulated with a dropdown, and the application tells Postgres who's asking via `set_config()`. A Python bug that sets the wrong provider ID would leak data — RLS centralizes the filter, but doesn't verify the identity. In production, each provider would authenticate via JWT/OAuth, and the identity would flow into a per-provider database role so the policy checks `current_user` instead of trusting a session variable.
+- **Input hardening.** Tool scoping prevents cross-patient data access, but the agent could still be influenced by adversarial content within the authorized patient's data. Defense-in-depth (output validation from Lab 3 + input sanitization) is needed.
+- **Granular sharing.** Right now sharing is binary — you can share a concern or not. A real system might need time-limited shares, read-only vs. read-write, or approval workflows. Structured concerns make this straightforward: the schema already separates the fields you'd want to control access to.
+- **Deterministic reconciliation.** The agent *usually* reuses existing concern IDs, but it's not guaranteed. A production system would add a post-agent reconciliation step that matches concerns by content rather than trusting the LLM to preserve IDs. Structured output makes this feasible — you can compare typed fields instead of parsing free text.
+- **Trace visibility.** We secured agent *output* with RLS, but the Langfuse traces from Lab 2 are still visible to anyone with access to the Langfuse instance. In production, use [Langfuse's RBAC](https://langfuse.com/docs/rbac) to scope trace visibility per provider — the same identity that flows into `app.provider_id` should determine who can see which traces.
+
+---
+
+## What Did We Learn?
+
+| Principle | Implementation |
+|---|---|
+| **Centralized access control** | Postgres RLS — one policy enforces filtering on every query, not scattered WHERE clauses |
+| **Agent output inherits identity** | Concerns are scoped to the provider who ran the agent |
+| **Default deny, explicit grant** | RLS blocks all access; sharing creates targeted exceptions |
+| **Least-privilege tools** | Agent can only access the patient it's authorized for |
+| **Stable artifacts** | Concerns persist across runs — update by ID, not replace wholesale |
+
+---
+
+## Workshop Complete
+
+| Lab | Problem | Solution |
+|---|---|---|
+| ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
+| ~~[Lab 3](lab-3.md)~~ | ~~Unstable output, hallucinations, overstepping~~ | ~~Evaluation: output validation, grounding checks, guardrails~~ |
+| ~~[Lab 4](lab-4.md)~~ | ~~Unrestricted data access, no isolation~~ | ~~Security: Postgres RLS, scoped tools, concern sharing~~ |
+
+???+ success "You're done!"
+    You've built an agent, made it observable, improved its reliability, and hardened it against data attacks. Check out the [Additional Resources](./resources.md) for further reading and frameworks to take this further.
