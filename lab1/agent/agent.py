@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 # API key for a user with access to that instance.
 WXO_INSTANCE_URL = os.environ.get("WXO_INSTANCE_URL", "").rstrip("/")
 WXO_API_KEY = os.environ.get("WXO_API_KEY", "")
-WXO_AGENT_NAME = os.environ.get("WXO_AGENT_NAME", "lakeview_inbox_agent")
+WXO_AGENT_NAME = os.environ.get("WXO_AGENT_NAME") or os.environ.get("WXO_NAME_PREFIX", "") + "lakeview_inbox_agent"
 
 IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
 RUN_TIMEOUT = 300  # seconds to wait for one agent run

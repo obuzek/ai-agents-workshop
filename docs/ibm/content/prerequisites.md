@@ -119,6 +119,7 @@ You should see:
 ```text
 ✓ API key works: <your workshop username> (account <account id>)
 ✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to .../ai-agents-workshop/.env
+✓ Your agent and tools will be named with the prefix 'student0_'
 ✓ Orchestrate instance is reachable with this key
 ```
 

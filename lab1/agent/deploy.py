@@ -12,6 +12,9 @@ Prerequisites:
         orchestrate env activate workshop --api-key <WXO_API_KEY>
   - EHR_API_URL in .env: a public URL for the EHR API (see deploy/ehr-api/).
     Tools run in the cloud, so they can't reach localhost.
+  - Optional WXO_NAME_PREFIX in .env (e.g. "student0_"). Agent, tool, and
+    connection names are global to an Orchestrate instance, so attendees
+    sharing one instance each deploy under their own prefix.
 
 Usage:
     uv run python -m lab1.agent.deploy
@@ -20,6 +23,7 @@ Usage:
 import json
 import logging
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -36,6 +40,7 @@ logger = logging.getLogger(__name__)
 AGENT_DIR = Path(__file__).parent
 REQUIREMENTS = AGENT_DIR / "requirements-orchestrate.txt"
 EHR_APP_ID = "lakeview_ehr"  # must match EHR_APP_ID in tools.py
+NAME_PREFIX = os.environ.get("WXO_NAME_PREFIX", "")
 
 
 def output_schema() -> dict:
@@ -71,7 +76,29 @@ def render_agent_spec() -> dict:
         + json.dumps(output_schema(), separators=(",", ":"))
         + "\n"
     )
+    spec["name"] = NAME_PREFIX + spec["name"]
+    spec["tools"] = [NAME_PREFIX + t for t in spec["tools"]]
     return spec
+
+
+def render_tools_source() -> str:
+    """tools.py with NAME_PREFIX applied to each tool name and the connection app_id.
+
+    tools.py itself stays prefix-free so it reads cleanly; the prefix is baked
+    into the uploaded copy because tools run inside Orchestrate, where our .env
+    doesn't exist.
+    """
+    source = (AGENT_DIR / "tools.py").read_text()
+    if not NAME_PREFIX:
+        return source
+    source, n_app = re.subn(r'^EHR_APP_ID = "lakeview_ehr"$', f'EHR_APP_ID = "{NAME_PREFIX}lakeview_ehr"',
+                            source, flags=re.MULTILINE)
+    source, n_tools = re.subn(r"^@tool\((.*)\)\ndef (\w+)\(",
+                              lambda m: f'@tool(name="{NAME_PREFIX}{m[2]}", {m[1]})\ndef {m[2]}(',
+                              source, flags=re.MULTILINE)
+    if n_app != 1 or n_tools == 0:
+        sys.exit("Couldn't apply WXO_NAME_PREFIX to tools.py; its EHR_APP_ID or @tool lines changed shape.")
+    return source
 
 
 def orchestrate(*args: str):
@@ -90,23 +117,30 @@ def main():
         logger.error("Set EHR_API_URL in .env to the public https:// URL of the EHR API.")
         sys.exit(1)
 
-    # 1. Connection: tools read the EHR URL from here instead of hardcoding it.
-    orchestrate("connections", "import", "-f", str(AGENT_DIR / "connection.yaml"))
-    for env in ("draft", "live"):
-        orchestrate("connections", "set-credentials", "-a", EHR_APP_ID, "--env", env, "-e", f"base_url={ehr_api_url}")
+    app_id = NAME_PREFIX + EHR_APP_ID
+    if NAME_PREFIX:
+        logger.info("Deploying with name prefix %r", NAME_PREFIX)
 
-    # 2. Tools. Orchestrate packages tools.py and runs it in its own sandbox.
-    #    Newly imported tools take a few minutes to become callable.
-    orchestrate("tools", "import", "-k", "python", "-f", str(AGENT_DIR / "tools.py"),
-                "-r", str(REQUIREMENTS), "-a", EHR_APP_ID)
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
 
-    # 3. Agent.
-    with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as f:
-        yaml.safe_dump(render_agent_spec(), f, sort_keys=False, allow_unicode=True)
-    try:
-        orchestrate("agents", "import", "-f", f.name)
-    finally:
-        os.unlink(f.name)
+        # 1. Connection: tools read the EHR URL from here instead of hardcoding it.
+        connection = yaml.safe_load((AGENT_DIR / "connection.yaml").read_text())
+        connection["app_id"] = app_id
+        (tmp / "connection.yaml").write_text(yaml.safe_dump(connection, sort_keys=False))
+        orchestrate("connections", "import", "-f", str(tmp / "connection.yaml"))
+        for env in ("draft", "live"):
+            orchestrate("connections", "set-credentials", "-a", app_id, "--env", env, "-e", f"base_url={ehr_api_url}")
+
+        # 2. Tools. Orchestrate packages tools.py and runs it in its own sandbox.
+        #    Newly imported tools take a few minutes to become callable.
+        (tmp / "tools.py").write_text(render_tools_source())
+        orchestrate("tools", "import", "-k", "python", "-f", str(tmp / "tools.py"),
+                    "-r", str(REQUIREMENTS), "-a", app_id)
+
+        # 3. Agent.
+        (tmp / "agent.yaml").write_text(yaml.safe_dump(render_agent_spec(), sort_keys=False, allow_unicode=True))
+        orchestrate("agents", "import", "-f", str(tmp / "agent.yaml"))
 
     logger.info("Deployed. New tools can take a few minutes before the agent can call them.")
 

@@ -63,13 +63,26 @@ def get_iam_token(api_key: str) -> str:
     return resp.json()["access_token"]
 
 
-def describe_token(token: str) -> str:
-    """Who the token belongs to, from the (unverified) JWT payload — for display only."""
+def token_claims(token: str) -> dict:
+    """The (unverified) JWT payload — only used to show and name things, never to authorize."""
     payload = token.split(".")[1]
-    claims = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+    return json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+
+
+def describe_token(claims: dict) -> str:
     who = claims.get("email") or claims.get("name") or claims.get("sub", "unknown user")
     account = claims.get("account", {}).get("bss", "unknown account")
     return f"{who} (account {account})"
+
+
+def name_prefix(claims: dict) -> str:
+    """A per-user prefix like "student0_" for Orchestrate agent/tool names.
+
+    Names are global to an Orchestrate instance, so attendees sharing one each
+    deploy under their own prefix (see lab1/agent/deploy.py).
+    """
+    user = (claims.get("email") or claims.get("name") or claims.get("sub", "user")).split("@")[0]
+    return re.sub(r"[^a-z0-9]+", "_", user.lower()).strip("_") + "_"
 
 
 def resolve_instance_url(value: str) -> str:
@@ -135,7 +148,8 @@ def main():
 
     api_key = read_api_key(args.key_file)
     token = get_iam_token(api_key)
-    print(f"✓ API key works: {describe_token(token)}")
+    claims = token_claims(token)
+    print(f"✓ API key works: {describe_token(claims)}")
 
     instance = args.instance
     if not instance:
@@ -153,11 +167,13 @@ def main():
 
     text = ENV_FILE.read_text()
     text = set_env_value(text, "WXO_API_KEY", api_key)
+    text = set_env_value(text, "WXO_NAME_PREFIX", name_prefix(claims))
     if instance_url:
         text = set_env_value(text, "WXO_INSTANCE_URL", instance_url)
     ENV_FILE.write_text(text)
     os.chmod(ENV_FILE, 0o600)  # the key is a password; keep it readable only by you
     print(f"✓ Saved WXO_API_KEY{' and WXO_INSTANCE_URL' if instance_url else ''} to {ENV_FILE}")
+    print(f"✓ Your agent and tools will be named with the prefix {name_prefix(claims)!r}")
 
     if not instance_url:
         print("! No Orchestrate instance URL set. Re-run the script once you have its CRN.")
