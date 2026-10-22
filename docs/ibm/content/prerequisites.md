@@ -71,7 +71,64 @@ uv sync
 
 ---
 
-## 3. LLM Provider Setup
+## 3. IBM Cloud API Key
+
+The workshop code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You create it once in the IBM Cloud web console, then a setup script saves it into the workshop's `.env` file.
+
+### Log in to IBM Cloud
+
+1. Open the **login link** from your instructor.
+2. Sign in with the **username and password** for your workshop seat.
+3. You land on the IBM Cloud dashboard at [cloud.ibm.com](https://cloud.ibm.com).
+
+### Create an API key
+
+1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
+2. In the **IAM menu on the left**, find the **Manage identities** heading and click **API keys** underneath it.
+3. Click **Create**.
+4. Give the key a name, such as `ai-agents-workshop`, and click **Create**.
+5. Click **Download**. This saves a file called `apikey.json` to your Downloads folder.
+
+!!! warning "You only see the key once"
+    IBM Cloud shows the key only when you create it. If you close the dialog without downloading it, delete that key and create a new one.
+
+### Save the key into the workshop
+
+From the `ai-agents-workshop` folder, run:
+
+```bash
+uv run python scripts/ibm_cloud_login.py
+```
+
+The script:
+
+- Finds `~/Downloads/apikey.json`, and asks you to confirm before using it.
+- Checks the key with IBM Cloud and shows the user and account it belongs to.
+- Asks for the **Orchestrate instance URL**, which your instructor provides.
+- Saves everything into `.env`, creating `.env` from `.env-example` if needed.
+
+You should see:
+
+```text
+✓ API key works: <your workshop username> (account <account id>)
+✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to .../ai-agents-workshop/.env
+✓ Orchestrate instance is reachable with this key
+```
+
+If the file is somewhere else, pass its path: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`. If you don't have the file, run the script without arguments and paste the key when it asks. The key won't appear on screen as you paste it. You can re-run the script at any time to change the key or the instance URL.
+
+??? tip "Using the `ibmcloud` CLI too?"
+    You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same key file:
+
+    ```bash
+    ibmcloud login --apikey @~/Downloads/apikey.json
+    ```
+
+    Plain `ibmcloud login` with your workshop username and password won't work, because workshop seats sign in through the instructor's login link, not with an IBMid.
+
+---
+
+## 4. LLM Provider Setup
 
 The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs under $5).
 
@@ -168,7 +225,7 @@ You should see a short greeting. If you get an authentication error, double-chec
 
 ---
 
-## 4. Later-Lab Prerequisites
+## 5. Later-Lab Prerequisites
 
 ### Docker (Labs 2, 3, 4)
 
@@ -260,7 +317,7 @@ uv sync --all-extras
 
 ---
 
-## 5. Start the EHR Inbox
+## 6. Start the EHR Inbox
 
 The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it with a single command:
 
