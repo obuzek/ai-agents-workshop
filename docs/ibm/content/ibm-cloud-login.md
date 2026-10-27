@@ -7,31 +7,59 @@ You use **two different logins** today:
 
 | For | Log in with |
 |---|---|
-| IBM Bob | **Your own IBMid** |
+| IBM Bob | **Your IBMid** |
 | IBM Cloud (your agent, your API key) | **A workshop seat login** from the list below |
 
 Don't use your own IBMid for IBM Cloud. Your IBMid isn't in the workshop's IBM Cloud account, and IBM Cloud will ask you to create a new account.
 
 ## 1. Pick your seat
 
-Take the seat your instructor gives you. Each seat is for one person.
+Take the seat your instructor gives you. Each seat is for one person. These are the IBM Cloud logins (App ID Cloud Directory).
 
-<div id="seat-list" hidden markdown>
-
-<table>
-<thead><tr><th>Seat</th><th>Username</th><th>Password</th></tr></thead>
-<tbody id="seat-rows"></tbody>
-</table>
-
-</div>
-
-<p id="seat-list-missing">Your instructor gives you your seat's username and password.</p>
+| Seat | Username | Password |
+|---|---|---|
+| 0 | `student0@6aa171448ca6cd9ed06956a4.techzone.com` | `qU7vz!YenaIckLG3` |
+| 1 | `student1@6aa171448ca6cd9ed06956a4.techzone.com` | `FfVbhdGBsklNgfRq` |
+| 2 | `student2@6aa171448ca6cd9ed06956a4.techzone.com` | `jrp57DBdr3XuLQRv` |
+| 3 | `student3@6aa171448ca6cd9ed06956a4.techzone.com` | `3R7xproNPZPLkZ5z` |
+| 4 | `student4@6aa171448ca6cd9ed06956a4.techzone.com` | `nZ0Do#zayXd2Ajpk` |
+| 5 | `student5@6aa171448ca6cd9ed06956a4.techzone.com` | `Z3sMy1h-imHIEEeD` |
+| 6 | `student6@6aa171448ca6cd9ed06956a4.techzone.com` | `gx#fODM-IhfgXRv!` |
+| 7 | `student7@6aa171448ca6cd9ed06956a4.techzone.com` | `h!Kaa#j98LRrr2cH` |
+| 8 | `student8@6aa171448ca6cd9ed06956a4.techzone.com` | `RIYGUtXv!ecuJ0zx` |
+| 9 | `student9@6aa171448ca6cd9ed06956a4.techzone.com` | `TTmStvxLDRHUuIDx` |
+| 10 | `student10@6aa171448ca6cd9ed06956a4.techzone.com` | `LeJKnKnAOABO-hES` |
+| 11 | `student11@6aa171448ca6cd9ed06956a4.techzone.com` | `jI9mlUDH6BRRU5cJ` |
+| 12 | `student12@6aa171448ca6cd9ed06956a4.techzone.com` | `HuQDpzBxTpN3CnNr` |
+| 13 | `student13@6aa171448ca6cd9ed06956a4.techzone.com` | `MP85YGxL52T9rkCN` |
+| 14 | `student14@6aa171448ca6cd9ed06956a4.techzone.com` | `MQevo4uWF27M11Xd` |
+| 15 | `student15@6aa171448ca6cd9ed06956a4.techzone.com` | `sND!fRXJlV9ZlQZX` |
+| 16 | `student16@6aa171448ca6cd9ed06956a4.techzone.com` | `M1a8z#988srpojnX` |
+| 17 | `student17@6aa171448ca6cd9ed06956a4.techzone.com` | `BbkuyExFwe6ofBR6` |
+| 18 | `student18@6aa171448ca6cd9ed06956a4.techzone.com` | `6WF5Tj-IgUutqD3C` |
+| 19 | `student19@6aa171448ca6cd9ed06956a4.techzone.com` | `mdLQsInwayAy7Udd` |
+| 20 | `student20@6aa171448ca6cd9ed06956a4.techzone.com` | `mxY#Bm5BfRmZEYrK` |
+| 21 | `student21@6aa171448ca6cd9ed06956a4.techzone.com` | `f74Oy4VDF5WCDEzr` |
+| 22 | `student22@6aa171448ca6cd9ed06956a4.techzone.com` | `ttdRN#LTX0UhpD#I` |
+| 23 | `student23@6aa171448ca6cd9ed06956a4.techzone.com` | `yn#5-rf!NcYNQSMZ` |
+| 24 | `student24@6aa171448ca6cd9ed06956a4.techzone.com` | `eT9gbLKoHrkXZPOa` |
+| 25 | `student25@6aa171448ca6cd9ed06956a4.techzone.com` | `Tm5Fa1H3#gbNQiH3` |
+| 26 | `student26@6aa171448ca6cd9ed06956a4.techzone.com` | `-7ER-zo7mG!875Cy` |
+| 27 | `student27@6aa171448ca6cd9ed06956a4.techzone.com` | `RWEON58gWaEu8Mx3` |
+| 28 | `student28@6aa171448ca6cd9ed06956a4.techzone.com` | `ZMZh2-AYGeLTg37P` |
+| 29 | `student29@6aa171448ca6cd9ed06956a4.techzone.com` | `c8U9l9Pkj0QQWh9P` |
+| 30 | `student30@6aa171448ca6cd9ed06956a4.techzone.com` | `9oKTYZcUSA6Ux9Dq` |
+| 31 | `student31@6aa171448ca6cd9ed06956a4.techzone.com` | `MDiefbK1NmOovBR2` |
+| 32 | `student32@6aa171448ca6cd9ed06956a4.techzone.com` | `SIlYeQSxocNwnVeG` |
+| 33 | `student33@6aa171448ca6cd9ed06956a4.techzone.com` | `9-T4l4!gUNpsWu5t` |
 
 ## 2. Log in to IBM Cloud with the access link
 
 Use this link. Don't start from cloud.ibm.com.
 
 <p style="font-size:1.3em"><strong><a href="https://ibm.biz/txc26-4217" target="_blank" rel="noopener">ibm.biz/txc26-4217</a></strong></p>
+
+If the short link doesn't open, use the full link: [https://cloud.ibm.com/authorize/2b3886f67e2b4a8c836209316ea567df/MjKFuwubCD](https://cloud.ibm.com/authorize/2b3886f67e2b4a8c836209316ea567df/MjKFuwubCD)
 
 1. Open a **private / incognito browser window**, so your own IBMid doesn't sign you in by accident.
 2. Open **[ibm.biz/txc26-4217](https://ibm.biz/txc26-4217)** in that window.
@@ -57,24 +85,3 @@ Your code talks to IBM Cloud with an **API key**: a long secret string that acts
 
 Now go back to the [Prerequisites](prerequisites.md#run-the-installer) and run the installer. It asks for this key.
 
-<script>
-  // Seat logins come from the workshop backend, not from this page, and stop being served after the workshop.
-  fetch("https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud/workshop/seats", { cache: "no-store" })
-    .then(r => (r.ok ? r.json() : null))
-    .then(info => {
-      if (!info || !Array.isArray(info.seats) || !info.seats.length) return;
-      const rows = document.getElementById("seat-rows");
-      info.seats.forEach((seat, i) => {
-        const tr = document.createElement("tr");
-        [String(i + 1).padStart(2, "0"), seat.username, seat.password].forEach((value, col) => {
-          const td = document.createElement("td");
-          if (col === 0) { td.textContent = value; } else { const code = document.createElement("code"); code.textContent = value; td.appendChild(code); }
-          tr.appendChild(td);
-        });
-        rows.appendChild(tr);
-      });
-      document.getElementById("seat-list").hidden = false;
-      document.getElementById("seat-list-missing").hidden = true;
-    })
-    .catch(() => {});
-</script>

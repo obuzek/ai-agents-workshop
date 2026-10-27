@@ -49,10 +49,11 @@ def check_orchestrate_config():
     missing = [name for name in ("WXO_INSTANCE_URL", "WXO_API_KEY") if not os.environ.get(name)]
     if missing:
         logger.error(
-            "Missing %s in .env. See .env-example (watsonx Orchestrate section).",
+            "Your IBM Cloud setup isn't finished (%s missing from .env). "
+            "Run: uv run python scripts/ibm_cloud_login.py",
             ", ".join(missing),
         )
-        sys.exit(1)
+        os._exit(1)  # exit quietly: sys.exit inside the server's startup prints a long traceback
 
 
 class _OrchestrateClient:

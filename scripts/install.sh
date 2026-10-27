@@ -58,9 +58,11 @@ main() {
     uv tool update-shell >/dev/null 2>&1 || true  # puts ~/.local/bin on PATH in new shells
     # `orchestrate --version` prints the version but exits non-zero, so don't trust its status.
     local adk_version
-    adk_version="$(orchestrate --version 2>/dev/null | head -1 || true)"
+    adk_version="$(orchestrate --version 2>/dev/null | grep -m1 '^ADK Version' || true)"
     command -v orchestrate >/dev/null 2>&1 || die "The Orchestrate CLI didn't install."
-    ok "${adk_version:-orchestrate CLI installed}"
+    ok "Orchestrate CLI installed${adk_version:+ ($adk_version)}"
+    # Make sure new terminals find uv and orchestrate in ~/.local/bin, even when uv came from elsewhere.
+    uv tool update-shell >/dev/null 2>&1 || true
 
     step 6 "Connect to IBM Cloud"
     local logged_in=0
@@ -98,7 +100,7 @@ main() {
     if [[ "$PLATFORM" == "wsl" ]]; then
         say "(On Windows, open that address in your normal Windows browser; WSL forwards it.)"
     fi
-    say "Open a new terminal (or run: source \$HOME/.local/bin/env) so 'uv' and 'orchestrate' are on your PATH."
+    say "Open a new terminal (or run: export PATH=\"\$HOME/.local/bin:\$PATH\") so 'uv' and 'orchestrate' are on your PATH."
 }
 
 say()  { printf '%s\n' "$*"; }

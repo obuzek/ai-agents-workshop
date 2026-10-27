@@ -198,8 +198,8 @@ def main():
     ehr_api_url = os.environ.get("EHR_API_URL", "")
     tenant = os.environ.get("EHR_TENANT", "")
     if not ehr_api_url.startswith("https://") or not tenant:
-        logger.error("Set EHR_API_URL (the public https:// URL of the EHR API) and EHR_TENANT in .env. "
-                     "scripts/install.sh writes both.")
+        logger.error("Your IBM Cloud setup isn't finished (EHR_API_URL and EHR_TENANT are missing from .env). "
+                     "Run: uv run python scripts/ibm_cloud_login.py")
         sys.exit(1)
 
     app_id = NAME_PREFIX + EHR_APP_ID

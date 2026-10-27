@@ -142,7 +142,7 @@ Use the same command later if your key expires.
 
 When the installer finishes:
 
-- Open a new terminal in Bob (**Terminal → New Terminal**) so `uv` and `orchestrate` are on your PATH. In the terminal you ran the installer from, run `source $HOME/.local/bin/env` instead.
+- Open a new terminal in Bob (**Terminal → New Terminal**) so `uv` and `orchestrate` are on your PATH. Or, in the terminal you ran the installer from, run `export PATH="$HOME/.local/bin:$PATH"`.
 - Open the workshop in Bob: **File → Open Folder…**, then choose `ai-agents-workshop` in your home folder.
 
 ---
@@ -168,11 +168,18 @@ Each page takes about a second to load, because it fetches from the cloud.
 !!! info "Your patients live in the shared workshop EHR"
     The patient records come from one EHR server shared by the whole workshop. You get your own copy of the 12 patients, tied to your API key. Replies you send are visible only to you and your agent. If you create a new API key and run `scripts/ibm_cloud_login.py` again, you start over with a fresh copy.
 
-??? tip "Port 8501 or 8000 already in use?"
-    Pick other ports:
+??? tip "Port 8501, 8000 or 8001 already in use?"
+    Pick other ports. Start the inbox with:
 
     ```bash
-    API_PORT=9000 uv run streamlit run app/ui.py --server.port 9501
+    API_PORT=8010 uv run streamlit run app/ui.py --server.port 8511
+    ```
+
+    and open http://localhost:8511. In Lab 1, start the agent service on another port too, and tell the inbox where it is:
+
+    ```bash
+    uv run uvicorn lab1.agent.api:app --port 8011
+    API_PORT=8010 AGENT_API_URL=http://localhost:8011 uv run streamlit run app/ui.py --server.port 8511
     ```
 
 ---

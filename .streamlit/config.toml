@@ -1,3 +1,6 @@
 [client]
 # Hide Streamlit's "Deploy" button and developer menu; attendees only need the app.
 toolbarMode = "minimal"
+
+[server]
+showEmailPrompt = false

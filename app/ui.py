@@ -22,6 +22,9 @@ import streamlit as st
 import requests
 
 from app.models import Patient, Message, Concern
+from dotenv import load_dotenv
+
+load_dotenv()  # so API_PORT / AGENT_API_URL in .env apply too
 
 print(
     "\n"
@@ -742,6 +745,11 @@ def _send_reply_and_clear(patient_id: str, message_id: str):
 
 
 st.title("Lakeview Family Medicine")
+
+if not os.environ.get("API_URL") and not (os.environ.get("EHR_API_URL") and os.environ.get("EHR_TENANT")):
+    st.warning("You're viewing a local copy of the patients, not your copy in the shared workshop EHR, "
+               "because your IBM Cloud setup isn't finished. Run: uv run python scripts/ibm_cloud_login.py "
+               "then restart the inbox.")
 
 if not os.environ.get("API_URL") and not _is_our_api():
     st.error(f"Another program is using port {API_PORT}, so the inbox can't start its EHR API. "
