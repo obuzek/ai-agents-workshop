@@ -78,6 +78,7 @@ def test_records_endpoint_returns_full_records(server):
 class FakeStorage:
     def __init__(self):
         self.objects, self.fail_reads, self.puts = {}, False, []
+        self.healthy = True
 
     def get(self, key):
         if self.fail_reads:
@@ -132,3 +133,143 @@ def test_storage_outage_returns_503_and_never_overwrites(server, storage):
     storage.fail_reads = False
     bodies = _thread_bodies(server, "tenant-r", mid)
     assert "saved before outage" in bodies and "during outage" not in bodies
+
+
+# --- Live-session hardening ---
+
+
+@pytest.mark.parametrize("tenant", ["../other", "a b", "x" * 65, "tenant/../../secrets", "é"])
+def test_malformed_tenant_ids_are_rejected(server, tenant):
+    resp = server.get("/patients", headers={"X-Tenant": tenant.encode()})
+    assert resp.status_code == 400
+
+
+def test_login_style_tenant_ids_are_accepted(server):
+    assert server.get("/patients", headers={"X-Tenant": "0123456789abcdef01234567"}).status_code == 200
+    assert server.get("/patients", headers={"X-Tenant": "dev_student-01"}).status_code == 200
+
+
+def test_health_reports_storage_without_identifiers(server, storage):
+    server.get("/patients", headers={"X-Tenant": "tenant-h"})
+    health = server.get("/health").json()
+    assert health["mode"] == "server" and health["storage"] == "object-storage" and health["tenants"] == 1
+    assert "tenant-h" not in str(health)
+
+
+def test_reply_does_not_change_a_record_another_request_is_reading(server):
+    from app import store
+    server.get("/patients", headers={"X-Tenant": "tenant-cow"})
+    token = store.current_tenant.set("tenant-cow")
+    try:
+        before = store.load_raw_patients()
+        mid = before[0]["messages"][0]["id"]
+        thread_len = len(before[0]["messages"][0].get("thread", []))
+        store.save_reply(before[0]["id"], mid, "Dr. Test", "new reply", "2026-10-27T00:00:00Z")
+        assert len(before[0]["messages"][0].get("thread", [])) == thread_len
+        assert len(store.load_raw_patients()[0]["messages"][0]["thread"]) == thread_len + 1
+    finally:
+        store.current_tenant.reset(token)
+
+
+def test_unexpected_errors_are_json(server, monkeypatch):
+    from app import store
+    monkeypatch.setattr(store, "load_raw_patients", lambda: 1 / 0)
+    import app.api
+    monkeypatch.setattr(app.api, "load_patients", lambda: 1 / 0)
+    client = TestClient(app.api.app, raise_server_exceptions=False)
+    resp = client.get("/patients", headers={"X-Tenant": "tenant-e"})
+    assert resp.status_code == 500 and resp.json()["detail"] == "Internal error (ZeroDivisionError)"
+
+
+# --- Object Storage client: retries ---
+
+
+class _Resp:
+    def __init__(self, status, body=None):
+        self.status_code, self._body = status, body
+
+    def json(self):
+        return self._body
+
+    def raise_for_status(self):
+        import requests
+        if self.status_code >= 400:
+            raise requests.HTTPError(f"HTTP {self.status_code}")
+
+
+@pytest.fixture
+def cos(monkeypatch):
+    from app import store
+    client = store._ObjectStorage("bucket", "https://cos.test", "apikey")
+    client.RETRY_DELAY = 0
+    tokens = []
+
+    def iam(url, **kwargs):
+        tokens.append(url)
+        return _Resp(200, {"access_token": f"t{len(tokens)}", "expiration": 9999999999})
+
+    monkeypatch.setattr(store.requests, "post", iam)
+    answers = []
+
+    def request(method, url, headers=None, **kwargs):
+        answer = answers.pop(0)
+        if isinstance(answer, Exception):
+            raise answer
+        return answer
+
+    monkeypatch.setattr(store.requests, "request", request)
+    return client, answers, tokens
+
+
+def test_storage_retries_a_transient_failure_once(cos):
+    import requests
+    client, answers, _ = cos
+    answers += [_Resp(503), _Resp(200, {"ok": 1})]
+    assert client.get("k") == {"ok": 1}
+    answers += [requests.ConnectionError(), _Resp(200)]
+    client.put("k", {"a": 1})
+    assert client.healthy is True
+
+
+def test_storage_refreshes_a_rejected_token(cos):
+    client, answers, tokens = cos
+    answers += [_Resp(401), _Resp(404)]
+    assert client.get("k") is None
+    assert len(tokens) == 2  # fetched a fresh token after the 401
+
+
+def test_storage_gives_up_after_the_retry(cos):
+    import requests
+    client, answers, _ = cos
+    answers += [_Resp(500), _Resp(500)]
+    with pytest.raises(requests.HTTPError):
+        client.get("k")
+    assert client.healthy is False
+
+
+# --- Remote mode: a student's local EHR when the shared one is down ---
+
+
+def test_remote_mode_reports_an_unreachable_shared_ehr_as_503(monkeypatch):
+    import requests
+    monkeypatch.delenv("EHR_MODE", raising=False)
+    monkeypatch.setenv("EHR_API_URL", "https://shared-ehr.test")
+    monkeypatch.setenv("EHR_TENANT", "student-1")
+    import app.store
+    import app.api
+    importlib.reload(app.store)
+    importlib.reload(app.api)
+    try:
+        assert app.store.EHR_MODE == "remote"
+
+        def down(*args, **kwargs):
+            raise requests.ConnectionError("refused")
+
+        monkeypatch.setattr(app.store.requests, "request", down)
+        resp = TestClient(app.api.app).get("/patients")
+        assert resp.status_code == 503 and "shared-ehr.test" in resp.json()["detail"]
+    finally:
+        monkeypatch.delenv("EHR_API_URL")
+        monkeypatch.delenv("EHR_TENANT")
+        importlib.reload(app.store)
+        importlib.reload(app.api)

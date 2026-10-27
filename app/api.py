@@ -16,6 +16,7 @@ from pydantic import BaseModel
 import requests as http_client
 
 from app import store
+from app import llm_proxy
 from app.llm_proxy import router as llm_proxy_router
 from app.workshop_info import router as workshop_info_router
 from app.store import load_patient, load_patients, load_raw_patients, save_reply
@@ -63,18 +64,35 @@ async def tenant_from_header(request: Request, call_next):
     tenant = request.headers.get(store.TENANT_HEADER, "").strip()
     if not tenant:
         return JSONResponse(status_code=401, content={"detail": f"Missing {store.TENANT_HEADER} header"})
+    if not store.TENANT_RE.match(tenant):
+        return JSONResponse(status_code=400, content={
+            "detail": f"Invalid {store.TENANT_HEADER} header: use 1-64 letters, digits, '-' or '_'"})
     token = store.current_tenant.set(tenant)
     try:
         return await call_next(request)
-    except (store.TooManyTenants, store.StorageUnavailable) as e:
-        return JSONResponse(status_code=503, content={"detail": str(e)})
     finally:
         store.current_tenant.reset(token)
 
 
+@app.exception_handler(store.TooManyTenants)
+@app.exception_handler(store.StorageUnavailable)
+async def storage_unavailable(request: Request, exc: RuntimeError):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(Exception)
+async def unexpected_error(request: Request, exc: Exception):
+    # The traceback still goes to the server log; the caller gets JSON, not a bare 500 page.
+    return JSONResponse(status_code=500, content={"detail": f"Internal error ({type(exc).__name__})"})
+
+
 @app.get("/health")
 def health():
-    return {"status": "ok", "mode": store.EHR_MODE}
+    """Liveness plus what's configured. Never includes keys, tokens, bucket names or tenant IDs."""
+    info = {"status": "ok", **store.status()}
+    if store.EHR_MODE == "server":
+        info["llm_proxy"] = "configured" if llm_proxy.configured() else "not configured"
+    return info
 
 
 @app.get("/records")
@@ -102,16 +120,16 @@ def get_patient_or_404(patient_id: str):
         raise HTTPException(status_code=404, detail="Patient not found")
 
 
-def _agent_request(method: str, path: str, *, fallback=None, json_body=None):
+def _agent_request(method: str, path: str, *, fallback=None, json_body=None, params=None):
     """Make a request to the agent API. Returns fallback on failure, or raises 503."""
     try:
-        kwargs = {"timeout": 5}
+        kwargs = {"timeout": 5, "params": params}
         if json_body is not None:
             kwargs["json"] = json_body
         resp = getattr(http_client, method)(f"{AGENT_API_URL}{path}", **kwargs)
         resp.raise_for_status()
         return resp.json()
-    except http_client.RequestException:
+    except (http_client.RequestException, ValueError):
         if fallback is not None:
             return fallback
         raise HTTPException(status_code=503, detail="Agent API unavailable")
@@ -276,7 +294,7 @@ def get_role():
 
 @app.post("/role")
 def set_role(provider_id: str):
-    return _agent_request("post", f"/role?provider_id={provider_id}")
+    return _agent_request("post", "/role", params={"provider_id": provider_id})
 
 
 @app.get("/role/patients")

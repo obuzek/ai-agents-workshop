@@ -45,7 +45,10 @@ if REMOTE_URL and REMOTE_TENANT:
     EHR_MODE = "remote"
 
 TENANT_HEADER = "X-Tenant"
-MAX_TENANTS = 200  # a workshop has ~35 seats; this just bounds memory
+# Tenant IDs become Object Storage keys, so only these characters are accepted.
+# (scripts/ibm_cloud_login.py makes 24 hex characters; --dev-tenant allows [A-Za-z0-9_-].)
+TENANT_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+MAX_TENANTS = 200  # a workshop has ~35 seats at ~1 MB each; this just bounds memory
 
 # Set per request by api.py in server mode.
 current_tenant: ContextVar[str | None] = ContextVar("current_tenant", default=None)
@@ -103,6 +106,7 @@ def _append_reply(data: dict, message_id: str, sender_name: str, body: str, date
 
 _tenant_data: dict[str, dict[str, dict]] = {}
 _tenant_lock = threading.RLock()  # re-entrant: save_reply holds it while fetching records
+_save_locks: dict[str, threading.Lock] = {}  # one per tenant, so saves land in order
 _pristine: dict[str, dict] | None = None
 
 
@@ -115,37 +119,62 @@ class StorageUnavailable(RuntimeError):
 
 
 class _ObjectStorage:
-    """Minimal IBM Cloud Object Storage client: GET/PUT JSON objects with an IAM API key."""
+    """Minimal IBM Cloud Object Storage client: GET/PUT JSON objects with an IAM API key.
+
+    A failed call (network error, 5xx, or a rejected token) is retried once with a
+    fresh token, so one blip doesn't turn into an error for an attendee.
+    """
+
+    TIMEOUT = (5, 20)  # (connect, read) seconds
+    RETRY_DELAY = 0.5
 
     def __init__(self, bucket: str, endpoint: str, api_key: str):
         self.bucket, self.endpoint, self.api_key = bucket, endpoint.rstrip("/"), api_key
         self._token, self._expires = "", 0.0
         self._token_lock = threading.Lock()
+        self.healthy: bool | None = None  # outcome of the last call, for /health
 
     def _headers(self) -> dict:
         with self._token_lock:
             if time.time() > self._expires - 300:
-                resp = requests.post("https://iam.cloud.ibm.com/identity/token", timeout=30, data={
+                resp = requests.post("https://iam.cloud.ibm.com/identity/token", timeout=self.TIMEOUT, data={
                     "grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": self.api_key})
                 resp.raise_for_status()
-                self._token, self._expires = resp.json()["access_token"], resp.json()["expiration"]
+                token = resp.json()
+                self._token, self._expires = token["access_token"], token["expiration"]
             return {"Authorization": f"Bearer {self._token}"}
 
     def _url(self, key: str) -> str:
         return f"{self.endpoint}/{self.bucket}/{key}"
 
+    def _request(self, method: str, key: str, headers: dict | None = None, **kwargs) -> requests.Response:
+        """One COS call, retried once. Returns 2xx or 404 responses; raises on anything else."""
+        for attempt in (1, 2):
+            try:
+                resp = requests.request(method, self._url(key), headers={**self._headers(), **(headers or {})},
+                                        timeout=self.TIMEOUT, **kwargs)
+                if resp.status_code in (401, 403):
+                    self._expires = 0.0  # token rejected: fetch a new one before retrying
+                retryable = resp.status_code in (401, 403) or resp.status_code >= 500
+                if not (retryable and attempt == 1):
+                    if resp.status_code != 404:
+                        resp.raise_for_status()
+                    self.healthy = True
+                    return resp
+            except requests.RequestException:
+                if attempt == 2:
+                    self.healthy = False
+                    raise
+            time.sleep(self.RETRY_DELAY)
+        raise AssertionError("unreachable")
+
     def get(self, key: str) -> dict | None:
         """The stored JSON, or None if there's no such object yet."""
-        resp = requests.get(self._url(key), headers=self._headers(), timeout=30)
-        if resp.status_code == 404:
-            return None
-        resp.raise_for_status()
-        return resp.json()
+        resp = self._request("GET", key)
+        return None if resp.status_code == 404 else resp.json()
 
     def put(self, key: str, data: dict):
-        resp = requests.put(self._url(key), headers={**self._headers(), "Content-Type": "application/json"},
-                            data=json.dumps(data), timeout=30)
-        resp.raise_for_status()
+        self._request("PUT", key, headers={"Content-Type": "application/json"}, data=json.dumps(data))
 
 
 _storage = (
@@ -196,15 +225,32 @@ def _tenant_records() -> dict[str, dict]:
 
 
 def _save_tenant(tenant: str):
-    """Persist a tenant's records. A failed save is logged; the data stays in memory."""
+    """Persist a tenant's records. A failed save is logged; the data stays in memory
+    and goes out with the tenant's next save."""
     if _storage is None:
         return
     with _tenant_lock:
-        snapshot = copy.deepcopy(_tenant_data[tenant])
-    try:
-        _storage.put(_storage_key(tenant), snapshot)
-    except Exception as e:
-        logger.error("Couldn't save records for tenant %s (kept in memory): %s", tenant, e)
+        save_lock = _save_locks.setdefault(tenant, threading.Lock())
+    # Snapshot and upload under the tenant's lock, so an older snapshot can never
+    # be uploaded after a newer one.
+    with save_lock:
+        with _tenant_lock:
+            snapshot = copy.deepcopy(_tenant_data[tenant])
+        try:
+            _storage.put(_storage_key(tenant), snapshot)
+        except Exception as e:
+            logger.error("Couldn't save records for tenant %s (kept in memory): %s", tenant, e)
+
+
+def status() -> dict:
+    """What /health reports about storage: no secrets, bucket names or tenant IDs."""
+    info: dict = {"mode": EHR_MODE}
+    if EHR_MODE == "server":
+        info["storage"] = "object-storage" if _storage is not None else "memory-only"
+        if _storage is not None:
+            info["storage_ok"] = _storage.healthy  # null until the first call
+        info["tenants"] = len(_tenant_data)
+    return info
 
 
 # --- remote mode: forward to the shared EHR ---
@@ -217,11 +263,19 @@ _remote_records: tuple[float, list[dict]] | None = None
 
 
 def _remote(method: str, path: str, **kwargs):
-    resp = requests.request(method, f"{REMOTE_URL}{path}", headers={TENANT_HEADER: REMOTE_TENANT},
-                            timeout=30, **kwargs)
+    try:
+        resp = requests.request(method, f"{REMOTE_URL}{path}", headers={TENANT_HEADER: REMOTE_TENANT},
+                                timeout=30, **kwargs)
+    except requests.RequestException as e:
+        raise StorageUnavailable(f"Couldn't reach the shared workshop EHR at {REMOTE_URL} ({type(e).__name__})") from e
     if resp.status_code == 404:
         raise FileNotFoundError(path)
-    resp.raise_for_status()
+    if not resp.ok:
+        try:
+            detail = resp.json().get("detail", "")
+        except (ValueError, AttributeError):
+            detail = ""
+        raise StorageUnavailable(f"The shared workshop EHR answered HTTP {resp.status_code}: {detail}".rstrip(": "))
     return resp.json()
 
 
@@ -270,7 +324,10 @@ def save_reply(patient_id: str, message_id: str, sender_name: str, body: str, da
     if EHR_MODE == "server":
         records = _tenant_records()
         with _tenant_lock:
-            _append_reply(records[patient_id], message_id, sender_name, body, date)
+            # Copy-on-write: requests still reading the old record never see it change mid-read.
+            patient = copy.deepcopy(records[patient_id])
+            _append_reply(patient, message_id, sender_name, body, date)
+            records[patient_id] = patient
         _save_tenant(current_tenant.get())
         return
     if EHR_MODE == "remote":
