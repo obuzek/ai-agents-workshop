@@ -11,6 +11,18 @@ revealjs:
   keyboardCondition: null
 ---
 
+<!-- .slide: id="workshop-links" data-background-gradient="linear-gradient(to top, #0f62fe 0, #0f62fe 16px, #161616 16px)" -->
+
+<!-- Shown only on the workshop day. The URL and code come from the workshop backend (see the script after the deck); they are never written here. -->
+
+<div style="color:#f4f4f4;display:flex;flex-direction:column;justify-content:center;gap:1.1em;min-height:600px">
+<div><p style="font-size:0.95em;color:#c6c6c6;margin:0">Workshop guide</p><p style="font-size:2.1em;font-weight:600;color:#ffffff;margin:0.1em 0 0">ibm.biz/txc-26-ai-agents-workshop</p></div>
+<div><p style="font-size:0.95em;color:#c6c6c6;margin:0">IBM Bob not working? Access link</p><p style="font-size:2.1em;font-weight:600;margin:0.1em 0 0"><a id="slide-bob-access-url" href="#" target="_blank" rel="noopener" style="color:#78a9ff"></a></p></div>
+<div><p style="font-size:0.95em;color:#c6c6c6;margin:0">Access code</p><p style="font-size:2.1em;font-weight:600;color:#ffffff;margin:0.1em 0 0;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em" id="slide-bob-access-code"></p></div>
+</div>
+
+---
+
 <!-- .slide: id="title" data-background-gradient="linear-gradient(to top, #0f62fe 0, #0f62fe 16px, #161616 16px)" -->
 
 <div style="color:#f4f4f4;display:flex;flex-direction:column;min-height:600px">
@@ -25,6 +37,49 @@ revealjs:
 </div>
 
 </div>
+
+---
+
+<!-- .slide: id="agentic-interface" -->
+
+<!-- DRAFT: instructor to review wording -->
+
+## The agentic interface
+
+How the doctor meets the agent is a design decision.
+
+<div style="display:flex;gap:2em;margin-top:0.8em">
+<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.4em">
+<h3 style="margin:0 0 0.3em">A chat interface</h3>
+<ul style="font-size:1.15em">
+<li>The doctor types, the agent answers</li>
+<li>Anyone can ask it for anything: a reply, a diagnosis</li>
+<li>The answer is free text</li>
+<li>One more screen for the doctor to check</li>
+</ul>
+</div>
+<div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.4em">
+<h3 style="margin:0 0 0.3em">The interface we're building</h3>
+<ul style="font-size:1.15em">
+<li>A new patient message starts the agent</li>
+<li>It adds concerns to the doctor's inbox in the EHR</li>
+<li>Every concern has the same fields: a contract</li>
+<li>The doctor reads, decides and replies</li>
+</ul>
+</div>
+</div>
+
+<p style="margin-top:1.4em">Labs 2–4 trace, check and secure that contract.</p>
+
+Note: Before the details: what are we building today?
+
+Most agents people have used are chatbots. You type, it answers.
+
+Our agent has no chat box. New patient messages start it, and it puts concerns into the inbox the doctor already uses, in the EHR.
+
+The doctor stays the expert. The agent summarizes and points at things. The doctor decides what to do.
+
+Every concern has the same structure. That's what we trace, check and secure in the later labs.
 
 ---
 
@@ -536,7 +591,7 @@ Sources:
 </div>
 </div>
 
-Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally in a JSON file. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
+Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on the workshop's Orchestrate instance (Toronto), in the shared TechZone account. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally in a JSON file. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
 
 ---
 
@@ -753,7 +808,7 @@ For a background agent with no human watching, this isn't a nice-to-have. If the
 
 Quick test: `uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges`
 
-Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent on gpt-oss-120b, the model we started with, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers for today's model.
+Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent on gpt-oss-120b, the model we started with, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. On Claude Sonnet 5.5, today's model, 10 of 12 were valid on the first try, and all 12 after one retry. The quick test runs your agent on three patients and prints the same numbers for your own agent.
 
 There are signs constrained outputs may come back to the mainstream: [Jev](https://opentweet.io/jev/vs-openai-structured-outputs)
 
@@ -963,7 +1018,7 @@ Not everything should be in your traces.
 
 <table>
 <tr><td><strong>Log Freely</strong></td><td><strong>Log With Masking</strong></td><td><strong>Do Not Log</strong></td></tr>
-<tr><td>Latency, token counts, cost</td><td>Summarized user intent</td><td>Raw credentials / secrets</td></tr>
+<tr><td>Latency, token counts</td><td>Summarized user intent</td><td>Raw credentials / secrets</td></tr>
 <tr><td>Model name, temperature</td><td>Redacted inputs/outputs</td><td>Full PHI in healthcare contexts</td></tr>
 <tr><td>Tool call names, success/fail</td><td>Error messages (scrubbed)</td><td>Internal API keys in tool args</td></tr>
 <tr><td>Trace structure / spans</td><td>Session metadata</td><td>Unmasked PII</td></tr>
@@ -1146,7 +1201,7 @@ Questions to ask your platform, for each one:
 - How long is it kept? How do you delete it, including backups and exports?
 - Is it encrypted at rest and in transit? Who holds the keys?
 
-Note: Ask these about every place the agent's data ends up, including traces. Get the answers from the vendor's documentation. IBM's watsonx data security page says data at rest is encrypted by default, and that you can bring your own keys with Key Protect. Check what applies to the specific service you use. For Orchestrate traces, what we saw in this account is that every seat can read them and they're kept for 30 days.
+Note: Ask these about every place the agent's data ends up, including traces. Get the answers from the vendor's documentation. IBM's general watsonx data security statement says data at rest is encrypted by default, and that you can bring your own keys with Key Protect. That statement covers watsonx as a whole. The Orchestrate security page doesn't mention customer-managed keys, so check what applies to the specific service you use. For Orchestrate traces, what we saw in this account is that every seat can read them and they're kept for 30 days.
 
 Sources: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/security-data.html?context=wx
 
@@ -1453,3 +1508,56 @@ Responsibility isn't something you bolt on at the end.
 **Jump to:** [Intro](#/section-agents) · [ADLC](#/adlc-intro) · [Lab 1](#/section-lab-1) · [Lab 2](#/section-lab-2) · [Lab 3](#/section-lab-3) · [Lab 4](#/section-lab-4) · [Wrap-up](#/wrap-up)
 
 **Keyboard shortcuts:** `F` fullscreen · `O` overview · `S` speaker notes · `←` `→` navigate
+
+<script>
+  // The workshop-links slide is shown only while the workshop backend serves the day-of values
+  // (it stops after the workshop). Until we know, the deck stays hidden; on failure the slide is
+  // removed before anyone sees it. Same endpoint as the "Today's workshop links" box in prerequisites.md.
+  (function () {
+    var deckEl = document.querySelector('.mkdocs-revealjs-deck[data-revealjs-deck-id]');
+    if (!deckEl) return;
+    deckEl.style.visibility = "hidden";
+
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 4000);
+    var info = fetch("https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud/workshop/bob-access",
+                     { cache: "no-store", signal: ctrl ? ctrl.signal : undefined })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (d) { clearTimeout(timer); return d && d.url && d.code ? d : null; });
+
+    var ready = new Promise(function (resolve) {
+      var deck = deckEl._mkdocsRevealDeck;
+      if (deck && deck.isReady && deck.isReady()) return resolve(deck);
+      document.addEventListener("mkdocs-revealjs-ready", function onReady(e) {
+        if (e.detail && e.detail.root === deckEl) {
+          document.removeEventListener("mkdocs-revealjs-ready", onReady);
+          resolve(e.detail.deck);
+        }
+      });
+    });
+
+    Promise.all([info, ready]).then(function (res) {
+      var d = res[0], deck = res[1];
+      var slide = deckEl.querySelector("section#workshop-links");
+      if (d && slide) {
+        var link = slide.querySelector("#slide-bob-access-url");
+        link.href = d.url;
+        link.textContent = d.url.replace(/^https?:\/\//, "");
+        slide.querySelector("#slide-bob-access-code").textContent = d.code;
+      } else if (slide) {
+        var current = deck.getCurrentSlide();
+        slide.parentNode.removeChild(slide);
+        deck.sync();
+        if (current === slide || !current || !current.isConnected) {
+          deck.slide(0, 0);
+        } else {
+          var idx = deck.getIndices(current);
+          deck.slide(idx.h, idx.v, idx.f);
+        }
+      }
+      deckEl.style.visibility = "";
+      deck.layout();
+    }).catch(function () { deckEl.style.visibility = ""; });
+  })();
+</script>
