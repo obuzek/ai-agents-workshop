@@ -5,7 +5,7 @@
 ???+ abstract "What You'll Cover"
     Your agent reads patient records and writes concerns about them. Copies of that data now exist in several places: the EHR, the model's context, Orchestrate's traces, and the concerns file on your laptop.
 
-    This lab is a discussion with one short look at a trace. You'll list where the agent's data lives, check what IBM documents about how watsonx Orchestrate stores it, and work through who should be able to read each copy. Then you'll look at why access rules belong in the data layer, and why the clinician's identity has to travel with every request.
+    This lab is a discussion with one short look at a trace. There's no code to change. You'll list where the agent's data lives, check what IBM documents about how watsonx Orchestrate stores it, and work through who should be able to read each copy. Then you'll look at why access rules belong in the data layer, and why the clinician's identity has to travel with every request.
 
 ---
 
@@ -83,7 +83,7 @@ None of this changes what you saw in Lab 2. Encryption and tenant isolation prot
 
 ## Look at a Trace: What Can Your Agent Reach?
 
-Open one of your agent's traces in **Analyze**, as in Lab 2. Find a run that called `list_patients` or `get_inbox`. If you can't find one, run the agent on `patient-005` (Elena Vasquez): one of her messages mentions her neighbor Patricia Kowalski.
+Open one of your agent's traces in **Analyze**, as in Lab 2. Find a run that called `list_patients` or `get_inbox`. If you can't find one, run the agent on `patient-005` (Elena Vasquez). One of her messages asks about her neighbor Patricia Kowalski, who is also a patient. Check whether the agent looked her up.
 
 Look at the tool output:
 
@@ -92,6 +92,9 @@ Look at the tool output:
 - `get_patient_record` and `get_messages` take any patient ID. Nothing checks it against the patient the agent was asked about.
 
 So your agent can read every patient's data while reviewing one. Lab 1 left the tools this way on purpose. The question is where to put the check.
+
+???+ question "Ask Bob"
+    Open `lab1/agent/tools.py` and ask Bob: "Which of these tools take a patient_id that the model chooses, and which return data about every patient? What would each one need to know to refuse a request?"
 
 ---
 
@@ -104,7 +107,7 @@ There are four places you could enforce a rule like "Rachel Torres can't see Dr.
 - **In the application's queries.** Every query includes `WHERE provider_id = :provider_id`. Forget it once and data leaks without an error.
 - **In the data layer.** The store enforces the rule on every read and write, whichever code path asks.
 
-Only the last one keeps working when the code around it changes. The rule lives in one place.
+Only the data layer applies the rule to every code path, including code written next year.
 
 ### How you'd enforce this in your own database
 
@@ -151,7 +154,7 @@ Use TLS on every hop and encrypt every store, its backups and its exports. On Or
 
 Record every read and write of PHI: which clinician, which patient, when, through which path, including denied requests. HIPAA's Security Rule requires audit controls. Keep the audit log append-only and separate from the data it describes.
 
-Orchestrate's traces are not an audit log. They're readable by every builder in the tenant, kept for a fixed 30 days, and record the agent's work, not the clinician's identity.
+Orchestrate's traces are built for debugging the agent, and they're very good at it. They aren't an audit log: every builder in the tenant can read them, they're kept for a fixed 30 days, and they record the agent's work, not the clinician's identity. Keep a separate audit log for that.
 
 ### Retention and deletion
 
@@ -207,7 +210,10 @@ The same identity should decide who can read the traces of that run. Lab 2 showe
 - **Minimal tool output.** Tools return only what the agent needs, so less PHI reaches the model provider and the trace store.
 - **Trace access and retention.** Limit the roles that can read traces, decide whether 30 days fits your policy, and treat trace exports as PHI.
 - **The right plan and paperwork.** Confirm in writing which Orchestrate plan, region and agreements cover PHI before real data goes in.
-- **Stable concerns.** Give each concern an ID that survives re-runs, so an audit entry, a share grant or a retention rule can point at it. The repository's `lab4/agent/` shows one way: pass the previous concerns to the agent and update by ID.
+- **Stable concerns.** Give each concern an ID that survives re-runs, so an audit entry, a share grant or a retention rule can point at it. The repository's `lab4/agent/` (from the open-source edition) shows one way: pass the previous concerns to the agent and update by ID.
+
+??? example "Extra credit"
+    Write down how you'd pass the clinician's identity from the inbox UI to the tools on Orchestrate. IBM documents context variables, which let the caller send values such as a user ID with a run so that the agent's tools can read them. We haven't tested them in this workshop. Ask Bob: "If each run of my Orchestrate agent carried the clinician's ID, how would get_patient_record in lab1/agent/tools.py use it, and what would the EHR have to check?"
 
 ---
 

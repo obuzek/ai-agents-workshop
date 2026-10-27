@@ -3,9 +3,9 @@
 **Duration:** ~25 minutes
 
 ???+ abstract "What You'll Do"
-    In Lab 2 you read your agent's traces. Some runs make one tool call and stop. Some concerns cite evidence you can't find in the tool output. Some suggest a diagnosis.
+    In Lab 2 you read your agent's traces and compared the tool output with the concerns. Some concerns may cite evidence you can't find in the tool output. Some may suggest a diagnosis.
 
-    This lab covers how to check an agent's work: grounding checks, LLM-as-judge, a critic, and tools that return less. Most of it is explanation. The part you run is a set of three **judge agents** on Orchestrate that check your agent's concerns.
+    This lab covers how to check an agent's work: grounding checks, LLM-as-judge, a critic, and tools that return less. You'll read about each one, then run three **judge agents** on Orchestrate against your agent's concerns and read their verdicts in the traces.
 
 ---
 
@@ -49,9 +49,9 @@ Compare the tool output with the agent's concerns. An evidence string may cite a
 
 The instructions say "do not make clinical recommendations." The agent may still suggest a diagnosis, propose a treatment, or draft a reply. Its job is to organize what the doctor needs to see.
 
-### The agent investigates shallowly
+### The agent may not look far
 
-Many runs make one call to `get_patient_record` and answer straight away. That tool returns the whole record in one block. The agent has no reason to look anything up, and every run puts the whole record in the model's context and in the trace.
+`get_patient_record` returns the whole record in one block. One call gives the agent everything, so it has little reason to search for a lab trend or read a whole thread, and every run puts the whole record in the model's context and in the trace. How often an agent answers after one call depends on the model: gpt-oss-120b often did, and missed concerns. Check the tool-call counts in your own traces.
 
 ---
 
@@ -77,7 +77,7 @@ The simplest grounding check is another LLM call: give a model the source data a
 
 Its weakness is **self-evaluation bias**. If the judge is the same model as the agent, it has the same blind spots.
 
-A purpose-built judge avoids this. IBM's [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) is a separate model trained to detect risks, including groundedness: given a context and a claim, it answers whether the claim is supported. Granite Guardian isn't available in this edition of the workshop.
+A purpose-built judge avoids this. IBM's [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) is a separate model trained to detect risks, including groundedness: given a context and a claim, it answers whether the claim is supported. IBM documents Granite Guardian on watsonx.ai. We haven't set it up for this workshop, so today's judges use the same model as the agent.
 
 ### Why one claim at a time
 
@@ -98,7 +98,12 @@ graph LR
     D -->|approved| E[Save results]
 ```
 
-The repository's `lab3/agent/` has this loop written in LangGraph. It isn't converted to Orchestrate for this edition, so you won't run the loop today. You'll run the three checks.
+We haven't built this loop on Orchestrate for this edition, so today you run the three checks on their own. There are two ways you could close it on Orchestrate:
+
+- **From your code.** Your code calls the critic agent, then sends its feedback to the inbox agent on the same thread. Lab 1's `agent.py` already continues a thread this way when it retries a bad reply.
+- **As collaborator agents.** The inbox agent calls the critic itself. IBM documents collaborator agents for Orchestrate; we haven't tested them here.
+
+The repository's `lab3/agent/` has the full loop for the open-source edition, written in LangGraph. Read it if you want to see one working version.
 
 ### Focused tools
 
@@ -116,13 +121,13 @@ The agent has to say what it's looking for: "the patient mentioned fatigue, so s
 
 If you split the record into `get_conditions`, `get_medications` and `get_labs` with no keyword, the agent would likely call all of them and rebuild the full record. The keyword is what forces it to choose.
 
-`lab3/agent/tools.py` has keyword search tools written for LangGraph. Your Lab 1 agent already has one: `search_labs`.
+`lab3/agent/tools.py` has keyword search tools (`search_conditions`, `search_medications`, `search_encounters`) from the open-source edition. Your Lab 1 agent already has one: `search_labs`.
 
 ### Prompt injection
 
 Patient portal messages are untrusted text, and they reach the agent through tool output. A message could include instructions aimed at the agent.
 
-In this system the agent's output goes to the doctor. The patient never sees it, so an attacker gets no feedback on what worked. That limits the risk but doesn't remove it: injected text could still change which concerns the doctor sees. As Lab 2 showed, no Orchestrate control inspects tool output for this agent. The checks in this lab help here too: a concern that isn't grounded in the record gets flagged whatever caused it.
+In this system the agent's output goes to the doctor. The patient never sees it, so an attacker gets no feedback on what worked. That limits the risk but doesn't remove it: injected text could still change which concerns the doctor sees. In Lab 2's tests, no control ran on tool output. The checks in this lab help here too: a concern that isn't grounded in the record gets flagged whatever caused it.
 
 ---
 
@@ -143,6 +148,9 @@ This takes a few minutes. The script:
 4. Sends all of the patient's concerns and the verdicts to the critic.
 
 All four agents use the same model, Claude Sonnet 5.5.
+
+???+ question "Ask Bob"
+    While it runs, open `scripts/check_structured_outputs.py` and ask Bob: "What does deploy_judges send to Orchestrate, and where do the judges' instructions come from?"
 
 ### What you'll see in the terminal
 
@@ -185,6 +193,7 @@ In **Analyze**, open each judge agent and look at its most recent traces, the sa
 
 ??? example "Extra credit"
     - Read `_JUDGE_PROMPT` and `_CRITIC_PROMPT` in `lab3/`. Find an instruction the judge or critic didn't follow in your traces.
+    - Tighten the critic. Add a rule to `_CRITIC_PROMPT` in `lab3/agent/critic.py`, for example "Flag any concern whose action recommends a treatment." Keep the `CONCERNS:` line and everything below it. Run the script again: it redeploys the judge agents from the prompts each time. Did the critic's verdicts change?
     - In `scripts/check_structured_outputs.py`, find where the judge's source data is built (search for `SOURCE DATA`). What would you need from Lab 2's traces to ground against the tool output instead?
     - Write down how you'd wire the critic's feedback back into your agent. Your Lab 1 `agent.py` already continues a conversation by `thread_id` when it retries a bad reply.
 
@@ -197,6 +206,13 @@ In **Analyze**, open each judge agent and look at its most recent traces, the sa
 **Verdicts are per claim.** When the judge rejects something, you know which fact it rejected and why.
 
 **The checks use structured output.** Every verdict is validated against a schema, so a program can act on it: count failures, route a concern back for revision, or hold it from the inbox.
+
+???+ info "Where Orchestrate evaluations and watsonx.governance fit"
+    Today's judges are agents you deploy yourself, so you can read every prompt and verdict. IBM documents tools for the same job, which we haven't tested in this workshop:
+
+    - The ADK's `orchestrate evaluations` commands run test cases against an agent and check which tools it called and in what order ([Evaluations](https://developer.watson-orchestrate.ibm.com/evaluate/overview.md)).
+    - The watsonx.governance SDK, `ibm-watsonx-gov`, has metrics such as faithfulness, answer relevance and tool-call accuracy ([ibm-watsonx-gov](https://ibm.github.io/ibm-watsonx-gov/)).
+    - watsonx.governance keeps a record of each AI use case and its evaluation results, which is what an auditor asks for.
 
 ---
 

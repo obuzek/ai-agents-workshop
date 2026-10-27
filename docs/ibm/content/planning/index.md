@@ -1,5 +1,8 @@
 # Use Case Planning
 
+!!! note "Early planning notes"
+    These are the instructors' notes from choosing the workshop's use case, kept for reference. Some tools named here, such as Langfuse, Arize Phoenix, Ollama and Guardium, aren't used in this edition. Here, tracing comes from watsonx Orchestrate, and the Lab 3 checks run as Orchestrate agents. See [Environment Topology](../environment-topology.md) for what the workshop runs today.
+
 ## Best candidates
 
 For each, list:

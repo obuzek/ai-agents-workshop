@@ -16,7 +16,7 @@ Since the introduction of Electronic Health Record (EHR) portals, doctors are ov
 When patients don't get responses, important medical needs can go unaddressed.
 
 ???+ example "A real inbox backlog"
-    Dr. Sarah Kim at **Lakeview Family Medicine** has 12 patients in the workshop dataset. Among them there are **10 unresolved portal messages** — including an urgent message from a patient whose pharmacy is refusing to fill their warfarin prescription, and a follow-up complaint that nobody has responded.
+    Dr. Sarah Kim works at **Lakeview Family Medicine**. The 12 patients in the workshop dataset have **26 portal messages that still need a reply**. One is an urgent message from a patient whose pharmacy is refusing to fill their warfarin prescription. A later message from the same patient complains that nobody has replied.
 
     How should Dr. Kim prioritize? Which messages need attention today, and which can wait? What patient history is relevant to each message?
 
@@ -37,9 +37,9 @@ Can we use an AI agent to support doctor-patient communication outside of appoin
 
 ## The Agent Loop: Observe, Reason, Act
 
-Before we deploy anything, let's understand the core pattern behind every AI agent.
+Before you deploy anything, here's the loop every agent in this workshop runs.
 
-The community has converged on **ReAct** (Yao et al., 2023) as the standard agent architecture. It's a loop with three steps:
+Most agents today use a version of **ReAct** (Yao et al., 2023). It's a loop with three steps:
 
 ```mermaid
 flowchart LR
@@ -258,7 +258,7 @@ def get_patient_record(patient_id: str) -> dict:
 def _get(path: str):
     conn = connections.key_value(EHR_APP_ID)
     return requests.get(f"{conn['base_url'].rstrip('/')}{path}",
-                        headers={"X-Tenant": conn.get("tenant", "")})
+                        headers={"X-Tenant": conn.get("tenant", "")}, timeout=30)
 ```
 
 The agent has five tools: `list_patients`, `get_patient_record`, `get_messages`, `search_labs`, and `get_inbox`.
@@ -300,7 +300,7 @@ This is the only message it sends. The agent decides which tools to call.
 
 ### The output contract: `models.py`
 
-The agent's reply must be a `PatientConcerns` object, which holds a list of `Concern`s.
+The agent's reply must be a `PatientConcerns` object (in `lab1/agent/models.py`), which holds a list of `Concern`s. `Concern` is defined in `app/models.py`, the same model the inbox UI uses:
 
 ```python
 class Concern(BaseModel):
@@ -372,15 +372,17 @@ The script sends your agent the same message `agent.py` sends, for `patient-001`
 
 The summary table counts **1st-try valid** and **valid after retry**. Each line also shows how many tool calls the agent made. You'll need that number in [What's Broken](#whats-broken).
 
-In our testing, most first replies were valid and one retry fixed the rest. Your numbers may differ.
+When we ran this on all 12 patients with Claude Sonnet 5.5, 10 first replies were valid and one retry fixed the other 2. Your numbers may differ.
 
+<!-- TODO(verify): source for this claim; the link couldn't be checked during the content review. Restore once confirmed.
 Structured-decision models such as [Jev](https://opentweet.io/jev/vs-openai-structured-outputs) have recently made a business of this, so constrained outputs may come back into the mainstream soon.
+-->
 
 ---
 
 ## Step 1: Explore the EHR Inbox
 
-Before we deploy anything, let's get oriented with the application. If the inbox from [Prerequisites](./prerequisites.md) is still running, skip this command and switch to its browser tab.
+Before you deploy anything, look around the application. If the inbox from [Prerequisites](./prerequisites.md) is still running, skip this command and switch to its browser tab.
 
 ```bash
 cd ~/ai-agents-workshop
@@ -423,6 +425,12 @@ Deployed. New tools can take a few minutes before the agent can call them.
 
     This happens every time you run `deploy.py`.
 
+???+ question "Ask Bob"
+    While the tools warm up, open `lab1/agent/deploy.py` in Bob and ask:
+
+    - "What does deploy.py change in agent.yaml and tools.py before it calls the orchestrate CLI?"
+    - "Where does the tenant ID that tools.py sends to the EHR come from?"
+
 ---
 
 ## Step 3: Run the Agent
@@ -440,7 +448,7 @@ Now go back to the UI at [http://localhost:8501](http://localhost:8501):
 
 1. Select a patient from the dropdown
 2. Click **Run Agent** in the Concerns panel
-3. Wait for the agent to finish (the button will show "Agent Running..."). A run usually takes 15–60 seconds.
+3. Wait for the agent to finish (the button will show "Agent Running..."). A run takes about 40 seconds, sometimes longer.
 4. Examine the concerns that appear
 
 ???+ tip "Try several patients"
@@ -451,19 +459,20 @@ Now go back to the UI at [http://localhost:8501](http://localhost:8501):
     - The **Related** links let you jump to the relevant message, lab, or encounter
     - The patient dropdown updates with urgency indicators
 
-    Some runs return few concerns, or none. Write down which patients. You'll look at those runs in Step 4.
+    Write down which patients you ran and how many concerns each one got. You'll look at those runs in Step 4.
 
 ---
 
 ## Step 4: See It in Orchestrate
 
-Orchestrate records a trace for each run of your agent. A trace shows the LLM calls and tool calls in that run.
-
-<!-- TODO(verify): exact Orchestrate UI path to an agent's traces / run history. Our own testing found agents under Build in the Orchestrate UI; IBM's ADK docs (developer.watson-orchestrate.ibm.com/traces/overview) say traces are available "through the UI and the API" but don't name the menus. -->
+Orchestrate records a trace for each run of your agent. You didn't write any code for this. A trace shows every LLM call and tool call in the run.
 
 1. Open the watsonx Orchestrate UI for the workshop instance (the same instance the setup script found for you).
-2. Find your agent. Its name starts with your prefix, for example `student0_lakeview_inbox_agent`. You'll also see the other students' agents, because everyone shares the instance.
-3. Open the agent's traces in Orchestrate and pick one of your runs.
+2. From the main menu, open **Analyze**. You'll see a table of agents, including the other students' agents, because everyone shares the instance.
+3. Click your agent. Its name starts with your prefix, for example `student0_lakeview_inbox_agent`.
+4. Pick one of your runs from the list and open its details.
+
+<!-- TODO(verify): exact menu labels in the workshop tenant's UI (see the matching TODO in lab-2.md). IBM's "Monitoring agents" page documents Analyze > Agent analytics > Traces > Trace details. -->
 
 For each run, look for:
 
@@ -471,7 +480,7 @@ For each run, look for:
 - **The LLM calls** between tool calls, and the final reply (the raw JSON before `agent.py` validated it)
 - **How long** each step took
 
-Find a run that returned few concerns. How many tool calls did the agent make before it answered?
+Compare the run with the most concerns and the run with the fewest. How many tool calls did the agent make in each before it answered?
 
 ???+ info "More in Lab 2"
     For now, just find your runs. Lab 2 covers traces in detail.
@@ -480,7 +489,7 @@ Find a run that returned few concerns. How many tool calls did the agent make be
 
 ## Step 5: Evaluate the Output
 
-Now the important part. Run the agent on a few patients and critically evaluate what it produces.
+Read the concerns for each patient you ran, next to the patient's record in the inbox UI.
 
 ???+ question "Write down 2-3 things"
     For each patient you review, write down:
@@ -494,13 +503,14 @@ Now the important part. Run the agent on a few patients and critically evaluate 
 ??? example "Extra credit"
     - Run the same patient twice. Do the concerns change? (The `scripts/check_structured_outputs.py` command above accepts `--rounds 2`.)
     - Open `agent.yaml` and read the output rules in `instructions`. Find a concern that breaks one of them.
-    - In Orchestrate's traces, compare a run that produced several concerns with one that produced none.
+    - Change the instructions to fix a problem you wrote down. For example, tell the agent to call `search_labs` for any lab value it cites. Redeploy with `uv run python -m lab1.agent.deploy`, wait a couple of minutes, and run the same patient again. Did the concerns or the tool calls change?
+    - Ask Bob: "Read lab1/agent/agent.yaml. Which of its output rules could a program check automatically, and which need a person or another model?"
 
 ---
 
 ## What's Working
 
-Let's acknowledge what this naive agent already does well:
+Some of this naive agent already works well:
 
 **Orchestrate runs the ReAct loop.** The agent is a YAML file and five Python functions. Orchestrate calls the LLM, runs your tools, and records each step. The agent decides which tools to call.
 
@@ -508,7 +518,7 @@ Let's acknowledge what this naive agent already does well:
 
 **The UI keeps the doctor in control.** The doctor clicks a button, reviews structured output, and acts on it. There's no chat box where they might ask the agent to draft a reply or confirm a diagnosis.
 
-**Background processing is the right pattern.** The agent runs in the background and writes to a store. The doctor sees results when they're ready — they don't have to sit in a conversation and wait for each response.
+**The agent runs in the background.** It writes its concerns to a store, and the doctor sees them when they're ready. The doctor doesn't sit in a conversation waiting for each answer.
 
 ---
 
@@ -516,11 +526,11 @@ Let's acknowledge what this naive agent already does well:
 
 But this agent has serious problems. Some you probably noticed in your evaluation:
 
-### 🔍 It investigates shallowly
+### 🔍 Nothing checks how much it looked at
 
-The instructions say "Gather evidence before concluding." The agent often makes one tool call, usually `get_patient_record`, and then answers. It doesn't search for lab trends or read the other messages in a thread. Some patients get few or no concerns even though their records have open issues.
+The instructions say "Gather evidence before concluding." Whether the agent does depends on the model. `get_patient_record` returns the whole record in one call, so an agent can answer after one tool call without searching for lab trends or reading the rest of a thread. The first model we tried, gpt-oss-120b, often did exactly that and returned no concerns for some patients. Claude Sonnet 5.5 found concerns for all 12 patients in our tests, but nothing in the loop would tell you if it skipped something.
 
-Naive agents often do this. Nothing in the loop checks how much the agent looked at. Lab 3 works on catching gaps like this.
+Check the tool calls in your traces. Lab 3 adds automatic checks.
 
 ### 🔓 No access controls
 
@@ -528,7 +538,7 @@ The agent can access any patient's data at any time. When you ask it to review `
 
 ### 🎲 Concerns aren't stable
 
-Run the agent twice on the same patient. You'll likely get different concerns — different titles, different urgency levels, maybe different issues entirely. The agent overwrites its previous output on every run. There's no persistence, no diffing, no way to track how concerns change over time.
+Run the agent twice on the same patient. You'll likely get different concerns: different titles, different urgency levels, maybe different issues. Each run overwrites the patient's previous concerns. There's no history and no way to see how concerns changed between runs.
 
 ### 🤥 No hallucination checks
 
@@ -542,7 +552,7 @@ Read the instructions in `agent.yaml` carefully. They tell the agent not to infe
 - Recommend treatments ("consider starting levothyroxine")
 - Editorialize on urgency in ways that could bias the doctor
 
-The LLM wants to be helpful. In healthcare, "helpful" can be dangerous.
+Models are trained to be helpful, so they often add a likely diagnosis or a next step. In this inbox, that steers the doctor before they've read the record.
 
 ### 📋 No completeness checks
 
@@ -552,15 +562,13 @@ How do you know the agent found *all* the concerns? It might surface 3 out of 5 
 
 ## Up Next
 
-These problems aren't just academic — they're the kind of issues that would stop a real healthcare system from deploying this agent.
-
-In the remaining labs, we'll work on them:
+Any one of these problems would stop a real practice from deploying this agent. The remaining labs work on them:
 
 | Lab | Problem | Approach |
 |---|---|---|
 | ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent on Orchestrate with validated structured output~~ |
-| **[Lab 2](lab-2.md)** | No visibility into what the agent is doing | Observability: tracing and logging |
-| **[Lab 3](lab-3.md)** | Shallow investigation, unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
+| **[Lab 2](lab-2.md)** | No visibility into what the agent is doing | Observability: Orchestrate traces, a PII control and a plug-in |
+| **[Lab 3](lab-3.md)** | Shallow investigation, unstable output, hallucinations, overstepping | Evaluation: claim extraction, grounding checks, LLM-as-judge, critic |
 | **[Lab 4](lab-4.md)** | Unrestricted data access | Security: who and what can reach patient data |
 
 ???+ tip "Keep your notes"

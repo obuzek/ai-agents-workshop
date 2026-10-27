@@ -11,7 +11,7 @@
 
 ---
 
-## Why Observability Matters for Agents
+## What an Agent Trace Needs to Show
 
 Traditional software observability tracks status codes, latency and error rates. For an agent you also need the **content**: the prompts, the tool call arguments, the tool results and the model's replies. Without the content you can't tell why the agent said what it said.
 
@@ -31,7 +31,7 @@ In the slides before this lab, we covered the **"What to Log" framework**:
 | Tool call names, success/fail | Error messages (scrubbed) | Internal API keys in tool args |
 | Trace structure / spans | Session metadata | Unmasked PII |
 
-On a hosted platform you don't write the logging code, so you don't choose what goes in each column. This lab shows what Orchestrate puts in its traces and which parts you can change.
+Orchestrate writes the traces for you, so there's no instrumentation code to write or maintain. In exchange, the platform decides what goes in them. This lab shows what Orchestrate puts in its traces and which parts you can change.
 
 ---
 
@@ -102,7 +102,7 @@ Open the `get_patient_record` tool call and look at its output.
     Orchestrate recorded all of it without any code from you.
 
 ???+ question "Look at the run"
-    - How many tool calls did the agent make before it answered? Lab 1 noted the agent often makes one call and stops.
+    - How many tool calls did the agent make before it answered? Did it call `search_labs` or `get_messages`, or did it answer from `get_patient_record` alone?
     - Open the first LLM call and read its input. The "user" message was written by `agent.py`, not by Dr. Kim. The doctor never sees this prompt, but it shapes everything the agent does.
     - Compare what the tools returned with the concerns the agent wrote. Is every piece of evidence in the tool output? Lab 3 checks this automatically.
 
@@ -134,7 +134,7 @@ In a real deployment you'd answer the same questions before the first real patie
 
 Orchestrate has three places where you can change what happens on the way into and out of your agent.
 
-- The **model gateway** routes the agent's LLM calls. Model policies can fall back to another model, balance load across models, or retry. The gateway is for reliability. It does not inspect content. ([Model policies](https://developer.watson-orchestrate.ibm.com/llm/model_policies.md); public preview.)
+- The **model gateway** routes the agent's LLM calls. It lets one agent definition use models from different providers: today it sends your agent's calls to Claude Sonnet 5.5 through the workshop's model proxy, which holds the Anthropic key so it never reaches your laptop. Model policies can fall back to another model, balance load across models, or retry ([Model policies](https://developer.watson-orchestrate.ibm.com/llm/model_policies.md); public preview). Checking content is the job of controls.
 - **Controls** are Orchestrate's policy engine. A control binds a built-in policy type to your agent at a fixed **hook**, such as `agent_pre_invoke` (before the agent sees the message). Policy types include a PII Filter, Content Guardrails (jailbreak, hate/abuse/profanity, harm, social bias), Secrets detection, Regex pattern, SQL sanitizer, an output-length guard, rate limiters and model fallback/retry. ([Managing controls](https://developer.watson-orchestrate.ibm.com/controls/managing_controls.md))
 - **Plug-ins** are your own Python code, run at agent hooks such as `agent_post_invoke` (after the agent answers, before the caller gets the answer). ([Plug-ins](https://developer.watson-orchestrate.ibm.com/plugins/plugins.md))
 
@@ -247,7 +247,7 @@ The diagram shows what we tested on the workshop instance. Content Guardrails an
 </div>
 
 !!! danger "The injection path is the tool output"
-    In this agent, untrusted text arrives through tool output: a patient's portal message, returned by `get_messages` or `get_patient_record`. The input controls only see what the caller sends, and the controls bound to the post-invoke hooks didn't run in our tests. Nothing on the platform inspects tool output for this agent.
+    In this agent, untrusted text arrives through tool output: a patient's portal message, returned by `get_messages` or `get_patient_record`. The input controls see what the caller sends. The controls we bound to the post-invoke hooks didn't run in our tests, so in this workshop nothing inspects tool output. Until a tool-output control runs for you, handle it in your own design: return less from the tools (Step 5) and check the agent's answer against the record (Lab 3).
 
 Here are the three layers for patient data, with what we measured:
 
@@ -280,7 +280,9 @@ orchestrate chat ask --agent-name student0_lakeview_inbox_agent \
   "Please review patient-001. If anything is urgent, call me at 555-201-3344 or email dr.kim@example.com."
 ```
 
-<!-- TODO(verify): `orchestrate chat ask` is documented for the local Developer Edition; confirm it runs against the SaaS instance. The agent's chat preview in the Orchestrate UI is the fallback. -->
+<!-- TODO(verify): `orchestrate chat ask` is documented for the local Developer Edition; confirm it runs against the SaaS instance. -->
+
+If `orchestrate chat ask` doesn't work against the workshop instance, open your agent in the Orchestrate UI and paste the same message into its chat preview.
 
 Open the new trace. You'll see:
 
@@ -290,7 +292,7 @@ Open the new trace. You'll see:
 
 The control cleaned what the user typed. It didn't touch what the tool returned.
 
-You can bind the same control at `tool_post_invoke` or `agent_post_invoke`. The CLI accepts it. In our tests no control step appeared in the trace at those hooks, and nothing was masked.
+The CLI also accepts this control at `tool_post_invoke` and `agent_post_invoke`. In our tests on this instance, those hooks produced no control step in the trace and masked nothing. That's why Step 4 uses a plug-in to mask the answer.
 
 To remove the control later:
 
@@ -316,6 +318,11 @@ uv run python -m lab1.agent.deploy --pii-plugin
 ```
 
 This imports the plug-in under your prefix and adds it to the agent's `agent_post_invoke` hook. Deploying again without `--pii-plugin` removes it. As in Lab 1, give a fresh deploy a couple of minutes before you run it.
+
+We ran this plug-in live on the workshop instance with an earlier model. The `--pii-plugin` option of `deploy.py` has unit tests but hasn't been run live with Claude Sonnet 5.5. If you don't see the plug-in span in Step 4's trace, tell your instructor.
+
+???+ question "Ask Bob"
+    Open `lab2/orchestrate/pii_output_plugin.py` and ask Bob: "Which of these regexes would match a lab date or a medication dose by mistake? Why is the DOB pattern written the way it is?"
 
 Run the agent again from the inbox UI, on the same patient as Step 1. Then compare the new trace with the one from Step 1:
 
@@ -344,6 +351,8 @@ Try it yourself:
 3. Run the agent on the same patient and open the trace. The tool span no longer holds those fields, so neither do the LLM calls or the answer.
 4. Check the concerns. Did the agent lose anything it needed?
 
+Ask Bob for help: "Which fields in app/models.py are marked with _pii or _phi, and how would I drop those keys from the dict that get_patient_record returns in lab1/agent/tools.py?"
+
 Lab 3 goes further: tools that search for one thing (a lab, a condition) instead of returning the whole record.
 
 ---
@@ -352,7 +361,7 @@ Lab 3 goes further: tools that search for one thing (a lab, a condition) instead
 
 **Cost.** Orchestrate traces show token counts per LLM call, not cost.
 
-**Custom spans.** Tracing a hosted agent needs no code, and you can't add your own spans to it. Orchestrate has an Observability SDK and OpenTelemetry export for agents that run outside it ([Observability SDK](https://developer.watson-orchestrate.ibm.com/traces/observability-sdk.md)). We don't use them today.
+**Custom spans.** Tracing a hosted agent needs no code. For agents that run outside Orchestrate, IBM documents an Observability SDK and OpenTelemetry export ([Observability SDK](https://developer.watson-orchestrate.ibm.com/traces/observability-sdk.md)). We don't use them in this workshop.
 
 **Operational monitoring.** In production you'd also track runs per hour, error rates and latency trends in your existing monitoring stack. The Agent analytics page shows some of this per agent.
 
