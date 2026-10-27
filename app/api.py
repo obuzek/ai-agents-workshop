@@ -58,7 +58,7 @@ async def tenant_from_header(request: Request, call_next):
     token = store.current_tenant.set(tenant)
     try:
         return await call_next(request)
-    except store.TooManyTenants as e:
+    except (store.TooManyTenants, store.StorageUnavailable) as e:
         return JSONResponse(status_code=503, content={"detail": str(e)})
     finally:
         store.current_tenant.reset(token)

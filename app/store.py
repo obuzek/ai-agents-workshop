@@ -17,6 +17,7 @@ Tenancy here only keeps attendees' data apart; it isn't access control.
 
 import copy
 import json
+import logging
 import os
 import re
 import threading
@@ -28,6 +29,8 @@ import requests
 from dotenv import load_dotenv
 
 from app.models import Patient
+
+logger = logging.getLogger(__name__)
 
 # The UI starts this API in-process without loading .env, so load it here:
 # remote mode is switched on by EHR_API_URL / EHR_TENANT in the student's .env.
@@ -90,7 +93,12 @@ def _append_reply(data: dict, message_id: str, sender_name: str, body: str, date
             break
 
 
-# --- server mode: per-tenant in-memory copies ---
+# --- server mode: per-tenant copies, kept in memory and saved to Object Storage ---
+#
+# Each tenant's records live in memory for speed. If COS_BUCKET is set, every write
+# also saves the tenant's records to IBM Cloud Object Storage at
+# tenants/<tenant>/records.json, and the first request after a restart loads them
+# back, so a restart of the shared EHR doesn't wipe anyone's work.
 
 
 _tenant_data: dict[str, dict[str, dict]] = {}
@@ -102,23 +110,101 @@ class TooManyTenants(RuntimeError):
     pass
 
 
-def _tenant_records() -> dict[str, dict]:
-    """Raw patient dicts for the current request's tenant, creating them on first use."""
+class StorageUnavailable(RuntimeError):
+    """Saved records exist (or might) but couldn't be read; never fall back to fresh data then."""
+
+
+class _ObjectStorage:
+    """Minimal IBM Cloud Object Storage client: GET/PUT JSON objects with an IAM API key."""
+
+    def __init__(self, bucket: str, endpoint: str, api_key: str):
+        self.bucket, self.endpoint, self.api_key = bucket, endpoint.rstrip("/"), api_key
+        self._token, self._expires = "", 0.0
+        self._token_lock = threading.Lock()
+
+    def _headers(self) -> dict:
+        with self._token_lock:
+            if time.time() > self._expires - 300:
+                resp = requests.post("https://iam.cloud.ibm.com/identity/token", timeout=30, data={
+                    "grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": self.api_key})
+                resp.raise_for_status()
+                self._token, self._expires = resp.json()["access_token"], resp.json()["expiration"]
+            return {"Authorization": f"Bearer {self._token}"}
+
+    def _url(self, key: str) -> str:
+        return f"{self.endpoint}/{self.bucket}/{key}"
+
+    def get(self, key: str) -> dict | None:
+        """The stored JSON, or None if there's no such object yet."""
+        resp = requests.get(self._url(key), headers=self._headers(), timeout=30)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        return resp.json()
+
+    def put(self, key: str, data: dict):
+        resp = requests.put(self._url(key), headers={**self._headers(), "Content-Type": "application/json"},
+                            data=json.dumps(data), timeout=30)
+        resp.raise_for_status()
+
+
+_storage = (
+    _ObjectStorage(os.environ["COS_BUCKET"],
+                   os.environ.get("COS_ENDPOINT", "https://s3.us-south.cloud-object-storage.appdomain.cloud"),
+                   os.environ.get("COS_APIKEY", ""))
+    if EHR_MODE == "server" and os.environ.get("COS_BUCKET") else None
+)
+
+
+def _storage_key(tenant: str) -> str:
+    return f"tenants/{tenant}/records.json"
+
+
+def _pristine_records() -> dict[str, dict]:
     global _pristine
+    if _pristine is None:
+        _pristine = {}
+        for filepath in sorted(DATA_DIR.glob("*.json")):
+            data = json.loads(filepath.read_text())
+            _pristine[data["id"]] = data
+    return _pristine
+
+
+def _tenant_records() -> dict[str, dict]:
+    """Raw patient dicts for the current request's tenant, loading or creating them on first use."""
     tenant = current_tenant.get()
     if not tenant:
         raise RuntimeError("No tenant set for this request")
     with _tenant_lock:
-        if tenant not in _tenant_data:
-            if len(_tenant_data) >= MAX_TENANTS:
-                raise TooManyTenants(f"Tenant limit ({MAX_TENANTS}) reached")
-            if _pristine is None:
-                _pristine = {}
-                for filepath in sorted(DATA_DIR.glob("*.json")):
-                    data = json.loads(filepath.read_text())
-                    _pristine[data["id"]] = data
-            _tenant_data[tenant] = copy.deepcopy(_pristine)
-        return _tenant_data[tenant]
+        if tenant in _tenant_data:
+            return _tenant_data[tenant]
+        if len(_tenant_data) >= MAX_TENANTS:
+            raise TooManyTenants(f"Tenant limit ({MAX_TENANTS}) reached")
+
+    # Load outside the lock so one slow storage call doesn't hold up other tenants.
+    saved = None
+    if _storage is not None:
+        try:
+            saved = _storage.get(_storage_key(tenant))
+        except Exception as e:
+            logger.error("Couldn't load saved records for tenant %s: %s", tenant, e)
+            raise StorageUnavailable("Saved records are temporarily unavailable; try again shortly") from e
+
+    with _tenant_lock:
+        # Another request for the same tenant may have loaded it meanwhile; keep the first copy.
+        return _tenant_data.setdefault(tenant, saved if saved is not None else copy.deepcopy(_pristine_records()))
+
+
+def _save_tenant(tenant: str):
+    """Persist a tenant's records. A failed save is logged; the data stays in memory."""
+    if _storage is None:
+        return
+    with _tenant_lock:
+        snapshot = copy.deepcopy(_tenant_data[tenant])
+    try:
+        _storage.put(_storage_key(tenant), snapshot)
+    except Exception as e:
+        logger.error("Couldn't save records for tenant %s (kept in memory): %s", tenant, e)
 
 
 # --- remote mode: forward to the shared EHR ---
@@ -182,8 +268,10 @@ def save_reply(patient_id: str, message_id: str, sender_name: str, body: str, da
     """Append a provider reply to a message."""
     _validate_patient_id(patient_id)
     if EHR_MODE == "server":
+        records = _tenant_records()
         with _tenant_lock:
-            _append_reply(_tenant_records()[patient_id], message_id, sender_name, body, date)
+            _append_reply(records[patient_id], message_id, sender_name, body, date)
+        _save_tenant(current_tenant.get())
         return
     if EHR_MODE == "remote":
         global _remote_records
