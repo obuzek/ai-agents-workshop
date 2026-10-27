@@ -346,6 +346,99 @@ Note: These four dimensions map directly to the four labs: build, observe, impro
 
 ---
 
+&lt;!-- .slide: id="todays-architecture" --&gt;
+
+## How today's workshop is wired
+
+&lt;div style="display:flex;gap:36px;align-items:flex-start;flex:1;min-height:0"&gt;
+&lt;div style="flex:0 0 770px"&gt;
+&lt;svg class="arch-diagram" viewBox="0 0 780 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your laptop runs the Streamlit UI, a local EHR API and the lab agent service. The agent service runs your agent on watsonx Orchestrate in the shared TechZone account. The local EHR API and the agent's tools both reach the shared EHR on Code Engine with your tenant header." style="width:100%;height:auto;display:block"&gt;
+&lt;style&gt;
+.arch-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.arch-diagram text { fill: currentColor; font-size: 17px; }
+.arch-diagram text.b { font-size: 19px; font-weight: 600; }
+.arch-diagram text.muted { fill: #8d8d8d; }
+.arch-diagram text.zone { fill: #8d8d8d; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; }
+.arch-diagram text.on-accent { fill: #fff; }
+.arch-diagram text.edge-label { font-size: 16px; fill: #8d8d8d; }
+.arch-diagram text.edge-label.accent { fill: #4589ff; }
+.arch-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.arch-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.arch-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.arch-diagram .group { fill: none; stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.arch-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#arch-arrow); }
+.arch-diagram .edge.accent { stroke: #0f62fe; marker-end: url(#arch-arrow-accent); }
+.arch-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#arch-arrow-muted); }
+.arch-diagram .edge.dashed { stroke-dasharray: 8 6; }
+&lt;/style&gt;
+&lt;defs&gt;
+&lt;marker id="arch-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="currentColor"/&gt;&lt;/marker&gt;
+&lt;marker id="arch-arrow-accent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="#0f62fe"/&gt;&lt;/marker&gt;
+&lt;marker id="arch-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/&gt;&lt;/marker&gt;
+&lt;/defs&gt;
+&lt;!-- zone 1: the student's laptop (x 0-330) --&gt;
+&lt;rect class="group" x="1" y="1" width="329" height="538"/&gt;
+&lt;text class="zone" x="24" y="32"&gt;YOUR LAPTOP&lt;/text&gt;
+&lt;rect class="node" x="24" y="52" width="282" height="116"/&gt;
+&lt;text class="b" x="44" y="84"&gt;Lab agent service :8001&lt;/text&gt;
+&lt;text x="44" y="112"&gt;starts the run, validates JSON,&lt;/text&gt;
+&lt;text x="44" y="138"&gt;stores concerns locally&lt;/text&gt;
+&lt;rect class="node" x="24" y="224" width="282" height="84"/&gt;
+&lt;text class="b" x="44" y="258"&gt;Streamlit UI :8501&lt;/text&gt;
+&lt;text x="44" y="286"&gt;Run Agent, review concerns&lt;/text&gt;
+&lt;rect class="node" x="24" y="364" width="282" height="84"/&gt;
+&lt;text class="b" x="44" y="398"&gt;Local EHR API :8000&lt;/text&gt;
+&lt;text x="44" y="426"&gt;thin forwarder&lt;/text&gt;
+&lt;rect class="node fill" x="24" y="464" width="282" height="56"/&gt;
+&lt;text x="44" y="488"&gt;&lt;tspan font-weight="600"&gt;.env&lt;/tspan&gt;  API key · instance URL&lt;/text&gt;
+&lt;text x="44" y="510"&gt;seat prefix · EHR tenant&lt;/text&gt;
+&lt;line class="edge" x1="165" y1="224" x2="165" y2="168"/&gt;
+&lt;line class="edge" x1="165" y1="308" x2="165" y2="364"/&gt;
+&lt;!-- zone 2: IBM Cloud, TechZone (x 420-780, y 0-236) --&gt;
+&lt;rect class="group" x="420" y="1" width="359" height="235"/&gt;
+&lt;text class="zone" x="444" y="32"&gt;IBM CLOUD · TECHZONE (ca-tor)&lt;/text&gt;
+&lt;rect class="node accent" x="444" y="52" width="312" height="160"/&gt;
+&lt;text class="b on-accent" x="464" y="84"&gt;watsonx Orchestrate&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="112"&gt;studentN_lakeview_inbox_agent&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="138"&gt;ReAct loop + LLM calls&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="164"&gt;prefixed tools + connection&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="190" opacity="0.8"&gt;shared by ~34 seats&lt;/text&gt;
+&lt;line class="edge accent" x1="306" y1="110" x2="444" y2="110"/&gt;
+&lt;text class="edge-label accent" x="375" y="98" text-anchor="middle"&gt;runs API&lt;/text&gt;
+&lt;text class="edge-label accent" x="375" y="132" text-anchor="middle"&gt;IAM key&lt;/text&gt;
+&lt;!-- zone 3: shared EHR on Code Engine (x 420-780, y 300-540) --&gt;
+&lt;rect class="group" x="420" y="300" width="359" height="239"/&gt;
+&lt;text class="zone" x="444" y="331"&gt;CODE ENGINE · us-south&lt;/text&gt;
+&lt;rect class="node" x="444" y="348" width="312" height="168"/&gt;
+&lt;text class="b" x="464" y="380"&gt;Shared EHR (FastAPI)&lt;/text&gt;
+&lt;text x="464" y="408"&gt;patient records in memory&lt;/text&gt;
+&lt;text x="464" y="434"&gt;a private copy per tenant,&lt;/text&gt;
+&lt;text x="464" y="460"&gt;keyed by X-Tenant&lt;/text&gt;
+&lt;text class="muted" x="464" y="490"&gt;no agent logic, no UI&lt;/text&gt;
+&lt;line class="edge" x1="306" y1="406" x2="444" y2="406"/&gt;
+&lt;text class="edge-label" x="375" y="394" text-anchor="middle"&gt;records&lt;/text&gt;
+&lt;text class="edge-label" x="375" y="428" text-anchor="middle"&gt;X-Tenant&lt;/text&gt;
+&lt;line class="edge accent" x1="716" y1="212" x2="716" y2="348"/&gt;
+&lt;text class="edge-label accent end" x="702" y="262" text-anchor="end"&gt;tools send X-Tenant&lt;/text&gt;
+&lt;text class="edge-label accent end" x="702" y="284" text-anchor="end"&gt;from your connection&lt;/text&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div style="flex:1;min-width:0"&gt;
+&lt;p style="font-size:0.75em;margin:0 0 0.4em"&gt;&lt;strong&gt;Both paths send your tenant&lt;/strong&gt;, so the UI and the cloud agent see the same private data.&lt;/p&gt;
+&lt;p style="font-size:0.75em;margin:1em 0 0.4em"&gt;&lt;strong&gt;In production, instead:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul style="margin-left:1em;width:auto"&gt;
+&lt;li style="font-size:0.7em;margin-bottom:0.6em"&gt;A real system of record (FHIR API) with OAuth / SMART-on-FHIR per user, not a tenant header&lt;/li&gt;
+&lt;li style="font-size:0.7em;margin-bottom:0.6em"&gt;UI and agent service hosted centrally behind SSO, not on laptops&lt;/li&gt;
+&lt;li style="font-size:0.7em;margin-bottom:0.6em"&gt;Concerns in a governed database; secrets in a vault, not &lt;code&gt;.env&lt;/code&gt;&lt;/li&gt;
+&lt;li style="font-size:0.7em;margin-bottom:0.6em"&gt;An instance per team, not one shared account where every seat is admin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally: a JSON file, then Postgres in Lab 4. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
+
+---
+
 &lt;!-- .slide: id="lets-build" data-background="#0f62fe" --&gt;
 
 &lt;div style="color:#fff"&gt;
@@ -1779,6 +1872,6 @@ Responsibility isn't something you bolt on at the end.
     initReveal();
   }
 })();
-</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 16, 2026 05:52:30 UTC">October 16, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2026 11:21:52 UTC">October 27, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
 document$.subscribe(()=>{ lightbox.reload(); });
 </script></body></html>
