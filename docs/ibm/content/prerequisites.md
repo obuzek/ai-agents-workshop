@@ -81,6 +81,18 @@ The workshop code talks to IBM Cloud with an **API key**: a long secret string t
 2. Sign in with the **username and password** for your workshop seat.
 3. You land on the IBM Cloud dashboard at [cloud.ibm.com](https://cloud.ibm.com).
 
+### Open watsonx once
+
+The labs use watsonx.governance to evaluate your agent. Its features need a watsonx user profile, and IBM creates that profile the first time you open watsonx. Do this once, before the workshop:
+
+1. In the menu on the left, open the **Resource list**.
+2. Expand **AI / Machine Learning** and click the workshop's **watsonx.ai Studio** instance. Its name starts with `ws-`.
+3. Click **Launch** and choose **IBM watsonx**.
+4. Accept the terms if asked, and wait for the watsonx home page to load. You can close it afterwards.
+
+!!! warning "Skip this and Lab 3 won't work"
+    Without this one-time visit, watsonx.governance calls fail with an authorization error ("Failed to verify user profile existence").
+
 ### Create an API key
 
 1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
