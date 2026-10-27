@@ -337,6 +337,13 @@ The EHR API server starts automatically in the background on port 8000.
 
 Open [http://localhost:8501](http://localhost:8501) in your browser. You should see the inbox with 12 patients and their portal messages.
 
+!!! info "Your patients live in the shared workshop EHR"
+    The patient records come from one EHR server shared by the whole workshop. You get your **own private copy** of the 12 patients, keyed to your API key (step 3 saved the link in `.env`). Replies you send are visible only to you and to your agent. Pages load in about a second, because each one fetches from the cloud.
+
+    If you create a new API key and re-run the setup script, you start over with a fresh copy of the patients.
+
+Until you start a lab's agent, the **Concerns** panel tells you your agent isn't running yet and disables **Run Agent**. That's expected: each lab starts its agent in a second terminal.
+
 ??? tip "Changing ports"
     The API and UI ports are configurable:
 
