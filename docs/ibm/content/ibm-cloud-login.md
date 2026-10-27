@@ -83,5 +83,15 @@ Your code talks to IBM Cloud with an **API key**: a long secret string that acts
 !!! warning "You only see the key once"
     IBM Cloud shows the key only when you create it. If you close the dialog before the installer accepts it, delete that key and create a new one.
 
+## 4. Open watsonx Orchestrate (for the labs)
+
+The labs ask you to look at your agent in the Orchestrate web UI. To open it:
+
+1. Log in to IBM Cloud with your seat (step 2).
+2. Click the **Resource list** icon in the menu on the left (or go to [cloud.ibm.com/resources](https://cloud.ibm.com/resources)).
+3. Expand **AI / Machine Learning** and click the **watsonx Orchestrate** instance. Its name starts with `wxo-`.
+4. Click **Launch watsonx Orchestrate**.
+5. In Orchestrate, open the menu at the top left and choose **Build → Agent Builder** (Manage agents) to find your agent. Its name starts with your prefix, e.g. `student0_lakeview_inbox_agent`.
+
 Now go back to the [Prerequisites](prerequisites.md#run-the-installer) and run the installer. It asks for this key.
 

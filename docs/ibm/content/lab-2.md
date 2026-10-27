@@ -64,7 +64,7 @@ In the UI at [http://localhost:8501](http://localhost:8501), pick a patient and 
 
 Traces are in watsonx Orchestrate, not in watsonx.ai.
 
-1. Open the Orchestrate UI for the workshop instance.
+1. Open the Orchestrate UI for the workshop instance ([how to open it](ibm-cloud-login.md#4-open-watsonx-orchestrate-for-the-labs)).
 2. From the main menu, open **Analyze**. This opens **Agent analytics**, a table of agents.
 3. Click your agent, `<prefix>lakeview_inbox_agent` (for example `student0_lakeview_inbox_agent`).
 4. The **Traces** view lists runs with a timestamp, trace ID, status, model and latency. Pick the run at the time you wrote down.

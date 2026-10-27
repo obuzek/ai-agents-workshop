@@ -465,7 +465,7 @@ Now go back to the UI at [http://localhost:8501](http://localhost:8501):
 
 Orchestrate records a trace for each run of your agent. You didn't write any code for this. A trace shows every LLM call and tool call in the run.
 
-1. Open the watsonx Orchestrate UI for the workshop instance (the same instance the setup script found for you).
+1. Open the watsonx Orchestrate UI for the workshop instance (the same instance the setup script found for you) ([how to open it](ibm-cloud-login.md#4-open-watsonx-orchestrate-for-the-labs)).
 2. From the main menu, open **Analyze**. You'll see a table of agents, including the other students' agents, because everyone shares the instance.
 3. Click your agent. Its name starts with your prefix, for example `student0_lakeview_inbox_agent`.
 4. Pick one of your runs from the list and open its details.
