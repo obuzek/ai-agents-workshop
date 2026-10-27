@@ -22,8 +22,8 @@ import requests
 #   2. Generates a JSON schema from the type hints + docstring
 #   3. Makes the tool importable via `orchestrate tools import -k python`
 #
-# The signature is intentionally the same as LangChain's @tool —
-# switching frameworks meant only changing this import line.
+# expected_credentials=EHR_CREDENTIALS tells Orchestrate the tool needs the
+# EHR connection, so connections.key_value() can read it at run time.
 from ibm_watsonx_orchestrate.agent_builder.tools import tool
 from ibm_watsonx_orchestrate.agent_builder.connections import ConnectionType, ExpectedCredentials
 from ibm_watsonx_orchestrate.run import connections
@@ -39,7 +39,8 @@ EHR_CREDENTIALS = [ExpectedCredentials(app_id=EHR_APP_ID, type=ConnectionType.KE
 def _get(path: str):
     """GET from the EHR API, using the URL and tenant stored in the Orchestrate connection."""
     conn = connections.key_value(EHR_APP_ID)
-    return requests.get(f"{conn['base_url'].rstrip('/')}{path}", headers={"X-Tenant": conn.get("tenant", "")})
+    return requests.get(f"{conn['base_url'].rstrip('/')}{path}",
+                        headers={"X-Tenant": conn.get("tenant", "")}, timeout=30)
 
 
 # --- Tools the LLM can call ---

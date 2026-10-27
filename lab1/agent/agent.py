@@ -5,10 +5,9 @@ The agent receives a patient ID and a goal. It decides which tools to call,
 in what order, and how to interpret the results. When it has gathered enough
 information, it returns structured concerns.
 
-Unlike a LangGraph agent, the loop does not run in this process. The agent
-(agent.yaml) and its tools (tools.py) are deployed to Orchestrate with
-deploy.py; Orchestrate runs the ReAct cycle (observe, reason, act) on its
-side. This module is just a client: it sends one message over the REST API,
+The loop does not run in this process. The agent (agent.yaml) and its tools
+(tools.py) are deployed to Orchestrate with deploy.py; Orchestrate runs the
+ReAct cycle (observe, reason, act) on its side. This module is just a client: it sends one message over the REST API,
 waits for the run to finish, and validates the answer.
 """
 
@@ -39,8 +38,8 @@ RUN_TIMEOUT = 300  # seconds to wait for one agent run
 POLL_INTERVAL = 2  # seconds between run status checks
 FINAL_STATUSES = {"completed", "failed", "cancelled", "expired", "requires_input"}
 
-# Orchestrate's react_core agents do not support constrained decoding the way
-# LangGraph's response_format does, so the model can return malformed JSON.
+# Orchestrate's react_core agents do not support constrained decoding, so the
+# model can return malformed JSON.
 # When that happens we tell it what was wrong and ask once more.
 MAX_FORMAT_RETRIES = 1
 
@@ -181,13 +180,11 @@ def process_patient(patient_id: str) -> PatientConcerns:
     # Patch in the patient_id and timestamps — the LLM sometimes gets
     # these wrong or leaves them empty, so we normalize here.
     now = datetime.now(timezone.utc).isoformat()
+    structured.patient_id = patient_id
     for concern in structured.concerns:
         concern.patient_id = patient_id
         if not concern.last_updated:
             concern.last_updated = now
-
-    if not structured.patient_id:
-        structured.patient_id = patient_id
 
     logger.info("[%s] Agent found %d concerns", patient_id, len(structured.concerns))
     return structured

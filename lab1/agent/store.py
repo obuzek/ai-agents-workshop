@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 
-from lab1.agent.models import ConcernsStore, PatientConcerns
+from lab1.agent.models import ConcernsStore
 
 STORE_PATH = Path(os.environ.get("AGENT_STORE", "data/agent_output.json"))
 
@@ -25,8 +25,11 @@ def load_store() -> ConcernsStore:
 def save_store(store: ConcernsStore):
     """Write the store to disk, overwriting any previous version."""
     STORE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(STORE_PATH, "w") as f:
+    # Write a temp file and swap it in, so a reader never sees a half-written file.
+    tmp = STORE_PATH.with_suffix(".tmp")
+    with open(tmp, "w") as f:
         json.dump(store.model_dump(), f, indent=2)
+    tmp.replace(STORE_PATH)
 
 
 def get_concerns(patient_id: str) -> list[dict]:

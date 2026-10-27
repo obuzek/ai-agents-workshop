@@ -26,7 +26,7 @@ async def lifespan(app):
     logger.info(
         "\n"
         "╔══════════════════════════════════════════════════════════╗\n"
-        "║  Lab 1 Agent — The Naive Agent                          ║\n"
+        "║  Lab 1 Agent — The Naive Agent                           ║\n"
         "║  ReAct agent on watsonx Orchestrate; concerns as JSON    ║\n"
         "║  http://localhost:8001/docs                              ║\n"
         "╚══════════════════════════════════════════════════════════╝"
@@ -63,18 +63,20 @@ def agent_status():
 @app.post("/patients/{patient_id}/run")
 def trigger_run(patient_id: str):
     """Run the agent for a single patient in a background thread."""
-    if _run_lock.locked():
+    # Take the lock here, not in the thread, so two quick clicks can't both start a run.
+    if not _run_lock.acquire(blocking=False):
         return {"status": "already_running"}
 
     def _background_run():
         global _run_error
         from lab1.agent.run import run_single
-        with _run_lock:
-            _run_error = None
-            try:
-                run_single(patient_id)
-            except Exception as e:
-                _run_error = str(e)
+        _run_error = None
+        try:
+            run_single(patient_id)
+        except Exception as e:
+            _run_error = str(e)
+        finally:
+            _run_lock.release()
 
     thread = threading.Thread(target=_background_run, daemon=True)
     thread.start()

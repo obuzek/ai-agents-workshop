@@ -107,7 +107,7 @@ def instructions_from(prompt: str, input_marker: str) -> str:
 
 
 def format_suffix(model: type[BaseModel]) -> str:
-    """The same "answer with JSON matching this schema" instruction lab1/agent/deploy.py appends."""
+    """An "answer with JSON matching this schema" instruction like the one lab1/agent/deploy.py appends."""
     schema = model.model_json_schema()
     return (
         "\nFINAL ANSWER FORMAT:\n"
@@ -139,8 +139,9 @@ class Orchestrate:
 
     def agent_id(self, name: str) -> str:
         if name not in self._ids:
-            agents = requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=self._headers(), timeout=30).json()
-            matches = [a["id"] for a in agents if a["name"] == name]
+            r = requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=self._headers(), timeout=30)
+            r.raise_for_status()
+            matches = [a["id"] for a in r.json() if a["name"] == name]
             if not matches:
                 sys.exit(f"Agent '{name}' isn't deployed on {INSTANCE}.")
             self._ids[name] = matches[0]
@@ -156,7 +157,9 @@ class Orchestrate:
         run = r.json()
         deadline = time.time() + 300
         while True:
-            s = requests.get(f"{INSTANCE}/v1/orchestrate/runs/{run['run_id']}", headers=self._headers(), timeout=30).json()
+            r = requests.get(f"{INSTANCE}/v1/orchestrate/runs/{run['run_id']}", headers=self._headers(), timeout=30)
+            r.raise_for_status()
+            s = r.json()
             if s.get("status") in {"completed", "failed", "cancelled", "expired", "requires_input"}:
                 break
             if time.time() > deadline:
@@ -223,8 +226,9 @@ def deploy_judges(wxo: Orchestrate):
          instructions_from(lab_prompt("lab3/agent/critic.py", "_CRITIC_PROMPT"), "CONCERNS:")
          + "\nThe concerns and grounding results are in the user message.\n" + format_suffix(CriticResult)),
     ]
-    existing = {a["name"]: a["id"] for a in
-                requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=wxo._headers(), timeout=30).json()}
+    r = requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=wxo._headers(), timeout=30)
+    r.raise_for_status()
+    existing = {a["name"]: a["id"] for a in r.json()}
     for name, description, instructions in specs:
         payload = {"additional_properties": {}, "spec_version": "v1", "kind": "native", "name": PREFIX + name,
                    "description": description, "style": "react_intrinsic", "llm": MODEL,  # the API name for react_core
@@ -284,6 +288,8 @@ def main():
     EHR_URL = (args.ehr_url or EHR_URL).rstrip("/")
     if not INSTANCE or not (API_KEY or args.ibmcloud_session):
         sys.exit("Missing WXO_INSTANCE_URL / WXO_API_KEY in .env. Run scripts/install.sh first.")
+    if not args.skip_judges and not EHR_URL:
+        sys.exit("The grounding check needs EHR_API_URL in .env (or --ehr-url). Use --skip-judges to check only the main agent.")
     wxo = Orchestrate(use_ibmcloud_session=args.ibmcloud_session)
     patients = [f"patient-{i:03d}" for i in range(1, args.patients + 1)]
     results: list[Result] = []
@@ -329,7 +335,7 @@ def main():
                         grounding.append({"concern_title": c.title, "verdicts": [v.model_dump() for v in jd.value.verdicts]})
             out.append(ask(wxo, "critic", pid, PREFIX + "critic",
                            "CONCERNS:\n" + concerns.model_dump_json() + "\n\nGROUNDING RESULTS:\n"
-                           + (json.dumps(grounding) or "(no grounding results)"), CriticResult))
+                           + (json.dumps(grounding) if grounding else "(no grounding results)"), CriticResult))
             return out
 
         print(f"\nGrounding + critic on {len(concern_jobs)} patients (up to 3 concerns each)")

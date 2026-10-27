@@ -2,7 +2,7 @@
 Deploy the Lab 1 agent to IBM watsonx Orchestrate.
 
 Imports three things into the active Orchestrate environment:
-  1. connection.yaml — a key-value connection holding the EHR API URL
+  1. connection.yaml — a key-value connection holding the EHR API URL and your tenant
   2. tools.py        — the @tool functions the agent can call
   3. agent.yaml      — the agent, with the JSON output format appended
 
@@ -15,7 +15,8 @@ Prerequisites:
   - The `orchestrate` CLI (ADK), with an environment added and activated:
         orchestrate env add -n workshop -u <WXO_INSTANCE_URL> -t ibm_iam
         orchestrate env activate workshop --api-key <WXO_API_KEY>
-  - EHR_API_URL in .env: a public URL for the EHR API (see deploy/ehr-api/).
+  - EHR_API_URL and EHR_TENANT in .env (scripts/install.sh writes both): the
+    public URL of the shared EHR API and the ID of your copy of the patients.
     Tools run in the cloud, so they can't reach localhost.
   - Optional WXO_NAME_PREFIX in .env (e.g. "student0_"). Agent, tool, and
     connection names are global to an Orchestrate instance, so attendees
@@ -73,9 +74,8 @@ def output_schema() -> dict:
 def render_agent_spec(pii_plugin: bool = False) -> dict:
     """Load agent.yaml and append the output format to its instructions.
 
-    LangGraph enforced this format with constrained decoding (response_format).
-    Orchestrate's react_core agents don't support that, so we ask for it in the
-    prompt and validate the reply in agent.py.
+    Orchestrate's react_core agents don't support constrained decoding, so we
+    ask for the format in the prompt and validate the reply in agent.py.
 
     With pii_plugin, the PII output plug-in is attached at agent_post_invoke.
     """
@@ -111,10 +111,11 @@ def render_tools_source() -> str:
     source = (AGENT_DIR / "tools.py").read_text()
     if not NAME_PREFIX:
         return source
-    source, n_app = re.subn(r'^EHR_APP_ID = "lakeview_ehr"$', f'EHR_APP_ID = "{NAME_PREFIX}lakeview_ehr"',
+    n_decorators = len(re.findall(r"^@tool\b", source, flags=re.MULTILINE))
+    source, n_app = re.subn(rf'^EHR_APP_ID = "{EHR_APP_ID}"$', f'EHR_APP_ID = "{NAME_PREFIX}{EHR_APP_ID}"',
                             source, flags=re.MULTILINE)
     source, n_tools = prefix_tool_names(source)
-    if n_app != 1 or n_tools == 0:
+    if n_app != 1 or n_tools == 0 or n_tools != n_decorators:
         sys.exit("Couldn't apply WXO_NAME_PREFIX to tools.py; its EHR_APP_ID or @tool lines changed shape.")
     return source
 
@@ -150,8 +151,10 @@ def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
     ehr_api_url = os.environ.get("EHR_API_URL", "")
-    if not ehr_api_url.startswith("https://"):
-        logger.error("Set EHR_API_URL in .env to the public https:// URL of the EHR API.")
+    tenant = os.environ.get("EHR_TENANT", "")
+    if not ehr_api_url.startswith("https://") or not tenant:
+        logger.error("Set EHR_API_URL (the public https:// URL of the EHR API) and EHR_TENANT in .env. "
+                     "scripts/install.sh writes both.")
         sys.exit(1)
 
     app_id = NAME_PREFIX + EHR_APP_ID
@@ -161,12 +164,11 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
 
-        # 1. Connection: tools read the EHR URL from here instead of hardcoding it.
+        # 1. Connection: tools read the EHR URL and tenant from here instead of hardcoding them.
         connection = yaml.safe_load((AGENT_DIR / "connection.yaml").read_text())
         connection["app_id"] = app_id
         (tmp / "connection.yaml").write_text(yaml.safe_dump(connection, sort_keys=False))
         orchestrate("connections", "import", "-f", str(tmp / "connection.yaml"))
-        tenant = os.environ.get("EHR_TENANT", "")
         for env in ("draft", "live"):
             orchestrate("connections", "set-credentials", "-a", app_id, "--env", env,
                         "-e", f"base_url={ehr_api_url}", "-e", f"tenant={tenant}")

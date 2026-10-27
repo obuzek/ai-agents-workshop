@@ -1,7 +1,7 @@
 # Lab 1 agent definition for IBM watsonx Orchestrate.
 #
-# This replaces LangGraph's create_react_agent(): Orchestrate runs the ReAct
-# loop (LLM -> tool calls -> tool results -> LLM -> ... -> answer) on its side.
+# Orchestrate runs the ReAct loop (LLM -> tool calls -> tool results -> LLM
+# -> ... -> answer) on its side; this file only describes the agent.
 #   instructions = the system prompt
 #   tools        = the @tool functions in tools.py
 #   llm          = any model from `orchestrate models list`

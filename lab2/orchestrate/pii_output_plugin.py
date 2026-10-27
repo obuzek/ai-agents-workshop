@@ -68,7 +68,7 @@ def mask_pii_output(plugin_context: PluginContext, agent_post_invoke_payload: Ag
     if not agent_post_invoke_payload or not agent_post_invoke_payload.messages:
         return result
 
-    payload = agent_post_invoke_payload.copy(deep=True)
+    payload = agent_post_invoke_payload.model_copy(deep=True)
     for i, message in enumerate(payload.messages):
         text = getattr(message.content, "text", None)
         if text:

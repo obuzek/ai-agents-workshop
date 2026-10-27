@@ -1,5 +1,5 @@
 """
-Tests for deploy.py's --pii-plugin rendering: the prefixed plug-in source and
+Tests for deploy.py's rendering: the prefixed tools and plug-in source, and
 the plugins block in the agent spec. Nothing here calls the orchestrate CLI.
 
 deploy.py reads WXO_NAME_PREFIX at import time, so each test sets the env var
@@ -54,3 +54,14 @@ def test_agent_spec_without_plugin(deploy):
 @pytest.mark.parametrize("argv, expected", [([], False), (["--pii-plugin"], True)])
 def test_parse_args(deploy, argv, expected):
     assert deploy("").parse_args(argv).pii_plugin is expected
+
+
+def test_tools_source_gets_prefixed_names(deploy):
+    module = deploy("student0_")
+    source = module.render_tools_source()
+    assert 'EHR_APP_ID = "student0_lakeview_ehr"' in source
+    tools = module.render_agent_spec()["tools"]
+    for name in tools:
+        assert f'@tool(name="{name}", expected_credentials=EHR_CREDENTIALS)' in source
+    assert source.count("\n@tool(") == len(tools)
+    compile(source, "tools.py", "exec")
