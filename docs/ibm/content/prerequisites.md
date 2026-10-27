@@ -56,7 +56,7 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
     1. Download and install [IBM Bob](https://bob.ibm.com/?lnk=hpfp2us), open it, and log in to your Bob account.
     2. Open a terminal inside Bob: **Terminal → New Terminal** (or <kbd>Ctrl</kbd>+<kbd>`</kbd>).
 
-    Use this terminal for **3. Run the installer** below and every command in the labs.
+    Use this terminal for **3. Install the workshop** below and every command in the labs.
 
     !!! tip "If macOS asks to install the Command Line Tools"
         The installer needs `git`, which comes with Apple's Command Line Tools. If a window pops up asking to install them, click **Install**, wait for it to finish, then run the installer again.
@@ -74,7 +74,7 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
     2. Open **IBM Bob** and log in to your Bob account.
     3. Open the **Extensions** view (the icon of four squares in the left bar), search for **Open Remote - WSL**, and install the extension by **jeanp413**.
     4. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> to open the command palette, type **WSL**, and choose **Remote-WSL: Connect to WSL**. A new Bob window opens, connected to FedoraLinux-44. Use this new window from here on.
-    5. In the new window, open a terminal: **Terminal → New Terminal**. It runs inside Fedora. Use it for **3. Run the installer** below and every command in the labs.
+    5. In the new window, open a terminal: **Terminal → New Terminal**. It runs inside Fedora. Use it for **3. Install the workshop** below and every command in the labs.
 
     ??? tip "On a VPN or behind a corporate proxy?"
         If downloads fail inside Fedora but work in Windows, see Microsoft's [WSL networking troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting).
@@ -88,7 +88,7 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
 
 ---
 
-## 3. Run the installer
+## 3. Install the workshop
 
 ### Create your API key
 
@@ -103,7 +103,7 @@ Keep Bob open, and in your browser at [cloud.ibm.com](https://cloud.ibm.com):
 !!! warning "You only see the key once"
     IBM Cloud shows the key only when you create it. If you close the dialog before the installer accepts it, delete that key and create a new one.
 
-### Run it
+### Run the installer
 
 In Bob's terminal from step 2 (on Windows, the Bob window connected to WSL), run:
 
@@ -113,94 +113,105 @@ curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-
 
 You don't need Homebrew or a preinstalled Python. The installer:
 
-1. Installs `git`, `curl`, `tar` and `gzip` if they're missing (on Fedora that's usually just `git`), using your package manager with `sudo`, which may ask for your Linux password.
+1. Installs `git`, `tar` and `gzip` if they're missing (on Fedora that's usually just `git`), using your package manager with `sudo`, which may ask for your Linux password.
 2. Installs [uv](https://docs.astral.sh/uv/), which also downloads Python 3.12 for the workshop.
 3. Downloads the workshop into `~/ai-agents-workshop`.
 4. Installs the workshop's Python packages.
-5. Installs the watsonx Orchestrate command-line tool, `orchestrate`.
-6. Connects you to IBM Cloud with your API key (see below).
+5. Installs the watsonx Orchestrate command-line tool, `orchestrate`, with `uv tool install ibm-watsonx-orchestrate`. uv puts it in `~/.local/bin` and adds that folder to your PATH.
+6. Asks for your API key and connects you to IBM Cloud.
+7. Checks the setup.
 
 It's safe to run again at any time: it skips what's already done and updates the workshop files.
 
-When it finishes, open the workshop in Bob: **File → Open Folder…**, then choose `ai-agents-workshop` in your home folder.
+### Paste your API key
 
-### Connecting to IBM Cloud
+When the installer reaches `[6/7] Connect to IBM Cloud`, paste the key you copied in the browser and press Enter. Nothing appears as you paste; that's on purpose. The script checks the key with IBM Cloud, finds the workshop's watsonx Orchestrate instance, saves your settings to `.env`, and connects the `orchestrate` CLI. Then it checks the whole setup.
 
-At the end, the installer asks you to **paste your API key**. Paste it and press Enter; it won't show on screen as you paste. Everything else, including finding the workshop's watsonx Orchestrate instance, happens automatically.
-
-You should see:
+You'll see:
 
 ```text
+[6/7] Connect to IBM Cloud
+Created .env from .env-example
+Paste your IBM Cloud API key (it won't show as you paste), then press Enter:
 ✓ API key works: <your workshop username> (account <account id>)
 ✓ Found your watsonx Orchestrate instance: <instance name>
 ✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to …/ai-agents-workshop/.env
 ✓ Your agent and tools will be named with the prefix 'student0_'
 ✓ Orchestrate instance is reachable with this key
-✓ Orchestrate CLI environment 'workshop' is active
+✓ Orchestrate CLI environment 'workshop' is active (deploy with: uv run python -m lab1.agent.deploy)
+
+[7/7] Check the setup
+✓ Python environment: Python 3.12.13, workshop packages installed
+✓ Orchestrate CLI: ADK 2.19.1
+✓ .env settings: WXO_API_KEY, WXO_INSTANCE_URL, WXO_NAME_PREFIX, EHR_TENANT, EHR_API_URL are set
+✓ IBM Cloud API key: IBM Cloud accepts it
+✓ Orchestrate instance: reachable with your key
+✓ Orchestrate CLI environment: 'workshop' is active
+✓ Shared workshop EHR: your copy has 12 patients
+
+All checks passed.
 ```
 
-??? tip "Running the IBM Cloud step on its own"
-    To change your API key later, without reinstalling:
+Your prefix, Python and ADK versions may differ.
 
-    ```bash
-    cd ~/ai-agents-workshop
-    uv run python scripts/ibm_cloud_login.py
-    ```
+If you see `IBM Cloud rejected that API key`, copy the key again from the browser, or create a new one, and run the IBM Cloud step on its own:
 
-    It asks you to paste a key again; use a new one if your old one has expired.
+```bash
+cd ~/ai-agents-workshop
+uv run python scripts/ibm_cloud_login.py
+```
 
-??? tip "Open a new terminal afterwards"
-    The installer adds `uv` and `orchestrate` to your shell's PATH for **new** terminals. In the terminal you ran it from, run `source $HOME/.local/bin/env` once.
+Use the same command later if your key expires.
 
-??? tip "Using the `ibmcloud` CLI too?"
-    You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same API key:
+When the installer finishes:
 
-    ```bash
-    ibmcloud login --apikey <your API key>
-    ```
-
-    Plain `ibmcloud login` with your workshop username and password won't work, because workshop seats sign in through the instructor's login link, not with an IBMid.
+- Open a new terminal in Bob (**Terminal → New Terminal**) so `uv` and `orchestrate` are on your PATH. In the terminal you ran the installer from, run `source $HOME/.local/bin/env` instead.
+- Open the workshop in Bob: **File → Open Folder…**, then choose `ai-agents-workshop` in your home folder.
 
 ---
 
-## 4. Start the EHR Inbox
+## 4. Start the EHR inbox
 
-The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it from the workshop folder:
+The workshop uses a simulated Electronic Health Record (EHR) inbox, a patient portal for **Lakeview Family Medicine**. Start it from the workshop folder:
 
 ```bash
 cd ~/ai-agents-workshop
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
-The EHR API server starts automatically in the background on port 8000.
-
-Open [http://localhost:8501](http://localhost:8501) in your browser. You should see the inbox with 12 patients and their portal messages.
-
-!!! info "Your patients live in the shared workshop EHR"
-    The patient records come from one EHR server shared by the whole workshop. You get your **own private copy** of the 12 patients, keyed to your API key (step 3 saved the link in `.env`). Replies you send are visible only to you and to your agent. Pages load in about a second, because each one fetches from the cloud.
-
-    If you create a new API key and re-run the setup script, you start over with a fresh copy of the patients.
-
-Until you start a lab's agent, the **Concerns** panel tells you your agent isn't running yet and disables **Run Agent**. That's expected: each lab starts its agent in a second terminal.
-
-??? tip "Changing ports"
-    The API and UI ports are configurable:
-
-    ```bash
-    # Use a different API port
-    API_PORT=9000 uv run streamlit run app/ui.py --server.port 9501
-    ```
-
-## Verify It Works
-
-You should see:
+The EHR API server starts automatically in the background on port 8000. Open [http://localhost:8501](http://localhost:8501) in your browser (on Windows, your normal Windows browser). You'll see:
 
 - A **patient dropdown** at the top (12 patients, some with unread messages)
 - **Medical records** with tabs for Conditions, Medications, Labs, History
-- A **Concerns** panel (empty for now — the agent will populate this)
+- A **Concerns** panel. It says your agent isn't running yet and **Run Agent** is disabled; each lab starts its agent in a second terminal.
 - An **Inbox** with patient messages and a conversation viewer
 
-If you can browse patients and read their messages, you're ready.
+Each page takes about a second to load, because it fetches from the cloud.
+
+!!! info "Your patients live in the shared workshop EHR"
+    The patient records come from one EHR server shared by the whole workshop. You get your own copy of the 12 patients, tied to your API key. Replies you send are visible only to you and your agent. If you create a new API key and run `scripts/ibm_cloud_login.py` again, you start over with a fresh copy.
+
+??? tip "Port 8501 or 8000 already in use?"
+    Pick other ports:
+
+    ```bash
+    API_PORT=9000 uv run streamlit run app/ui.py --server.port 9501
+    ```
+
+---
+
+## 5. Verify it works
+
+Leave the inbox running. In a second terminal, run the setup check:
+
+```bash
+cd ~/ai-agents-workshop
+uv run python scripts/check_setup.py
+```
+
+It changes nothing. It prints the same list you saw at the end of the installer: one ✓ or ✗ per part of the setup, and for each ✗ a line starting with `Fix:` that says what to do.
+
+You're ready when every line has a ✓ and you can browse patients and read their messages in the inbox.
 
 ## Next Steps
 

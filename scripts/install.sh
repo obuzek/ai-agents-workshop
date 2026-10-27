@@ -8,17 +8,18 @@
 # what's already there.
 #
 # What it does:
-#   1. Installs missing system tools (git, curl, tar, gzip) with your package manager
+#   1. Installs missing system tools (git, tar, gzip) with your package manager
 #   2. Installs uv (Python package manager), which also provides Python
 #   3. Clones the workshop (branch txc-2026-ibm) into ~/ai-agents-workshop, or updates it
 #   4. Installs the workshop's Python dependencies
 #   5. Installs the watsonx Orchestrate CLI (`orchestrate`)
 #   6. Connects you to IBM Cloud: runs scripts/ibm_cloud_login.py with your API key
+#   7. Checks the setup: runs scripts/check_setup.py (read-only)
 #
 # Settings (environment variables):
 #   WORKSHOP_DIR     where to put the workshop   (default: ~/ai-agents-workshop)
 #   WORKSHOP_BRANCH  which branch to use          (default: txc-2026-ibm)
-#   SKIP_LOGIN=1     stop before the IBM Cloud login step
+#   SKIP_LOGIN=1     skip the IBM Cloud login step (and check only the local setup)
 
 # Everything lives in main(), called on the last line, so a download cut off
 # halfway through runs nothing.
@@ -62,16 +63,31 @@ main() {
     ok "${adk_version:-orchestrate CLI installed}"
 
     step 6 "Connect to IBM Cloud"
+    local logged_in=0
     if [[ "${SKIP_LOGIN:-}" == "1" ]]; then
         warn "Skipped (SKIP_LOGIN=1). When you're ready: cd $dir && uv run python scripts/ibm_cloud_login.py"
     elif [[ -r /dev/tty ]]; then
         # This script arrives on stdin (curl | bash), so give the login script the
-        # keyboard explicitly; it asks for your Orchestrate instance and, if it can't
-        # find apikey.json, for the key itself.
-        (cd "$dir" && uv run python scripts/ibm_cloud_login.py </dev/tty) \
-            || warn "IBM Cloud setup didn't finish. Fix the issue above, then run: cd $dir && uv run python scripts/ibm_cloud_login.py"
+        # keyboard explicitly; it asks for your API key.
+        if (cd "$dir" && uv run python scripts/ibm_cloud_login.py </dev/tty); then
+            logged_in=1
+        else
+            warn "IBM Cloud setup didn't finish. Fix the issue above, then run: cd $dir && uv run python scripts/ibm_cloud_login.py"
+        fi
     else
         warn "No terminal to ask questions in. Run: cd $dir && uv run python scripts/ibm_cloud_login.py"
+    fi
+
+    step 7 "Check the setup"
+    local check=(uv run python scripts/check_setup.py)
+    if [[ "${SKIP_LOGIN:-}" == "1" ]]; then
+        check+=(--offline)  # no API key yet, so check only what's on this machine
+    elif [[ "$logged_in" != "1" ]]; then
+        check=()
+        warn "Skipped until you're connected. Afterwards run: cd $dir && uv run python scripts/check_setup.py"
+    fi
+    if [[ ${#check[@]} -gt 0 ]] && ! (cd "$dir" && "${check[@]}"); then
+        warn "Fix what's marked ✗ above, then check again: cd $dir && uv run python scripts/check_setup.py"
     fi
 
     say ""
@@ -86,7 +102,7 @@ main() {
 }
 
 say()  { printf '%s\n' "$*"; }
-step() { printf '\n[%s/6] %s\n' "$1" "$2"; }
+step() { printf '\n[%s/7] %s\n' "$1" "$2"; }
 ok()   { printf '      ✓ %s\n' "$*"; }
 warn() { printf '      ! %s\n' "$*" >&2; }
 die()  { printf '\n✗ %s\n' "$*" >&2; exit 1; }
@@ -107,19 +123,20 @@ as_root() {
 }
 
 ensure_system_tools() {
-    local needed=(git curl tar gzip) missing=() tool
+    # curl is a given: it's how this script was downloaded.
+    local needed=(git tar gzip) missing=() tool
     for tool in "${needed[@]}"; do
         command -v "$tool" >/dev/null 2>&1 || missing+=("$tool")
     done
     if [[ ${#missing[@]} -eq 0 ]]; then
-        ok "git, curl, tar, gzip already installed"
+        ok "git, tar, gzip already installed"
         return
     fi
 
     say "      Installing: ${missing[*]} (you may be asked for your password)"
     case "$PLATFORM" in
         macos)
-            # git ships with Apple's Command Line Tools; curl, tar and gzip are built in.
+            # git ships with Apple's Command Line Tools; tar and gzip are built in.
             xcode-select --install >/dev/null 2>&1 || true
             die "macOS is installing the Command Line Tools (for git) in a separate window. When that finishes, run this command again."
             ;;
