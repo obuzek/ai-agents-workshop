@@ -227,7 +227,7 @@ def deploy_judges(wxo: Orchestrate):
                 requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=wxo._headers(), timeout=30).json()}
     for name, description, instructions in specs:
         payload = {"additional_properties": {}, "spec_version": "v1", "kind": "native", "name": PREFIX + name,
-                   "description": description, "style": "react_core", "llm": MODEL,
+                   "description": description, "style": "react_intrinsic", "llm": MODEL,  # the API name for react_core
                    "instructions": instructions, "tools": []}
         if PREFIX + name in existing:
             r = requests.patch(f"{INSTANCE}/v1/orchestrate/agents/{existing[PREFIX + name]}",
