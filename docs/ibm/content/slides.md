@@ -341,6 +341,99 @@ Note: These four dimensions map directly to the four labs: build, observe, impro
 
 ---
 
+<!-- .slide: id="todays-architecture" -->
+
+## How today's workshop is wired
+
+<div style="display:flex;gap:36px;align-items:flex-start;flex:1;min-height:0">
+<div style="flex:0 0 770px">
+<svg class="arch-diagram" viewBox="0 0 780 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your laptop runs the Streamlit UI, a local EHR API and the lab agent service. The agent service runs your agent on watsonx Orchestrate in the shared TechZone account. The local EHR API and the agent's tools both reach the shared EHR on Code Engine with your tenant header." style="width:100%;height:auto;display:block">
+<style>
+.arch-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.arch-diagram text { fill: currentColor; font-size: 17px; }
+.arch-diagram text.b { font-size: 19px; font-weight: 600; }
+.arch-diagram text.muted { fill: #8d8d8d; }
+.arch-diagram text.zone { fill: #8d8d8d; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; }
+.arch-diagram text.on-accent { fill: #fff; }
+.arch-diagram text.edge-label { font-size: 16px; fill: #8d8d8d; }
+.arch-diagram text.edge-label.accent { fill: #4589ff; }
+.arch-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.arch-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.arch-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.arch-diagram .group { fill: none; stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.arch-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#arch-arrow); }
+.arch-diagram .edge.accent { stroke: #0f62fe; marker-end: url(#arch-arrow-accent); }
+.arch-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#arch-arrow-muted); }
+.arch-diagram .edge.dashed { stroke-dasharray: 8 6; }
+</style>
+<defs>
+<marker id="arch-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+<marker id="arch-arrow-accent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0f62fe"/></marker>
+<marker id="arch-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/></marker>
+</defs>
+<!-- zone 1: the student's laptop (x 0-330) -->
+<rect class="group" x="1" y="1" width="329" height="538"/>
+<text class="zone" x="24" y="32">YOUR LAPTOP</text>
+<rect class="node" x="24" y="52" width="282" height="116"/>
+<text class="b" x="44" y="84">Lab agent service :8001</text>
+<text x="44" y="112">starts the run, validates JSON,</text>
+<text x="44" y="138">stores concerns locally</text>
+<rect class="node" x="24" y="224" width="282" height="84"/>
+<text class="b" x="44" y="258">Streamlit UI :8501</text>
+<text x="44" y="286">Run Agent, review concerns</text>
+<rect class="node" x="24" y="364" width="282" height="84"/>
+<text class="b" x="44" y="398">Local EHR API :8000</text>
+<text x="44" y="426">thin forwarder</text>
+<rect class="node fill" x="24" y="464" width="282" height="56"/>
+<text x="44" y="488"><tspan font-weight="600">.env</tspan>  API key · instance URL</text>
+<text x="44" y="510">seat prefix · EHR tenant</text>
+<line class="edge" x1="165" y1="224" x2="165" y2="168"/>
+<line class="edge" x1="165" y1="308" x2="165" y2="364"/>
+<!-- zone 2: IBM Cloud, TechZone (x 420-780, y 0-236) -->
+<rect class="group" x="420" y="1" width="359" height="235"/>
+<text class="zone" x="444" y="32">IBM CLOUD · TECHZONE (ca-tor)</text>
+<rect class="node accent" x="444" y="52" width="312" height="160"/>
+<text class="b on-accent" x="464" y="84">watsonx Orchestrate</text>
+<text class="on-accent" x="464" y="112">studentN_lakeview_inbox_agent</text>
+<text class="on-accent" x="464" y="138">ReAct loop + LLM calls</text>
+<text class="on-accent" x="464" y="164">prefixed tools + connection</text>
+<text class="on-accent" x="464" y="190" opacity="0.8">shared by ~34 seats</text>
+<line class="edge accent" x1="306" y1="110" x2="444" y2="110"/>
+<text class="edge-label accent" x="375" y="98" text-anchor="middle">runs API</text>
+<text class="edge-label accent" x="375" y="132" text-anchor="middle">IAM key</text>
+<!-- zone 3: shared EHR on Code Engine (x 420-780, y 300-540) -->
+<rect class="group" x="420" y="300" width="359" height="239"/>
+<text class="zone" x="444" y="331">CODE ENGINE · us-south</text>
+<rect class="node" x="444" y="348" width="312" height="168"/>
+<text class="b" x="464" y="380">Shared EHR (FastAPI)</text>
+<text x="464" y="408">patient records in memory</text>
+<text x="464" y="434">a private copy per tenant,</text>
+<text x="464" y="460">keyed by X-Tenant</text>
+<text class="muted" x="464" y="490">no agent logic, no UI</text>
+<line class="edge" x1="306" y1="406" x2="444" y2="406"/>
+<text class="edge-label" x="375" y="394" text-anchor="middle">records</text>
+<text class="edge-label" x="375" y="428" text-anchor="middle">X-Tenant</text>
+<line class="edge accent" x1="716" y1="212" x2="716" y2="348"/>
+<text class="edge-label accent end" x="702" y="262" text-anchor="end">tools send X-Tenant</text>
+<text class="edge-label accent end" x="702" y="284" text-anchor="end">from your connection</text>
+</svg>
+</div>
+<div style="flex:1;min-width:0">
+<p style="font-size:0.75em;margin:0 0 0.4em"><strong>Both paths send your tenant</strong>, so the UI and the cloud agent see the same private data.</p>
+<p style="font-size:0.75em;margin:1em 0 0.4em"><strong>In production, instead:</strong></p>
+<ul style="margin-left:1em;width:auto">
+<li style="font-size:0.7em;margin-bottom:0.6em">A real system of record (FHIR API) with OAuth / SMART-on-FHIR per user, not a tenant header</li>
+<li style="font-size:0.7em;margin-bottom:0.6em">UI and agent service hosted centrally behind SSO, not on laptops</li>
+<li style="font-size:0.7em;margin-bottom:0.6em">Concerns in a governed database; secrets in a vault, not <code>.env</code></li>
+<li style="font-size:0.7em;margin-bottom:0.6em">An instance per team, not one shared account where every seat is admin</li>
+</ul>
+</div>
+</div>
+
+Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally: a JSON file, then Postgres in Lab 4. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
+
+---
+
 <!-- .slide: id="lets-build" data-background="#0f62fe" -->
 
 <div style="color:#fff">
