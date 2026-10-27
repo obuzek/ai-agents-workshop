@@ -3,9 +3,9 @@
 **Duration:** ~20 minutes
 
 ???+ abstract "What You'll Build"
-    In this lab you'll deploy a naive AI agent to **watsonx Orchestrate** and use it to help a doctor manage their patient portal inbox. You'll see what an Orchestrate agent is made of, how we get reliable JSON out of it, and what it does with real (synthetic) patient data.
+    In this lab you'll deploy a naive AI agent to **watsonx Orchestrate**. The agent reviews a patient's record and portal messages and lists concerns for the doctor. You'll look at the files that define the agent, see how we get valid JSON out of it, and run it against real (synthetic) patient data.
 
-    Each step is something you run and then look at. By the end you'll have a working agent, a clear sense of what it does well, and a list of problems you'd want to fix before putting this anywhere near a real clinic.
+    In each step you run something and look at the result. By the end you'll have a working agent, a sense of what it does well, and a list of problems you'd want to fix before putting this anywhere near a real clinic.
 
 ---
 
@@ -54,7 +54,7 @@ flowchart LR
 | **Reason** | The LLM decides what to do next — call a tool, ask for more info, or respond | "This message mentions warfarin — I should look up the patient's medication list and recent labs" |
 | **Act** | The agent executes — calls a tool, writes to memory, or produces output | Calls `get_patient_record()`, reads the result, then summarizes findings |
 
-The loop repeats until the agent decides it has enough information to produce a final response. On watsonx Orchestrate you don't write this loop yourself: an agent with `style: react_core` runs it on the platform.
+The loop repeats until the agent decides it has enough information to produce a final response. On watsonx Orchestrate, you don't write this loop. Orchestrate runs it for any agent with `style: react_core`.
 
 ### Chat agents vs. background agents
 
@@ -74,13 +74,15 @@ For our doctor inbox problem, a background agent is the better design: incoming 
 ???+ tip "Why not chat?"
     A chat interface is risky here because you can't stop doctors from asking the agent to draft responses, make diagnoses, or confirm medical correctness. An inbox UI keeps the agent's role constrained to organizing information, preserving the doctor's role as the expert.
 
-    One caveat on a hosted platform: Orchestrate gives every agent a chat preview, so anyone with access to your Orchestrate instance can still talk to it directly. The inbox UI constrains what *doctors* see; who can reach the agent itself is an access-control question we come back to in Lab 4.
+    Orchestrate gives every agent a chat preview. Anyone with access to your Orchestrate instance can chat with your agent there. The inbox UI only controls what doctors see. We come back to who can reach the agent in Lab 4.
 
 ---
 
 ## The Data
 
-The workshop uses a set of synthetic EHR patient records that simulate **Lakeview Family Medicine**, a small GP practice with three providers and 12 patients. The source files are in the repo at `data/patients/patient_001.json` through `patient_012.json`; during the workshop they're served by a shared EHR in the cloud, where you get your own private copy (see [Prerequisites](./prerequisites.md)).
+The workshop includes a set of synthetic EHR patient records. These simulate **Lakeview Family Medicine**, a small GP practice with three providers and 12 patients. The source files are `data/patients/patient_001.json` through `patient_012.json`.
+
+During the workshop, a shared EHR server in the cloud serves these records. You have your own private copy of the 12 patients (see [Prerequisites](./prerequisites.md)).
 
 Each patient record contains:
 
@@ -114,7 +116,7 @@ By the end of this lab, you will:
 - [x] Understand the ReAct loop (Observe → Reason → Act) and where it runs on watsonx Orchestrate
 - [x] Know which files define an Orchestrate agent and what each one does
 - [x] Know the difference between an agent that *surfaces information* and one that *generates content* — and why it matters in healthcare
-- [x] Understand two ways to get structured output from an LLM: constrained decoding, and prompt-validate-retry
+- [x] Know two ways to get structured output from an LLM: constrained decoding, and prompting with a schema plus validation and retry
 - [x] Deploy the agent, run it against synthetic patient data, and find its runs in Orchestrate
 - [x] Identify the limitations of a naive implementation
 
@@ -122,7 +124,7 @@ By the end of this lab, you will:
 
 ## Anatomy of an Orchestrate Agent
 
-The Lab 1 agent lives in `lab1/agent/`. Five files on your machine describe it, deploy it, and call it. The agent itself, and the tools it calls, run on watsonx Orchestrate.
+The Lab 1 agent is in `lab1/agent/`. Five files there define the agent, deploy it, and call it. The diagram shows where each piece runs.
 
 <div class="wxo-anatomy" style="margin:1.5em 0">
 <svg class="wxo-anatomy-svg" viewBox="0 0 760 756" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your machine holds agent.yaml, tools.py and connection.yaml. deploy.py reads all three and imports them into watsonx Orchestrate with the orchestrate CLI. agent.py calls your agent through the runs API. In Orchestrate, the agent runs a ReAct loop with an LLM and calls tools in the tool runtime, which reads the EHR connection and fetches records from the shared EHR in the cloud. The agent and the tools are recorded in traces." style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
@@ -152,28 +154,28 @@ The Lab 1 agent lives in `lab1/agent/`. Five files on your machine describe it, 
 <rect class="box" x="24" y="52" width="228" height="84"/>
 <text class="mono" x="40" y="80">agent.yaml</text>
 <text x="40" y="104">instructions, model,</text>
-<text x="40" y="124">tool list</text>
+<text x="40" y="124">list of tools</text>
 <rect class="box" x="266" y="52" width="228" height="84"/>
 <text class="mono" x="282" y="80">tools.py</text>
-<text x="282" y="104">plain @tool functions,</text>
+<text x="282" y="104">Python @tool functions,</text>
 <text x="282" y="124">uploaded as-is</text>
 <rect class="box" x="508" y="52" width="228" height="84"/>
 <text class="mono" x="524" y="80">connection.yaml</text>
-<text x="524" y="104">where the EHR is,</text>
-<text x="524" y="124">plus your tenant</text>
+<text x="524" y="104">EHR URL and</text>
+<text x="524" y="124">your tenant ID</text>
 <line class="edge" x1="197" y1="148" x2="197" y2="176"/>
 <text class="lbl" x="210" y="168">reads all three</text>
 <rect class="box blue" x="24" y="176" width="346" height="96"/>
 <text class="mono on-blue" x="44" y="204">deploy.py</text>
-<text class="on-blue" x="44" y="230">adds your seat prefix, then imports</text>
-<text class="on-blue" x="44" y="254">connection → tools → agent</text>
+<text class="on-blue" x="44" y="230">adds your prefix to each name,</text>
+<text class="on-blue" x="44" y="254">imports connection, tools, agent</text>
 <rect class="box" x="390" y="176" width="346" height="96"/>
 <text class="mono" x="410" y="204">agent.py</text>
 <text x="410" y="230">asks the agent to review a patient,</text>
 <text x="410" y="254">validates the JSON, retries once</text>
 <!-- arrows from your machine into Orchestrate -->
 <line class="edge" x1="197" y1="272" x2="197" y2="340"/>
-<text class="lbl" x="210" y="318">orchestrate CLI import</text>
+<text class="lbl" x="210" y="318">imports with the orchestrate CLI</text>
 <line class="edge" x1="563" y1="272" x2="563" y2="388"/>
 <text class="lbl" x="576" y="318">runs API</text>
 <!-- Zone B: watsonx Orchestrate (y 340-604) -->
@@ -181,12 +183,12 @@ The Lab 1 agent lives in `lab1/agent/`. Five files on your machine describe it, 
 <text class="zone" x="24" y="368">WATSONX ORCHESTRATE (HOSTED)</text>
 <rect class="box soft" x="24" y="388" width="326" height="196"/>
 <text class="t" x="44" y="418">Traces</text>
-<text x="44" y="446">every run, every LLM call,</text>
-<text x="44" y="470">every tool call, recorded</text>
-<text class="lbl" x="44" y="556">you open these in Step 4</text>
+<text x="44" y="446">one per run, with each</text>
+<text x="44" y="470">LLM call and tool call</text>
+<text class="lbl" x="44" y="556">you look at these in Step 4</text>
 <rect class="box blue" x="410" y="388" width="326" height="72"/>
 <text class="t on-blue" x="430" y="416">Your agent</text>
-<text class="on-blue" x="430" y="442">ReAct loop + LLM (gpt-oss-120b)</text>
+<text class="on-blue" x="430" y="442">ReAct loop, gpt-oss-120b</text>
 <line class="edge" x1="500" y1="460" x2="500" y2="500"/>
 <text class="lbl" x="512" y="486">calls tools</text>
 <rect class="box" x="410" y="500" width="174" height="84"/>
@@ -201,20 +203,20 @@ The Lab 1 agent lives in `lab1/agent/`. Five files on your machine describe it, 
 <line class="edge rec" x1="410" y1="542" x2="350" y2="542"/>
 <!-- Zone C: shared EHR (y 630-754) -->
 <line class="edge" x1="500" y1="584" x2="500" y2="674"/>
-<text class="lbl" x="512" y="623">fetches records</text>
+<text class="lbl" x="512" y="623">gets patient records</text>
 <rect class="zone-r" x="390" y="636" width="369" height="118"/>
 <text class="zone" x="736" y="662" text-anchor="end">SHARED EHR (CLOUD)</text>
 <rect class="box" x="410" y="674" width="326" height="64"/>
 <text class="t" x="430" y="700">Lakeview EHR</text>
-<text x="430" y="724">your private copy of the patients</text>
+<text x="430" y="724">your copy of the 12 patients</text>
 </svg>
 </div>
 
-The split matters: **the ReAct loop and the tools don't run on your laptop.** Your laptop holds the definitions and a small client. That's why there's a deploy step, why the tools can't read your `.env`, and why the place to watch the agent think is Orchestrate's traces, not a debugger.
+Your agent and its tools run on Orchestrate, not on your laptop. Your laptop has the agent's definition files and `agent.py`, which asks the agent to review a patient. That's why you deploy before you run it, and why you look at Orchestrate's traces to see what the agent did.
 
 ### `agent.yaml`: the agent definition
 
-This is what the agent *is*: a name, a model, a system prompt, and the tools it may call.
+This file defines the agent: its name, the model, the system prompt (`instructions`), and the tools it can call.
 
 ```yaml
 spec_version: v1
@@ -234,11 +236,11 @@ tools:
 - get_inbox
 ```
 
-Read the full `instructions` in the file; you'll compare them against the agent's behavior in Step 5.
+Read the full `instructions` in the file. You'll compare them with the agent's output in Step 5.
 
 ### `tools.py`: what the agent can do
 
-Each function decorated with the Orchestrate ADK's `@tool` becomes something the LLM can call. The ADK builds the tool's schema from the type hints, and the docstring becomes the description the LLM reads when it decides which tool to use.
+Each function decorated with `@tool` from the Orchestrate ADK becomes a tool the LLM can call. The ADK builds the tool's schema from the type hints. The docstring becomes the tool description the LLM sees.
 
 ```python
 @tool(expected_credentials=EHR_CREDENTIALS)
@@ -250,7 +252,7 @@ def get_patient_record(patient_id: str) -> dict:
     return resp.json()
 ```
 
-The file is uploaded to Orchestrate as-is and runs there, so it must be self-contained: no imports from the rest of the repo. `_get` looks up the EHR's URL and your tenant in the Orchestrate connection instead of hardcoding them:
+`deploy.py` uploads this file to Orchestrate as-is, and the tools run there. The file can't import anything else from the repo. `_get` reads the EHR URL and your tenant ID from the Orchestrate connection:
 
 ```python
 def _get(path: str):
@@ -266,11 +268,11 @@ The agent has five tools: `list_patients`, `get_patient_record`, `get_messages`,
 
 ### `connection.yaml`: where the data is
 
-A key-value connection named `lakeview_ehr`. `deploy.py` imports it and fills in two values from your `.env`: `base_url` (the shared EHR) and `tenant` (your private copy of the patients). Your tools read them at run time.
+This file defines a key-value connection named `lakeview_ehr`. `deploy.py` imports it and sets two values from your `.env`: `base_url`, the address of the shared EHR, and `tenant`, the ID of your copy of the patients. Your tools read both values when they run.
 
 ### `deploy.py`: getting it all into Orchestrate
 
-Agent, tool, and connection names are global to an Orchestrate instance, and everyone in the room shares one instance. So `deploy.py` adds your seat prefix (`WXO_NAME_PREFIX`, for example `student0_`) to every name, then runs three `orchestrate` CLI imports:
+Everyone in the workshop shares one Orchestrate instance, and agent, tool, and connection names must be unique in an instance. `deploy.py` adds your prefix (`WXO_NAME_PREFIX` in `.env`, for example `student0_`) to each name. Then it runs three `orchestrate` CLI imports:
 
 ```python
 orchestrate("connections", "import", "-f", str(tmp / "connection.yaml"))
@@ -279,11 +281,11 @@ orchestrate("tools", "import", "-k", "python", "-f", str(tmp / "tools.py"),
 orchestrate("agents", "import", "-f", str(tmp / "agent.yaml"))
 ```
 
-Your deployed agent is called `<prefix>lakeview_inbox_agent`. Before importing, `deploy.py` also appends the output format to the instructions; more on that below.
+Your deployed agent is named `<prefix>lakeview_inbox_agent`. Before the import, `deploy.py` also adds the output format to the instructions. See [Structured Outputs](#structured-outputs).
 
 ### `agent.py`: asking the agent for a review
 
-`agent.py` is the client. It sends one message to your agent over Orchestrate's runs API, waits for the run to finish, and checks the reply:
+`agent.py` sends one message to your agent through Orchestrate's runs API. It waits for the run to finish, then checks the reply:
 
 ```python
 user_message = (
@@ -294,11 +296,11 @@ user_message = (
 text, thread_id = _client.run(user_message)
 ```
 
-That one message is all it sends. The agent decides which tools to call from there.
+This is the only message it sends. The agent decides which tools to call.
 
 ### The output contract: `models.py`
 
-The agent's reply must be a `PatientConcerns` object: a list of `Concern`s.
+The agent's reply must be a `PatientConcerns` object, which holds a list of `Concern`s.
 
 ```python
 class Concern(BaseModel):
@@ -316,19 +318,19 @@ class Concern(BaseModel):
     related: RelatedData = RelatedData()  # links back to messages, labs, conditions, encounters
 ```
 
-This is the **contract** between the agent and the UI. The agent fills it in; the UI renders it. The doctor never sees raw LLM output in the inbox.
+This is the **contract** between the agent and the UI. The agent fills it in; the UI renders it. The inbox never shows the doctor raw LLM output.
 
 ---
 
 ## Structured Outputs
 
-A background agent has no human reading each reply. If the output doesn't parse, nothing downstream works. So how do you make an LLM return JSON that matches `PatientConcerns`?
+No one reads the background agent's replies before they're saved. If a reply isn't valid JSON for `PatientConcerns`, the UI has nothing to show. There are two ways to get valid JSON from an LLM.
 
-Some inference services offer *constrained decoding*, which works like this: you send a JSON Schema along with the request, and at every step of generation the server masks out any token that would break that schema. If the next character must be `"` or `}`, nothing else can be sampled. The model can't produce a missing field, an invalid enum value, or a stray sentence of prose, so the output always parses.
+Some inference services offer *constrained decoding*, which works like this: you send a JSON Schema with the request. At each step of generation, the server masks every token that would break the schema, so the model can only pick tokens that keep the JSON valid. The output always parses.
 
-Without that, we recommend *prompt with the schema, validate, and retry*:
+Without that, we recommend *prompt with the schema, validate, and retry*. Lab 1 does it in three parts:
 
-1. **Prompt with the schema.** `deploy.py` generates the JSON Schema from `models.py` and appends it to the agent's instructions, so the prompt and the Pydantic model can't drift apart:
+1. **Prompt with the schema.** `deploy.py` generates the JSON Schema from the Pydantic models in `models.py` and adds it to the end of the agent's instructions. When you change `models.py`, the next deploy updates the prompt.
 
     ```python
     spec["instructions"] += (
@@ -340,8 +342,8 @@ Without that, we recommend *prompt with the schema, validate, and retry*:
     )
     ```
 
-2. **Validate.** `agent.py` parses the reply with Pydantic. Anything that doesn't match the schema raises a `ValidationError` that says exactly what's wrong.
-3. **Retry once.** On failure, `agent.py` sends the error back to the agent in the same conversation and asks for corrected JSON. If the second reply also fails, the run fails loudly instead of saving something malformed.
+2. **Validate.** `agent.py` parses the reply with Pydantic. If the reply doesn't match the schema, Pydantic raises a `ValidationError` that lists each problem.
+3. **Retry once.** If validation fails, `agent.py` sends the error to the agent in the same conversation and asks for corrected JSON. If the second reply also fails, the run fails with an error and nothing is saved.
 
     ```python
     except ValidationError as e:
@@ -355,20 +357,22 @@ Without that, we recommend *prompt with the schema, validate, and retry*:
         )
     ```
 
-Orchestrate's `react_core` agents take the second route. Here's a quick test you can run against our backend once your agent is deployed (Step 2):
+Orchestrate's `react_core` agents don't offer constrained decoding, so Lab 1 uses prompt, validate, and retry. Here's a quick test you can run against our backend after you deploy your agent in Step 2:
 
 ```bash
 cd ~/ai-agents-workshop
 uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges
 ```
 
-It sends your agent the same message `agent.py` sends, for `patient-001` through `patient-003`, and applies the same validate-and-retry-once policy. Each line shows one patient:
+The script sends your agent the same message `agent.py` sends, for `patient-001` through `patient-003`. It validates each reply and retries once, the same way `agent.py` does. It prints one line per patient:
 
 - `ok`: the first reply was valid `PatientConcerns` JSON
 - `ok (retry)`: the first reply failed validation, and the retry fixed it
 - `FAIL`: still invalid after the retry, with the validation error
 
-The summary table counts the same thing: **1st-try valid** versus **valid after retry**. It also prints how many tool calls each run made; keep that number in mind for [What's Broken](#whats-broken). In our testing most first replies were valid and one retry fixed the rest. Your numbers may differ, which is exactly why the code validates every reply.
+The summary table counts **1st-try valid** and **valid after retry**. Each line also shows how many tool calls the agent made. You'll need that number in [What's Broken](#whats-broken).
+
+In our testing, most first replies were valid and one retry fixed the rest. Your numbers may differ.
 
 Structured-decision models such as [Jev](https://opentweet.io/jev/vs-openai-structured-outputs) have recently made a business of this, so constrained outputs may come back into the mainstream soon.
 
@@ -376,7 +380,7 @@ Structured-decision models such as [Jev](https://opentweet.io/jev/vs-openai-stru
 
 ## Step 1: Explore the EHR Inbox
 
-Before you deploy anything, get oriented with the application. If the inbox from [Prerequisites](./prerequisites.md) is still running, skip the command and just switch to its browser tab:
+Before we deploy anything, let's get oriented with the application. If the inbox from [Prerequisites](./prerequisites.md) is still running, skip this command and switch to its browser tab.
 
 ```bash
 cd ~/ai-agents-workshop
@@ -401,42 +405,42 @@ This is Dr. Kim's inbox dashboard. Take a minute to explore:
 
 ## Step 2: Deploy Your Agent
 
-Leave the inbox running. In a second terminal, deploy the agent to Orchestrate:
+Leave the inbox running. Open a second terminal and deploy the agent to Orchestrate:
 
 ```bash
 cd ~/ai-agents-workshop
 uv run python -m lab1.agent.deploy
 ```
 
-You'll see each `orchestrate` command as it runs: the connection (plus its credentials for the draft and live environments), then the tools, then the agent. It finishes with:
+The script prints each `orchestrate` command as it runs. It imports the connection and sets its values, then imports the tools, then the agent. The last line is:
 
 ```
 Deployed. New tools can take a few minutes before the agent can call them.
 ```
 
 ???+ warning "The first few minutes after a deploy"
-    Orchestrate sets up newly imported tools in the background. For the first few minutes, a tool call can come back with a message that the tool is still being configured, and the agent's answer won't make sense. That's not your code. Wait a couple of minutes and run it again.
+    Orchestrate sets up new tools in the background. For the first few minutes after a deploy, a tool call may return a message that the tool is still being configured. The agent's answer then won't make sense. Wait a couple of minutes and run the agent again.
 
-    The same applies every time you re-run `deploy.py`.
+    This happens every time you run `deploy.py`.
 
 ---
 
 ## Step 3: Run the Agent
 
-In the second terminal (or a third one), start the Lab 1 agent service:
+In the second terminal, start the Lab 1 agent service:
 
 ```bash
 cd ~/ai-agents-workshop
 uv run uvicorn lab1.agent.api:app --port 8001
 ```
 
-This is a small local service the inbox UI talks to. When you click **Run Agent**, it calls `agent.py`, which starts a run of your agent on Orchestrate, validates the reply, and saves the concerns.
+The inbox UI calls this service. When you click **Run Agent**, the service calls `agent.py`. `agent.py` starts a run of your agent on Orchestrate, validates the reply, and saves the concerns.
 
 Now go back to the UI at [http://localhost:8501](http://localhost:8501):
 
 1. Select a patient from the dropdown
 2. Click **Run Agent** in the Concerns panel
-3. Wait for the agent to finish (the button shows "Agent Running..."); a run usually takes well under a minute
+3. Wait for the agent to finish (the button will show "Agent Running..."). A run usually takes 15–60 seconds.
 4. Examine the concerns that appear
 
 ???+ tip "Try several patients"
@@ -447,18 +451,18 @@ Now go back to the UI at [http://localhost:8501](http://localhost:8501):
     - The **Related** links let you jump to the relevant message, lab, or encounter
     - The patient dropdown updates with urgency indicators
 
-    Some runs come back with few concerns, or none. Note which patients; you'll see why in a moment.
+    Some runs return few concerns, or none. Write down which patients. You'll look at those runs in Step 4.
 
 ---
 
 ## Step 4: See It in Orchestrate
 
-Your agent is a real Orchestrate agent, and every run you just started is recorded there.
+Orchestrate records a trace for each run of your agent. A trace shows the LLM calls and tool calls in that run.
 
 <!-- TODO(verify): exact Orchestrate UI path to an agent's traces / run history. Our own testing found agents under Build in the Orchestrate UI; IBM's ADK docs (developer.watson-orchestrate.ibm.com/traces/overview) say traces are available "through the UI and the API" but don't name the menus. -->
 
 1. Open the watsonx Orchestrate UI for the workshop instance (the same instance the setup script found for you).
-2. Find your agent: it's the one named with your prefix, for example `student0_lakeview_inbox_agent`. You'll see everyone else's agents too; that's the shared instance.
+2. Find your agent. Its name starts with your prefix, for example `student0_lakeview_inbox_agent`. You'll also see the other students' agents, because everyone shares the instance.
 3. Open the agent's traces in Orchestrate and pick one of your runs.
 
 For each run, look for:
@@ -467,10 +471,10 @@ For each run, look for:
 - **The LLM calls** between tool calls, and the final reply (the raw JSON before `agent.py` validated it)
 - **How long** each step took
 
-If a run in the inbox looked thin, find it here. How many tool calls did the agent make before it answered?
+Find a run that returned few concerns. How many tool calls did the agent make before it answered?
 
-???+ info "Traces are Lab 2's subject"
-    For now, just find your runs. Lab 2 is about what you can learn from traces, and what they don't show you.
+???+ info "More in Lab 2"
+    For now, just find your runs. Lab 2 covers traces in detail.
 
 ---
 
@@ -489,7 +493,7 @@ Now the important part. Run the agent on a few patients and critically evaluate 
 
 ??? example "Extra credit"
     - Run the same patient twice. Do the concerns change? (The `scripts/check_structured_outputs.py` command above accepts `--rounds 2`.)
-    - Open `agent.yaml` and read the `instructions` line by line. Find a concern that breaks one of the output rules.
+    - Open `agent.yaml` and read the output rules in `instructions`. Find a concern that breaks one of them.
     - In Orchestrate's traces, compare a run that produced several concerns with one that produced none.
 
 ---
@@ -498,11 +502,11 @@ Now the important part. Run the agent on a few patients and critically evaluate 
 
 Let's acknowledge what this naive agent already does well:
 
-**The ReAct loop runs on the platform.** You wrote a YAML file and five Python functions; Orchestrate runs the loop, calls the LLM, executes your tools, and records every step. Nothing in the agent hardcodes a pipeline.
+**Orchestrate runs the ReAct loop.** The agent is a YAML file and five Python functions. Orchestrate calls the LLM, runs your tools, and records each step. The agent decides which tools to call.
 
-**Every reply is checked against the contract.** The JSON Schema comes from the same Pydantic model the UI uses, every reply is validated, and a malformed reply gets one retry with the exact error. Nothing reaches the inbox that doesn't match `PatientConcerns`.
+**Every reply is validated.** The JSON Schema in the prompt comes from the same Pydantic model the UI uses. `agent.py` validates each reply and retries once with the error. Only valid `PatientConcerns` reach the inbox.
 
-**The UI keeps the doctor in control.** The doctor clicks a button, reviews structured output, and acts on it. There's no chat box in the inbox where they might ask the agent to draft a reply or confirm a diagnosis.
+**The UI keeps the doctor in control.** The doctor clicks a button, reviews structured output, and acts on it. There's no chat box where they might ask the agent to draft a reply or confirm a diagnosis.
 
 **Background processing is the right pattern.** The agent runs in the background and writes to a store. The doctor sees results when they're ready — they don't have to sit in a conversation and wait for each response.
 
@@ -514,7 +518,9 @@ But this agent has serious problems. Some you probably noticed in your evaluatio
 
 ### 🔍 It investigates shallowly
 
-The instructions say "Gather evidence before concluding," but the agent often makes a single tool call, usually `get_patient_record`, and answers straight away. It doesn't look up a lab trend, check the other messages in a thread, or follow up on what it found. Sometimes that produces few or no concerns for a patient with plenty going on. This is typical of a naive agent: nothing in the loop checks whether it looked hard enough. Lab 3 is about catching this kind of gap.
+The instructions say "Gather evidence before concluding." The agent often makes one tool call, usually `get_patient_record`, and then answers. It doesn't search for lab trends or read the other messages in a thread. Some patients get few or no concerns even though their records have open issues.
+
+Naive agents often do this. Nothing in the loop checks how much the agent looked at. Lab 3 works on catching gaps like this.
 
 ### 🔓 No access controls
 
@@ -526,17 +532,17 @@ Run the agent twice on the same patient. You'll likely get different concerns �
 
 ### 🤥 No hallucination checks
 
-The agent might report a lab value that doesn't exist, misattribute a symptom, or fabricate evidence. Validation only checks the *shape* of the JSON, not whether its contents match the patient record. We're trusting the LLM to be accurate — and it won't always be.
+The agent might report a lab value that doesn't exist, misattribute a symptom, or fabricate evidence. Validation checks only that the JSON matches the schema. Nothing checks the values against the patient record. We're trusting the LLM to be accurate — and it won't always be.
 
 ### 👨‍⚕️ The agent may overstep
 
-Read the instructions in `agent.yaml` carefully. They tell the agent not to infer diagnoses or make clinical recommendations. Check whether your concerns:
+Read the instructions in `agent.yaml` carefully. They tell the agent not to infer diagnoses or make clinical recommendations. Check whether your agent's concerns:
 
 - Suggest diagnoses ("possible hypothyroidism")
 - Recommend treatments ("consider starting levothyroxine")
 - Editorialize on urgency in ways that could bias the doctor
 
-LLMs want to be helpful. In healthcare, "helpful" can be dangerous, and an instruction in a prompt is not a control.
+The LLM wants to be helpful. In healthcare, "helpful" can be dangerous.
 
 ### 📋 No completeness checks
 
@@ -561,4 +567,4 @@ In the remaining labs, we'll work on them:
     The issues you wrote down in Step 5 are your personal roadmap for the next three labs. As we add observability, evaluation, and security, check whether each improvement addresses something you noticed.
 
 !!! note "Want to run it all on your laptop?"
-    The [open-source edition of this workshop](https://obuzek.github.io/ai-agents-workshop/oss/lab-1/) builds the same agent with LangGraph, fully local. It's designed to run on a laptop rather than a hosted platform.
+    The [open-source edition of this workshop](https://obuzek.github.io/ai-agents-workshop/oss/lab-1/) builds the same agent with LangGraph. Everything in it runs on your laptop.
