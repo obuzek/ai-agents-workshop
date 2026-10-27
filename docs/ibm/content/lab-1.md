@@ -374,9 +374,7 @@ The summary table counts **1st-try valid** and **valid after retry**. Each line 
 
 When we ran this on all 12 patients with Claude Sonnet 5.5, 10 first replies were valid and one retry fixed the other 2. Your numbers may differ.
 
-<!-- TODO(verify): source for this claim; the link couldn't be checked during the content review. Restore once confirmed.
 Structured-decision models such as [Jev](https://opentweet.io/jev/vs-openai-structured-outputs) have recently made a business of this, so constrained outputs may come back into the mainstream soon.
--->
 
 ---
 
