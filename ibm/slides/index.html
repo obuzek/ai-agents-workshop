@@ -85,6 +85,27 @@ Sources (IBM's own descriptions):
 
 ---
 
+&lt;!-- .slide: id="which-model" --&gt;
+
+## Which model?
+
+Today's agent runs on **Claude Sonnet 5.5**. It's a high-end model at a reasonable cost.
+
+- In Orchestrate it's `virtual-model/anthropic/claude-sonnet-5-5`, reached through Orchestrate's model gateway.
+- Orchestrate can be set up with many model backends: watsonx.ai, Anthropic, OpenAI, AWS Bedrock, Ollama and others.
+- Through watsonx.ai you can choose open-weights models, or deploy your own. That's one way to run on-prem.
+
+Note: We're using Claude Sonnet 5.5 today because it's a strong model at a reasonable price. We tried the free gpt-oss-120b first. It often stopped after one look at the patient record, so it missed things.
+
+You're not locked into one model. Orchestrate's model gateway can talk to a long list of providers. If your data can't leave your building, watsonx.ai has open-weights models, and you can deploy your own model there.
+
+Sources:
+- Providers Orchestrate supports for models: https://developer.watson-orchestrate.ibm.com/llm/managing_llm.md
+- watsonx.ai models: https://www.ibm.com/products/watsonx-ai
+- Deploying your own model in watsonx.ai: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
+
+---
+
 &lt;!-- .slide: id="todays-modules" --&gt;
 
 ## Today's modules
@@ -572,7 +593,7 @@ The ReAct loop (observe, reason, act, repeat) needs something to run it. On wats
 kind: native
 name: lakeview_inbox_agent
 style: react_core
-llm: groq/openai/gpt-oss-120b
+llm: virtual-model/anthropic/claude-sonnet-5-5
 instructions: |
   You are a clinical inbox assistant ...
 tools:
@@ -654,7 +675,7 @@ Here, the agent is this YAML file: instructions, a model, and a list of tools. O
 &lt;rect class="node accent" x="444" y="52" width="392" height="120"/&gt;
 &lt;text class="b on-accent" x="464" y="84"&gt;Agent: ReAct loop + LLM&lt;/text&gt;
 &lt;text class="on-accent" x="464" y="112"&gt;studentN_lakeview_inbox_agent&lt;/text&gt;
-&lt;text class="on-accent" x="464" y="140" opacity="0.85"&gt;gpt-oss-120b from the model catalog&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="140" opacity="0.85"&gt;Claude Sonnet 5.5 through the model gateway&lt;/text&gt;
 &lt;rect class="node" x="476" y="236" width="138" height="100"/&gt;
 &lt;text class="b" x="490" y="268"&gt;Connections&lt;/text&gt;
 &lt;text x="490" y="296"&gt;base URL,&lt;/text&gt;
@@ -692,7 +713,7 @@ Here, the agent is this YAML file: instructions, a model, and a list of tools. O
 
 Note: Here's what lives where. On your machine, agent.yaml is the agent definition, tools.py has the tools, and connection.yaml sets up the connection to the EHR. deploy.py adds your seat prefix and imports all three into Orchestrate. agent.py starts a run and checks the JSON that comes back.
 
-In Orchestrate, the agent runs the loop with gpt-oss-120b. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
+In Orchestrate, the agent runs the loop with Claude Sonnet 5.5. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
 
 ---
 
@@ -729,7 +750,7 @@ For a background agent with no human watching, this isn't a nice-to-have. If the
 
 Quick test: `uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges`
 
-Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers.
+Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent on gpt-oss-120b, the model we started with, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers for today's model.
 
 There are signs constrained outputs may come back to the mainstream: [Jev](https://opentweet.io/jev/vs-openai-structured-outputs)
 
@@ -837,7 +858,7 @@ Note: This is data provenance. Before you put an agent in front of real patient 
 &lt;rect class="node fill" x="380" y="2" width="580" height="96"/&gt;
 &lt;text class="b" x="400" y="32"&gt;Model gateway &lt;tspan class="muted" font-weight="400"&gt;(public preview)&lt;/tspan&gt;&lt;/text&gt;
 &lt;text x="400" y="58"&gt;model policies: fallback · load-balance · retry&lt;/text&gt;
-&lt;text x="400" y="84"&gt;gpt-oss-120b on groq or bedrock · granite · …&lt;/text&gt;
+&lt;text x="400" y="84"&gt;to Claude Sonnet 5.5 through the workshop proxy · granite · …&lt;/text&gt;
 &lt;text class="muted" x="940" y="32" text-anchor="end"&gt;for reliability&lt;/text&gt;
 &lt;!-- legend --&gt;
 &lt;text class="ok" x="0" y="32"&gt;✓ worked in our tests&lt;/text&gt;
@@ -1063,7 +1084,7 @@ Note: These three are prompts plus a schema, deployed as agents with no tools. Y
 
 ## Lab 3: Who Checks the Checker?
 
-Our judges run on the same model as the agent: gpt-oss-120b. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
+Our judges run on the same model as the agent: Claude Sonnet 5.5. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
 
 Ways to reduce it:
 
@@ -1172,6 +1193,188 @@ Note: Patient Elena Vasquez's message mentions her neighbor, Patricia Kowalski. 
 - Traces get the same treatment: limit who can read them, minimize what goes in, and set how long they're kept
 - Credentials live in the platform's connections or a secrets manager, not in `.env`
 - Each team gets its own Orchestrate instance and only the roles it needs
+
+---
+
+&lt;!-- .slide: id="further-lifecycle" --&gt;
+
+## Going further on watsonx
+
+&lt;style&gt;
+.reveal .further { font-size: 0.95em; line-height: 1.35; }
+.reveal .further.detail { font-size: 0.9em; }
+.reveal .further .ok { color: #4589ff; font-weight: 600; }
+.reveal .further .unt { color: #8d8d8d; font-weight: 600; }
+.reveal .further .cols { display: flex; gap: 28px; }
+.reveal .further .col { flex: 1; min-width: 0; border-top: 4px solid #0f62fe; padding-top: 0.5em; }
+.reveal .further .step { margin: 0; font-weight: 600; font-size: 1.3em; }
+.reveal .further .q { margin: 0.15em 0 0.3em; font-style: italic; }
+.reveal .further .prod { margin: 0 0 0.7em; opacity: 0.7; font-size: 0.85em; }
+.reveal .further ul { list-style: none; margin: 0 !important; padding: 0 !important; display: block; }
+.reveal .further li { list-style: none; margin: 0 0 0.5em !important; padding-left: 1.2em; text-indent: -1.2em; }
+.reveal .further li::marker { content: none; }
+.reveal .further .legend { margin: 1.4em 0 0; font-size: 0.85em; }
+.reveal .further code { font-size: 0.9em; }
+&lt;/style&gt;
+
+&lt;div class="further"&gt;
+&lt;div class="cols"&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;1. Document it&lt;/p&gt;
+&lt;p class="q"&gt;Can you show an auditor what this agent is for?&lt;/p&gt;
+&lt;p class="prod"&gt;watsonx.governance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; AI use case and factsheets&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; AI Risk Atlas&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;2. Test it&lt;/p&gt;
+&lt;p class="q"&gt;Does it still behave after a change?&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate, watsonx.governance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; Judge agents (Lab 3)&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Evaluations and rubrics&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Red-teaming&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Governance metrics SDK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;3. Constrain it&lt;/p&gt;
+&lt;p class="q"&gt;What can it never do?&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; PII Filter control&lt;/li&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; Plug-ins&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Content Guardrails&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Context variables for identity&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Collaborator agents, workspaces&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;4. Watch it&lt;/p&gt;
+&lt;p class="q"&gt;What is it doing once it's live?&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate, watsonx.governance, watsonx.ai&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; Traces&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Agent monitoring&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; Model choice in watsonx.ai Studio&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class="legend"&gt;&lt;span class="ok"&gt;✓ tested today&lt;/span&gt; &nbsp;&nbsp; &lt;span class="unt"&gt;? documented by IBM, not tested here&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+Note: Today you built one agent and put some checks around it. If you take an agent like this toward production in a regulated setting, here's how I'd organize the rest of the work: document it, test it, constrain it, watch it.
+
+The checkmarks are things we ran today. The question marks are in IBM's documentation, and I haven't tested them for this workshop. The next two slides go through each one.
+
+---
+
+&lt;!-- .slide: id="further-document-test" --&gt;
+
+## Document it, test it
+
+&lt;div class="further detail"&gt;
+&lt;div class="cols"&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;Document it&lt;/p&gt;
+&lt;p class="prod"&gt;watsonx.governance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;AI use case:&lt;/strong&gt; one entry per AI system. It tracks the system's assets through the lifecycle, with a risk level and approval steps.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Factsheets:&lt;/strong&gt; the record for each model and prompt template, including its history and evaluation results.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;AI Risk Atlas:&lt;/strong&gt; IBM's list of AI risks. The agentic section includes "Sharing IP/PI/confidential information with tools" and "Function calling hallucination".&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;Test it&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate, watsonx.governance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; &lt;strong&gt;Judge agents:&lt;/strong&gt; Lab 3's claim extractor, grounding judge and critic, each an Orchestrate agent.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;code&gt;orchestrate evaluations evaluate&lt;/code&gt;: run test cases, check the tool calls and their order.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;code&gt;quick-eval&lt;/code&gt;: no ground truth needed. Flags schema mismatches and calls to the wrong tool.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Rubric evaluations:&lt;/strong&gt; an LLM grades each answer against your criteria, such as "no hallucination".&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;code&gt;orchestrate evaluations red-teaming&lt;/code&gt;: 15 built-in attacks, mapped to the OWASP Top 10 for LLMs.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;code&gt;ibm-watsonx-gov&lt;/code&gt; SDK: faithfulness, answer relevance, tool call accuracy, PII, HAP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class="legend"&gt;&lt;span class="ok"&gt;✓ tested today&lt;/span&gt; &nbsp;&nbsp; &lt;span class="unt"&gt;? documented by IBM, not tested here&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+Note: Document it. In watsonx.governance, an AI use case is the entry for one AI system. It holds what the system is for, its risk level, and the assets behind it, and it can go through approval steps. Factsheets are the detailed record for each model and prompt template. This is what an auditor asks for. I haven't checked how an Orchestrate agent shows up in a use case, so try it before you count on it.
+
+The AI Risk Atlas is IBM's list of AI risks. It has a section for agents. Two entries describe our agent: sharing personal information with tools, and function calling hallucination. You can use it to name your risks with the same words everyone else uses.
+
+Test it. The judge agents from Lab 3 are the part we ran. Orchestrate also has an evaluation command. evaluate runs test cases and checks that the agent called the right tools in the right order. quick-eval doesn't need expected answers. It looks for schema mismatches and calls to the wrong tool. Rubric evaluations use an LLM to grade answers against criteria you write. On a hosted instance these run against the draft version of the agent.
+
+Red-teaming runs 15 built-in attacks against your agent, and each one is mapped to the OWASP Top 10 for LLMs. These attacks come in as user input. In our agent, the injection risk is in patient messages, which arrive as tool output, so you'd still need your own tests for that.
+
+The watsonx.governance SDK, ibm-watsonx-gov, has metrics like faithfulness, answer relevance, tool call accuracy, PII and HAP. From our seats it returned a permissions error, so I haven't run it here.
+
+Sources:
+- AI use cases: https://ibm.com/docs/en/SSLSRPV_latest/wsj/analyze-data/xgov-use-cases.html and https://www.ibm.com/docs/SSYOK8/wsj/getting-started/use-case-watsonx-gov.html
+- AI Risk Atlas: https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas
+- Evaluations: https://developer.watson-orchestrate.ibm.com/evaluate/overview.md
+- quick-eval: https://developer.watson-orchestrate.ibm.com/evaluate/quick_eval.md
+- Rubric evaluations: https://developer.watson-orchestrate.ibm.com/evaluate/rubric.md
+- Red-teaming: https://developer.watson-orchestrate.ibm.com/evaluate/llm_vulnerability.md
+- ibm-watsonx-gov metrics: https://ibm.github.io/ibm-watsonx-gov/ and https://jp-tok.dataplatform.cloud.ibm.com/docs/content/wsj/model/wxgov-agentic-ai-evaluation-sdk.html?context=wx
+
+---
+
+&lt;!-- .slide: id="further-constrain-watch" --&gt;
+
+## Constrain it, watch it
+
+&lt;div class="further detail"&gt;
+&lt;div class="cols"&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;Constrain it&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; &lt;strong&gt;PII Filter control:&lt;/strong&gt; masks PII the user types. User input only.&lt;/li&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; &lt;strong&gt;Plug-ins:&lt;/strong&gt; your Python code before or after the agent.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Content Guardrails control:&lt;/strong&gt; jailbreak, HAP, harm, social bias and more. It's on our instance.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Context variables:&lt;/strong&gt; your app passes in the clinician's identity, and the runtime fills it into the tool. The LLM never picks it.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Collaborator agents:&lt;/strong&gt; the inbox agent calls a critic agent itself.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Workspaces:&lt;/strong&gt; agents, tools and connections only a team's members can see.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+&lt;p class="step"&gt;Watch it&lt;/p&gt;
+&lt;p class="prod"&gt;Orchestrate, watsonx.governance, watsonx.ai&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="ok"&gt;✓&lt;/span&gt; &lt;strong&gt;Traces:&lt;/strong&gt; every LLM call and tool call. Treat them as PHI.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Agent monitoring:&lt;/strong&gt; success rate, response time and tokens for agents deployed to production. Built on watsonx.governance.&lt;/li&gt;
+&lt;li&gt;&lt;span class="unt"&gt;?&lt;/span&gt; &lt;strong&gt;Model choice:&lt;/strong&gt; watsonx.ai Studio has IBM and open-weights models, and you can deploy your own. Prompt Lab runs the same prompt on any of them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="margin:1em 0 0"&gt;The model you pick changes how well the agent investigates. Check again every time you change it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class="legend"&gt;&lt;span class="ok"&gt;✓ tested today&lt;/span&gt; &nbsp;&nbsp; &lt;span class="unt"&gt;? documented by IBM, not tested here&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+Note: Constrain it. The PII Filter control and the plug-in are what we ran in Lab 2. The filter only sees what the user types. The Content Guardrails control is on our instance and covers jailbreak, hate, abuse and profanity, harm, and social bias, among others. I haven't tested it.
+
+Context variables are how I'd fix the identity problem from Lab 4. Your app passes the clinician's identity into the run. A Python tool can take it as an argument, and the runtime fills it in, so the model never chooses it. If the identity comes in the signed token, neither a tool nor the API call can overwrite it.
+
+Collaborator agents let one agent call another. The inbox agent could call the critic itself, instead of our code calling it. That's less predictable than our loop, so test it. Workspaces keep a team's agents, tools and connections visible only to that team. We couldn't turn them on in the workshop account.
+
+Watch it. Traces are what we used all day, and they hold patient data. Agent monitoring gives you a dashboard for agents deployed to production: success rate, response time, tokens. IBM says it's powered by watsonx.governance.
+
+Last, the model. The free gpt-oss-120b we tried first often stopped after one look at the record, so it missed things. That's part of why we're on Claude Sonnet 5.5 today. watsonx.ai Studio has a big catalog, including open-weights models, and you can deploy your own. In Prompt Lab you can run the same prompt on different models and look at the answers. Whenever you change the model, run your tests again.
+
+Sources:
+- Controls: https://developer.watson-orchestrate.ibm.com/controls/managing_controls.md
+- Plug-ins: https://developer.watson-orchestrate.ibm.com/plugins/plugins.md
+- Context variables: https://developer.watson-orchestrate.ibm.com/conversation/context_variables.md
+- Collaborators: https://developer.watson-orchestrate.ibm.com/agents/build_agent.md
+- Workspaces: https://developer.watson-orchestrate.ibm.com/workspaces/overview.md
+- Traces: https://developer.watson-orchestrate.ibm.com/traces/overview.md
+- Agent monitoring: https://www.ibm.com/new/announcements/now-ga-monitor-agents-in-runtime-in-watsonx-orchestrate
+- watsonx.ai models: https://www.ibm.com/products/watsonx-ai · Custom models: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
+- Prompt Lab: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-prompt-lab.html?context=wx
 
 ---
 
@@ -2184,6 +2387,6 @@ Responsibility isn't something you bolt on at the end.
     initReveal();
   }
 })();
-</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2026 12:49:12 UTC">October 27, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2026 13:07:19 UTC">October 27, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
 document$.subscribe(()=>{ lightbox.reload(); });
 </script></body></html>
