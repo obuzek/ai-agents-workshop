@@ -1,13 +1,14 @@
-"""Save your IBM Cloud API key (and Orchestrate instance URL) into .env.
+"""Connect the workshop to IBM Cloud: save your API key and Orchestrate details into .env.
 
-Checks that the key works, shows which IBM Cloud user and account it belongs
-to, and confirms the key can reach the workshop's Orchestrate instance.
-Safe to re-run: it updates the existing values and leaves the rest of .env alone.
+Asks you to paste your IBM Cloud API key, checks it, shows which user and
+account it belongs to, finds the workshop's watsonx Orchestrate instance on its
+own, and sets up the `orchestrate` CLI. Safe to re-run: it updates the existing
+values and leaves the rest of .env alone.
 
 Usage:
-    uv run python scripts/ibm_cloud_login.py                      # finds the newest apikey*.json in Downloads, else asks
+    uv run python scripts/ibm_cloud_login.py                  # paste your key when asked
     uv run python scripts/ibm_cloud_login.py path/to/apikey.json
-    uv run python scripts/ibm_cloud_login.py --instance crn:v1:bluemix:public:watsonx-orchestrate:<region>:a/<account>:<guid>::
+    uv run python scripts/ibm_cloud_login.py --instance <CRN or URL>   # only if it can't find the instance
 """
 
 import argparse
@@ -23,7 +24,6 @@ import sys
 from pathlib import Path
 
 import requests
-from dotenv import dotenv_values
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = REPO_ROOT / ".env"
@@ -34,53 +34,8 @@ IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
 SHARED_EHR_URL = os.environ.get("SHARED_EHR_URL", "https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud")
 
 
-def is_wsl() -> bool:
-    """True inside Windows Subsystem for Linux."""
-    try:
-        return "microsoft" in Path("/proc/version").read_text().lower()
-    except OSError:
-        return False
-
-
-def download_dirs() -> list[Path]:
-    """Where a browser download of apikey.json is likely to be.
-
-    Inside WSL, the browser is a Windows app, so the file lands in the Windows
-    Downloads folder (under /mnt/c/...), not in the Linux home directory.
-    """
-    dirs = [Path.home() / "Downloads"]
-    if is_wsl():
-        try:
-            # Ask Windows for the real Downloads folder: users or IT policy can move it from %USERPROFILE%\Downloads.
-            win = subprocess.run(
-                ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command",
-                 "(New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path"],
-                capture_output=True, text=True, timeout=20,
-            ).stdout.strip()
-            if win:
-                linux = subprocess.run(["wslpath", "-u", win], capture_output=True, text=True, timeout=10).stdout.strip()
-                if linux:
-                    dirs.append(Path(linux))
-        except (OSError, subprocess.SubprocessError):
-            pass
-        dirs += sorted(Path("/mnt/c/Users").glob("*/Downloads"))  # fallback if Windows interop is off
-    return [d for d in dict.fromkeys(dirs) if d.is_dir()]
-
-
-def find_key_file() -> Path | None:
-    """The newest apikey*.json in the download folders (browsers rename repeats to "apikey (1).json")."""
-    candidates = [f for d in download_dirs() for f in d.glob("apikey*.json") if f.is_file()]
-    return max(candidates, key=lambda f: f.stat().st_mtime, default=None)
-
-
 def read_api_key(key_file: Path | None) -> str:
-    """Get the API key from a downloaded apikey.json, or ask for it."""
-    found = find_key_file() if key_file is None else None
-    if found is not None:
-        answer = input(f"Use the API key in {found}? [Y/n] ").strip().lower()
-        if answer in ("", "y", "yes"):
-            key_file = found
-
+    """Get the API key: from a key file if one was passed, otherwise pasted at a hidden prompt."""
     if key_file is not None:
         try:
             return json.loads(key_file.read_text())["apikey"].strip()
@@ -88,7 +43,7 @@ def read_api_key(key_file: Path | None) -> str:
             sys.exit(f"Couldn't read an API key from {key_file}: {e}")
 
     # getpass keeps the key off the screen and out of terminal scrollback.
-    key = getpass.getpass("Paste your IBM Cloud API key (input is hidden): ").strip()
+    key = getpass.getpass("Paste your IBM Cloud API key (it won't show as you paste), then press Enter: ").strip()
     if not key:
         sys.exit("No API key entered.")
     return key
@@ -146,6 +101,46 @@ def resolve_instance_url(value: str) -> str:
             return f"https://api.{region}.watson-orchestrate.cloud.ibm.com/instances/{guid}"
         sys.exit("That doesn't look like a complete CRN. Copy it again from the Orchestrate instance's details.")
     sys.exit("Paste either the instance's CRN (starts with crn:) or its API endpoint URL (starts with https://).")
+
+
+RESOURCE_CONTROLLER = "https://resource-controller.cloud.ibm.com/v2/resource_instances"
+
+
+def find_orchestrate_instances(token: str) -> list[dict]:
+    """The watsonx Orchestrate instances this key can see: [{"name", "url"}]."""
+    found, url = [], f"{RESOURCE_CONTROLLER}?type=service_instance&limit=100"
+    while url:
+        resp = requests.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=30)
+        resp.raise_for_status()
+        body = resp.json()
+        for inst in body.get("resources", []):
+            if ":watsonx-orchestrate:" in inst.get("crn", "") and inst.get("state") == "active":
+                found.append({"name": inst["name"], "url": resolve_instance_url(inst["crn"])})
+        nxt = body.get("next_url")
+        url = f"https://resource-controller.cloud.ibm.com{nxt}" if nxt else None
+    return found
+
+
+def choose_instance(token: str) -> str:
+    """Pick the Orchestrate instance automatically; ask only if there's more than one (or none)."""
+    try:
+        instances = find_orchestrate_instances(token)
+    except requests.RequestException:
+        instances = []
+    if len(instances) == 1:
+        print(f"✓ Found your watsonx Orchestrate instance: {instances[0]['name']}")
+        return instances[0]["url"]
+    if instances:
+        print("This key can see more than one watsonx Orchestrate instance:")
+        for i, inst in enumerate(instances, 1):
+            print(f"  {i}. {inst['name']}")
+        while True:
+            choice = input(f"Which one is the workshop's? [1-{len(instances)}]: ").strip()
+            if choice.isdigit() and 1 <= int(choice) <= len(instances):
+                return instances[int(choice) - 1]["url"]
+    print("Couldn't find a watsonx Orchestrate instance for this key. Ask your instructor for its CRN or URL.")
+    value = input("Paste the instance CRN or URL: ").strip()
+    return resolve_instance_url(value) if value else ""
 
 
 def check_instance(instance_url: str, token: str) -> str | None:
@@ -212,33 +207,20 @@ def set_env_value(text: str, key: str, value: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("key_file", nargs="?", type=Path, help="path to the apikey.json you downloaded")
-    parser.add_argument("--instance", help="Orchestrate instance CRN, or its API endpoint URL")
+    parser.add_argument("key_file", nargs="?", type=Path, help="optional: an apikey.json file instead of pasting the key")
+    parser.add_argument("--instance", help="optional: Orchestrate instance CRN or URL (found automatically otherwise)")
     args = parser.parse_args()
 
     if not ENV_FILE.exists():
         shutil.copy(ENV_EXAMPLE, ENV_FILE)
         print("Created .env from .env-example")
-    current = dotenv_values(ENV_FILE)
 
     api_key = read_api_key(args.key_file)
     token = get_iam_token(api_key)
     claims = token_claims(token)
     print(f"✓ API key works: {describe_token(claims)}")
 
-    instance = args.instance
-    if not instance:
-        # Ignore the .env-example placeholder; only offer a real saved value as the default.
-        existing = current.get("WXO_INSTANCE_URL") or ""
-        existing = "" if "<" in existing else existing
-        print(
-            "\nNext, the workshop's watsonx Orchestrate instance. In cloud.ibm.com: Resource list ->\n"
-            "AI / Machine Learning -> the Orchestrate instance -> copy its CRN from the details panel."
-        )
-        prompt = "Paste the instance CRN (or its API endpoint URL)"
-        prompt += f" [Enter keeps {existing}]: " if existing else ": "
-        instance = input(prompt).strip() or existing
-    instance_url = resolve_instance_url(instance) if instance else ""
+    instance_url = resolve_instance_url(args.instance) if args.instance else choose_instance(token)
 
     text = ENV_FILE.read_text()
     text = set_env_value(text, "WXO_API_KEY", api_key)
@@ -254,7 +236,7 @@ def main():
     print(f"✓ Your agent and tools will be named with the prefix {name_prefix(claims)!r}")
 
     if not instance_url:
-        print("! No Orchestrate instance URL set. Re-run the script once you have its CRN.")
+        print("! No Orchestrate instance set. Re-run the script once your instructor gives you its CRN or URL.")
         return
     error = check_instance(instance_url, token)
     if error:

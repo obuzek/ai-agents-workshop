@@ -16,7 +16,7 @@ the retry rescues it, and what still fails.
 
 The extraction, judge and critic steps run as small tool-less Orchestrate
 agents (<prefix>claim_extractor, <prefix>grounding_judge, <prefix>critic),
-deployed by this script into your active `orchestrate` environment.
+which this script creates or updates through the Orchestrate API.
 
 Prerequisites: run scripts/install.sh (or ibm_cloud_login.py) and deploy your
 agent (uv run python -m lab1.agent.deploy).
@@ -24,6 +24,7 @@ agent (uv run python -m lab1.agent.deploy).
 Usage:
     uv run python scripts/check_structured_outputs.py                 # all 12 patients, 1 round
     uv run python scripts/check_structured_outputs.py --patients 4 --rounds 2
+    uv run python scripts/check_structured_outputs.py --ibmcloud-session --instance <url> --main-agent <name>
 """
 
 import argparse
@@ -119,10 +120,16 @@ def format_suffix(model: type[BaseModel]) -> str:
 
 
 class Orchestrate:
-    def __init__(self):
+    def __init__(self, use_ibmcloud_session: bool = False):
         self._token, self._expires, self._ids = "", 0.0, {}
+        self._session = use_ibmcloud_session
 
     def _headers(self):
+        if self._session:
+            # Your own user, via `ibmcloud login`; the CLI refreshes the token as needed.
+            out = subprocess.run(["ibmcloud", "iam", "oauth-tokens", "--output", "json"],
+                                 capture_output=True, text=True, check=True).stdout
+            return {"Authorization": json.loads(out)["iam_token"]}
         if time.time() > self._expires - 60:
             r = requests.post("https://iam.cloud.ibm.com/identity/token",
                               data={"grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": API_KEY}, timeout=30)
@@ -203,8 +210,8 @@ def ask(wxo: Orchestrate, phase: str, item: str, agent: str, message: str, model
     return res
 
 
-def deploy_judges():
-    """Import the three tool-less judge agents into the active orchestrate environment."""
+def deploy_judges(wxo: Orchestrate):
+    """Create (or update) the three tool-less judge agents through the Orchestrate API."""
     specs = [
         ("claim_extractor", "Extracts verifiable medical claims from one concern.",
          instructions_from(lab_prompt("lab3/agent/grounding.py", "_EXTRACT_PROMPT"), "CONCERN:")
@@ -216,15 +223,19 @@ def deploy_judges():
          instructions_from(lab_prompt("lab3/agent/critic.py", "_CRITIC_PROMPT"), "CONCERNS:")
          + "\nThe concerns and grounding results are in the user message.\n" + format_suffix(CriticResult)),
     ]
-    with tempfile.TemporaryDirectory() as tmp:
-        for name, description, instructions in specs:
-            spec = {"spec_version": "v1", "kind": "native", "name": PREFIX + name, "description": description,
-                    "style": "react_core", "llm": MODEL, "instructions": instructions, "tools": []}
-            path = Path(tmp, f"{name}.yaml")
-            path.write_text(yaml.safe_dump(spec, sort_keys=False, allow_unicode=True))
-            out = subprocess.run(["orchestrate", "agents", "import", "-f", str(path)], capture_output=True, text=True)
-            if out.returncode != 0:
-                sys.exit(f"Couldn't deploy {PREFIX + name}: {out.stderr[-300:]}")
+    existing = {a["name"]: a["id"] for a in
+                requests.get(f"{INSTANCE}/v1/orchestrate/agents", headers=wxo._headers(), timeout=30).json()}
+    for name, description, instructions in specs:
+        payload = {"additional_properties": {}, "spec_version": "v1", "kind": "native", "name": PREFIX + name,
+                   "description": description, "style": "react_core", "llm": MODEL,
+                   "instructions": instructions, "tools": []}
+        if PREFIX + name in existing:
+            r = requests.patch(f"{INSTANCE}/v1/orchestrate/agents/{existing[PREFIX + name]}",
+                               headers=wxo._headers(), json=payload, timeout=60)
+        else:
+            r = requests.post(f"{INSTANCE}/v1/orchestrate/agents", headers=wxo._headers(), json=payload, timeout=60)
+        if not r.ok:
+            sys.exit(f"Couldn't deploy {PREFIX + name}: HTTP {r.status_code} {r.text[:300]}")
     print(f"Deployed judge agents: {', '.join(PREFIX + s[0] for s in specs)}")
 
 
@@ -253,16 +264,27 @@ def summarize(results: list[Result]):
 
 
 def main():
+    global INSTANCE, MAIN_AGENT, PREFIX, EHR_URL
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--patients", type=int, default=12, help="how many patients (from patient-001)")
     parser.add_argument("--rounds", type=int, default=1, help="repeat the main-agent pass this many times")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--skip-judges", action="store_true", help="only check the main agent")
+    parser.add_argument("--ibmcloud-session", action="store_true",
+                        help="authenticate as your logged-in `ibmcloud` user instead of WXO_API_KEY")
+    parser.add_argument("--instance", help="Orchestrate instance URL (default: WXO_INSTANCE_URL)")
+    parser.add_argument("--main-agent", help=f"main agent name (default: {MAIN_AGENT})")
+    parser.add_argument("--prefix", help="name prefix for the judge agents (default: WXO_NAME_PREFIX)")
+    parser.add_argument("--ehr-url", help="EHR the main agent's tools read, for grounding (default: EHR_API_URL)")
     args = parser.parse_args()
 
-    if not (INSTANCE and API_KEY):
+    INSTANCE = (args.instance or INSTANCE).rstrip("/")
+    MAIN_AGENT = args.main_agent or MAIN_AGENT
+    PREFIX = args.prefix if args.prefix is not None else PREFIX
+    EHR_URL = (args.ehr_url or EHR_URL).rstrip("/")
+    if not INSTANCE or not (API_KEY or args.ibmcloud_session):
         sys.exit("Missing WXO_INSTANCE_URL / WXO_API_KEY in .env. Run scripts/install.sh first.")
-    wxo = Orchestrate()
+    wxo = Orchestrate(use_ibmcloud_session=args.ibmcloud_session)
     patients = [f"patient-{i:03d}" for i in range(1, args.patients + 1)]
     results: list[Result] = []
 
@@ -281,7 +303,7 @@ def main():
 
     # 2-4. Grounding and critic on the concerns the main agent produced.
     if not args.skip_judges:
-        deploy_judges()
+        deploy_judges(wxo)
         time.sleep(10)
         concern_jobs = []
         for res in results:

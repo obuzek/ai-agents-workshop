@@ -2,9 +2,9 @@
 
 Complete these steps **before the workshop** to make sure your environment is ready.
 
-## 1. IBM Cloud: log in and create your API key
+## 1. IBM Cloud: log in
 
-The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate**, and watsonx.governance evaluates it. Your code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You create it in the IBM Cloud web console, and the installer in step 3 saves it for you.
+The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate**, and watsonx.governance evaluates it. Your code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You'll create it in step 3, right before the installer asks for it.
 
 ### Log in to IBM Cloud
 
@@ -24,17 +24,6 @@ The labs use watsonx.governance to evaluate your agent. Its features need a wats
 !!! warning "Skip this and Lab 3 won't work"
     Without this one-time visit, watsonx.governance calls fail with an authorization error ("Failed to verify user profile existence").
 
-### Create an API key
-
-1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
-2. In the **IAM menu on the left**, find the **Manage identities** heading and click **API keys** underneath it.
-3. Click **Create**.
-4. Give the key a name, such as `ai-agents-workshop`, and click **Create**.
-5. Click **Download**. This saves a file called `apikey.json` to your Downloads folder.
-
-!!! warning "You only see the key once"
-    IBM Cloud shows the key only when you create it. If you close the dialog without downloading it, delete that key and create a new one.
-
 ---
 
 ## 2. Set up IBM Bob
@@ -53,61 +42,21 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
 
 === "Windows"
 
-    On Windows, the workshop runs inside **WSL** (Windows Subsystem for Linux), using the **FedoraLinux-44** distribution. Bob connects to it, so your terminal and files are in Linux.
+    On Windows, the workshop runs inside **WSL** (Windows Subsystem for Linux), using the **FedoraLinux-44** distribution, which is already installed on the workshop machines. Bob connects to it, so your terminal and files are in Linux.
 
-    !!! tip "On a TechXchange workshop machine?"
-        WSL and FedoraLinux-44 are already installed. Skip **Install WSL with Fedora** and start at **Connect IBM Bob to WSL**.
+    **Open FedoraLinux-44**
 
-    !!! info "What you need"
-        Windows 11 (recommended), or Windows 10 version 2004 (build 19041) or later, with hardware virtualization turned on. On a managed work laptop, WSL may be blocked by policy; check with your IT team before the workshop.
-
-    **Install WSL with Fedora** (once; needs administrator rights and a restart)
-
-    1. Right-click **Windows Terminal** (or **PowerShell**) and choose **Run as administrator**, then run:
-
-        ```powershell
-        wsl --install -d FedoraLinux-44
-        ```
-
-        If you already use WSL, run `wsl --update` first.
-
-    2. Restart Windows when asked.
-    3. Open PowerShell again (administrator not needed) and check that Fedora is installed, with **VERSION 2**:
-
-        ```powershell
-        wsl -l -v
-        ```
-
-        If `FedoraLinux-44` isn't listed, run `wsl --install -d FedoraLinux-44` once more.
-
-    4. Start Fedora once to create your Linux user, either from the Start menu (**FedoraLinux-44**) or with:
-
-        ```powershell
-        wsl -d FedoraLinux-44
-        ```
-
-        It asks you to **create a default Unix user account**: type a username (it doesn't need to match your Windows name). It doesn't ask for a password; your user can already run `sudo` without one. Type `exit` to close it.
-
-    ??? warning "Error 0x80370102, or the install stuck at 0.0%"
-        **0x80370102** means virtualization is off: turn it on in your BIOS/UEFI settings (usually under CPU), make sure the **Virtual Machine Platform** Windows feature is on, and restart.
-
-        **Stuck at 0.0%?** Cancel and run `wsl --install --web-download -d FedoraLinux-44` instead.
+    1. Open the Start menu, search for **FedoraLinux-44**, and open it. This starts Fedora; when you see a prompt, you can close the window.
 
     **Connect IBM Bob to WSL**
 
-    5. Download and install the latest [IBM Bob](https://bob.ibm.com/?lnk=hpfp2us), open it, and log in to your Bob account. If you already have Bob, update it: older versions can't set up WSL.
-    6. Open the **Extensions** view (the icon of four squares in the left bar), search for **Open Remote - WSL**, and install the one by **jeanp413**. (Don't use Microsoft's "WSL" extension; its licence only allows it in Microsoft's VS Code.)
-    7. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, type **WSL**, choose **Remote-WSL: Connect to WSL using Distro...**, and pick **FedoraLinux-44**. The first time, Bob takes a minute to set itself up inside Fedora. Use this window from now on.
-
-        Picking the distro matters if you have another one, like Ubuntu, installed: plain **Remote-WSL: Connect to WSL** opens your *default* distro.
-
-    8. In that window, open a terminal: **Terminal → New Terminal**. It runs inside Fedora. Use it for **3. Run the installer** below and every command in the labs.
-
-    !!! tip "Your browser downloads still go to Windows"
-        The API key you download in your Windows browser lands in your Windows **Downloads** folder. The installer looks there too, so you don't need to move it.
+    2. Open **IBM Bob** and log in to your Bob account.
+    3. Open the **Extensions** view (the icon of four squares in the left bar), search for **Open Remote - WSL**, and install the extension by **jeanp413**.
+    4. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> to open the command palette, type **WSL**, and choose **Remote-WSL: Connect to WSL**. A new Bob window opens, connected to FedoraLinux-44. Use this new window from here on.
+    5. In the new window, open a terminal: **Terminal → New Terminal**. It runs inside Fedora. Use it for **3. Run the installer** below and every command in the labs.
 
     ??? tip "On a VPN or behind a corporate proxy?"
-        If downloads fail inside Fedora but work in Windows, see Microsoft's [WSL networking troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting). On Windows 11, *mirrored* networking often helps with VPNs.
+        If downloads fail inside Fedora but work in Windows, see Microsoft's [WSL networking troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting).
 
 === "Linux"
 
@@ -120,7 +69,22 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
 
 ## 3. Run the installer
 
-In Bob's terminal from step 2 (on Windows, Bob connected to WSL), run:
+### Create your API key
+
+Keep Bob open, and in your browser at [cloud.ibm.com](https://cloud.ibm.com):
+
+1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
+2. In the **IAM menu on the left**, find the **Manage identities** heading and click **API keys** underneath it.
+3. Click **Create**.
+4. Give the key a name, such as `ai-agents-workshop`, and click **Create**.
+5. Click **Copy** to copy the key. Leave this browser tab open until the installer has accepted it.
+
+!!! warning "You only see the key once"
+    IBM Cloud shows the key only when you create it. If you close the dialog before the installer accepts it, delete that key and create a new one.
+
+### Run it
+
+In Bob's terminal from step 2 (on Windows, the Bob window connected to WSL), run:
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-ibm/scripts/install.sh | bash
@@ -128,7 +92,7 @@ curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-
 
 You don't need Homebrew or a preinstalled Python. The installer:
 
-1. Installs `git`, `curl`, `tar` and `gzip` if they're missing, using your package manager with `sudo`. (On Fedora WSL only `git` is missing, and `sudo` doesn't ask for a password. On other Linux systems it may.)
+1. Installs `git`, `curl`, `tar` and `gzip` if they're missing (on Fedora that's usually just `git`), using your package manager with `sudo`, which may ask for your Linux password.
 2. Installs [uv](https://docs.astral.sh/uv/), which also downloads Python 3.12 for the workshop.
 3. Downloads the workshop into `~/ai-agents-workshop`.
 4. Installs the workshop's Python packages.
@@ -141,15 +105,13 @@ When it finishes, open the workshop in Bob: **File → Open Folder…**, then ch
 
 ### Connecting to IBM Cloud
 
-At the end, the installer asks a few questions:
-
-- **Your API key.** It finds the `apikey.json` you downloaded in step 1 and asks you to confirm. On Windows it also looks in your Windows Downloads folder. If it can't find the file, paste the key when asked; it won't appear on screen.
-- **The watsonx Orchestrate instance.** In cloud.ibm.com, open the **Resource list**, expand **AI / Machine Learning**, click the workshop's **watsonx Orchestrate** instance, and copy its **CRN** (it starts with `crn:v1:`; there's a copy button next to it). Paste it at the prompt.
+At the end, the installer asks you to **paste your API key**. Paste it and press Enter; it won't show on screen as you paste. Everything else, including finding the workshop's watsonx Orchestrate instance, happens automatically.
 
 You should see:
 
 ```text
 ✓ API key works: <your workshop username> (account <account id>)
+✓ Found your watsonx Orchestrate instance: <instance name>
 ✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to …/ai-agents-workshop/.env
 ✓ Your agent and tools will be named with the prefix 'student0_'
 ✓ Orchestrate instance is reachable with this key
@@ -157,23 +119,23 @@ You should see:
 ```
 
 ??? tip "Running the IBM Cloud step on its own"
-    To change your key or instance later, without reinstalling:
+    To change your API key later, without reinstalling:
 
     ```bash
     cd ~/ai-agents-workshop
     uv run python scripts/ibm_cloud_login.py
     ```
 
-    Pass a path if your key file is somewhere unusual: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`.
+    It asks you to paste a key again; use a new one if your old one has expired.
 
 ??? tip "Open a new terminal afterwards"
     The installer adds `uv` and `orchestrate` to your shell's PATH for **new** terminals. In the terminal you ran it from, run `source $HOME/.local/bin/env` once.
 
 ??? tip "Using the `ibmcloud` CLI too?"
-    You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same key file:
+    You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same API key:
 
     ```bash
-    ibmcloud login --apikey @~/Downloads/apikey.json
+    ibmcloud login --apikey <your API key>
     ```
 
     Plain `ibmcloud login` with your workshop username and password won't work, because workshop seats sign in through the instructor's login link, not with an IBMid.
