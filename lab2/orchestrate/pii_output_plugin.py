@@ -20,12 +20,14 @@ you can see this one as its own "mask_pii_output" span in the trace.
 This file is uploaded to Orchestrate as-is, so it must be self-contained: no
 imports from the rest of the repo.
 
-Deploy (from the repo root, with your Orchestrate env active):
-    orchestrate tools import -k python -f lab2/orchestrate/pii_output_plugin.py
-then reference it from the agent YAML:
+Deploy it with the agent (from the repo root, with your Orchestrate env active):
+    uv run python -m lab1.agent.deploy --pii-plugin
+That imports this file (named with your WXO_NAME_PREFIX, if set) and adds to the
+agent YAML:
     plugins:
       agent_post_invoke:
       - plugin_name: mask_pii_output
+Keep the @tool(...) decorator on one line: deploy.py adds the prefixed name to it.
 """
 
 import re

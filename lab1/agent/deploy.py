@@ -6,6 +6,11 @@ Imports three things into the active Orchestrate environment:
   2. tools.py        — the @tool functions the agent can call
   3. agent.yaml      — the agent, with the JSON output format appended
 
+With --pii-plugin (Lab 2), it also imports lab2/orchestrate/pii_output_plugin.py
+and attaches it to the agent as an agent_post_invoke plug-in that masks contact
+details and identifiers in the answer. Deploying again without the flag
+detaches it.
+
 Prerequisites:
   - The `orchestrate` CLI (ADK), with an environment added and activated:
         orchestrate env add -n workshop -u <WXO_INSTANCE_URL> -t ibm_iam
@@ -17,9 +22,11 @@ Prerequisites:
     sharing one instance each deploy under their own prefix.
 
 Usage:
-    uv run python -m lab1.agent.deploy
+    uv run python -m lab1.agent.deploy                 # Lab 1
+    uv run python -m lab1.agent.deploy --pii-plugin    # Lab 2: mask PII in answers
 """
 
+import argparse
 import json
 import logging
 import os
@@ -39,6 +46,8 @@ logger = logging.getLogger(__name__)
 
 AGENT_DIR = Path(__file__).parent
 REQUIREMENTS = AGENT_DIR / "requirements-orchestrate.txt"
+PII_PLUGIN = AGENT_DIR.parent.parent / "lab2" / "orchestrate" / "pii_output_plugin.py"
+PII_PLUGIN_NAME = "mask_pii_output"  # the plug-in's function name in PII_PLUGIN
 EHR_APP_ID = "lakeview_ehr"  # must match EHR_APP_ID in tools.py
 NAME_PREFIX = os.environ.get("WXO_NAME_PREFIX", "")
 
@@ -61,12 +70,14 @@ def output_schema() -> dict:
     return inline(schema)
 
 
-def render_agent_spec() -> dict:
+def render_agent_spec(pii_plugin: bool = False) -> dict:
     """Load agent.yaml and append the output format to its instructions.
 
     LangGraph enforced this format with constrained decoding (response_format).
     Orchestrate's react_core agents don't support that, so we ask for it in the
     prompt and validate the reply in agent.py.
+
+    With pii_plugin, the PII output plug-in is attached at agent_post_invoke.
     """
     spec = yaml.safe_load((AGENT_DIR / "agent.yaml").read_text())
     spec["instructions"] += (
@@ -78,7 +89,16 @@ def render_agent_spec() -> dict:
     )
     spec["name"] = NAME_PREFIX + spec["name"]
     spec["tools"] = [NAME_PREFIX + t for t in spec["tools"]]
+    if pii_plugin:
+        spec["plugins"] = {"agent_post_invoke": [{"plugin_name": NAME_PREFIX + PII_PLUGIN_NAME}]}
     return spec
+
+
+def prefix_tool_names(source: str) -> tuple[str, int]:
+    """Add name="<NAME_PREFIX><function>" to each one-line @tool(...) decorator."""
+    return re.subn(r"^@tool\((.*)\)\ndef (\w+)\(",
+                   lambda m: f'@tool(name="{NAME_PREFIX}{m[2]}", {m[1]})\ndef {m[2]}(',
+                   source, flags=re.MULTILINE)
 
 
 def render_tools_source() -> str:
@@ -93,11 +113,20 @@ def render_tools_source() -> str:
         return source
     source, n_app = re.subn(r'^EHR_APP_ID = "lakeview_ehr"$', f'EHR_APP_ID = "{NAME_PREFIX}lakeview_ehr"',
                             source, flags=re.MULTILINE)
-    source, n_tools = re.subn(r"^@tool\((.*)\)\ndef (\w+)\(",
-                              lambda m: f'@tool(name="{NAME_PREFIX}{m[2]}", {m[1]})\ndef {m[2]}(',
-                              source, flags=re.MULTILINE)
+    source, n_tools = prefix_tool_names(source)
     if n_app != 1 or n_tools == 0:
         sys.exit("Couldn't apply WXO_NAME_PREFIX to tools.py; its EHR_APP_ID or @tool lines changed shape.")
+    return source
+
+
+def render_pii_plugin_source() -> str:
+    """pii_output_plugin.py with NAME_PREFIX applied to the plug-in's name."""
+    source = PII_PLUGIN.read_text()
+    if not NAME_PREFIX:
+        return source
+    source, n = prefix_tool_names(source)
+    if n != 1:
+        sys.exit("Couldn't apply WXO_NAME_PREFIX to pii_output_plugin.py; its @tool line changed shape.")
     return source
 
 
@@ -109,7 +138,15 @@ def orchestrate(*args: str):
         sys.exit(result.returncode)
 
 
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Deploy the Lab 1 agent to watsonx Orchestrate.")
+    parser.add_argument("--pii-plugin", action="store_true",
+                        help="also deploy the Lab 2 PII output plug-in and attach it to the agent")
+    return parser.parse_args(argv)
+
+
 def main():
+    args = parse_args()
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
     ehr_api_url = os.environ.get("EHR_API_URL", "")
@@ -140,8 +177,14 @@ def main():
         orchestrate("tools", "import", "-k", "python", "-f", str(tmp / "tools.py"),
                     "-r", str(REQUIREMENTS), "-a", app_id)
 
-        # 3. Agent.
-        (tmp / "agent.yaml").write_text(yaml.safe_dump(render_agent_spec(), sort_keys=False, allow_unicode=True))
+        # 3. Optional PII plug-in. It must exist before the agent that references it.
+        if args.pii_plugin:
+            (tmp / "pii_output_plugin.py").write_text(render_pii_plugin_source())
+            orchestrate("tools", "import", "-k", "python", "-f", str(tmp / "pii_output_plugin.py"))
+
+        # 4. Agent. Without --pii-plugin the spec has no plugins, which detaches any earlier one.
+        spec = render_agent_spec(pii_plugin=args.pii_plugin)
+        (tmp / "agent.yaml").write_text(yaml.safe_dump(spec, sort_keys=False, allow_unicode=True))
         orchestrate("agents", "import", "-f", str(tmp / "agent.yaml"))
 
     logger.info("Deployed. New tools can take a few minutes before the agent can call them.")
