@@ -146,6 +146,20 @@ def _strip_code_fence(text: str) -> str:
 _client = _OrchestrateClient()
 
 
+class ModelUnavailable(RuntimeError):
+    """Orchestrate answered with its generic error instead of the agent's reply."""
+
+
+# What Orchestrate replies when the model behind the agent fails (e.g. the
+# provider is down or out of quota). Retrying for format won't help.
+_ORCHESTRATE_MODEL_ERROR = "i have encountered an error"
+
+
+def _raise_if_model_failed(text: str):
+    if text.strip().lower().startswith(_ORCHESTRATE_MODEL_ERROR):
+        raise ModelUnavailable(text.strip())
+
+
 def process_patient(patient_id: str) -> PatientConcerns:
     """Run the agent loop for a single patient. Returns structured concerns."""
 
@@ -159,6 +173,7 @@ def process_patient(patient_id: str) -> PatientConcerns:
 
     logger.info("[%s] Starting agent run on Orchestrate", patient_id)
     text, thread_id = _client.run(user_message)
+    _raise_if_model_failed(text)
 
     # The agent's instructions ask for JSON matching PatientConcerns. Validate
     # it here; if it's malformed, show the model the error and ask again.
@@ -176,6 +191,7 @@ def process_patient(patient_id: str) -> PatientConcerns:
                 "Reply again with ONLY the corrected JSON object.",
                 thread_id=thread_id,
             )
+            _raise_if_model_failed(text)
 
     # Patch in the patient_id and timestamps — the LLM sometimes gets
     # these wrong or leaves them empty, so we normalize here.

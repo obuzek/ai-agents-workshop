@@ -63,6 +63,9 @@ def friendly_error(e: Exception) -> str:
         return "Your agent isn't deployed yet. Run: uv run python -m lab1.agent.deploy"
     if "configuring" in lowered:
         return "Your tools are still being set up on Orchestrate. Wait a minute and click Run Agent again."
+    if type(e).__name__ == "ModelUnavailable":
+        return ("The model behind the agent isn't answering right now. This is on the workshop side, "
+                "not your setup. Wait a minute and click Run Agent again; tell the instructor if it keeps happening.")
     if isinstance(e, TimeoutError):
         return "The agent took longer than 5 minutes. Click Run Agent again; if it keeps happening, ask the instructor."
     if isinstance(e, ValidationError):

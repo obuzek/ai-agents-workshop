@@ -620,8 +620,10 @@ def render_inbox(messages: list[Message]) -> int:
         st.info("No messages.")
         return 0
 
-    # Check if a concern link wants to jump to a specific message
-    jump_to = st.session_state.pop("jump_to_message", None)
+    # A concern link may ask for a specific message; otherwise stay on the one
+    # last selected. The labels change when a message is answered, and
+    # Streamlit resets a widget whose labels change, so we track it ourselves.
+    jump_to = st.session_state.pop("jump_to_message", None) or st.session_state.get("current_message")
     default_idx = 0
     if jump_to:
         for i, m in enumerate(messages):
@@ -637,13 +639,15 @@ def render_inbox(messages: list[Message]) -> int:
         status = "⬜" if msg.needs_response() else "✅"
         labels.append(f"{status}  {msg.date[:10]}  {msg.subject}")
 
-    return st.radio(
+    selected = st.radio(
         "Select a message",
         options=range(len(messages)),
         index=default_idx,
         format_func=lambda i: labels[i],
         label_visibility="collapsed",
     )
+    st.session_state["current_message"] = messages[selected].id
+    return selected
 
 
 def render_conversation(msg: Message, patient_id: str):
