@@ -28,6 +28,27 @@ The labs use watsonx.governance to evaluate your agent. Its features need a wats
 
 ## 2. Set up IBM Bob
 
+<div class="admonition tip" id="bob-access" hidden markdown>
+<p class="admonition-title">Today's workshop links</p>
+<p>Workshop guide: <a href="https://ibm.biz/txc-26-ai-agents-workshop">ibm.biz/txc-26-ai-agents-workshop</a></p>
+<p>IBM Bob not working? Get access here: <a id="bob-access-url" href="#" target="_blank" rel="noopener"></a><br>
+Access code: <code id="bob-access-code"></code></p>
+</div>
+<script>
+  // Day-of details come from the workshop backend, not from this page, and stop being served after the workshop.
+  fetch("https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud/workshop/bob-access", { cache: "no-store" })
+    .then(r => (r.ok ? r.json() : null))
+    .then(info => {
+      if (!info || !info.url || !info.code) return;
+      const link = document.getElementById("bob-access-url");
+      link.href = info.url;
+      link.textContent = info.url;
+      document.getElementById("bob-access-code").textContent = info.code;
+      document.getElementById("bob-access").hidden = false;
+    })
+    .catch(() => {});
+</script>
+
 You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's built-in terminal. On Windows, Bob connects to a Linux environment (WSL), so everyone runs the same commands.
 
 === "macOS"

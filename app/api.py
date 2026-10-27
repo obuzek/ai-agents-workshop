@@ -17,6 +17,7 @@ import requests as http_client
 
 from app import store
 from app.llm_proxy import router as llm_proxy_router
+from app.workshop_info import router as workshop_info_router
 from app.store import load_patient, load_patients, load_raw_patients, save_reply
 
 logger = logging.getLogger(__name__)
@@ -49,13 +50,15 @@ AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 OPEN_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
 # The model proxy has its own token check (app/llm_proxy.py) and is only served by the shared EHR.
 LLM_PROXY_PREFIX = "/llm/"
+WORKSHOP_INFO_PREFIX = "/workshop/"
 if store.EHR_MODE == "server":
     app.include_router(llm_proxy_router)
+    app.include_router(workshop_info_router)
 
 
 @app.middleware("http")
 async def tenant_from_header(request: Request, call_next):
-    if store.EHR_MODE != "server" or request.url.path in OPEN_PATHS or request.url.path.startswith(LLM_PROXY_PREFIX):
+    if store.EHR_MODE != "server" or request.url.path in OPEN_PATHS or request.url.path.startswith((LLM_PROXY_PREFIX, WORKSHOP_INFO_PREFIX)):
         return await call_next(request)
     tenant = request.headers.get(store.TENANT_HEADER, "").strip()
     if not tenant:

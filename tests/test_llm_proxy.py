@@ -89,3 +89,33 @@ def test_streaming_passes_through(proxy):
 def test_not_served_in_local_mode(monkeypatch):
     api, _ = _reload(monkeypatch, "local")
     assert TestClient(api.app).post(URL, json=BODY, headers={"x-api-key": "x"}).status_code in (404, 405)
+
+
+# --- Day-of workshop info (app/workshop_info.py) ---
+
+
+def _info_client(monkeypatch, expires):
+    monkeypatch.setenv("BOB_ACCESS_URL", "https://example.test/access")
+    monkeypatch.setenv("BOB_ACCESS_CODE", "CODE-1")
+    monkeypatch.setenv("WORKSHOP_INFO_EXPIRES", expires)
+    import app.workshop_info
+    importlib.reload(app.workshop_info)
+    api, _ = _reload(monkeypatch, "server")
+    return TestClient(api.app)
+
+
+def test_bob_access_served_before_expiry_with_cors(monkeypatch):
+    client = _info_client(monkeypatch, "2099-01-01T00:00:00Z")
+    resp = client.get("/workshop/bob-access", headers={"Origin": "https://obuzek.github.io"})
+    assert resp.status_code == 200 and resp.json() == {"url": "https://example.test/access", "code": "CODE-1"}
+    assert resp.headers["access-control-allow-origin"] == "https://obuzek.github.io"
+    assert "access-control-allow-origin" not in client.get("/workshop/bob-access", headers={"Origin": "https://evil.test"}).headers
+    monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")
+
+
+def test_bob_access_refused_after_expiry_or_without_expiry(monkeypatch):
+    client = _info_client(monkeypatch, "2000-01-01T00:00:00Z")
+    assert client.get("/workshop/bob-access").status_code == 400
+    client = _info_client(monkeypatch, "")
+    assert client.get("/workshop/bob-access").status_code == 400
+    monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")
