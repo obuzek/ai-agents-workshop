@@ -28,8 +28,8 @@ from scripts.ibm_cloud_login import IAM_TOKEN_URL, ORCHESTRATE_ENV, check_instan
 ENV_FILE = REPO_ROOT / ".env"
 REQUIRED_ENV = ["WXO_API_KEY", "WXO_INSTANCE_URL", "WXO_NAME_PREFIX", "EHR_TENANT", "EHR_API_URL"]
 TENANT_HEADER = "X-Tenant"  # same as app.store.TENANT_HEADER
-LOGIN_HINT = "Run: uv run python scripts/ibm_cloud_login.py"
-NEW_KEY_HINT = "Create a new API key in IBM Cloud (step 3 of the prerequisites), then run: uv run python scripts/ibm_cloud_login.py"
+LOGIN_HINT = "uv run python scripts/ibm_cloud_login.py"
+NEW_KEY_HINT = "create a new API key in IBM Cloud (step 3 of the prerequisites), then run: uv run python scripts/ibm_cloud_login.py"
 
 
 @dataclass
@@ -46,7 +46,7 @@ def check_python_env() -> Result:
         import app.store  # noqa: F401  (pulls in the workshop's main dependencies)
     except Exception as e:  # any import failure means the environment is broken
         return Result(name, False, f"can't import the workshop code ({e.__class__.__name__}: {e})",
-                      "Run: cd ~/ai-agents-workshop && uv sync")
+                      "cd ~/ai-agents-workshop && uv sync")
     return Result(name, True, f"Python {sys.version.split()[0]}, workshop packages installed")
 
 
@@ -60,17 +60,17 @@ def check_orchestrate_cli() -> Result:
     path = shutil.which("orchestrate")
     if not path:
         return Result(name, False, "`orchestrate` isn't on your PATH",
-                      "Run: source $HOME/.local/bin/env (or open a new terminal). If it's still missing, run the installer again.")
+                      "source $HOME/.local/bin/env (or open a new terminal). If it's still missing, run the installer again.")
     try:
         # `orchestrate --version` can exit non-zero even when it works, so judge it by its output.
         run = subprocess.run([path, "--version"], capture_output=True, text=True, timeout=120)
     except (OSError, subprocess.TimeoutExpired) as e:
         return Result(name, False, f"`orchestrate --version` didn't run ({e.__class__.__name__})",
-                      "Run: uv tool install --reinstall ibm-watsonx-orchestrate")
+                      "uv tool install --reinstall ibm-watsonx-orchestrate")
     version = parse_adk_version(run.stdout + run.stderr)
     if not version:
         return Result(name, False, "`orchestrate --version` didn't print a version",
-                      "Run: uv tool install --reinstall ibm-watsonx-orchestrate")
+                      "uv tool install --reinstall ibm-watsonx-orchestrate")
     return Result(name, True, f"ADK {version}")
 
 
@@ -103,12 +103,12 @@ def get_iam_token(env: dict[str, str]) -> tuple[Result, str | None]:
                              data={"grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": key})
     except requests.RequestException as e:
         return Result(name, False, f"couldn't reach IBM Cloud ({e.__class__.__name__})",
-                      "Check your internet connection, then run this again."), None
+                      "check your internet connection, then run this again."), None
     if resp.status_code in (400, 401):
         return Result(name, False, "IBM Cloud rejected the key in .env (it may have expired or been deleted)",
                       NEW_KEY_HINT), None
     if not resp.ok:
-        return Result(name, False, f"IBM Cloud returned HTTP {resp.status_code}", "Wait a minute and run this again."), None
+        return Result(name, False, f"IBM Cloud returned HTTP {resp.status_code}", "wait a minute and run this again."), None
     return Result(name, True, "IBM Cloud accepts it"), resp.json()["access_token"]
 
 
@@ -138,7 +138,7 @@ def check_active_env() -> Result:
     path = shutil.which("orchestrate")
     if not path:
         return Result(name, False, "not checked: `orchestrate` isn't on your PATH (see above)",
-                      "Run: source $HOME/.local/bin/env, then run this again.")
+                      "source $HOME/.local/bin/env, then run this again.")
     try:
         run = subprocess.run([path, "env", "list"], capture_output=True, text=True, timeout=60)
     except (OSError, subprocess.TimeoutExpired) as e:
@@ -152,7 +152,7 @@ def check_active_env() -> Result:
 
 def check_ehr(env: dict[str, str]) -> list[Result]:
     name = "Shared workshop EHR"
-    ask = "Tell your instructor: the shared EHR isn't answering."
+    ask = "tell your instructor that the shared EHR isn't answering."
     url = env.get("EHR_API_URL", "").rstrip("/")
     tenant = env.get("EHR_TENANT")
     if not url or not tenant:
