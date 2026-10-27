@@ -10,11 +10,13 @@ import logging
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import requests as http_client
 
-from app.store import load_patient, load_patients, save_reply
+from app import store
+from app.store import load_patient, load_patients, load_raw_patients, save_reply
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +41,38 @@ app = FastAPI(
 )
 
 AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
+
+
+# In server mode (the shared workshop EHR) every data request names its tenant
+# in the X-Tenant header; each tenant sees only its own copy of the patients.
+OPEN_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
+
+
+@app.middleware("http")
+async def tenant_from_header(request: Request, call_next):
+    if store.EHR_MODE != "server" or request.url.path in OPEN_PATHS:
+        return await call_next(request)
+    tenant = request.headers.get(store.TENANT_HEADER, "").strip()
+    if not tenant:
+        return JSONResponse(status_code=401, content={"detail": f"Missing {store.TENANT_HEADER} header"})
+    token = store.current_tenant.set(tenant)
+    try:
+        return await call_next(request)
+    except store.TooManyTenants as e:
+        return JSONResponse(status_code=503, content={"detail": str(e)})
+    finally:
+        store.current_tenant.reset(token)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "mode": store.EHR_MODE}
+
+
+@app.get("/records")
+def list_records():
+    """Full raw patient records (used by a local EHR running in remote mode)."""
+    return load_raw_patients()
 
 
 # --- Request models ---
