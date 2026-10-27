@@ -31,7 +31,7 @@ DEFAULT_KEY_FILE = Path.home() / "Downloads" / "apikey.json"  # IBM Cloud's defa
 IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
 # The shared workshop EHR. Every attendee uses it; each gets a private copy of the
 # patients, keyed by EHR_TENANT below.
-SHARED_EHR_URL = os.environ.get("SHARED_EHR_URL", "")
+SHARED_EHR_URL = os.environ.get("SHARED_EHR_URL", "https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud")
 
 
 def read_api_key(key_file: Path | None) -> str:
