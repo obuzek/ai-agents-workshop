@@ -169,7 +169,11 @@ def load_patient(patient_id: str) -> Patient:
             raise FileNotFoundError(patient_id)
         return _parse_patient(records[patient_id])
     if EHR_MODE == "remote":
-        return _parse_patient(_remote("GET", f"/patients/{patient_id}"))
+        # Served from the briefly cached full records (one cloud call per redraw, not one per read).
+        for data in load_raw_patients():
+            if data["id"] == patient_id:
+                return _parse_patient(data)
+        raise FileNotFoundError(patient_id)
     with open(_patient_filepath(patient_id)) as f:
         return _parse_patient(json.load(f))
 

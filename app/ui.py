@@ -175,6 +175,10 @@ def mark_concern_resolved(patient_id: str, concern_id: str):
     _post(f"/patients/{patient_id}/concerns/{concern_id}/resolve", {})
 
 
+# What the EHR API reports when no lab agent API is listening on AGENT_API_URL.
+AGENT_UNAVAILABLE = "Agent API unavailable"
+
+
 def get_agent_status() -> dict:
     """Get the agent's current status (running, last_run, etc.)."""
     try:
@@ -182,7 +186,7 @@ def get_agent_status() -> dict:
         resp.raise_for_status()
         return resp.json()
     except (requests.ConnectionError, requests.Timeout, requests.HTTPError):
-        return {"running": False, "last_run": "", "error": "Agent unavailable"}
+        return {"running": False, "last_run": "", "error": AGENT_UNAVAILABLE}
 
 
 def get_masking_status() -> bool | None:
@@ -442,6 +446,14 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
     # Treat "just triggered" the same as "running" — the background thread
     # may not have acquired the lock by the time this rerun checks status.
     is_running = status.get("running") or st.session_state.get("agent_just_triggered")
+    if status.get("error") == AGENT_UNAVAILABLE:
+        st.button("Run Agent", disabled=True)
+        st.info(
+            "Your agent isn't running yet. Start the agent for the lab you're on in a second terminal, "
+            "e.g. `uv run uvicorn lab1.agent.api:app --port 8001`, then refresh this page."
+        )
+        return
+
     col_btn, col_status = st.columns([1, 2])
     with col_btn:
         if is_running:
@@ -643,11 +655,24 @@ def render_conversation(msg: Message, patient_id: str):
 
     # Reply form
     st.divider()
-    reply_text = st.text_area("Reply", key=f"reply_{msg.id}", placeholder="Type your response...")
-    if st.button("Send", key=f"send_{msg.id}"):
-        if reply_text.strip():
-            send_reply(patient_id, msg.id, reply_text)
-            st.rerun()
+    st.text_area("Reply", key=f"reply_{msg.id}", placeholder="Type your response...")
+    st.button("Send", key=f"send_{msg.id}", on_click=_send_reply_and_clear, args=(patient_id, msg.id))
+
+
+def _send_reply_and_clear(patient_id: str, message_id: str):
+    """Send button callback: post the reply, then empty the box so it can't be sent twice.
+
+    Runs before the rerun, which is the only point where Streamlit lets us
+    reset a widget's value.
+    """
+    key = f"reply_{message_id}"
+    text = st.session_state.get(key, "").strip()
+    if not text:
+        return
+    with st.spinner("Sending..."):
+        send_reply(patient_id, message_id, text)
+    st.session_state[key] = ""
+    st.toast("Reply sent")
 
 
 # ======================
