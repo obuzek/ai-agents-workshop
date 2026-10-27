@@ -1,38 +1,37 @@
 # Lab 2: Observability
 
-**Duration:** ~20 minutes
+**Duration:** ~25 minutes
 
-???+ abstract "What You'll Add"
-    The naive agent from Lab 1 is a black box — you can see its output (concerns), but not how it got there. Which tools did it call? What data did it see? How long did each step take? How much did it cost?
+???+ abstract "What You'll Do"
+    Lab 1's agent gives you concerns, but not how it got them. Which tools did it call? What data did it see?
 
-    In this lab you'll instrument the agent with **Langfuse**, an open-source LLM observability platform. You'll see every decision the agent makes — and then figure out what you can make better.
+    watsonx Orchestrate already records this. Every run of your agent produces a **trace**. In this lab you'll open a trace, find the patient data inside it, and try the two masking layers Orchestrate offers. Then you'll compare traces to see what each layer changes and what it leaves alone.
+
+    Each step is something you run and look at. The extra-credit step at the end is optional.
 
 ---
 
 ## Why Observability Matters for Agents
 
-Traditional software observability tracks HTTP status codes, latency histograms, and error rates — metadata about what happened. Agent observability is fundamentally different because you need to capture the **content** of what was processed: the full prompts, tool call arguments, model outputs, and reasoning chain.
+Traditional software observability tracks status codes, latency and error rates. For an agent you also need the **content**: the prompts, the tool call arguments, the tool results and the model's replies. Without the content you can't tell why the agent said what it said.
 
-This creates a tension: the richer your traces, the more useful they are for debugging — but the more likely they are to contain sensitive data. Your trace store becomes a **secondary repository of sensitive data** that needs its own governance posture.
+The content also includes patient data. When the agent calls `get_patient_record("patient-001")`, the trace records:
 
-???+ example "The trace data problem"
-    When the agent calls `get_patient_record("patient-001")`, the trace captures:
+- **Input**: the patient ID
+- **Output**: the whole patient record: name, date of birth, phone, email, address, insurance member ID, medications, labs, messages
 
-    - **Input**: the patient ID
-    - **Output**: the entire patient record — name, DOB, medications, lab results, messages
-
-    That output is now sitting in your trace store. If anyone with access to your observability platform can see it, you've created a PHI leak that has nothing to do with your agent's behavior.
+That output now lives in the trace store as well as in the EHR. The trace store is a second copy of patient data, and it needs the same rules as the first.
 
 In the slides before this lab, we covered the **"What to Log" framework**:
 
 | Log Freely | Log With Masking | Do Not Log |
 |---|---|---|
-| Latency, token counts, cost | Summarized user intent | Raw credentials / secrets |
-| Model name, temperature, params | Redacted inputs / outputs | Full PHI in healthcare contexts |
+| Latency, token counts | Summarized user intent | Raw credentials / secrets |
+| Model name, parameters | Redacted inputs / outputs | Full PHI in healthcare contexts |
 | Tool call names, success/fail | Error messages (scrubbed) | Internal API keys in tool args |
 | Trace structure / spans | Session metadata | Unmasked PII |
 
-This lab puts that framework into practice.
+On a hosted platform you don't write the logging code, so you don't choose what goes in each column. This lab shows what Orchestrate puts in its traces and which parts you can change.
 
 ---
 
@@ -40,343 +39,358 @@ This lab puts that framework into practice.
 
 By the end of this lab, you will:
 
-- [x] Understand why agent observability requires different tooling than traditional software monitoring
-- [x] Know the difference between traces, spans, and the data they capture
-- [x] Instrument a LangGraph agent with Langfuse using three lines of code
-- [x] See raw PHI in your traces and understand the risk
-- [x] Implement client-side PII masking so sensitive data never reaches the trace store
-- [x] Use the Langfuse UI to inspect agent behavior: tool calls, token usage, cost, latency
+- [x] Find your agent's traces in Orchestrate and read a trace: LLM calls, tool calls, token counts
+- [x] Find raw patient data (PHI) in a trace and say who can read it and for how long
+- [x] Explain the difference between Orchestrate's model gateway, its controls and its plug-ins
+- [x] Bind a PII Filter control to your agent and see what it masks
+- [x] Deploy a PII masking plug-in and see what it masks, and what is still in the trace
+- [x] Explain why returning less data from the tools is the only layer that keeps PHI out of the trace
 
 ---
 
-## Step 1: Start Langfuse
+## Step 1: Run Your Agent and Open Its Trace
 
-Langfuse runs locally via Docker Compose. All data stays on your machine — nothing is sent to the cloud.
+You need your Lab 1 agent deployed, the inbox UI running and the Lab 1 agent service running. If you stopped them, restart them:
 
 ```bash
-cd ai-agents-workshop
-docker compose -f docker-compose.langfuse.yml up -d
+cd ~/ai-agents-workshop
+uv run streamlit run app/ui.py --server.port 8501      # terminal 1
+uv run uvicorn lab1.agent.api:app --port 8001          # terminal 2
 ```
 
-This starts 6 containers: Langfuse web UI, a background worker, Postgres, Clickhouse, Redis, and MinIO (object storage). The first run pulls images and takes ~30 seconds.
+In the UI at [http://localhost:8501](http://localhost:8501), pick a patient and click **Run Agent**. Write down the patient and the time.
 
-Open [http://localhost:3000](http://localhost:3000) and log in:
+### Find the trace in Orchestrate
 
-- **Email**: `workshop@example.com`
-- **Password**: `workshop`
+Traces are in watsonx Orchestrate, not in watsonx.ai.
 
-You should see an empty project called **"Lab 2 Observability"**. No traces yet — we'll generate some in the next steps.
+1. Open the Orchestrate UI for the workshop instance.
+2. From the main menu, open **Analyze**. This opens **Agent analytics**, a table of agents.
+3. Click your agent, `<prefix>lakeview_inbox_agent` (for example `student0_lakeview_inbox_agent`).
+4. The **Traces** view lists runs with a timestamp, trace ID, status, model and latency. Pick the run at the time you wrote down.
+5. Open **Trace details** to see each step of the run.
 
-???+ tip "Pre-configured credentials"
-    The Docker Compose file uses Langfuse's [headless initialization](https://langfuse.com/self-hosting/administration/headless-initialization) to pre-seed an organization, project, user, and API keys. You don't need to create anything manually.
+IBM documents this path in [Monitoring agents](https://www.ibm.com/docs/en/SSAVQO/administering/agent_observability.html). The ADK docs describe the same data under "Analyze > [Agent name] > Overview and Conversations" ([Observability SDK](https://developer.watson-orchestrate.ibm.com/traces/observability-sdk.md)).
 
-    The API keys (`pk-lf-workshop` / `sk-lf-workshop`) are already set as defaults in the agent code.
+<!-- TODO(verify): exact menu labels in the workshop tenant's UI. The IBM Docs page is titled "legacy experience"; the ADK docs use "Overview" and "Conversations" instead of "Traces" / "Trace details". Check which one the TXC tenant shows and drop the other. -->
+
+??? tip "From the command line instead"
+    The `orchestrate` CLI can list and export traces from your active environment:
+
+    ```bash
+    orchestrate observability traces search --last 30m --limit 20
+    orchestrate observability traces export --trace-id <32-character trace ID> --output trace.json
+    ```
+
+    `search` can't filter by agent name in the current ADK (that option is deprecated), so you'll see runs from the whole room. Use the time of your run to find yours. `export` writes the full trace as JSON.
+
+    <!-- TODO(verify): the trace API is rate-limited (we measured 4 requests/minute and a 4-hour search window). Confirm whether the CLI hits the same limit before a room of 30 runs it at once. -->
+
+### Read the trace
+
+The trace is a tree of **spans**. One span covers the whole run. Inside it are:
+
+- **LLM calls**, with the model name (`gpt-oss-120b`) and input and output token counts. There's no cost figure.
+- **Tool calls**, with the full arguments and the full result.
+- The agent's final reply: the raw JSON before `agent.py` validated it.
+
+Open the `get_patient_record` tool call and look at its output.
+
+???+ warning "This is the patient record"
+    The tool output holds the patient's name, date of birth, phone number, email, home address, insurance member ID, and the full clinical record, in plain text. The LLM calls that follow contain the same data, because the tool result is part of the model's input.
+
+    Orchestrate recorded all of it without any code from you.
+
+???+ question "Look at the run"
+    - How many tool calls did the agent make before it answered? Lab 1 noted the agent often makes one call and stops.
+    - Open the first LLM call and read its input. The "user" message was written by `agent.py`, not by Dr. Kim. The doctor never sees this prompt, but it shapes everything the agent does.
+    - Compare what the tools returned with the concerns the agent wrote. Is every piece of evidence in the tool output? Lab 3 checks this automatically.
 
 ---
 
-## Step 2: Understand the Instrumentation
+## Step 2: Who Else Can Read This Trace?
 
-Open `lab2/agent/agent.py` and compare it to `lab1/agent/agent.py`. The diff is small:
+Go back to the agent list in **Analyze**. Open someone else's agent, for example the seat next to you, and open one of their traces.
 
-```python
-# --- NEW IN LAB 2 ---
-from lab2.agent.observability import create_langfuse_handler
+You can read it. You can read their patient's record in the tool output.
 
-_langfuse_handler = create_langfuse_handler()
-```
+That's because every seat in this workshop has the same broad role on one shared Orchestrate instance. IBM's docs say users with the Administrator or Builder role can view conversations in their tenant ([Chat privacy and data protection](https://www.ibm.com/docs/en/watsonx/watson-orchestrate/base?topic=instance-chat-privacy-data-protection)) and that builders and administrators can view traces ([Monitoring agents](https://www.ibm.com/docs/en/SSAVQO/administering/agent_observability.html)). The patients are synthetic, so this is safe today.
 
-And in `process_patient()`:
+### Traces are PHI
 
-```python
-result = _agent.invoke(
-    {"messages": [{"role": "user", "content": user_message}]},
-    config={
-        "callbacks": [_langfuse_handler],
-        "metadata": {
-            "langfuse_session_id": f"patient-review-{patient_id}",
-            "langfuse_tags": ["lab2", patient_id],
-        },
-    },
-)
-```
+Treat the trace store like any other copy of patient data. **Data provenance** means you can say where patient data went and what happened to it at each step. For the trace store, that comes down to three questions:
 
-That's it. The `CallbackHandler` hooks into LangChain's callback system, which LangGraph propagates to every LLM call and tool call in the ReAct loop.
+| Question | In this workshop | Source |
+|---|---|---|
+| **Where does it live?** | In the Orchestrate instance, next to the agent. It is a separate copy from the EHR. | Observed |
+| **Who can read it?** | Every seat. Access follows the Orchestrate role, and every seat has a Builder-level role or higher. | Tested; [Monitoring agents](https://www.ibm.com/docs/en/SSAVQO/administering/agent_observability.html) |
+| **How long is it kept?** | 30 days, then deleted. The period is fixed. | [Managing data retention](https://www.ibm.com/docs/en/SSAVQO/administering/data_retention_agentic_experience.html) |
+
+In a real deployment you'd answer the same questions before the first real patient: who gets a role that can read traces, whether 30 days fits your retention policy, and what the tools put into the trace in the first place. Lab 4 comes back to this.
 
 ---
 
-## Step 3: Run the Agent
+## Policy Engines: What Orchestrate Offers
 
-Start the system (you need two terminals):
+Orchestrate has three places where you can change what happens on the way into and out of your agent.
+
+- The **model gateway** routes the agent's LLM calls. Model policies can fall back to another model, balance load across models, or retry. The gateway is for reliability. It does not inspect content. ([Model policies](https://developer.watson-orchestrate.ibm.com/llm/model_policies.md); public preview.)
+- **Controls** are Orchestrate's policy engine. A control binds a built-in policy type to your agent at a fixed **hook**, such as `agent_pre_invoke` (before the agent sees the message). Policy types include a PII Filter, Content Guardrails (jailbreak, hate/abuse/profanity, harm, social bias), Secrets detection, Regex pattern, SQL sanitizer, an output-length guard, rate limiters and model fallback/retry. ([Managing controls](https://developer.watson-orchestrate.ibm.com/controls/managing_controls.md))
+- **Plug-ins** are your own Python code, run at agent hooks such as `agent_post_invoke` (after the agent answers, before the caller gets the answer). ([Plug-ins](https://developer.watson-orchestrate.ibm.com/plugins/plugins.md))
+
+The diagram shows what we tested on the workshop instance. Content Guardrails and the other control types exist, but we haven't tested them.
+
+<div class="wxo-policy" style="margin:1.5em 0">
+<svg class="wxo-policy-svg" viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A caller sends a message to the agent. Controls at agent_pre_invoke run first: the PII Filter masks PII the user types (verified); Content Guardrails are untested. Controls bound to tool_post_invoke and agent_post_invoke were accepted but did not execute in our tests. The agent runs a ReAct loop. Its LLM calls go through the model gateway, which handles fallback, load balancing and retry to gpt-oss-120b. Its tool calls go to the tool runtime, which reads the shared EHR. Tool output carries patient messages, which is an indirect prompt-injection path that no control inspects. After the agent answers, a Python plug-in at agent_post_invoke masks phone, email, date of birth and member ID in the answer (verified). Every step writes to the trace store, which holds raw tool input and output and LLM context, is readable across the tenant, and keeps traces for 30 days." style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+<style>
+.wxo-policy-svg { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.wxo-policy-svg text { fill: currentColor; font-size: 14px; }
+.wxo-policy-svg text.t { font-size: 16px; font-weight: 600; }
+.wxo-policy-svg text.mono { font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+.wxo-policy-svg text.zone { fill: #8d8d8d; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; }
+.wxo-policy-svg text.muted { fill: #8d8d8d; font-size: 13px; }
+.wxo-policy-svg text.warn { fill: #fa4d56; font-size: 13px; }
+.wxo-policy-svg text.on-blue { fill: #ffffff; }
+.wxo-policy-svg .box { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.wxo-policy-svg .box.blue { fill: #0f62fe; stroke: none; }
+.wxo-policy-svg .box.soft { fill: rgba(141,141,141,0.16); stroke: none; }
+.wxo-policy-svg .box.dash { stroke: #8d8d8d; stroke-dasharray: 5 4; }
+.wxo-policy-svg .zone-r { fill: none; stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.wxo-policy-svg .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#wxo-p-arrow); }
+.wxo-policy-svg .edge.both { marker-start: url(#wxo-p-arrow-start); }
+.wxo-policy-svg .edge.rec { stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 5 4; marker-end: url(#wxo-p-arrow-muted); }
+.wxo-policy-svg .edge.inj { stroke: #fa4d56; marker-start: url(#wxo-p-arrow-red-start); marker-end: url(#wxo-p-arrow-red); }
+</style>
+<defs>
+<marker id="wxo-p-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" markerUnits="strokeWidth" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+<marker id="wxo-p-arrow-start" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="7" markerHeight="7" markerUnits="strokeWidth" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="currentColor"/></marker>
+<marker id="wxo-p-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" markerUnits="strokeWidth" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/></marker>
+<marker id="wxo-p-arrow-red" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" markerUnits="strokeWidth" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#fa4d56"/></marker>
+<marker id="wxo-p-arrow-red-start" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="7" markerHeight="7" markerUnits="strokeWidth" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="#fa4d56"/></marker>
+</defs>
+<!-- Caller (outside Orchestrate) -->
+<rect class="box" x="222" y="10" width="260" height="56"/>
+<text class="t" x="238" y="34">Caller (agent.py)</text>
+<text x="238" y="54">"Review patient-005"</text>
+<line class="edge" x1="352" y1="66" x2="352" y2="112"/>
+<!-- Orchestrate zone -->
+<rect class="zone-r" x="1" y="92" width="758" height="456"/>
+<text class="zone" x="16" y="118">WATSONX ORCHESTRATE</text>
+<!-- Controls at agent_pre_invoke -->
+<rect class="box" x="222" y="112" width="260" height="100"/>
+<text class="t" x="238" y="136">Controls</text>
+<text class="mono" x="316" y="136">agent_pre_invoke</text>
+<text x="238" y="160">PII Filter: masks PII the user</text>
+<text x="238" y="180">types. Verified.</text>
+<text x="238" y="200">Content Guardrails: untested.</text>
+<!-- Post hooks that didn't run -->
+<rect class="box dash" x="530" y="112" width="218" height="92"/>
+<text class="muted" x="544" y="134">Controls at tool_post_invoke</text>
+<text class="muted" x="544" y="154">and agent_post_invoke:</text>
+<text class="muted" x="544" y="174">accepted, but did not run</text>
+<text class="muted" x="544" y="194">in our tests.</text>
+<line class="edge" x1="352" y1="212" x2="352" y2="236"/>
+<!-- Agent -->
+<rect class="box blue" x="222" y="236" width="260" height="120"/>
+<text class="t on-blue" x="238" y="262">Your agent</text>
+<text class="on-blue" x="238" y="286">ReAct loop (react_core)</text>
+<text class="on-blue" x="238" y="314">LLM calls go to the gateway</text>
+<text class="on-blue" x="238" y="336">Tool calls go to the tool runtime</text>
+<!-- Model gateway -->
+<rect class="box" x="530" y="216" width="218" height="96"/>
+<text class="t" x="544" y="240">Model gateway</text>
+<text x="544" y="262">Fallback, load balance, retry</text>
+<text x="544" y="282">to gpt-oss-120b</text>
+<text class="muted" x="544" y="302">Reliability only. Preview.</text>
+<line class="edge both" x1="482" y1="264" x2="530" y2="264"/>
+<!-- Tool runtime -->
+<rect class="box" x="530" y="324" width="218" height="56"/>
+<text class="t" x="544" y="348">Tool runtime</text>
+<text x="544" y="368">runs your tools.py</text>
+<line class="edge both" x1="482" y1="340" x2="530" y2="340"/>
+<!-- Tool runtime to EHR, with injection label -->
+<line class="edge both inj" x1="560" y1="380" x2="560" y2="572"/>
+<text class="warn" x="574" y="414">Tool output carries patient</text>
+<text class="warn" x="574" y="434">messages. This is the indirect</text>
+<text class="warn" x="574" y="454">prompt-injection path. No</text>
+<text class="warn" x="574" y="474">control inspects tool output.</text>
+<line class="edge" x1="352" y1="356" x2="352" y2="396"/>
+<!-- Plug-in -->
+<rect class="box blue" x="222" y="396" width="260" height="96"/>
+<text class="t on-blue" x="238" y="420">Plug-in</text>
+<text class="mono on-blue" x="300" y="420">agent_post_invoke</text>
+<text class="on-blue" x="238" y="444">Your Python. Masks phone, email,</text>
+<text class="on-blue" x="238" y="464">DOB and member ID in the answer.</text>
+<text class="on-blue" x="238" y="484">Verified.</text>
+<!-- Trace store -->
+<rect class="box soft" x="12" y="140" width="180" height="352"/>
+<text class="t" x="26" y="166">Trace store</text>
+<text x="26" y="192">Every step writes here.</text>
+<text x="26" y="226">Raw tool input and</text>
+<text x="26" y="246">output, and the LLM</text>
+<text x="26" y="266">context: this is PHI.</text>
+<text x="26" y="300">Readable across the</text>
+<text x="26" y="320">whole tenant.</text>
+<text x="26" y="354">Kept 30 days.</text>
+<line class="edge rec" x1="222" y1="162" x2="192" y2="162"/>
+<line class="edge rec" x1="222" y1="296" x2="192" y2="296"/>
+<line class="edge rec" x1="222" y1="444" x2="192" y2="444"/>
+<!-- Answer and EHR (outside Orchestrate) -->
+<line class="edge" x1="352" y1="492" x2="352" y2="572"/>
+<rect class="box" x="222" y="572" width="260" height="56"/>
+<text class="t" x="238" y="596">Answer to the caller</text>
+<text x="238" y="616">concerns JSON</text>
+<rect class="box" x="530" y="572" width="218" height="56"/>
+<text class="t" x="544" y="596">Shared EHR (cloud)</text>
+<text x="544" y="616">your copy of the patients</text>
+</svg>
+</div>
+
+!!! danger "The injection path is the tool output"
+    In this agent, untrusted text arrives through tool output: a patient's portal message, returned by `get_messages` or `get_patient_record`. The input controls only see what the caller sends, and the controls bound to the post-invoke hooks didn't run in our tests. Nothing on the platform inspects tool output for this agent.
+
+Here are the three layers for patient data, with what we measured:
+
+| Layer | Mechanism | What it protects | What it doesn't protect |
+|---|---|---|---|
+| **Input** | PII Filter control at `agent_pre_invoke` | PII the user types in the message. Regex detectors: phone, email, date of birth, SSN, MRN and others. | Names. Anything that comes back from a tool. |
+| **Output** | Python plug-in at `agent_post_invoke` | Phone, email, labelled date of birth and member ID in the final answer | Names and addresses. The tool output and LLM context, which are already in the trace. |
+| **Source** | Tools return only the fields the agent needs | The model's context, the trace and the answer | Any field the tool still returns. |
+
+---
+
+## Step 3: Bind the PII Filter Control
+
+Bind the built-in PII Filter to your agent at `agent_pre_invoke`. Replace `student0_` with your prefix:
 
 ```bash
-# Terminal 1: Streamlit UI (auto-starts the EHR API)
-uv run streamlit run app/ui.py --server.port 8501
-
-# Terminal 2: Agent API (now using lab2)
-uv run uvicorn lab2.agent.api:app --port 8001
+orchestrate controls create \
+  --artifact "PII Filter" \
+  --name student0_pii_input \
+  --hook agent_pre_invoke \
+  --agent student0_lakeview_inbox_agent
 ```
 
-Go to the UI at [http://localhost:8501](http://localhost:8501), select a patient, and click **Run Agent**.
+<!-- TODO(verify): this is the form in IBM's managing_controls docs, without --config. Our live test passed a --config JSON; confirm the defaults mask phone/email without it. `orchestrate controls get-type --name "PII Filter"` shows the config options. -->
 
----
+The inbox UI always sends the same message, which has no PII in it. To see the control work, send your agent a message that does:
 
-## Step 4: Find the PHI Leak
-
-After the agent finishes, go to the Langfuse UI at [http://localhost:3000](http://localhost:3000).
-
-Click into **Traces** in the left sidebar. You should see a new trace. Click on it.
-
-???+ warning "Look at the trace data"
-    Expand the spans and look at the tool call inputs and outputs. You'll see patient names, dates of birth, phone numbers, email addresses, home addresses, insurance member IDs, and full medical records — all in plain text.
-
-    All of this is now sitting in your Langfuse database. Anyone with access to this Langfuse instance can see it.
-
-    In a real system under HIPAA, this would be a **reportable breach**. Your observability platform just became an unauthorized copy of the patient record.
-
-The core point of this lab is learning to evaluate and improve your agent — but you can't do that responsibly if your instrumentation is leaking sensitive data.
-
----
-
-## Step 5: Implement PII Masking
-
-Now let's fix it. Open `lab2/agent/observability/masking.py`.
-
-The `mask_pii` function is the client-side filter that Langfuse applies to all trace data — inputs, outputs, and metadata — *before* any data leaves the process. This is the approach recommended by the [Langfuse documentation](https://langfuse.com/docs/observability/features/masking) and is the strongest guarantee that sensitive data never reaches your trace store.
-
-### How it works
-
-Our masking uses two layers of defense:
-
-**Layer 1: Field-level redaction from data model annotations.** Our Pydantic data models annotate which fields contain PII or PHI:
-
-```python
-# In app/models.py
-class Demographics(BaseModel):
-    name: Name
-    birth_date: str = _phi(default="", alias="birthDate")    # PHI — clinical identifier
-    phone: str = _pii(default="")                             # PII — contact info
-    email: str = _pii(default="")                             # PII — contact info
+```bash
+orchestrate chat ask --agent-name student0_lakeview_inbox_agent \
+  "Please review patient-001. If anything is urgent, call me at 555-201-3344 or email dr.kim@example.com."
 ```
 
-When the mask function encounters a Pydantic model, it reads these annotations and replaces the values with placeholders (`<PII_REDACTED>`, `<PHI_REDACTED>`) — no named entity recognition (NER) needed. This is reliable even for short values like names where NER would struggle.
+<!-- TODO(verify): `orchestrate chat ask` is documented for the local Developer Edition; confirm it runs against the SaaS instance. The agent's chat preview in the Orchestrate UI is the fallback. -->
 
-**Layer 2: NER-based detection for free text.** For string fields that aren't annotated (message bodies, clinical notes, LLM reasoning), we use [Microsoft Presidio](https://github.com/microsoft/presidio) via LangChain's `PresidioAnonymizer`. Presidio combines:
+Open the new trace. You'll see:
 
-- **[spaCy](https://spacy.io/) NER**: identifies names, locations, and other contextual entities in natural language
-- **Regex patterns**: catches structured PII — SSNs, email addresses, phone numbers
-- **Custom recognizers**: we add one for insurance member IDs
+- A **control step** at `agent_pre_invoke` before the agent runs, reporting that PII was detected and redacted.
+- The LLM input with the phone number and email masked.
+- The `get_patient_record` tool output, still with the patient's phone, email and date of birth in full.
 
-```python
-from langchain_experimental.data_anonymizer import PresidioAnonymizer
+The control cleaned what the user typed. It didn't touch what the tool returned.
 
-_anonymizer = PresidioAnonymizer(
-    analyzed_fields=["PERSON", "EMAIL_ADDRESS", "PHONE_NUMBER", "US_SSN",
-                     "LOCATION", "DATE_TIME", "CREDIT_CARD", "URL"],
-    add_default_faker_operators=False,  # Use <TYPE> placeholders, not fake values
-)
+You can bind the same control at `tool_post_invoke` or `agent_post_invoke`. The CLI accepts it. In our tests no control step appeared in the trace at those hooks, and nothing was masked.
+
+To remove the control later:
+
+```bash
+orchestrate controls remove --name student0_pii_input
 ```
 
-### Why two layers?
+---
 
-NER is excellent at finding names embedded in paragraphs ("Dear Dr. Kim, I've been having trouble with..."). But it's unreliable on short strings — a field containing just `"Patricia Kowalski"` might not be confidently classified as a person name depending on context. By annotating the data model, we tell the masking layer *exactly* which fields are sensitive, and reserve NER for the free-text fields where it excels.
+## Step 4: Deploy the PII Masking Plug-in
 
-???+ question "Think about coverage"
-    Even with two layers, no PII detection is perfect. What happens if:
+Open `lab2/orchestrate/pii_output_plugin.py`. It's one function, `mask_pii_output`, marked as an `agent_post_invoke` plug-in. It runs regexes over the agent's final answer:
 
-    - A rare name isn't in spaCy's training data?
-    - A medical condition is so specific it effectively identifies the patient?
-    - The LLM paraphrases PII in a way that changes its surface form?
-    - A first name appears alone in the LLM's reasoning text?
+- email addresses become `[EMAIL]`
+- phone numbers become `[PHONE]`
+- insurance member IDs become `[MEMBER_ID]`
+- dates of birth become `[DOB]`, only when labelled ("DOB", "birth date"), so lab and visit dates stay as evidence
 
-    These are real production concerns. In a real healthcare deployment, you would layer additional defenses: dedicated PHI detection models, regular audits of your trace store, and potentially routing sensitive data through a **governed data platform** (like [IBM watsonx.data](https://www.ibm.com/products/watsonx-data)) that enforces data governance policies at the storage layer — so even if your masking pipeline misses something, the data store itself has controls.
+Redeploy your agent with the plug-in attached:
 
-    For this workshop, our two-layer approach demonstrates the pattern. Production systems need more.
+```bash
+uv run python -m lab1.agent.deploy --pii-plugin
+```
 
-### Enable masking
+This imports the plug-in under your prefix and adds it to the agent's `agent_post_invoke` hook. Deploying again without `--pii-plugin` removes it. As in Lab 1, give a fresh deploy a couple of minutes before you run it.
 
-Toggle the **PII Masking** button at the bottom of the UI to **ON**, then run the agent again for the same patient.
+Run the agent again from the inbox UI, on the same patient as Step 1. Then compare the new trace with the one from Step 1:
+
+- There's a new span for the plug-in, `mask_pii_output` (with your prefix), after the agent's last LLM call.
+
+<!-- TODO(verify): whether the span name in the trace carries the seat prefix. Our test deployed the plug-in without a prefix. -->
+
+- The answer that comes out of the plug-in has placeholders where the phone, email, member ID or labelled DOB were. If the agent didn't quote any of these in its concerns, there's nothing to mask. Ask for them with `orchestrate chat ask` (for example "include the patient's phone number in the summary") to see the difference.
+- The patient's **name** and **address** still appear wherever the agent wrote them. Regexes don't find names.
+- The `get_patient_record` tool span and the LLM calls still hold every value in full.
+
+The plug-in runs after the model has read the full record, so it can only clean the answer.
 
 ---
 
-## Step 6: Verify the Fix
+## Step 5: Minimize at the Source (Try It Yourself, Extra Credit)
 
-Go back to Langfuse at [http://localhost:3000](http://localhost:3000). Find the new trace (the most recent one).
+The input control and the output plug-in both leave the tool output in the trace. The only way to keep PHI out of the model and out of the trace is for the tool to return less.
 
-Expand the spans again. In the **tool call outputs**, you should see:
+`get_patient_record` returns demographics the agent never needs to find a concern: phone, email, address, member ID. The concerns are about labs, medications, messages and follow-ups.
 
-- `<PII_REDACTED>` where patient names, emails, and phone numbers used to be
-- `<PHI_REDACTED>` where dates of birth and insurance member IDs were
-- `<PERSON>`, `<PHONE_NUMBER>`, `<LOCATION>` where Presidio caught PII in free-text fields
+Try it yourself:
 
-The trace structure is preserved — you can still see which tools were called, in what order, how long each step took, and how many tokens were used. The clinical data (conditions, medications, lab values) is still visible because it's useful for debugging — only the identifying information is redacted.
+1. In `lab1/agent/tools.py`, change `get_patient_record` to drop the contact and insurance fields before it returns. The repository's data models already mark these fields with `_pii` and `_phi` in `app/models.py`. Use them as your list, but don't import `app.models`: `tools.py` is uploaded to Orchestrate on its own.
+2. Redeploy with `uv run python -m lab1.agent.deploy`.
+3. Run the agent on the same patient and open the trace. The tool span no longer holds those fields, so neither do the LLM calls or the answer.
+4. Check the concerns. Did the agent lose anything it needed?
 
-???+ tip "Compare the two traces"
-    With both the masked and unmasked traces in Langfuse, you can directly compare them. The unmasked trace is a cautionary tale; the masked one is the pattern you'd use in production.
-
-???+ warning "You may still see some names"
-    Look carefully at the LLM generation spans. You may see the patient's first name in the model's reasoning text — Presidio's NER doesn't always catch standalone first names. This is a known limitation of classical entity extraction. In a production system, you'd add additional defenses (see the "Think about coverage" callout above).
-
----
-
-## Step 7: Explore the Langfuse UI
-
-Now that you have traces (ideally both masked and unmasked), let's walk through what Langfuse reveals about your agent. This is where observability goes from "nice to have" to essential.
-
-### 7.1 Reading a trace
-
-Click into **Traces** in the left sidebar and open your most recent trace. The trace view shows a **nested timeline** of everything that happened during the agent run:
-
-- The **root span** covering the entire `process_patient` call
-- **LLM generation spans** for each reasoning step — with token counts (input + output) and latency
-- **Tool call spans** for each tool the agent invoked — with the full inputs and outputs
-- **Cost** calculated automatically from model and token counts
-
-Click on any span to see its details. This is the primary debugging interface — when something goes wrong in production, you trace the exact path the agent took.
-
-### 7.2 The sequence of agent calls
-
-Expand the trace and look at the **order** of spans. The ReAct loop is visible: the LLM reasons, decides to call a tool, receives the result, reasons again, calls another tool, and so on until it produces its final output.
-
-Pay attention to:
-
-- **How many LLM calls** the agent makes — each one is a decision point (and a cost)
-- **Which tools** get called and in what order — is the agent's strategy sensible?
-- **Whether the same tool** gets called multiple times — that might indicate confusion
-
-???+ question "Think about this"
-    Run the agent twice on the same patient and compare the traces. Does the agent call the same tools in the same order? If not, what does that tell you about the reliability of the agent's strategy?
-
-### 7.3 The implicit summary problem
-
-Look at the final LLM generation — the one that produces the structured concerns. Now compare it to the tool call outputs that preceded it.
-
-The agent is performing an **implicit summarization**: it reads the full patient record via tool calls, then synthesizes that into structured concerns. Every layer of summarization is an opportunity for:
-
-- **Hallucination**: the agent claims something that isn't in the data
-- **Omission**: the agent misses something clinically important
-- **Distortion**: the agent changes the meaning or severity of a finding
-
-This is visible in the traces. Compare what the tools returned (ground truth) with what the agent concluded (the concerns). You can spot discrepancies by eye — in Lab 3, we'll automate this.
-
-### 7.4 Too much data from simple tools
-
-Look at the **output** of the `get_patient_record` tool call. It returns the *entire* patient record — demographics, conditions, medications, labs, encounters, messages, everything — in a single blob.
-
-This creates two problems:
-
-1. **For the agent**: it has to reason over a huge context window. More data means more tokens, more cost, more latency, and more opportunities to get confused or hallucinate.
-2. **For tracing**: that entire patient record is now captured in your trace store. Even with masking, you're storing a lot of clinical data. In production, this has retention, compliance, and storage cost implications.
-
-???+ question "Think about tool design"
-    What if instead of one `get_patient_record` tool, you had separate tools for `get_demographics`, `get_conditions`, `get_medications`, `get_labs`, `get_messages`? The agent could request only what it needs. How would that change the traces? How would it change the cost? We'll revisit this in Lab 3.
-
-### 7.5 The invisible user message
-
-Click on the first LLM generation span and look at the **input messages**. You'll see a system prompt and a "user" message — something like *"Review the patient record for patient-001 and identify any concerns..."*
-
-But the doctor never wrote that message. The patient never wrote it either. It's a **synthetic prompt** constructed by the agent's `process_patient` function. The "conversation" between user and assistant is happening entirely behind the scenes.
-
-This is important to understand:
-
-- The doctor sees *concerns* in the UI — they never see this prompt
-- The prompt shapes everything the agent does — but it's invisible to the end user
-- If the prompt is poorly written or biased, the doctor has no way to know
-
-Traces make this visible — you can see the exact prompt in every trace.
-
-### 7.6 Datasets and annotations
-
-Langfuse has two built-in features for **human learning from agent behavior**:
-
-- **Add to Dataset**: on any trace or span, click "Add to dataset" to save it as a labeled example. Over time, you build a collection of real agent behaviors — good and bad — that you can use for evaluation, fine-tuning, or training new team members.
-
-- **Annotate**: add free-text notes or structured scores to any trace. When a clinician reviews the agent's output and spots a problem, they can annotate the trace with what went wrong. This creates a feedback loop from domain experts back to the engineering team.
-
-Neither of these requires any code changes — they're built into the Langfuse UI. The traces you're generating right now could become the foundation of your evaluation dataset.
-
-### 7.7 Scores and LLM-as-Judge (conceptual)
-
-Langfuse supports **scores** — numeric or categorical ratings attached to traces. You can assign scores manually (human evaluation) or programmatically (automated evaluation).
-
-One powerful pattern is **LLM-as-Judge**: use a second LLM to evaluate the first LLM's output. For example:
-
-- *"Does this concern have evidence in the patient record, or is it hallucinated?"*
-- *"Does the urgency level match the clinical severity?"*
-- *"Did the agent overstep by making a diagnosis instead of flagging a concern?"*
-
-We haven't implemented this yet — it's conceptual in this lab. But the traces you're capturing here are exactly the input you'd need. In Lab 3, we'll build evaluation checks that could feed scores back into Langfuse.
-
-### Cost tracking
-
-Langfuse automatically calculates cost based on the model and token counts. Look at the cost column — this tells you what each agent run costs. For a workshop with synthetic data this is small, but in production with 12 patients running multiple times per day, it adds up.
-
-???+ question "Think about cost"
-    If each patient review costs ~$0.10 in API calls, and you run the agent 3 times per day for 12 patients, that's $3.60/day or ~$100/month for a single practice. What if you have 100 practices? What if the agent re-runs unnecessarily because concerns aren't stable (a Lab 1 limitation)?
-
-    This is why cost tracking in traces matters — you need visibility before you can optimize.
-
-### Filtering and search
-
-Use the sidebar filters to search by:
-
-- **Tags**: find all traces for a specific patient (e.g., `patient-001`)
-- **Session**: group traces by patient review session
-- **Time range**: compare runs over time
+Lab 3 goes further: tools that search for one thing (a lab, a condition) instead of returning the whole record.
 
 ---
 
 ## What's Not Covered Here
 
-This lab focuses on **tracing** — capturing and inspecting individual agent runs. There are other observability signals we're not building today:
+**Cost.** Orchestrate traces show token counts per LLM call, not cost.
 
-**Structured logging** (operational monitoring): In production, you'd also emit structured log events for aggregate monitoring — "agent run completed," "error rate," "runs per hour." These feed into your existing ops stack (Datadog, Splunk, Grafana). This is part of the **Operate and Monitor** phase of the ADLC — the runtime optimization loop we discussed in the slides. It's closer to traditional software engineering than to agent-specific work, so we're focusing our time on the agent-specific parts.
+**Custom spans.** Tracing a hosted agent needs no code, and you can't add your own spans to it. Orchestrate has an Observability SDK and OpenTelemetry export for agents that run outside it ([Observability SDK](https://developer.watson-orchestrate.ibm.com/traces/observability-sdk.md)). We don't use them today.
 
-**Metrics and alerting**: p95 latency, token usage trends, error rates. Langfuse has some of this built in; for production you'd connect to your existing monitoring infrastructure.
+**Operational monitoring.** In production you'd also track runs per hour, error rates and latency trends in your existing monitoring stack. The Agent analytics page shows some of this per agent.
 
-**Evaluation**: Are the agent's concerns actually correct? That's Lab 3.
+**Evaluation.** Are the agent's concerns correct? That's Lab 3.
 
 ---
 
 ## What's Working
 
-Let's take stock of what we've added:
+**Every run is recorded.** Every LLM call and tool call is in the trace, with inputs, outputs, timing and token counts, and you wrote no code for it.
 
-**Full visibility into agent behavior.** Every LLM call, tool call, and decision step is captured with timing and token counts. When something goes wrong, you can trace the exact path the agent took.
+**Two masking layers you can see.** The PII Filter control masks what the user types. The plug-in masks identifiers in the answer. Each one shows up in the trace as its own step.
 
-**Two-layer PII/PHI masking.** Pydantic model annotations handle structured data (names, DOBs, contact info) reliably regardless of string length. Presidio NER catches PII embedded in free-text fields. Both run client-side before data leaves the process — the strongest guarantee available at this layer.
-
-**Cost attribution per run.** You can see exactly what each agent run costs and where the tokens are spent. This is essential for understanding whether your agent is economically viable.
+**You can say where the patient data went.** The EHR, the model's context, the trace store, the answer. For the trace store, you know who can read it and how long it's kept.
 
 ---
 
 ## What's Still Broken
 
-Observability lets us *see* the problems from Lab 1 more clearly, but it doesn't fix them:
+### The trace still holds the full record
 
-### The agent still hallucinates
+Neither masking layer touches the tool output. Until the tools return less, every run puts a patient record in the trace store, readable by the whole tenant for 30 days.
 
-With traces, you can now *see* when the agent fabricates evidence — compare the tool call outputs (what the data actually says) with the agent's final concerns (what it claims). But there's nothing in place to catch this automatically.
+### The agent still hallucinates and oversteps
 
-### Concerns are still unstable
+With the trace, you can compare what the tools returned with what the agent claimed, and see when it suggests a diagnosis. Nothing checks this automatically yet.
 
-Run the agent twice on the same patient and compare the traces. The agent may call different tools in different orders and produce different concerns. Traces make this visible, but they don't stabilize it.
+### The agent still investigates shallowly
 
-### The agent still oversteps
-
-Look at the structured output in the trace. Despite the system prompt saying "do not make clinical recommendations," you'll likely see the agent suggesting diagnoses or treatments. The trace makes this auditable — but not preventable.
+The trace shows how few tool calls the agent makes. Lab 3 adds checks for this.
 
 ---
 
 ## Up Next
 
-Now that you can see what the agent is doing, the next step is to make it do the right things more reliably.
-
 | Lab | Problem | Solution |
 |---|---|---|
 | ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
-| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
-| **[Lab 3](lab-3.md)** | Unstable output, hallucinations, overstepping | Evaluation: output validation, grounding checks, guardrails |
-| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
-
-???+ tip "Further reading"
-    For a deep dive into agent observability governance — data retention, compliance frameworks (HIPAA, GDPR, SOC 2), and the full tooling landscape — see `docs/agent-observability-governance-reference.md` in this repository.
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Orchestrate traces, PII controls and plug-ins~~ |
+| **[Lab 3](lab-3.md)** | Hallucinations, overstepping, shallow investigation | Evaluation: grounding checks, LLM-as-judge, critic |
+| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: where the data lives, who can read it, identity end to end |

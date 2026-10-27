@@ -2,16 +2,16 @@
 
 **Duration:** ~25 minutes
 
-???+ abstract "What You'll Improve"
-    The observable agent from Lab 2 has problems you can now see in the traces: it hallucinates evidence, goes off-task, and dumps the entire patient record into every run. In this lab you'll apply the improvement cycle — **identify** failure modes in traces, **reproduce** them, and **fix** them with targeted changes.
+???+ abstract "What You'll Do"
+    In Lab 2 you read your agent's traces. Some runs make one tool call and stop. Some concerns cite evidence you can't find in the tool output. Some suggest a diagnosis.
+
+    This lab covers how to check an agent's work: grounding checks, LLM-as-judge, a critic, and tools that return less. Most of it is explanation. The part you run is a set of three **judge agents** on Orchestrate that check your agent's concerns.
 
 ---
 
 ## Where We Are in the ADLC
 
-The AI Development Lifecycle (ADLC) from the slides describes five phases: **Problem Definition → Data Collection → Model Development → Deployment → Operations & Governance**. Agent-based systems add dimensions at every phase — tool access, autonomy level, memory, and observability.
-
-Lab 1 was **Model Development** — building the agent. Lab 2 was **Operations** — adding observability so you can see what the agent does. Lab 3 is the feedback loop between the two: use what you observe to improve what you build.
+Lab 1 built the agent. Lab 2 made it observable. Lab 3 uses what you observed to improve what you built:
 
 ```mermaid
 graph LR
@@ -21,7 +21,7 @@ graph LR
     D --> A
 ```
 
-This is the inner loop of the ADLC's Operations & Governance phase — monitor, detect issues, fix, redeploy. Lab 2 gave you the **inspect** step. Lab 3 gives you the **fix** step.
+This is the inner loop of the ADLC's Operations & Governance phase: monitor, find a problem, fix it, redeploy. Lab 2 gave you the **inspect** step. Lab 3 is about the **check** that comes before a fix: an automatic way to find the failures you were spotting by eye.
 
 ---
 
@@ -29,322 +29,184 @@ This is the inner loop of the ADLC's Operations & Governance phase — monitor, 
 
 By the end of this lab, you will:
 
-- [x] Know how to use Langfuse traces to identify concrete agent failures
-- [x] Replace dump-everything tools with keyword-based search tools
-- [x] Add a critic agent that evaluates the primary agent's output in a loop
-- [x] Implement hallucination detection using Granite Guardian
-- [x] Compare LLM-as-judge vs. purpose-built grounding models
+- [x] Name the failures an agent check has to catch: made-up evidence, going off-task, shallow investigation
+- [x] Explain claim extraction, grounding checks and LLM-as-judge
+- [x] Explain how a critic and a revision loop use those checks
+- [x] Run three judge agents on your agent's output and read their verdicts in Orchestrate
+- [x] Name the limits of this check: what it's grounded against, and the same model judging itself
 
 ---
 
-## What Lab 2 Revealed
+## What Lab 2 Showed
 
-If you haven't already, run the Lab 2 agent and look at the traces in Langfuse. You'll find three problems:
+Look back at your Lab 2 traces. Three kinds of problem show up.
 
-### Problem 1: The agent hallucinates evidence
+### The agent can make up evidence
 
-Compare the tool call outputs (what the data says) with the agent's concerns (what it claims). You'll find evidence strings that cite lab values, dates, or medication names that don't match what the tools returned. The agent is confidently stating facts that aren't in the record.
+Compare the tool output with the agent's concerns. An evidence string may cite a lab value, a date or a medication that isn't in what the tools returned. The agent states it with the same confidence as everything else.
 
-### Problem 2: The agent goes off-task
+### The agent can go off-task
 
-Despite the system prompt saying "do not make clinical recommendations," the agent suggests diagnoses, proposes treatments, or drafts replies to patient messages. It's doing the doctor's job instead of organizing what the doctor needs to see.
+The instructions say "do not make clinical recommendations." The agent may still suggest a diagnosis, propose a treatment, or draft a reply. Its job is to organize what the doctor needs to see.
 
-### Problem 3: Too much data, not enough focus
+### The agent investigates shallowly
 
-The `get_patient_record` tool dumps the **entire** patient record on every call — demographics, all conditions, all medications, all labs, all encounters, all messages. This wastes tokens, increases cost, and gives the agent more opportunities to hallucinate from irrelevant data.
-
-???+ note "What about prompt injection?"
-    You might wonder whether a patient could craft a portal message that hijacks the agent. In this system, that risk is **ameliorated by design**: the agent runs in the background, and its output goes to the **doctor** — not back to the patient. The patient never sees agent output, so there's no feedback loop to exploit. This is a deliberate architectural defense, not an accident. Security is about threat models, not checklists.
+Many runs make one call to `get_patient_record` and answer straight away. That tool returns the whole record in one block. The agent has no reason to look anything up, and every run puts the whole record in the model's context and in the trace.
 
 ---
 
-## Step 1: Focused Search Tools
+## How to Check an Agent's Work
 
-Open `lab2/agent/tools.py` and look at `get_patient_record`:
+### Claim extraction
 
-```python
-@tool
-def get_patient_record(patient_id: str) -> dict:
-    """Get a patient's full record: demographics, conditions, allergies,
-    medications, lab results, encounter history, messages, and social history."""
-    resp = requests.get(f"{API_URL}/patients/{patient_id}")
-    resp.raise_for_status()
-    return resp.json()
+A concern mixes specific facts ("TSH 4.8 mIU/L on 2026-04-01") with vague descriptions ("recent lab results"). A vague description passes any check, because it doesn't assert anything you can look up.
+
+So the first step pulls out every specific claim. A model reads the concern's summary, action and evidence, and returns a list of self-contained claims: "Patient's HbA1c is 8.2%", "TSH trending up from 3.1 to 4.8 over 6 months". Internal IDs are replaced with what they refer to. Vague references are dropped.
+
+The prompt is `_EXTRACT_PROMPT` in `lab3/agent/grounding.py`.
+
+### Grounding
+
+A **grounding check** takes each claim and the source data, and decides whether the source data supports the claim. The answer per claim is `supported: true` or `false`, with a reason.
+
+The source data should be what the agent actually saw: the tool output from its run. A claim that's true in the full record but wasn't in anything the tools returned means the agent guessed.
+
+### LLM-as-judge
+
+The simplest grounding check is another LLM call: give a model the source data and the claims, and ask it to judge. This is **LLM-as-judge**. The prompt is `_JUDGE_PROMPT` in `lab3/agent/grounding.py`.
+
+Its weakness is **self-evaluation bias**. If the judge is the same model as the agent, it has the same blind spots.
+
+A purpose-built judge avoids this. IBM's [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) is a separate model trained to detect risks, including groundedness: given a context and a claim, it answers whether the claim is supported. Granite Guardian isn't available in this edition of the workshop.
+
+### Why one claim at a time
+
+A grounding model that answers yes or no for a whole concern can't tell you which sentence is wrong. With one verdict per claim, you get "TSH 4.8 is supported, but 'patient reported dizziness' is not." That gives the next step something specific to act on.
+
+### The critic and the revision loop
+
+A **critic** reads the concerns and the grounding verdicts and decides, per concern: is it on task, is it grounded, does it need revision? It returns feedback and an overall `approved`. The prompt is `_CRITIC_PROMPT` in `lab3/agent/critic.py`.
+
+In a full loop, the feedback goes back to the agent, which revises its concerns, and the checks run again, up to a set number of rounds:
+
+```mermaid
+graph LR
+    A[Primary agent] --> B[Extract claims]
+    B --> C[Grounding check]
+    C --> D[Critic]
+    D -->|revisions needed| A
+    D -->|approved| E[Save results]
 ```
 
-This returns *everything*. The agent has no reason to think about what's relevant — it gets it all for free.
+The repository's `lab3/agent/` has this loop written in LangGraph. It isn't converted to Orchestrate for this edition, so you won't run the loop today. You'll run the three checks.
 
-Now open `lab3/agent/tools.py`. The dump-everything tool is gone, replaced by keyword-based search tools:
+### Focused tools
+
+Checks catch problems after the agent answers. Tool design prevents some of them.
+
+If `get_patient_record` returns everything, the agent doesn't have to decide what's relevant. Compare tools that search for one thing:
 
 ```python
 @tool
 def search_conditions(patient_id: str, keyword: str) -> list[dict]:
     """Search a patient's conditions by keyword (e.g., 'diabetes', 'hypertension')."""
-    resp = requests.get(f"{API_URL}/patients/{patient_id}/conditions",
-                        params={"q": keyword})
-    resp.raise_for_status()
-    return resp.json()
 ```
 
-The agent must now specify *what* it's looking for. This forces it to reason about relevance: "The patient mentioned fatigue — let me search for thyroid conditions and check TSH labs." Instead of drowning in data, the agent investigates.
+The agent has to say what it's looking for: "the patient mentioned fatigue, so search for thyroid conditions and TSH labs." Each call returns less data, so there's less in the model's context to misread and less patient data in the trace. This is the same "minimize at the source" layer from Lab 2.
 
-???+ question "Think about this"
-    If we'd replaced `get_patient_record` with `get_conditions`, `get_medications`, `get_labs` (no keywords), what would the agent do? It would call all of them and reconstruct the full record. Keywords force intentional investigation.
+If you split the record into `get_conditions`, `get_medications` and `get_labs` with no keyword, the agent would likely call all of them and rebuild the full record. The keyword is what forces it to choose.
 
-The search endpoints use a recursive keyword matcher — a keyword like "diabetes" finds matches in nested fields like `code.display`, `notes`, or `assessment`:
+`lab3/agent/tools.py` has keyword search tools written for LangGraph. Your Lab 1 agent already has one: `search_labs`.
 
-```python
-def _contains(obj, keyword: str) -> bool:
-    """Recursively check if keyword appears in any string value."""
-    if isinstance(obj, str):
-        return keyword in obj.lower()
-    if isinstance(obj, BaseModel):
-        return any(_contains(getattr(obj, f), keyword) for f in obj.model_fields)
-    if isinstance(obj, dict):
-        return any(_contains(v, keyword) for v in obj.values())
-    if isinstance(obj, (list, tuple)):
-        return any(_contains(item, keyword) for item in obj)
-    return False
-```
+### Prompt injection
 
-Small functions, clear responsibilities. The search helper doesn't know about patients or tools — it just knows how to walk a data structure.
+Patient portal messages are untrusted text, and they reach the agent through tool output. A message could include instructions aimed at the agent.
+
+In this system the agent's output goes to the doctor. The patient never sees it, so an attacker gets no feedback on what worked. That limits the risk but doesn't remove it: injected text could still change which concerns the doctor sees. As Lab 2 showed, no Orchestrate control inspects tool output for this agent. The checks in this lab help here too: a concern that isn't grounded in the record gets flagged whatever caused it.
 
 ---
 
-## Step 2: The Critic Loop
+## Run the Judge Agents
 
-Focused tools reduce noise, but the agent can still hallucinate and go off-task. We need something to **check its work**.
-
-The naive approach is to use the same LLM to evaluate its own output (LLM-as-judge). The problem: the LLM has the same biases and failure modes when judging as when generating. It's checking its own homework.
-
-Lab 3 addresses this with a **three-part evaluation loop**:
-
-1. **Claim extraction** — an LLM reads each concern and extracts specific, verifiable medical claims
-2. **Grounding check** — each extracted claim is verified against the raw tool output
-3. **Critic** — evaluates whether the agent stayed on task and the grounding results are acceptable
-
-All three run inside a loop with the primary agent:
-
-```mermaid
-graph LR
-    A[Primary Agent] --> B[Extract Claims]
-    B --> C[Grounding Check]
-    C --> D[Critic]
-    D -->|revisions needed| A
-    D -->|approved| E[Save Results]
-```
-
-### Claim extraction
-
-The agent's output contains a mix of specific facts ("TSH 4.8 mIU/L on 2026-04-01") and vague descriptions ("recent lab results"). A vague description will trivially pass any grounding check — you can't verify something that doesn't assert anything specific.
-
-Before grounding, an LLM reads each concern's summary, action, and evidence fields and extracts every specific medical claim that can actually be checked:
-
-```python
-@observe(name="Claim Extraction")
-def _extract_claims(title, summary, action, evidence) -> list[str]:
-    llm = get_chat_model().with_structured_output(ExtractedClaims)
-    return llm.invoke(_EXTRACT_PROMPT.format(...)).claims
-```
-
-The extraction prompt filters out internal IDs (like `msg-002-003`) and vague references — claims must be self-contained factual assertions that a grounding model can evaluate without looking anything up.
-
-### The grounding module
-
-Open `lab3/agent/grounding.py`. It takes the extracted claims and the tool output, and determines which claims are supported. Two implementations behind a toggle:
-
-```python
-# "llm" = LLM-as-judge (default), "guardian" = Granite Guardian via Ollama
-grounding_mode: str = "llm"
-```
-
-The **LLM-as-judge** path sends the claims and tool output to the configured LLM:
-
-```python
-@observe(name="Grounding: LLM-as-Judge")
-def _check_llm_judge(claims: list[str], context: str) -> list[ClaimVerdict]:
-    llm = get_chat_model().with_structured_output(...)
-    result = llm.invoke(_JUDGE_PROMPT.format(context=context, claims=...))
-    return result.verdicts
-```
-
-The **Granite Guardian** path uses a purpose-built model via Ollama. It uses Guardian's canonical message format — the system message selects the `groundedness` risk detector, and the user message provides the tool output as context and each claim to verify:
-
-```python
-@observe(name="Grounding: Granite Guardian")
-def _check_guardian(claims: list[str], context: str) -> list[ClaimVerdict]:
-    client = ollama.Client(host=OLLAMA_BASE_URL)
-    for claim in claims:
-        response = client.chat(model=GUARDIAN_MODEL, messages=[
-            {"role": "system", "content": "groundedness"},
-            {"role": "user", "content": f"Context: {context}\n\nClaim: {claim}"},
-        ])
-        # Guardian outputs Yes (risk = hallucination) or No (grounded)
-```
-
-Granite Guardian is a [separate model fine-tuned specifically for groundedness detection](https://www.ibm.com/granite/docs/models/guardian/). It avoids the self-evaluation problem — a different model with different training checks the work. See the [Granite Guardian cookbook](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks) for more usage examples.
-
-???+ question "Why not skip claim extraction and check the whole concern at once?"
-    Guardian evaluates **one claim** against **one context** and returns a binary Yes/No. It can't tell you *which part* of a multi-sentence concern is hallucinated. By extracting individual claims first, we get a verdict per assertion — "TSH 4.8" is grounded, but "patient reported dizziness" is not. The critic can then give targeted revision feedback.
-
-### The critic module
-
-Open `lab3/agent/critic.py`. The critic receives concerns plus grounding results and evaluates on-task behavior:
-
-```python
-def evaluate(concerns_json: str, grounding_results: list[GroundingResult]) -> CriticResult:
-    llm = get_chat_model().with_structured_output(CriticResult)
-    return llm.invoke(_CRITIC_PROMPT.format(
-        concerns=concerns_json,
-        grounding=grounding_json,
-    ))
-```
-
-The critic returns structured feedback per concern — what's wrong and how to fix it. If anything needs revision, the feedback goes back to the primary agent.
-
-### Wiring it together
-
-Open `lab3/agent/agent.py`. The loop is a LangGraph `StateGraph` — the same framework as the primary agent, now orchestrating the full review cycle:
-
-```python
-class ReviewState(TypedDict):
-    patient_id: str
-    concerns: PatientConcerns | None
-    tool_context: str
-    revision_feedback: str
-    revision_count: int
-    approved: bool
-
-graph = StateGraph(ReviewState)
-graph.add_node("primary_agent", primary_agent_node)
-graph.add_node("evaluate", grounding_node)
-
-graph.add_edge(START, "primary_agent")
-graph.add_edge("primary_agent", "evaluate")
-graph.add_conditional_edges("evaluate", should_revise, {
-    "revise": "primary_agent",
-    "done": END,
-})
-```
-
-The `primary_agent` node runs the ReAct agent. The `evaluate` node runs grounding checks and the critic. The conditional edge `should_revise` routes back to the primary agent if the critic requests revision, or to `END` if approved (or max revisions reached).
-
-State flows through the graph as a `ReviewState` dict — no manual variable juggling, no bookkeeping bugs. LangGraph handles the loop, the state threading, and the conditional routing.
-
-Each module has one job. The grounding module doesn't know about the critic. The critic doesn't know about tools. The graph wires them together. When you read one file, you understand one thing.
-
----
-
-## Step 3: Run the Improved Agent
-
-Start the system with the Lab 3 agent:
+Your Lab 1 agent should still be deployed. Run:
 
 ```bash
-# Terminal 1: Streamlit UI (auto-starts the EHR API)
-uv run streamlit run app/ui.py --server.port 8501
-
-# Terminal 2: Agent API (now using lab3)
-uv run uvicorn lab3.agent.api:app --port 8001
+cd ~/ai-agents-workshop
+uv run python scripts/check_structured_outputs.py --patients 3
 ```
 
-!!! warning "Leave grounding on LLM-as-judge"
-    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. Granite Guardian runs locally through Ollama, which isn't part of this edition's setup, so leave the **Grounding** toggle on LLM-as-judge. Switching it to Guardian mode makes the agent error.
+This takes a few minutes. The script:
 
-Select a patient and click **Run Agent**. The agent will take longer than Lab 2 — it's running the full loop (primary agent → grounding → critic → possibly revise).
+1. Runs your agent, `<prefix>lakeview_inbox_agent`, on `patient-001` to `patient-003`, the same way the inbox UI does.
+2. Creates (or updates) three small agents on Orchestrate, with no tools, under your prefix: `<prefix>claim_extractor`, `<prefix>grounding_judge` and `<prefix>critic`. Their instructions are the Lab 3 prompts above, plus the JSON format each one must reply in.
+3. For each patient, takes up to three of your agent's concerns and sends each one to the claim extractor, then sends the claims to the grounding judge.
+4. Sends all of the patient's concerns and the verdicts to the critic.
 
----
+All four agents use the same model, `gpt-oss-120b`.
 
-## Step 4: Read the Trace in Langfuse
+### What you'll see in the terminal
 
-Open Langfuse at [http://localhost:3000](http://localhost:3000) and find the new trace. Each component is a **named span** — a labeled block in the trace timeline that shows what ran, what it received, and what it produced.
+One line per step. Yours will have different titles, timings and counts:
 
-Here's what to look for, top to bottom:
+```
+Main agent: student0_lakeview_inbox_agent (3 patients x 1 round(s))
+  patient-001 r1: ok 21s, 1 tool calls, 4 concerns
+  ...
+Deployed judge agents: student0_claim_extractor, student0_grounding_judge, student0_critic
 
-### The "Patient Review" span (outermost)
+Grounding + critic on 3 patients (up to 3 concerns each)
+  extraction patient-001 Rising TSH with new tachy: ok 6s
+  judge      patient-001 Rising TSH with new tachy: ok 9s
+  ...
+  critic     patient-001: ok 12s
+```
 
-This is the full agent run. Expand it to see the three inner components.
+`ok` means the reply was valid JSON for that step's schema. `ok (retry)` means the first reply wasn't and one retry fixed it. `FAIL` means it was still invalid. The summary table at the end counts these per step.
 
-### The "Primary Agent" span
+The terminal shows whether each judge **answered in the right format**. It doesn't print what they decided. For that, open the traces.
 
-This is the LangGraph ReAct agent — the same structure as Lab 2, but now with **focused search tools**. Look at the tool calls:
+### What you'll see in Orchestrate
 
-- **What tools did it call?** You should see `search_conditions`, `search_labs`, `search_medications` — not `get_patient_record`.
-- **What keywords did it search for?** The agent had to decide what was relevant. Compare this to Lab 2, where it got everything at once.
-- **How many tokens?** Check the token count. Focused tools mean less data in context, lower cost.
+In **Analyze**, open each judge agent and look at its most recent traces, the same way you did in Lab 2.
 
-### The "Grounding Check" spans
+- **`<prefix>claim_extractor`**: the input is one concern. The output is a list of claims. Did it drop anything specific? Did it keep anything vague?
+- **`<prefix>grounding_judge`**: the input is the patient's record and the claims. The output is one verdict per claim, `supported` with a `reason`. Look for `supported: false`. Then check the record yourself: is the judge right?
+- **`<prefix>critic`**: the output has, per concern, `on_task`, `grounded`, `revision_needed` and `feedback`, plus an overall `approved` and `summary`. Did the critic flag the concerns you'd flag? Did it flag anything for suggesting a diagnosis?
 
-There's one **Grounding Check** span per concern. Expand it and you'll see two nested steps:
+???+ warning "Two limits of this check"
+    **It's grounded against the full record.** The script sends the judge the patient's whole EHR record (cut to 60,000 characters), not the tool output from your agent's run. A claim can be supported by the record even though your agent never fetched that data. This check catches claims that aren't true. It doesn't catch claims the agent made without looking.
 
-1. **Claim Extraction** — an LLM reads the concern's summary, action, and evidence fields and extracts every specific medical claim that can be verified: "Patient's HbA1c is 8.2%", "TSH trending from 3.1 to 4.8", etc. Vague descriptions like "recent message about X" get filtered out — they'd trivially pass any grounding check.
-
-2. **Grounding: LLM-as-Judge** or **Grounding: Granite Guardian** (depending on the active mode) — each extracted claim is verified against the raw tool output.
-
-Look inside:
-
-- **Input:** The extracted claims, plus the tool call results (the source of truth).
-- **Output:** A verdict per claim — `supported: true/false` with a reason.
-- **Did it catch anything?** If the agent hallucinated a lab value or date, you'll see `supported: false` here.
-
-### The "Critic Evaluation" span
-
-The critic sees the concerns plus grounding verdicts and decides: approve or revise?
-
-- **Input:** The full concerns JSON plus grounding results.
-- **Output:** Per-concern feedback (on-task? grounded? revision needed?) and an overall `approved: true/false`.
-- **If approved:** The loop ends here. One pass.
-- **If not approved:** Look for a second "Primary Agent" span — the agent re-ran with the critic's feedback injected into the prompt.
+    **The same model judges itself.** The agent and all three judges run on `gpt-oss-120b`. A mistake the model tends to make as the agent, it may also accept as the judge. A purpose-built judge such as Granite Guardian is one way around this. It isn't available in this edition.
 
 ???+ question "Things to notice"
-    1. How many revision rounds happened? Was the first attempt good enough, or did the critic catch something?
-    2. Look at the revision feedback — what did the critic flag? Compare the first and second "Primary Agent" outputs.
-    3. Check the grounding verdicts — are there evidence strings marked `supported: false`? Do they match real hallucinations when you compare against the tool output?
+    1. How many concerns had at least one `supported: false` claim? When you check them by hand, are they real mistakes?
+    2. Did the critic approve every patient? If it did, read its feedback. Is it checking anything, or agreeing?
+    3. Run it twice (`--rounds 2` re-runs your agent; the judges run on the first round). Do the verdicts change?
 
----
-
-## Step 5: Toggle Grounding Modes
-
-!!! warning "Granite Guardian requires Ollama, which this edition doesn't install"
-    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. Granite Guardian needs Ollama running locally with the model pulled, which isn't part of this edition's setup. **Don't toggle to Guardian mode**, or the agent will error.
-
-The **Grounding** button at the bottom of the UI toggles between `LLM` and `GUARDIAN` modes. This follows the same pattern as Lab 2's PII masking toggle — a runtime flag on the agent API:
-
-```python
-# In lab3/agent/api.py — same shape as the masking toggle
-@app.post("/grounding/toggle")
-def toggle_grounding():
-    import lab3.agent.grounding as g
-    g.grounding_mode = "llm" if g.grounding_mode == "guardian" else "guardian"
-    return {"mode": g.grounding_mode}
-```
-
-Try both modes on the same patient and compare the results in Langfuse. The key tradeoff:
-
-| | LLM-as-Judge | [Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) |
-|---|---|---|
-| **Model** | Same OpenAI model | [Purpose-built IBM model](https://github.com/ibm-granite/granite-guardian) |
-| **Self-evaluation bias** | Yes — checking its own work | No — separate model |
-| **Cost** | Uses your OpenAI API quota | Free (local via Ollama) |
-| **Latency** | Fast (API call) | Depends on hardware |
-| **Accuracy** | Good at reasoning, prone to bias | [Trained for this specific task](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b) |
+??? example "Extra credit"
+    - Read `_JUDGE_PROMPT` and `_CRITIC_PROMPT` in `lab3/`. Find an instruction the judge or critic didn't follow in your traces.
+    - In `scripts/check_structured_outputs.py`, find where the judge's source data is built (search for `SOURCE DATA`). What would you need from Lab 2's traces to ground against the tool output instead?
+    - Write down how you'd wire the critic's feedback back into your agent. Your Lab 1 `agent.py` already continues a conversation by `thread_id` when it retries a bad reply.
 
 ---
 
 ## What's Working
 
-Three targeted improvements, driven by what we found in the traces:
+**Each check is a small agent with one job.** The extractor, the judge and the critic each have one prompt and one output schema. You can read each one's input and output in its own trace.
 
-**Focused tools reduce noise.** The agent investigates instead of dumping. Traces show fewer tokens per run, lower cost, and more intentional tool selection. PHI exposure in traces drops because the agent only sees data it asked for.
+**Verdicts are per claim.** When the judge rejects something, you know which fact it rejected and why.
 
-**The critic loop catches problems.** Hallucinated evidence and off-task behavior get flagged and revised. You can see the revision feedback in the traces — the agent's second attempt is typically better than its first.
-
-**Granite Guardian provides independent grounding.** A separate model checking the agent's evidence avoids the self-evaluation problem. You can compare both approaches in the traces — each is a named span ("Grounding: LLM-as-Judge" vs. "Grounding: Granite Guardian") so you can see exactly what each one did.
+**The checks use structured output.** Every verdict is validated against a schema, so a program can act on it: count failures, route a concern back for revision, or hold it from the inbox.
 
 ---
 
 ## What's Still Broken
 
-The agent is more reliable, but it still has unrestricted access to all patient data. Any tool can fetch any patient's records — there are no access controls, no scoping, no audit trail for who accessed what.
+**The loop isn't closed.** The critic's feedback doesn't go back to your agent. Nothing gets revised.
+
+**The check is weaker than it looks.** It grounds against the full record, and the same model judges its own kind of output.
+
+**The agent still has unrestricted access.** Any tool can fetch any patient's record. There's no record of who asked for what, and no identity attached to the request. That's Lab 4.
 
 ---
 
@@ -353,6 +215,6 @@ The agent is more reliable, but it still has unrestricted access to all patient 
 | Lab | Problem | Solution |
 |---|---|---|
 | ~~[Lab 1](lab-1.md)~~ | ~~No structure, no tools, just vibes~~ | ~~A ReAct agent with structured output~~ |
-| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Observability: Langfuse tracing, PII masking, cost tracking~~ |
-| ~~[Lab 3](lab-3.md)~~ | ~~Unstable output, hallucinations, overstepping~~ | ~~Evaluation: focused tools, critic loop, grounding checks~~ |
-| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: scoped tools, access controls, audit trails |
+| ~~[Lab 2](lab-2.md)~~ | ~~No visibility into agent behavior~~ | ~~Orchestrate traces, PII controls and plug-ins~~ |
+| ~~[Lab 3](lab-3.md)~~ | ~~Hallucinations, overstepping, shallow investigation~~ | ~~Evaluation: grounding checks, LLM-as-judge, critic~~ |
+| **[Lab 4](lab-4.md)** | Unrestricted data access | Security: where the data lives, who can read it, identity end to end |
