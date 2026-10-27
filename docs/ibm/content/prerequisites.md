@@ -64,7 +64,7 @@ Complete these steps **before the workshop** to make sure your environment is re
 ## 2. Clone and Install
 
 ```bash
-git clone https://github.com/obuzek/ai-agents-workshop.git
+git clone --branch txc-2026-ibm --single-branch https://github.com/obuzek/ai-agents-workshop.git
 cd ai-agents-workshop
 uv sync
 ```
