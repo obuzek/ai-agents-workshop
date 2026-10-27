@@ -223,3 +223,12 @@ def test_model_access_refused_after_expiry(monkeypatch):
     client = _info_client(monkeypatch, "2000-01-01T00:00:00Z")
     assert client.get("/workshop/model-access").status_code == 400
     monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")
+
+
+def test_seats_served_before_expiry_and_refused_after(monkeypatch):
+    monkeypatch.setenv("WORKSHOP_SEATS", '[{"username": "seat01@example.test", "password": "pw-1"}, {"bad": 1}]')
+    client = _info_client(monkeypatch, "2099-01-01T00:00:00Z")
+    assert client.get("/workshop/seats").json() == {"seats": [{"username": "seat01@example.test", "password": "pw-1"}]}
+    client = _info_client(monkeypatch, "2000-01-01T00:00:00Z")
+    assert client.get("/workshop/seats").status_code == 400
+    monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")

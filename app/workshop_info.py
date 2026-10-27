@@ -9,8 +9,10 @@ Environment (server mode only):
     BOB_ACCESS_URL, BOB_ACCESS_CODE   the values to show
     WORKSHOP_INFO_EXPIRES             ISO 8601 timestamp, e.g. 2026-10-28T04:00:00Z
     WORKSHOP_INFO_ORIGINS             comma-separated origins allowed to read it (CORS)
+    WORKSHOP_SEATS                    JSON list of {"username", "password"} seat logins (/seats)
 """
 
+import json
 import os
 from datetime import datetime, timezone
 
@@ -63,3 +65,21 @@ def model_access(request: Request):
         "custom_host": f"{base}/llm/anthropic/v1",
         "api_key": token,
     }, headers={"Cache-Control": "no-store"})
+
+
+@router.get("/seats")
+def seats(request: Request):
+    """Workshop seat logins for IBM Cloud, shown on the docs' IBM Cloud login page.
+
+    WORKSHOP_SEATS is a JSON list of {"username": ..., "password": ...}. Like
+    /bob-access, it stops answering after WORKSHOP_INFO_EXPIRES.
+    """
+    try:
+        rows = json.loads(os.environ.get("WORKSHOP_SEATS", "[]"))
+    except ValueError:
+        rows = []
+    rows = [{"username": r["username"], "password": r["password"]}
+            for r in rows if isinstance(r, dict) and r.get("username") and r.get("password")]
+    if not rows or _expired():
+        return JSONResponse(status_code=400, content={"detail": "Not available"}, headers=_cors(request))
+    return JSONResponse(content={"seats": rows}, headers=_cors(request))
