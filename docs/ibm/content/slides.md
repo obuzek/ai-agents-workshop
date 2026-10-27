@@ -88,6 +88,27 @@ Sources (IBM's own descriptions):
 
 ---
 
+<!-- .slide: id="which-model" -->
+
+## Which model?
+
+Today's agent runs on **Claude Sonnet 5.5**. It's a high-end model at a reasonable cost.
+
+- In Orchestrate it's `virtual-model/anthropic/claude-sonnet-5-5`, reached through Orchestrate's model gateway.
+- Orchestrate can be set up with many model backends: watsonx.ai, Anthropic, OpenAI, AWS Bedrock, Ollama and others.
+- Through watsonx.ai you can choose open-weights models, or deploy your own. That's one way to run on-prem.
+
+Note: We're using Claude Sonnet 5.5 today because it's a strong model at a reasonable price. We tried the free gpt-oss-120b first. It often stopped after one look at the patient record, so it missed things.
+
+You're not locked into one model. Orchestrate's model gateway can talk to a long list of providers. If your data can't leave your building, watsonx.ai has open-weights models, and you can deploy your own model there.
+
+Sources:
+- Providers Orchestrate supports for models: https://developer.watson-orchestrate.ibm.com/llm/managing_llm.md
+- watsonx.ai models: https://www.ibm.com/products/watsonx-ai
+- Deploying your own model in watsonx.ai: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
+
+---
+
 <!-- .slide: id="todays-modules" -->
 
 ## Today's modules
@@ -575,7 +596,7 @@ The ReAct loop (observe, reason, act, repeat) needs something to run it. On wats
 kind: native
 name: lakeview_inbox_agent
 style: react_core
-llm: groq/openai/gpt-oss-120b
+llm: virtual-model/anthropic/claude-sonnet-5-5
 instructions: |
   You are a clinical inbox assistant ...
 tools:
@@ -657,7 +678,7 @@ Here, the agent is this YAML file: instructions, a model, and a list of tools. O
 <rect class="node accent" x="444" y="52" width="392" height="120"/>
 <text class="b on-accent" x="464" y="84">Agent: ReAct loop + LLM</text>
 <text class="on-accent" x="464" y="112">studentN_lakeview_inbox_agent</text>
-<text class="on-accent" x="464" y="140" opacity="0.85">gpt-oss-120b from the model catalog</text>
+<text class="on-accent" x="464" y="140" opacity="0.85">Claude Sonnet 5.5 through the model gateway</text>
 <rect class="node" x="476" y="236" width="138" height="100"/>
 <text class="b" x="490" y="268">Connections</text>
 <text x="490" y="296">base URL,</text>
@@ -695,7 +716,7 @@ Here, the agent is this YAML file: instructions, a model, and a list of tools. O
 
 Note: Here's what lives where. On your machine, agent.yaml is the agent definition, tools.py has the tools, and connection.yaml sets up the connection to the EHR. deploy.py adds your seat prefix and imports all three into Orchestrate. agent.py starts a run and checks the JSON that comes back.
 
-In Orchestrate, the agent runs the loop with gpt-oss-120b. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
+In Orchestrate, the agent runs the loop with Claude Sonnet 5.5. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
 
 ---
 
@@ -732,7 +753,7 @@ For a background agent with no human watching, this isn't a nice-to-have. If the
 
 Quick test: `uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges`
 
-Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers.
+Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent on gpt-oss-120b, the model we started with, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers for today's model.
 
 There are signs constrained outputs may come back to the mainstream: [Jev](https://opentweet.io/jev/vs-openai-structured-outputs)
 
@@ -840,7 +861,7 @@ Note: This is data provenance. Before you put an agent in front of real patient 
 <rect class="node fill" x="380" y="2" width="580" height="96"/>
 <text class="b" x="400" y="32">Model gateway <tspan class="muted" font-weight="400">(public preview)</tspan></text>
 <text x="400" y="58">model policies: fallback · load-balance · retry</text>
-<text x="400" y="84">gpt-oss-120b on groq or bedrock · granite · …</text>
+<text x="400" y="84">to Claude Sonnet 5.5 through the workshop proxy · granite · …</text>
 <text class="muted" x="940" y="32" text-anchor="end">for reliability</text>
 <!-- legend -->
 <text class="ok" x="0" y="32">✓ worked in our tests</text>
@@ -1066,7 +1087,7 @@ Note: These three are prompts plus a schema, deployed as agents with no tools. Y
 
 ## Lab 3: Who Checks the Checker?
 
-Our judges run on the same model as the agent: gpt-oss-120b. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
+Our judges run on the same model as the agent: Claude Sonnet 5.5. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
 
 Ways to reduce it:
 
@@ -1175,6 +1196,188 @@ Note: Patient Elena Vasquez's message mentions her neighbor, Patricia Kowalski. 
 - Traces get the same treatment: limit who can read them, minimize what goes in, and set how long they're kept
 - Credentials live in the platform's connections or a secrets manager, not in `.env`
 - Each team gets its own Orchestrate instance and only the roles it needs
+
+---
+
+<!-- .slide: id="further-lifecycle" -->
+
+## Going further on watsonx
+
+<style>
+.reveal .further { font-size: 0.95em; line-height: 1.35; }
+.reveal .further.detail { font-size: 0.9em; }
+.reveal .further .ok { color: #4589ff; font-weight: 600; }
+.reveal .further .unt { color: #8d8d8d; font-weight: 600; }
+.reveal .further .cols { display: flex; gap: 28px; }
+.reveal .further .col { flex: 1; min-width: 0; border-top: 4px solid #0f62fe; padding-top: 0.5em; }
+.reveal .further .step { margin: 0; font-weight: 600; font-size: 1.3em; }
+.reveal .further .q { margin: 0.15em 0 0.3em; font-style: italic; }
+.reveal .further .prod { margin: 0 0 0.7em; opacity: 0.7; font-size: 0.85em; }
+.reveal .further ul { list-style: none; margin: 0 !important; padding: 0 !important; display: block; }
+.reveal .further li { list-style: none; margin: 0 0 0.5em !important; padding-left: 1.2em; text-indent: -1.2em; }
+.reveal .further li::marker { content: none; }
+.reveal .further .legend { margin: 1.4em 0 0; font-size: 0.85em; }
+.reveal .further code { font-size: 0.9em; }
+</style>
+
+<div class="further">
+<div class="cols">
+<div class="col">
+<p class="step">1. Document it</p>
+<p class="q">Can you show an auditor what this agent is for?</p>
+<p class="prod">watsonx.governance</p>
+<ul>
+<li><span class="unt">?</span> AI use case and factsheets</li>
+<li><span class="unt">?</span> AI Risk Atlas</li>
+</ul>
+</div>
+<div class="col">
+<p class="step">2. Test it</p>
+<p class="q">Does it still behave after a change?</p>
+<p class="prod">Orchestrate, watsonx.governance</p>
+<ul>
+<li><span class="ok">✓</span> Judge agents (Lab 3)</li>
+<li><span class="unt">?</span> Evaluations and rubrics</li>
+<li><span class="unt">?</span> Red-teaming</li>
+<li><span class="unt">?</span> Governance metrics SDK</li>
+</ul>
+</div>
+<div class="col">
+<p class="step">3. Constrain it</p>
+<p class="q">What can it never do?</p>
+<p class="prod">Orchestrate</p>
+<ul>
+<li><span class="ok">✓</span> PII Filter control</li>
+<li><span class="ok">✓</span> Plug-ins</li>
+<li><span class="unt">?</span> Content Guardrails</li>
+<li><span class="unt">?</span> Context variables for identity</li>
+<li><span class="unt">?</span> Collaborator agents, workspaces</li>
+</ul>
+</div>
+<div class="col">
+<p class="step">4. Watch it</p>
+<p class="q">What is it doing once it's live?</p>
+<p class="prod">Orchestrate, watsonx.governance, watsonx.ai</p>
+<ul>
+<li><span class="ok">✓</span> Traces</li>
+<li><span class="unt">?</span> Agent monitoring</li>
+<li><span class="unt">?</span> Model choice in watsonx.ai Studio</li>
+</ul>
+</div>
+</div>
+<p class="legend"><span class="ok">✓ tested today</span> &nbsp;&nbsp; <span class="unt">? documented by IBM, not tested here</span></p>
+</div>
+
+Note: Today you built one agent and put some checks around it. If you take an agent like this toward production in a regulated setting, here's how I'd organize the rest of the work: document it, test it, constrain it, watch it.
+
+The checkmarks are things we ran today. The question marks are in IBM's documentation, and I haven't tested them for this workshop. The next two slides go through each one.
+
+---
+
+<!-- .slide: id="further-document-test" -->
+
+## Document it, test it
+
+<div class="further detail">
+<div class="cols">
+<div class="col">
+<p class="step">Document it</p>
+<p class="prod">watsonx.governance</p>
+<ul>
+<li><span class="unt">?</span> <strong>AI use case:</strong> one entry per AI system. It tracks the system's assets through the lifecycle, with a risk level and approval steps.</li>
+<li><span class="unt">?</span> <strong>Factsheets:</strong> the record for each model and prompt template, including its history and evaluation results.</li>
+<li><span class="unt">?</span> <strong>AI Risk Atlas:</strong> IBM's list of AI risks. The agentic section includes "Sharing IP/PI/confidential information with tools" and "Function calling hallucination".</li>
+</ul>
+</div>
+<div class="col">
+<p class="step">Test it</p>
+<p class="prod">Orchestrate, watsonx.governance</p>
+<ul>
+<li><span class="ok">✓</span> <strong>Judge agents:</strong> Lab 3's claim extractor, grounding judge and critic, each an Orchestrate agent.</li>
+<li><span class="unt">?</span> <code>orchestrate evaluations evaluate</code>: run test cases, check the tool calls and their order.</li>
+<li><span class="unt">?</span> <code>quick-eval</code>: no ground truth needed. Flags schema mismatches and calls to the wrong tool.</li>
+<li><span class="unt">?</span> <strong>Rubric evaluations:</strong> an LLM grades each answer against your criteria, such as "no hallucination".</li>
+<li><span class="unt">?</span> <code>orchestrate evaluations red-teaming</code>: 15 built-in attacks, mapped to the OWASP Top 10 for LLMs.</li>
+<li><span class="unt">?</span> <code>ibm-watsonx-gov</code> SDK: faithfulness, answer relevance, tool call accuracy, PII, HAP.</li>
+</ul>
+</div>
+</div>
+<p class="legend"><span class="ok">✓ tested today</span> &nbsp;&nbsp; <span class="unt">? documented by IBM, not tested here</span></p>
+</div>
+
+Note: Document it. In watsonx.governance, an AI use case is the entry for one AI system. It holds what the system is for, its risk level, and the assets behind it, and it can go through approval steps. Factsheets are the detailed record for each model and prompt template. This is what an auditor asks for. I haven't checked how an Orchestrate agent shows up in a use case, so try it before you count on it.
+
+The AI Risk Atlas is IBM's list of AI risks. It has a section for agents. Two entries describe our agent: sharing personal information with tools, and function calling hallucination. You can use it to name your risks with the same words everyone else uses.
+
+Test it. The judge agents from Lab 3 are the part we ran. Orchestrate also has an evaluation command. evaluate runs test cases and checks that the agent called the right tools in the right order. quick-eval doesn't need expected answers. It looks for schema mismatches and calls to the wrong tool. Rubric evaluations use an LLM to grade answers against criteria you write. On a hosted instance these run against the draft version of the agent.
+
+Red-teaming runs 15 built-in attacks against your agent, and each one is mapped to the OWASP Top 10 for LLMs. These attacks come in as user input. In our agent, the injection risk is in patient messages, which arrive as tool output, so you'd still need your own tests for that.
+
+The watsonx.governance SDK, ibm-watsonx-gov, has metrics like faithfulness, answer relevance, tool call accuracy, PII and HAP. From our seats it returned a permissions error, so I haven't run it here.
+
+Sources:
+- AI use cases: https://ibm.com/docs/en/SSLSRPV_latest/wsj/analyze-data/xgov-use-cases.html and https://www.ibm.com/docs/SSYOK8/wsj/getting-started/use-case-watsonx-gov.html
+- AI Risk Atlas: https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas
+- Evaluations: https://developer.watson-orchestrate.ibm.com/evaluate/overview.md
+- quick-eval: https://developer.watson-orchestrate.ibm.com/evaluate/quick_eval.md
+- Rubric evaluations: https://developer.watson-orchestrate.ibm.com/evaluate/rubric.md
+- Red-teaming: https://developer.watson-orchestrate.ibm.com/evaluate/llm_vulnerability.md
+- ibm-watsonx-gov metrics: https://ibm.github.io/ibm-watsonx-gov/ and https://jp-tok.dataplatform.cloud.ibm.com/docs/content/wsj/model/wxgov-agentic-ai-evaluation-sdk.html?context=wx
+
+---
+
+<!-- .slide: id="further-constrain-watch" -->
+
+## Constrain it, watch it
+
+<div class="further detail">
+<div class="cols">
+<div class="col">
+<p class="step">Constrain it</p>
+<p class="prod">Orchestrate</p>
+<ul>
+<li><span class="ok">✓</span> <strong>PII Filter control:</strong> masks PII the user types. User input only.</li>
+<li><span class="ok">✓</span> <strong>Plug-ins:</strong> your Python code before or after the agent.</li>
+<li><span class="unt">?</span> <strong>Content Guardrails control:</strong> jailbreak, HAP, harm, social bias and more. It's on our instance.</li>
+<li><span class="unt">?</span> <strong>Context variables:</strong> your app passes in the clinician's identity, and the runtime fills it into the tool. The LLM never picks it.</li>
+<li><span class="unt">?</span> <strong>Collaborator agents:</strong> the inbox agent calls a critic agent itself.</li>
+<li><span class="unt">?</span> <strong>Workspaces:</strong> agents, tools and connections only a team's members can see.</li>
+</ul>
+</div>
+<div class="col">
+<p class="step">Watch it</p>
+<p class="prod">Orchestrate, watsonx.governance, watsonx.ai</p>
+<ul>
+<li><span class="ok">✓</span> <strong>Traces:</strong> every LLM call and tool call. Treat them as PHI.</li>
+<li><span class="unt">?</span> <strong>Agent monitoring:</strong> success rate, response time and tokens for agents deployed to production. Built on watsonx.governance.</li>
+<li><span class="unt">?</span> <strong>Model choice:</strong> watsonx.ai Studio has IBM and open-weights models, and you can deploy your own. Prompt Lab runs the same prompt on any of them.</li>
+</ul>
+<p style="margin:1em 0 0">The model you pick changes how well the agent investigates. Check again every time you change it.</p>
+</div>
+</div>
+<p class="legend"><span class="ok">✓ tested today</span> &nbsp;&nbsp; <span class="unt">? documented by IBM, not tested here</span></p>
+</div>
+
+Note: Constrain it. The PII Filter control and the plug-in are what we ran in Lab 2. The filter only sees what the user types. The Content Guardrails control is on our instance and covers jailbreak, hate, abuse and profanity, harm, and social bias, among others. I haven't tested it.
+
+Context variables are how I'd fix the identity problem from Lab 4. Your app passes the clinician's identity into the run. A Python tool can take it as an argument, and the runtime fills it in, so the model never chooses it. If the identity comes in the signed token, neither a tool nor the API call can overwrite it.
+
+Collaborator agents let one agent call another. The inbox agent could call the critic itself, instead of our code calling it. That's less predictable than our loop, so test it. Workspaces keep a team's agents, tools and connections visible only to that team. We couldn't turn them on in the workshop account.
+
+Watch it. Traces are what we used all day, and they hold patient data. Agent monitoring gives you a dashboard for agents deployed to production: success rate, response time, tokens. IBM says it's powered by watsonx.governance.
+
+Last, the model. The free gpt-oss-120b we tried first often stopped after one look at the record, so it missed things. That's part of why we're on Claude Sonnet 5.5 today. watsonx.ai Studio has a big catalog, including open-weights models, and you can deploy your own. In Prompt Lab you can run the same prompt on different models and look at the answers. Whenever you change the model, run your tests again.
+
+Sources:
+- Controls: https://developer.watson-orchestrate.ibm.com/controls/managing_controls.md
+- Plug-ins: https://developer.watson-orchestrate.ibm.com/plugins/plugins.md
+- Context variables: https://developer.watson-orchestrate.ibm.com/conversation/context_variables.md
+- Collaborators: https://developer.watson-orchestrate.ibm.com/agents/build_agent.md
+- Workspaces: https://developer.watson-orchestrate.ibm.com/workspaces/overview.md
+- Traces: https://developer.watson-orchestrate.ibm.com/traces/overview.md
+- Agent monitoring: https://www.ibm.com/new/announcements/now-ga-monitor-agents-in-runtime-in-watsonx-orchestrate
+- watsonx.ai models: https://www.ibm.com/products/watsonx-ai · Custom models: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
+- Prompt Lab: https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-prompt-lab.html?context=wx
 
 ---
 
