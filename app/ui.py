@@ -519,7 +519,7 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
     # Display concerns sorted by urgency
     urgency_order = {"urgent": 0, "soon": 1, "routine": 2}
     badge_colors = {"urgent": "red", "soon": "orange", "routine": "blue"}
-    status_badges = {"unresolved": ":orange-background[needs reply]",
+    status_badges = {"unresolved": ":orange-background[open]",
                      "monitoring": ":blue-background[monitoring]",
                      "resolved": ":green-background[resolved]"}
     if concerns:
