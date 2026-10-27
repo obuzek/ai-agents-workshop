@@ -46,40 +46,28 @@ revealjs:
 
 ## The agentic interface
 
-How the doctor meets the agent is a design decision.
+Where people and an agent meet. Every agent has one, and each choice changes what can go wrong.
 
-<div style="display:flex;gap:2em;margin-top:0.8em">
-<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.4em">
-<h3 style="margin:0 0 0.3em">A chat interface</h3>
-<ul style="font-size:1.15em">
-<li>The doctor types, the agent answers</li>
-<li>Anyone can ask it for anything: a reply, a diagnosis</li>
-<li>The answer is free text</li>
-<li>One more screen for the doctor to check</li>
-</ul>
-</div>
-<div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.4em">
-<h3 style="margin:0 0 0.3em">The interface we're building</h3>
-<ul style="font-size:1.15em">
-<li>A new patient message starts the agent</li>
-<li>It adds concerns to the doctor's inbox in the EHR</li>
-<li>Every concern has the same fields: a contract</li>
-<li>The doctor reads, decides and replies</li>
-</ul>
-</div>
-</div>
+<table style="font-size:0.75em;margin-top:0.6em">
+<tr><th style="text-align:left">Design question</th><th style="text-align:left">One end</th><th style="text-align:left">The other end</th></tr>
+<tr><td>Who starts it?</td><td>A person asks</td><td>An event or a schedule</td></tr>
+<tr><td>What can it do?</td><td>Read and suggest</td><td>Act on its own</td></tr>
+<tr><td>What comes back?</td><td>Free text</td><td>A structured result with fixed fields</td></tr>
+<tr><td>Where does it land?</td><td>A new chat window</td><td>The tools people already use</td></tr>
+<tr><td>Who decides?</td><td>The agent</td><td>The person</td></tr>
+</table>
 
-<p style="margin-top:1.4em">Labs 2–4 trace, check and secure that contract.</p>
+<p style="margin-top:1em">Today: a background agent that reads, suggests and files structured concerns. The doctor decides.</p>
 
-Note: Before the details: what are we building today?
+Note: Before the details: what is an agentic interface?
 
-Most agents people have used are chatbots. You type, it answers.
+It's wherever people and an agent meet. A chat box is one kind. It's not the only kind.
 
-Our agent has no chat box. New patient messages start it, and it puts concerns into the inbox the doctor already uses, in the EHR.
+Each row is a choice you make when you design one. Who kicks it off. What it's allowed to do. What shape its answer takes. Where that answer shows up. And who has the final say.
 
-The doctor stays the expert. The agent summarizes and points at things. The doctor decides what to do.
+Those choices decide your risks. A chatbot anyone can type into has a very different attack surface from a background agent that writes into a fixed format.
 
-Every concern has the same structure. That's what we trace, check and secure in the later labs.
+Today we sit toward the right-hand column on most rows, and the doctor makes the call.
 
 ---
 
