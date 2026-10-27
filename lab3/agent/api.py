@@ -36,6 +36,22 @@ async def lifespan(app):
 
 app = FastAPI(title="Lab 3 Agent API", version="0.1.0", lifespan=lifespan)
 
+# --- Lab identity ---
+# The inbox UI is shared by every lab. It asks which lab's service this is
+# and calls only the optional endpoints named here, so it doesn't fill this
+# terminal with 404s probing for features from later labs.
+#   masking   GET /masking, POST /masking/toggle
+#   grounding GET /grounding, POST /grounding/toggle
+#   roles     GET /providers, GET|POST /role, GET /role/patients
+#   sharing   POST .../concerns/{id}/share, GET .../concerns/{id}/shared-by
+
+
+@app.get("/lab")
+def lab_info():
+    """Name this lab and the optional features this service serves."""
+    return {"lab": 3, "features": ["masking", "grounding"]}
+
+
 _run_lock = threading.Lock()
 _run_error: str | None = None
 

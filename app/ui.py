@@ -197,6 +197,28 @@ def get_agent_status() -> dict:
         return {"running": False, "last_run": "", "error": AGENT_UNAVAILABLE}
 
 
+def get_agent_lab() -> dict | None:
+    """Ask the agent service which lab it is and which optional features it serves.
+
+    Returns {"lab": N, "features": [...]}, or None if the service is down or
+    predates GET /lab. None means "can't tell", so callers probe every feature.
+    """
+    try:
+        resp = requests.get(f"{AGENT_API_URL}/lab", timeout=3)
+        resp.raise_for_status()
+        data = resp.json()
+    except (requests.RequestException, ValueError):
+        return None
+    if isinstance(data, dict) and isinstance(data.get("features"), list):
+        return data
+    return None
+
+
+def agent_serves(agent_lab: dict | None, feature: str) -> bool:
+    """True if the agent service lists the feature, or can't say what it serves."""
+    return agent_lab is None or feature in agent_lab["features"]
+
+
 def get_masking_status() -> bool | None:
     """Check whether PII masking is enabled on the agent. Returns None if agent is unavailable."""
     try:
@@ -452,8 +474,11 @@ def _related_row(text: str, button_key: str, **session_updates):
 
 
 @st.fragment
-def render_concerns(patient_id: str, messages: list[Message] = None):
+def render_concerns(patient_id: str, messages: list[Message] = None, agent_lab: dict | None = None):
     """Render the concerns panel (populated by the agent).
+
+    agent_lab is the agent service's GET /lab answer; later-lab features
+    (roles, sharing) are only asked for when the service lists them.
 
     This is a Streamlit fragment — it can rerun independently without
     rerunning the whole page. This lets the agent status poll without
@@ -483,6 +508,9 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                 trigger_agent(patient_id)
                 st.session_state["agent_just_triggered"] = True
                 st.rerun(scope="fragment")
+        # Say which lab's agent is answering, so a student on the wrong one notices.
+        if agent_lab and agent_lab.get("lab"):
+            st.caption(f"Agent: Lab {agent_lab['lab']}")
     # Show what happened for *this* patient, not the last run of any patient.
     run = (status.get("patients") or {}).get(patient_id)
     with col_status:
@@ -527,9 +555,10 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
         msg_subjects = {m.id: m.subject for m in messages} if messages else {}
 
         # Pre-fetch shared-by info and provider list once, not per concern
-        shared_by_map = {c.id: get_concern_shared_by(patient_id, c.id) for c in concerns}
-        share_providers = get_providers()
-        role_data = get_active_role()
+        sharing = agent_serves(agent_lab, "sharing")
+        shared_by_map = {c.id: get_concern_shared_by(patient_id, c.id) for c in concerns} if sharing else {}
+        share_providers = get_providers() if sharing and agent_serves(agent_lab, "roles") else []
+        role_data = get_active_role() if share_providers else None
         current_role_id = role_data["provider_id"] if role_data else None
         other_providers = [p for p in share_providers if p["id"] != current_role_id]
 
@@ -720,8 +749,11 @@ if not os.environ.get("API_URL") and not _is_our_api():
              f"API_PORT=8010 uv run streamlit run app/ui.py --server.port 8511")
     st.stop()
 
+# Which lab's agent service is running decides which optional features to ask it for.
+agent_lab = get_agent_lab()
+
 # Role switcher (Lab 4) — only shown when providers are available
-providers = get_providers()
+providers = get_providers() if agent_serves(agent_lab, "roles") else []
 if providers:
     role_data = get_active_role()
     current_role = role_data["provider_id"] if role_data else "dr_kim"
@@ -744,7 +776,7 @@ try:
     patient_list = load_patient_list()
 
     # Filter patients by active role (Lab 4)
-    role_patient_ids = get_role_patients()
+    role_patient_ids = get_role_patients() if agent_serves(agent_lab, "roles") else []
     if role_patient_ids:
         patient_list = [p for p in patient_list if p["id"] in role_patient_ids]
 
@@ -798,7 +830,7 @@ with col_record:
         render_history(patient)
 
 with col_concerns:
-    render_concerns(selected_id, messages)
+    render_concerns(selected_id, messages, agent_lab)
 
 # Row 2: Inbox + Conversation viewer
 st.divider()
@@ -815,8 +847,8 @@ with col_viewer:
         st.info("Select a patient to view messages.")
 
 # Agent toggles — only visible when the agent API is running
-masking_status = get_masking_status()
-grounding_mode = get_grounding_mode()
+masking_status = get_masking_status() if agent_serves(agent_lab, "masking") else None
+grounding_mode = get_grounding_mode() if agent_serves(agent_lab, "grounding") else None
 
 if masking_status is not None or grounding_mode is not None:
     st.divider()
