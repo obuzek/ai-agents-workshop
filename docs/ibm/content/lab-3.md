@@ -142,7 +142,7 @@ This takes a few minutes. The script:
 3. For each patient, takes up to three of your agent's concerns and sends each one to the claim extractor, then sends the claims to the grounding judge.
 4. Sends all of the patient's concerns and the verdicts to the critic.
 
-All four agents use the same model, `gpt-oss-120b`.
+All four agents use the same model, Claude Sonnet 5.5.
 
 ### What you'll see in the terminal
 
@@ -176,7 +176,7 @@ In **Analyze**, open each judge agent and look at its most recent traces, the sa
 ???+ warning "Two limits of this check"
     **It's grounded against the full record.** The script sends the judge the patient's whole EHR record (cut to 60,000 characters), not the tool output from your agent's run. A claim can be supported by the record even though your agent never fetched that data. This check catches claims that aren't true. It doesn't catch claims the agent made without looking.
 
-    **The same model judges itself.** The agent and all three judges run on `gpt-oss-120b`. A mistake the model tends to make as the agent, it may also accept as the judge. A purpose-built judge such as Granite Guardian is one way around this. It isn't available in this edition.
+    **The same model judges itself.** The agent and all three judges run on Claude Sonnet 5.5. A mistake the model tends to make as the agent, it may also accept as the judge. A purpose-built judge such as Granite Guardian is one way around this. It isn't available in this edition.
 
 ???+ question "Things to notice"
     1. How many concerns had at least one `supported: false` claim? When you check them by hand, are they real mistakes?

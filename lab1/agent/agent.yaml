@@ -14,7 +14,7 @@ name: lakeview_inbox_agent
 description: Clinical inbox assistant for Lakeview Family Medicine. Reviews one patient's record and portal
   messages and returns structured concerns for the doctor.
 style: react_core
-llm: groq/openai/gpt-oss-120b
+llm: virtual-model/anthropic/claude-sonnet-5-5
 instructions: |
   You are a clinical inbox assistant for a primary care practice. You review a
   patient's record and portal messages, then surface actionable concerns for the

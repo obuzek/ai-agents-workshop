@@ -90,7 +90,7 @@ IBM documents this path in [Monitoring agents](https://www.ibm.com/docs/en/SSAVQ
 
 The trace is a tree of **spans**. One span covers the whole run. Inside it are:
 
-- **LLM calls**, with the model name (`gpt-oss-120b`) and input and output token counts. There's no cost figure.
+- **LLM calls**, with the model name (`claude-sonnet-5-5`) and input and output token counts. There's no cost figure.
 - **Tool calls**, with the full arguments and the full result.
 - The agent's final reply: the raw JSON before `agent.py` validated it.
 
@@ -141,7 +141,7 @@ Orchestrate has three places where you can change what happens on the way into a
 The diagram shows what we tested on the workshop instance. Content Guardrails and the other control types exist, but we haven't tested them.
 
 <div class="wxo-policy" style="margin:1.5em 0">
-<svg class="wxo-policy-svg" viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A caller sends a message to the agent. Controls at agent_pre_invoke run first: the PII Filter masks PII the user types (verified); Content Guardrails are untested. Controls bound to tool_post_invoke and agent_post_invoke were accepted but did not execute in our tests. The agent runs a ReAct loop. Its LLM calls go through the model gateway, which handles fallback, load balancing and retry to gpt-oss-120b. Its tool calls go to the tool runtime, which reads the shared EHR. Tool output carries patient messages, which is an indirect prompt-injection path that no control inspects. After the agent answers, a Python plug-in at agent_post_invoke masks phone, email, date of birth and member ID in the answer (verified). Every step writes to the trace store, which holds raw tool input and output and LLM context, is readable across the tenant, and keeps traces for 30 days." style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+<svg class="wxo-policy-svg" viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A caller sends a message to the agent. Controls at agent_pre_invoke run first: the PII Filter masks PII the user types (verified); Content Guardrails are untested. Controls bound to tool_post_invoke and agent_post_invoke were accepted but did not execute in our tests. The agent runs a ReAct loop. Its LLM calls go through the model gateway, which handles fallback, load balancing and retry to Claude Sonnet 5.5. Its tool calls go to the tool runtime, which reads the shared EHR. Tool output carries patient messages, which is an indirect prompt-injection path that no control inspects. After the agent answers, a Python plug-in at agent_post_invoke masks phone, email, date of birth and member ID in the answer (verified). Every step writes to the trace store, which holds raw tool input and output and LLM context, is readable across the tenant, and keeps traces for 30 days." style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
 <style>
 .wxo-policy-svg { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
 .wxo-policy-svg text { fill: currentColor; font-size: 14px; }
@@ -200,7 +200,7 @@ The diagram shows what we tested on the workshop instance. Content Guardrails an
 <rect class="box" x="530" y="216" width="218" height="96"/>
 <text class="t" x="544" y="240">Model gateway</text>
 <text x="544" y="262">Fallback, load balance, retry</text>
-<text x="544" y="282">to gpt-oss-120b</text>
+<text x="544" y="282">to Claude Sonnet 5.5</text>
 <text class="muted" x="544" y="302">Reliability only. Preview.</text>
 <line class="edge both" x1="482" y1="264" x2="530" y2="264"/>
 <!-- Tool runtime -->

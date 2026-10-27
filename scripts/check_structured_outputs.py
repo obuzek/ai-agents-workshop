@@ -1,5 +1,5 @@
 """
-Live check: does gpt-oss-120b on watsonx Orchestrate produce the structured
+Live check: does the workshop model on watsonx Orchestrate produce the structured
 output every phase of the workshop needs?
 
 Phases and schemas checked (the labs' own prompts and Pydantic models):
@@ -57,7 +57,7 @@ INSTANCE = os.environ.get("WXO_INSTANCE_URL", "").rstrip("/")
 API_KEY = os.environ.get("WXO_API_KEY", "")
 EHR_URL = os.environ.get("EHR_API_URL", "").rstrip("/")
 EHR_TENANT = os.environ.get("EHR_TENANT", "")
-MODEL = "groq/openai/gpt-oss-120b"
+MODEL = os.environ.get("WXO_JUDGE_MODEL", "virtual-model/anthropic/claude-sonnet-5-5")  # same model as agent.yaml
 MAIN_AGENT = os.environ.get("WXO_AGENT_NAME") or PREFIX + "lakeview_inbox_agent"
 
 

@@ -188,7 +188,7 @@ The Lab 1 agent is in `lab1/agent/`. Five files there define the agent, deploy i
 <text class="lbl" x="44" y="556">you look at these in Step 4</text>
 <rect class="box blue" x="410" y="388" width="326" height="72"/>
 <text class="t on-blue" x="430" y="416">Your agent</text>
-<text class="on-blue" x="430" y="442">ReAct loop, gpt-oss-120b</text>
+<text class="on-blue" x="430" y="442">ReAct loop, Claude Sonnet 5.5</text>
 <line class="edge" x1="500" y1="460" x2="500" y2="500"/>
 <text class="lbl" x="512" y="486">calls tools</text>
 <rect class="box" x="410" y="500" width="174" height="84"/>
@@ -223,7 +223,7 @@ spec_version: v1
 kind: native
 name: lakeview_inbox_agent
 style: react_core              # Orchestrate runs the ReAct loop
-llm: groq/openai/gpt-oss-120b
+llm: virtual-model/anthropic/claude-sonnet-5-5
 instructions: |
   You are a clinical inbox assistant for a primary care practice. ...
   - Only surface information that is IN the record. Do not infer diagnoses.

@@ -45,12 +45,11 @@ Lab 2 asked three questions about the trace store: where does it live, who can r
 | Copy | Where | Who can read it here | How long |
 |---|---|---|---|
 | **Patient records** | The shared workshop EHR. Each seat has its own copy of the 12 patients, saved to IBM Cloud Object Storage. | Anyone who sends your tenant ID. Your tools send it in a header with every request. | Until the workshop environment is torn down |
-| **Model context** | Each LLM call. Your agent uses `gpt-oss-120b`, which Orchestrate runs through GroqCloud or AWS Bedrock ([Available AI models](https://www.ibm.com/docs/en/SSAVQO/agent_builder/ai-models.html)). | The model provider, during the call | IBM's page doesn't say whether these providers keep prompts. |
+| **Model context** | Each LLM call. Your agent uses Claude Sonnet 5.5. Orchestrate's model gateway sends each call to the workshop's model proxy, which forwards it to Anthropic's API. | Anthropic, during the call (and the workshop proxy, which passes it through without storing it) | Check your model provider's data-retention terms before sending it PHI. |
 | **Traces** | The Orchestrate instance | Every seat (Lab 2) | 30 days |
 | **Conversations** | The Orchestrate instance | Administrators and builders in the tenant | 30 days by default, up to 365 |
 | **Concerns** | `data/agent_output.json` on your laptop | Anyone with your laptop | Until you delete them |
 
-<!-- TODO(verify): whether gpt-oss-120b on the workshop instance routes to GroqCloud or Bedrock (the agent's llm is groq/openai/gpt-oss-120b). -->
 
 ### What IBM documents about storage on Orchestrate
 
