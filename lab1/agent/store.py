@@ -11,7 +11,8 @@ from pathlib import Path
 
 from lab1.agent.models import ConcernsStore
 
-STORE_PATH = Path(os.environ.get("AGENT_STORE", "data/agent_output.json"))
+# Anchored to the repo root, so the agent service finds the same file whichever folder it starts from.
+STORE_PATH = Path(os.environ.get("AGENT_STORE", Path(__file__).resolve().parents[2] / "data" / "agent_output.json"))
 
 
 def load_store() -> ConcernsStore:

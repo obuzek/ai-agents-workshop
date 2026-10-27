@@ -74,6 +74,14 @@ def _ensure_api_server():
 
 _ensure_api_server()
 
+
+def _is_our_api() -> bool:
+    """True if what answers on API_URL is the workshop's EHR API (not some other program on the port)."""
+    try:
+        return requests.get(f"{API_URL}/health", timeout=3).json().get("status") == "ok"
+    except (requests.RequestException, ValueError, AttributeError):
+        return False
+
 st.set_page_config(page_title="Lakeview Family Medicine", layout="wide")
 
 # Style radio buttons to look like tabs
@@ -331,12 +339,18 @@ def render_patient_selector(patients: list[dict], inbox: list[dict],
         return f"{icon} {p['name']} ({count} new)"
 
     patient_map = {p["id"]: p for p in patients}
-    return st.selectbox(
+    options = [p["id"] for p in patients]
+    # Remember the selection ourselves: the labels change as messages are answered
+    # and concerns arrive, and Streamlit resets a widget whose labels change.
+    current = st.session_state.get("current_patient")
+    selected = st.selectbox(
         "Patient",
-        options=[p["id"] for p in patients],
+        options=options,
+        index=options.index(current) if current in options else 0,
         format_func=lambda pid: label(patient_map[pid]),
-        key="selected_patient",
     )
+    st.session_state["current_patient"] = selected
+    return selected
 
 
 def render_conditions(patient: Patient):
@@ -689,6 +703,12 @@ def _send_reply_and_clear(patient_id: str, message_id: str):
 
 
 st.title("Lakeview Family Medicine")
+
+if not os.environ.get("API_URL") and not _is_our_api():
+    st.error(f"Another program is using port {API_PORT}, so the inbox can't start its EHR API. "
+             f"Stop that program, or start the inbox on other ports: "
+             f"API_PORT=8010 uv run streamlit run app/ui.py --server.port 8511")
+    st.stop()
 
 # Role switcher (Lab 4) — only shown when providers are available
 providers = get_providers()
