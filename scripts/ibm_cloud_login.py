@@ -9,6 +9,9 @@ Usage:
     uv run python scripts/ibm_cloud_login.py                  # paste your key when asked
     uv run python scripts/ibm_cloud_login.py path/to/apikey.json
     uv run python scripts/ibm_cloud_login.py --instance <CRN or URL>   # only if it can't find the instance
+
+Instructors testing without a workshop seat can simulate a fresh student with
+the --dev-* flags (see --help); students never need them.
 """
 
 import argparse
@@ -205,11 +208,29 @@ def set_env_value(text: str, key: str, value: str) -> str:
     return text.rstrip("\n") + f"\n{line}\n"
 
 
-def main():
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("key_file", nargs="?", type=Path, help="optional: an apikey.json file instead of pasting the key")
     parser.add_argument("--instance", help="optional: Orchestrate instance CRN or URL (found automatically otherwise)")
-    args = parser.parse_args()
+    dev = parser.add_argument_group(
+        "instructor/testing only — students: ignore these",
+        "Simulate a fresh student without a workshop seat key (e.g. tests/e2e/two_students.py).",
+    )
+    dev.add_argument("--dev-prefix", metavar="PREFIX",
+                     help="use this WXO_NAME_PREFIX (e.g. devA_) instead of one derived from the key's user")
+    dev.add_argument("--dev-tenant", metavar="TENANT",
+                     help="use this EHR_TENANT instead of the key's fingerprint, so one key can act as several students")
+    dev.add_argument("--dev-skip-cli", action="store_true",
+                     help="don't add or activate an `orchestrate` CLI environment")
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None):
+    args = parse_args(argv)
+    if args.dev_prefix is not None and not re.fullmatch(r"[A-Za-z0-9_]*", args.dev_prefix):
+        sys.exit("--dev-prefix may only contain letters, digits and underscores.")
+    if args.dev_tenant is not None and not re.fullmatch(r"[A-Za-z0-9_-]+", args.dev_tenant):
+        sys.exit("--dev-tenant must be non-empty letters, digits, '-' or '_'.")
 
     if not ENV_FILE.exists():
         shutil.copy(ENV_EXAMPLE, ENV_FILE)
@@ -222,10 +243,13 @@ def main():
 
     instance_url = resolve_instance_url(args.instance) if args.instance else choose_instance(token)
 
+    prefix = args.dev_prefix if args.dev_prefix is not None else name_prefix(claims)
+    tenant = args.dev_tenant if args.dev_tenant is not None else tenant_id(api_key)
+
     text = ENV_FILE.read_text()
     text = set_env_value(text, "WXO_API_KEY", api_key)
-    text = set_env_value(text, "WXO_NAME_PREFIX", name_prefix(claims))
-    text = set_env_value(text, "EHR_TENANT", tenant_id(api_key))
+    text = set_env_value(text, "WXO_NAME_PREFIX", prefix)
+    text = set_env_value(text, "EHR_TENANT", tenant)
     if SHARED_EHR_URL:
         text = set_env_value(text, "EHR_API_URL", SHARED_EHR_URL)
     if instance_url:
@@ -233,7 +257,7 @@ def main():
     ENV_FILE.write_text(text)
     os.chmod(ENV_FILE, 0o600)  # the key is a password; keep it readable only by you
     print(f"✓ Saved WXO_API_KEY{' and WXO_INSTANCE_URL' if instance_url else ''} to {ENV_FILE}")
-    print(f"✓ Your agent and tools will be named with the prefix {name_prefix(claims)!r}")
+    print(f"✓ Your agent and tools will be named with the prefix {prefix!r}")
 
     if not instance_url:
         print("! No Orchestrate instance set. Re-run the script once your instructor gives you its CRN or URL.")
@@ -243,6 +267,9 @@ def main():
         sys.exit(f"✗ Saved, but couldn't reach the Orchestrate instance: {error}")
     print("✓ Orchestrate instance is reachable with this key")
 
+    if args.dev_skip_cli:
+        print("- Skipped the Orchestrate CLI setup (--dev-skip-cli)")
+        return
     error = setup_orchestrate_cli(instance_url, api_key)
     if error:
         sys.exit(f"✗ Couldn't set up the Orchestrate CLI: {error}")
