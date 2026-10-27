@@ -25,6 +25,83 @@
 
 ---
 
+&lt;!-- .slide: id="watsonx-products" --&gt;
+
+## watsonx.ai Studio vs watsonx Orchestrate vs watsonx.governance
+
+&lt;div style="display:flex;gap:28px;font-size:0.78em;line-height:1.4"&gt;
+&lt;div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em"&gt;
+&lt;p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em"&gt;watsonx.ai Studio&lt;/p&gt;
+&lt;p style="margin:0 0 0.8em;opacity:0.75"&gt;"A studio of integrated tools for building generative AI and machine learning solutions"&lt;/p&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;What it's for&lt;/strong&gt;&lt;/p&gt;
+&lt;ul style="margin:0 0 0.8em 1em"&gt;
+&lt;li&gt;Foundation models: IBM and open source&lt;/li&gt;
+&lt;li&gt;Prompt Lab: experiment with prompts&lt;/li&gt;
+&lt;li&gt;Projects: shared workspaces for assets&lt;/li&gt;
+&lt;li&gt;Tuning, RAG, deployments&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;Today&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="margin:0"&gt;You open it once. That creates the watsonx profile that governance needs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.6em"&gt;
+&lt;p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em"&gt;watsonx Orchestrate&lt;/p&gt;
+&lt;p style="margin:0 0 0.8em;opacity:0.75"&gt;"An agent management platform designed to help build, deploy, orchestrate, manage and govern AI agents"&lt;/p&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;What it's for&lt;/strong&gt;&lt;/p&gt;
+&lt;ul style="margin:0 0 0.8em 1em"&gt;
+&lt;li&gt;Agents and the tools they call&lt;/li&gt;
+&lt;li&gt;Connections that hold credentials&lt;/li&gt;
+&lt;li&gt;Controls and plug-ins: guardrails, PII&lt;/li&gt;
+&lt;li&gt;Traces and evaluation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;Today&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="margin:0"&gt;Where you build and run your agent: definition, tools, connection, controls, traces.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em"&gt;
+&lt;p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em"&gt;watsonx.governance&lt;/p&gt;
+&lt;p style="margin:0 0 0.8em;opacity:0.75"&gt;"Govern any AI, anywhere with real-time visibility, enterprise controls, and continuous accountability"&lt;/p&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;What it's for&lt;/strong&gt;&lt;/p&gt;
+&lt;ul style="margin:0 0 0.8em 1em"&gt;
+&lt;li&gt;Evaluating and monitoring AI output&lt;/li&gt;
+&lt;li&gt;Metrics, factsheets, model history&lt;/li&gt;
+&lt;li&gt;AI risk management&lt;/li&gt;
+&lt;li&gt;Policy and regulatory compliance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="margin:0 0 0.3em"&gt;&lt;strong&gt;Today&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="margin:0"&gt;The evaluation concepts behind Lab 3: grounding, judges, metrics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+Note: You'll hear about three watsonx products today. watsonx.ai Studio is where you work with models directly, try prompts in Prompt Lab, and keep things in projects. Today you only open it once. Opening it creates the watsonx profile that governance needs.
+
+watsonx Orchestrate is where your agent lives. The agent, its tools, its connection to the EHR, the controls on it, and the traces of every run are all in Orchestrate.
+
+watsonx.governance is for evaluating and monitoring AI, and for managing risk. In Lab 3 we build the kind of checks it's designed to track: grounding, judges, metrics.
+
+Sources (IBM's own descriptions):
+- watsonx.ai: https://www.ibm.com/products/watsonx-ai and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx ("a studio of integrated tools…", Prompt Lab, projects)
+- Prompt Lab and projects: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/get-started-prompt-lab.html?context=wx
+- watsonx Orchestrate: https://www.ibm.com/products/watsonx-orchestrate
+- watsonx.governance: https://www.ibm.com/products/watsonx-governance and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx (evaluate prompts, monitor output, factsheets, risk)
+
+---
+
+&lt;!-- .slide: id="todays-modules" --&gt;
+
+## Today's modules
+
+&lt;div style="display:grid;grid-template-columns:auto auto 1fr;gap:0.7em 1em;align-items:baseline;font-size:0.78em;margin-top:0.6em"&gt;
+&lt;div style="font-size:1.6em;font-weight:300;color:#0f62fe"&gt;1&lt;/div&gt;&lt;div&gt;&lt;strong&gt;Build&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;An agent on Orchestrate: definition, tools, deploy&lt;/div&gt;
+&lt;div style="font-size:1.6em;font-weight:300;color:#0f62fe"&gt;2&lt;/div&gt;&lt;div&gt;&lt;strong&gt;Observe&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;Traces, and why traces are PHI. Controls and plug-ins for PII&lt;/div&gt;
+&lt;div style="font-size:1.6em;font-weight:300;color:#0f62fe"&gt;3&lt;/div&gt;&lt;div&gt;&lt;strong&gt;Improve&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;Checks: grounding, LLM-as-judge and a critic, as judge agents&lt;/div&gt;
+&lt;div style="font-size:1.6em;font-weight:300;color:#0f62fe"&gt;4&lt;/div&gt;&lt;div&gt;&lt;strong&gt;Secure&lt;/strong&gt;&lt;/div&gt;&lt;div&gt;Agent output is sensitive data. Data storage guarantees. Identity end to end (discussion)&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p style="font-size:0.7em;opacity:0.75;margin-top:2em"&gt;Labs 1–3: run it, then look at what changed. Lab 4: a discussion.&lt;/p&gt;
+
+Note: Here's the plan. In Lab 1 you deploy an agent to Orchestrate. In Lab 2 we look at its traces. They're full of patient data, so we'll look at what Orchestrate can mask, and what it can't. In Lab 3 we add checks on the agent's output, using other agents as judges. Lab 4 is a discussion: where does the agent's output get stored, and who gets to see it?
+
+---
+
 &lt;!-- .slide: id="section-agents" data-background="#0f62fe" --&gt;
 
 &lt;div style="color:#fff"&gt;
@@ -435,7 +512,7 @@ Note: These four dimensions map directly to the four labs: build, observe, impro
 &lt;/div&gt;
 &lt;/div&gt;
 
-Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally: a JSON file, then Postgres in Lab 4. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
+Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally in a JSON file. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
 
 ---
 
@@ -481,29 +558,141 @@ A **background agent** is triggered by data arriving — a new patient message �
 
 ---
 
-&lt;!-- .slide: id="lab1-langgraph" --&gt;
+&lt;!-- .slide: id="lab1-why-orchestrate" --&gt;
 
-## Lab 1: Why LangGraph?
+## Lab 1: Why Orchestrate?
 
-The ReAct loop — observe, reason, act, repeat — needs orchestration: state tracking, conditional routing, tool execution, loop termination. You could write that yourself. LangGraph gives it to you.
+The ReAct loop (observe, reason, act, repeat) needs something to run it. On watsonx Orchestrate, you describe the agent in a YAML file, and Orchestrate runs the loop.
 
-```python
-def _build_agent():
-    llm = get_chat_model()
-    return create_react_agent(
-        model=llm,
-        tools=ALL_TOOLS,
-        prompt=SYSTEM_PROMPT,
-        response_format=PatientConcerns,
-    )
+&lt;div style="display:flex;gap:32px;align-items:flex-start"&gt;
+&lt;div style="flex:1;min-width:0;font-size:1.45em"&gt;
+
+```yaml
+# lab1/agent/agent.yaml (excerpt)
+kind: native
+name: lakeview_inbox_agent
+style: react_core
+llm: groq/openai/gpt-oss-120b
+instructions: |
+  You are a clinical inbox assistant ...
+tools:
+  - list_patients
+  - get_patient_record
 ```
 
-That's the whole agent. `create_react_agent` handles the loop:
-1. Send system prompt + user message to the LLM
-2. If the LLM returns tool calls → execute them, feed results back, go to 1
-3. If the LLM is done → one final call with Structured Outputs to produce a `PatientConcerns` object
+&lt;/div&gt;
+&lt;div style="flex:1;min-width:0;font-size:0.95em"&gt;
 
-In Lab 3, we use the same `StateGraph` primitives to wire together the critic loop. Each component has one job; the graph connects them.
+- Orchestrate runs the loop. Your code starts a run and reads the answer.
+- Tools run in IBM Cloud. Credentials live in a connection.
+- Every run is traced automatically.
+- Controls and plug-ins act on the agent's input and output.
+- Models come from Orchestrate's model catalog.
+- You can't set a breakpoint in a tool. You read the trace instead.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+Note: There's an open-source edition of this workshop with a fully local LangGraph version of this agent. If you want to read that code, go look at it there. It's designed to run on a laptop, so we didn't use it in a hosted setting like this one.
+
+Here, the agent is this YAML file: instructions, a model, and a list of tools. Orchestrate runs the loop and the tools, and it keeps a trace of every run. You can't step through it in a debugger, so you'll use the traces in Lab 2.
+
+---
+
+&lt;!-- .slide: id="lab1-anatomy" --&gt;
+
+## Anatomy of an Orchestrate agent
+
+&lt;svg class="anat-diagram" viewBox="0 0 1180 548" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="On your machine, deploy.py reads agent.yaml, tools.py and connection.yaml and imports them into watsonx Orchestrate. agent.py starts runs through the runs API. In Orchestrate, the agent's ReAct loop calls the tool runtime, which uses the connection's credentials to call the shared EHR. Every LLM call and tool call is recorded in traces." style="width:100%;max-height:560px;height:auto;display:block"&gt;
+&lt;style&gt;
+.anat-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.anat-diagram text { fill: currentColor; font-size: 17px; }
+.anat-diagram text.b { font-size: 19px; font-weight: 600; }
+.anat-diagram text.mono { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; }
+.anat-diagram text.muted { fill: #8d8d8d; }
+.anat-diagram text.zone { fill: #8d8d8d; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; }
+.anat-diagram text.on-accent { fill: #fff; }
+.anat-diagram text.edge-label { font-size: 16px; fill: #8d8d8d; }
+.anat-diagram text.edge-label.accent { fill: #4589ff; }
+.anat-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.anat-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.anat-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.anat-diagram .group { fill: none; stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.anat-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#anat-arrow); }
+.anat-diagram .edge.accent { stroke: #0f62fe; marker-end: url(#anat-arrow-accent); }
+.anat-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#anat-arrow-muted); }
+.anat-diagram .edge.dashed { stroke-dasharray: 8 6; }
+&lt;/style&gt;
+&lt;defs&gt;
+&lt;marker id="anat-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="currentColor"/&gt;&lt;/marker&gt;
+&lt;marker id="anat-arrow-accent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="#0f62fe"/&gt;&lt;/marker&gt;
+&lt;marker id="anat-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/&gt;&lt;/marker&gt;
+&lt;/defs&gt;
+&lt;!-- zone 1: your machine (x 0-330) --&gt;
+&lt;rect class="group" x="1" y="1" width="329" height="546"/&gt;
+&lt;text class="zone" x="24" y="32"&gt;YOUR MACHINE&lt;/text&gt;
+&lt;rect class="node" x="24" y="52" width="282" height="76"/&gt;
+&lt;text class="mono" x="44" y="82"&gt;agent.py&lt;/text&gt;
+&lt;text x="44" y="110"&gt;starts runs, checks the JSON&lt;/text&gt;
+&lt;rect class="node" x="24" y="164" width="282" height="76"/&gt;
+&lt;text class="mono" x="44" y="194"&gt;deploy.py&lt;/text&gt;
+&lt;text x="44" y="222"&gt;imports the three files below&lt;/text&gt;
+&lt;line class="edge muted" x1="165" y1="300" x2="165" y2="240"/&gt;
+&lt;text class="edge-label" x="177" y="276"&gt;reads&lt;/text&gt;
+&lt;rect class="node fill" x="24" y="300" width="282" height="72"/&gt;
+&lt;text class="mono" x="44" y="330"&gt;agent.yaml&lt;/text&gt;
+&lt;text x="44" y="358"&gt;instructions · model · tools&lt;/text&gt;
+&lt;rect class="node fill" x="24" y="384" width="282" height="72"/&gt;
+&lt;text class="mono" x="44" y="414"&gt;tools.py&lt;/text&gt;
+&lt;text x="44" y="442"&gt;&lt;tspan font-family="'IBM Plex Mono', monospace"&gt;@tool&lt;/tspan&gt; functions&lt;/text&gt;
+&lt;rect class="node fill" x="24" y="468" width="282" height="72"/&gt;
+&lt;text class="mono" x="44" y="498"&gt;connection.yaml&lt;/text&gt;
+&lt;text x="44" y="526"&gt;EHR URL + your tenant&lt;/text&gt;
+&lt;!-- zone 2: watsonx Orchestrate (x 420-860) --&gt;
+&lt;rect class="group" x="420" y="1" width="439" height="546"/&gt;
+&lt;text class="zone" x="444" y="32"&gt;WATSONX ORCHESTRATE&lt;/text&gt;
+&lt;rect class="node accent" x="444" y="52" width="392" height="120"/&gt;
+&lt;text class="b on-accent" x="464" y="84"&gt;Agent: ReAct loop + LLM&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="112"&gt;studentN_lakeview_inbox_agent&lt;/text&gt;
+&lt;text class="on-accent" x="464" y="140" opacity="0.85"&gt;gpt-oss-120b from the model catalog&lt;/text&gt;
+&lt;rect class="node" x="476" y="236" width="138" height="100"/&gt;
+&lt;text class="b" x="490" y="268"&gt;Connections&lt;/text&gt;
+&lt;text x="490" y="296"&gt;base URL,&lt;/text&gt;
+&lt;text x="490" y="320"&gt;tenant&lt;/text&gt;
+&lt;rect class="node" x="666" y="236" width="170" height="100"/&gt;
+&lt;text class="b" x="684" y="268"&gt;Tool runtime&lt;/text&gt;
+&lt;text x="684" y="296"&gt;runs your&lt;/text&gt;
+&lt;text x="684" y="320"&gt;&lt;tspan font-family="'IBM Plex Mono', monospace"&gt;@tool&lt;/tspan&gt; code&lt;/text&gt;
+&lt;rect class="node fill" x="444" y="412" width="392" height="112"/&gt;
+&lt;text class="b" x="464" y="444"&gt;Traces&lt;/text&gt;
+&lt;text x="464" y="472"&gt;every LLM call and tool call,&lt;/text&gt;
+&lt;text x="464" y="498"&gt;with inputs and outputs&lt;/text&gt;
+&lt;!-- edges inside Orchestrate --&gt;
+&lt;line class="edge" x1="751" y1="172" x2="751" y2="236"/&gt;
+&lt;text class="edge-label" x="763" y="210"&gt;tool calls&lt;/text&gt;
+&lt;line class="edge" x1="614" y1="286" x2="666" y2="286"/&gt;
+&lt;line class="edge muted dashed" x1="458" y1="172" x2="458" y2="412"/&gt;
+&lt;line class="edge muted dashed" x1="751" y1="336" x2="751" y2="412"/&gt;
+&lt;!-- machine to Orchestrate --&gt;
+&lt;line class="edge accent" x1="306" y1="92" x2="444" y2="92"/&gt;
+&lt;text class="edge-label accent" x="375" y="80" text-anchor="middle"&gt;runs API&lt;/text&gt;
+&lt;line class="edge accent" x1="306" y1="202" x2="420" y2="202"/&gt;
+&lt;text class="edge-label accent" x="363" y="190" text-anchor="middle"&gt;import&lt;/text&gt;
+&lt;!-- zone 3: shared EHR (x 940-1180) --&gt;
+&lt;rect class="group" x="940" y="1" width="239" height="546"/&gt;
+&lt;text class="zone" x="964" y="32"&gt;CODE ENGINE&lt;/text&gt;
+&lt;rect class="node" x="964" y="226" width="192" height="120"/&gt;
+&lt;text class="b" x="982" y="258"&gt;Shared EHR&lt;/text&gt;
+&lt;text x="982" y="286"&gt;a private copy&lt;/text&gt;
+&lt;text x="982" y="312"&gt;per tenant&lt;/text&gt;
+&lt;line class="edge" x1="836" y1="286" x2="964" y2="286"/&gt;
+&lt;text class="edge-label" x="900" y="274" text-anchor="middle"&gt;HTTPS&lt;/text&gt;
+&lt;text class="edge-label" x="900" y="308" text-anchor="middle"&gt;X-Tenant&lt;/text&gt;
+&lt;/svg&gt;
+
+Note: Here's what lives where. On your machine, agent.yaml is the agent definition, tools.py has the tools, and connection.yaml sets up the connection to the EHR. deploy.py adds your seat prefix and imports all three into Orchestrate. agent.py starts a run and checks the JSON that comes back.
+
+In Orchestrate, the agent runs the loop with gpt-oss-120b. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
 
 ---
 
@@ -511,7 +700,7 @@ In Lab 3, we use the same `StateGraph` primitives to wire together the critic lo
 
 ## Lab 1: Tools and the Output Contract
 
-Each function decorated with `@tool` does three things: registers it as callable, generates a JSON schema from type hints and docstring, and makes it available during the ReAct loop. The agent decides which tools to call and in what order — we don't script that.
+Each function in `tools.py` decorated with `@tool` (from the Orchestrate ADK) does three things: registers it as callable, generates a JSON schema from type hints and docstring, and lets `deploy.py` import it into Orchestrate. The agent decides which tools to call and in what order — we don't script that.
 
 The doctor never sees raw LLM output. The agent fills in a typed `Concern`:
 
@@ -529,14 +718,20 @@ The contract between agent and UI is explicit. The UI renders the schema. That's
 
 ## Lab 1: Structured Outputs ≠ "Please Return JSON"
 
-LLMs generate one token at a time. **Constrained decoding** masks out invalid tokens at each step — the model literally cannot produce malformed output. It's the difference between asking someone to drive the speed limit and installing a speed governor.
+LLMs generate one token at a time. Some inference services offer **constrained decoding** (the server masks tokens that would break the schema). It's the difference between asking someone to drive the speed limit and installing a speed governor.
 
-This is different from prompting for structure:
+Without it, we recommend: **prompt with the schema, validate, retry once.**
 
-- **Prompting**: describe the format in the prompt; the model tries to follow it. Sometimes it wraps the JSON in markdown. Sometimes it invents fields.
-- **Constrained decoding**: the schema is enforced at the token level. No retries, no parsing code, no stripping code fences.
+- `deploy.py` builds the JSON schema from `models.py` and adds it to the agent's instructions
+- `agent.py` checks every answer against the Pydantic model, and retries once with the error
 
-For a background agent with no human watching, this isn't a nice-to-have. If the output doesn't parse at 3 AM, the pipeline fails silently.
+For a background agent with no human watching, this isn't a nice-to-have. If the output doesn't parse at 3 AM, nobody finds out.
+
+Quick test: `uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges`
+
+Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers.
+
+There are signs constrained outputs may come back to the mainstream: [Jev](https://opentweet.io/jev/vs-openai-structured-outputs)
 
 ---
 
@@ -566,26 +761,173 @@ That creates a tension: the richer your traces, the more useful they are for deb
 
 ---
 
-&lt;!-- .slide: id="lab2-langfuse" --&gt;
+&lt;!-- .slide: id="lab2-orchestrate-traces" --&gt;
 
-## Lab 2: Why Langfuse?
+## Lab 2: Traces in Orchestrate
 
-Langfuse is an open-source LLM observability platform. Self-hostable — in this lab it runs entirely in Docker on your machine. Nothing leaves the building.
+Orchestrate traces every run of your agent. There's no code to add.
 
-Instrumenting the agent takes three lines:
+Each trace has:
 
-```python
-handler = create_langfuse_handler()
+- the run, from start to answer
+- every LLM call: model, input, output, token counts
+- every tool call: arguments and the full output
 
-result = agent.invoke(
-    {"messages": [...]},
-    config={"callbacks": [handler]},
-)
-```
+You can read traces in the Orchestrate UI, with `orchestrate observability traces` in the CLI, or through the API.
 
-The `CallbackHandler` hooks into LangChain's callback system, which LangGraph propagates automatically to every LLM call and tool call in the ReAct loop. You don't instrument each step — you instrument the entry point.
+Traces show tokens, but not cost. To estimate cost, multiply tokens by the model's price.
 
-What you get: full traces with nested spans, token counts and cost per LLM call, tool call inputs and outputs, session grouping by patient, and a UI for browsing, filtering, annotating, and building evaluation datasets.
+Note: In the open-source edition, this lab is about adding tracing to the agent. Here it's already on. Run the agent on a patient, then open the trace and find your agent by its seat prefix. Look at what the tool returned. You'll see the whole patient record in there.
+
+---
+
+&lt;!-- .slide: id="lab2-traces-are-phi" --&gt;
+
+## Lab 2: Traces Are PHI
+
+Open a trace and look at the tool output. It's the patient's full record: name, date of birth, phone, insurance ID, conditions, messages.
+
+In this workshop's Orchestrate instance:
+
+- every seat can see every seat's traces
+- traces are kept for 30 days
+
+Treat the trace store like any other copy of patient data. Follow the data:
+
+&lt;p style="font-size:0.85em;margin-left:1em"&gt;&lt;strong&gt;EHR&lt;/strong&gt; → tool output → model context → &lt;strong&gt;trace store&lt;/strong&gt; → answer → concerns file&lt;/p&gt;
+
+At each step, ask: who can read it, how long is it kept, and what was removed before it got there?
+
+Note: This is data provenance. Before you put an agent in front of real patient data, trace where that data goes and what happens to it at each step. Here, the full record goes from the EHR into the tool output, into the model, into the trace, and parts of it end up in the answer and in the concerns file on your laptop. The data is synthetic today, so it's fine that everyone can see each other's traces. With real patients, that's a breach.
+
+---
+
+&lt;!-- .slide: id="lab2-policy-engine" --&gt;
+
+## Lab 2: Gateway and policy in Orchestrate
+
+&lt;svg class="gw-diagram" viewBox="0 0 1180 562" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A run goes from the caller through Controls at agent_pre_invoke, where the PII Filter masks what the user types, to the agent's ReAct loop. The agent's LLM calls go through the model gateway; its tool calls go through the tool runtime to the shared EHR. The answer goes through your plug-in at agent_post_invoke, which masks phone, email, date of birth and member ID, and then to the caller. Control hooks after tools and after the agent did not run in our tests. Every step writes to the trace store, which holds raw tool output and LLM context, is visible tenant-wide, and keeps traces 30 days. Patient messages reach the model as tool output, and no control checks tool output." style="width:100%;max-height:540px;height:auto;display:block"&gt;
+&lt;style&gt;
+.gw-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.gw-diagram text { fill: currentColor; font-size: 16px; }
+.gw-diagram text.b { font-size: 18px; font-weight: 600; }
+.gw-diagram text.mono { font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
+.gw-diagram text.muted { fill: #8d8d8d; }
+.gw-diagram text.on-accent { fill: #fff; }
+.gw-diagram text.ok { fill: #4589ff; font-weight: 600; }
+.gw-diagram text.bad { fill: #fa4d56; font-weight: 600; }
+.gw-diagram text.edge-label { font-size: 15px; fill: #8d8d8d; }
+.gw-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.gw-diagram .node.policy { stroke: #0f62fe; stroke-width: 2.5px; }
+.gw-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.gw-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.gw-diagram .node.phi { fill: rgba(250,77,86,0.12); stroke: #fa4d56; stroke-width: 1.5px; }
+.gw-diagram .node.norun { fill: none; stroke: #fa4d56; stroke-width: 1.5px; stroke-dasharray: 5 4; }
+.gw-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#gw-arrow); }
+.gw-diagram .edge.both { marker-start: url(#gw-arrow); }
+.gw-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#gw-arrow-muted); }
+.gw-diagram .edge.dashed { stroke-dasharray: 7 5; }
+.gw-diagram .edge.warn { stroke: #fa4d56; stroke-dasharray: 5 4; marker-end: none; }
+&lt;/style&gt;
+&lt;defs&gt;
+&lt;marker id="gw-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="currentColor"/&gt;&lt;/marker&gt;
+&lt;marker id="gw-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"&gt;&lt;path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/&gt;&lt;/marker&gt;
+&lt;/defs&gt;
+&lt;!-- row 0: model gateway above the agent --&gt;
+&lt;rect class="node fill" x="380" y="2" width="580" height="96"/&gt;
+&lt;text class="b" x="400" y="32"&gt;Model gateway &lt;tspan class="muted" font-weight="400"&gt;(public preview)&lt;/tspan&gt;&lt;/text&gt;
+&lt;text x="400" y="58"&gt;model policies: fallback · load-balance · retry&lt;/text&gt;
+&lt;text x="400" y="84"&gt;gpt-oss-120b on groq or bedrock · granite · …&lt;/text&gt;
+&lt;text class="muted" x="940" y="32" text-anchor="end"&gt;for reliability&lt;/text&gt;
+&lt;!-- legend --&gt;
+&lt;text class="ok" x="0" y="32"&gt;✓ worked in our tests&lt;/text&gt;
+&lt;text class="muted" x="0" y="58"&gt;? exists, untested&lt;/text&gt;
+&lt;text class="bad" x="0" y="84"&gt;✗ did not run in our tests&lt;/text&gt;
+&lt;!-- row 1 --&gt;
+&lt;rect class="node" x="0" y="140" width="130" height="160"/&gt;
+&lt;text class="b" x="16" y="172"&gt;Caller&lt;/text&gt;
+&lt;text x="16" y="200"&gt;runs API&lt;/text&gt;
+&lt;text x="16" y="224"&gt;or chat&lt;/text&gt;
+&lt;rect class="node policy" x="170" y="140" width="250" height="160"/&gt;
+&lt;text class="b" x="186" y="172"&gt;Controls&lt;/text&gt;
+&lt;text class="mono muted" x="186" y="196"&gt;agent_pre_invoke&lt;/text&gt;
+&lt;text x="186" y="228"&gt;&lt;tspan class="ok"&gt;✓&lt;/tspan&gt; PII Filter: masks&lt;/text&gt;
+&lt;text x="208" y="250"&gt;PII the user types&lt;/text&gt;
+&lt;text x="186" y="280"&gt;&lt;tspan class="muted"&gt;?&lt;/tspan&gt; Guardrails: jailbreak, HAP&lt;/text&gt;
+&lt;rect class="node accent" x="460" y="140" width="230" height="160"/&gt;
+&lt;text class="b on-accent" x="478" y="172"&gt;Agent&lt;/text&gt;
+&lt;text class="on-accent" x="478" y="200"&gt;ReAct loop&lt;/text&gt;
+&lt;text class="on-accent" x="478" y="228"&gt;reads tool output,&lt;/text&gt;
+&lt;text class="on-accent" x="478" y="252"&gt;writes the answer&lt;/text&gt;
+&lt;rect class="node policy" x="730" y="140" width="230" height="160"/&gt;
+&lt;text class="b" x="746" y="172"&gt;Your plug-in&lt;/text&gt;
+&lt;text class="mono muted" x="746" y="196"&gt;agent_post_invoke&lt;/text&gt;
+&lt;text x="746" y="222"&gt;&lt;tspan class="ok"&gt;✓&lt;/tspan&gt; masks phone, email,&lt;/text&gt;
+&lt;text x="768" y="244"&gt;DOB, member ID&lt;/text&gt;
+&lt;rect class="node norun" x="742" y="256" width="206" height="32"/&gt;
+&lt;text x="752" y="278"&gt;&lt;tspan class="bad"&gt;✗&lt;/tspan&gt; a control here&lt;/text&gt;
+&lt;rect class="node" x="1000" y="140" width="180" height="160"/&gt;
+&lt;text class="b" x="1016" y="172"&gt;Answer&lt;/text&gt;
+&lt;text x="1016" y="200"&gt;back to&lt;/text&gt;
+&lt;text x="1016" y="224"&gt;the caller&lt;/text&gt;
+&lt;line class="edge" x1="130" y1="220" x2="170" y2="220"/&gt;
+&lt;line class="edge" x1="420" y1="220" x2="460" y2="220"/&gt;
+&lt;line class="edge" x1="690" y1="220" x2="730" y2="220"/&gt;
+&lt;line class="edge" x1="960" y1="220" x2="1000" y2="220"/&gt;
+&lt;line class="edge both" x1="575" y1="140" x2="575" y2="98"/&gt;
+&lt;text class="edge-label" x="587" y="125"&gt;LLM calls&lt;/text&gt;
+&lt;!-- row 2 --&gt;
+&lt;rect class="node" x="460" y="340" width="230" height="110"/&gt;
+&lt;text class="b" x="478" y="370"&gt;Tool runtime&lt;/text&gt;
+&lt;text x="478" y="396"&gt;your &lt;tspan font-family="'IBM Plex Mono', monospace"&gt;@tool&lt;/tspan&gt; code&lt;/text&gt;
+&lt;rect class="node norun" x="472" y="408" width="206" height="32"/&gt;
+&lt;text x="482" y="430"&gt;&lt;tspan class="bad"&gt;✗&lt;/tspan&gt; tool_post_invoke&lt;/text&gt;
+&lt;line class="edge both" x1="575" y1="300" x2="575" y2="340"/&gt;
+&lt;text class="edge-label" x="587" y="326"&gt;tool calls&lt;/text&gt;
+&lt;rect class="node" x="730" y="340" width="170" height="110"/&gt;
+&lt;text class="b" x="746" y="370"&gt;Shared EHR&lt;/text&gt;
+&lt;text x="746" y="396"&gt;full patient&lt;/text&gt;
+&lt;text x="746" y="420"&gt;record&lt;/text&gt;
+&lt;line class="edge both" x1="690" y1="395" x2="730" y2="395"/&gt;
+&lt;!-- indirect injection callout --&gt;
+&lt;rect class="node phi" x="1000" y="322" width="180" height="146"/&gt;
+&lt;text class="b" x="1014" y="350"&gt;Injection path&lt;/text&gt;
+&lt;text x="1014" y="376"&gt;Patient messages&lt;/text&gt;
+&lt;text x="1014" y="398"&gt;reach the agent as&lt;/text&gt;
+&lt;text x="1014" y="420"&gt;tool output. No&lt;/text&gt;
+&lt;text x="1014" y="442"&gt;control checks it.&lt;/text&gt;
+&lt;!-- trace store --&gt;
+&lt;rect class="node phi" x="170" y="492" width="1010" height="68"/&gt;
+&lt;text class="b" x="190" y="520"&gt;Trace store&lt;/text&gt;
+&lt;text x="190" y="546"&gt;raw tool output + LLM context = PHI · every seat can see it · kept 30 days&lt;/text&gt;
+&lt;line class="edge muted dashed" x1="295" y1="300" x2="295" y2="492"/&gt;
+&lt;line class="edge muted dashed" x1="575" y1="450" x2="575" y2="492"/&gt;
+&lt;line class="edge muted dashed" x1="940" y1="300" x2="940" y2="492"/&gt;
+&lt;/svg&gt;
+
+Note: Here's what we actually tested. The PII Filter control runs before the agent, and it masked PII that the user typed. The Content Guardrails control exists, for jailbreak and hate, abuse and profanity, but we didn't test it. Control hooks after a tool call and after the agent were accepted when we set them up, but they never ran. A Python plug-in after the agent did run, and it masked phone numbers, emails, dates of birth and member IDs in the answer.
+
+The model gateway is for reliability: falling back to another provider, load balancing, retries. It doesn't apply any policy to the content.
+
+Two things to notice. Everything goes into the trace store before any masking happens. And patient messages come back to the agent as tool output, which nothing checks. That's where prompt injection would come from in this agent.
+
+---
+
+&lt;!-- .slide: id="lab2-pii-layers" --&gt;
+
+## Lab 2: Three Places to Remove PHI
+
+&lt;table style="font-size:0.7em"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Runs&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Model&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Trace&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Answer&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Control:&lt;/strong&gt; PII Filter&lt;/td&gt;&lt;td&gt;before the agent, on user input&lt;/td&gt;&lt;td&gt;user input only&lt;/td&gt;&lt;td&gt;✗&lt;/td&gt;&lt;td&gt;✗&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Plug-in&lt;/strong&gt; (Python)&lt;/td&gt;&lt;td&gt;after the agent, on the answer&lt;/td&gt;&lt;td&gt;✗&lt;/td&gt;&lt;td&gt;✗&lt;/td&gt;&lt;td&gt;✓ identifiers&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Minimize at the source&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;in the tool or the EHR&lt;/td&gt;&lt;td&gt;✓&lt;/td&gt;&lt;td&gt;✓&lt;/td&gt;&lt;td&gt;✓&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+- The PII Filter and the plug-in use patterns. They catch phone numbers and IDs, not names.
+- Only the tool can keep PHI out of the model and the trace. If the tool doesn't return it, nothing downstream has it.
+
+Note: The control and the plug-in are useful, but look at the trace column. Neither one changes what's in the trace. The only way to keep PHI out of the trace is to have the tool return less. That's one reason Lab 3 replaces the tool that returns the whole record.
 
 ---
 
@@ -603,37 +945,7 @@ Not everything should be in your traces.
 &lt;tr&gt;&lt;td&gt;Trace structure / spans&lt;/td&gt;&lt;td&gt;Session metadata&lt;/td&gt;&lt;td&gt;Unmasked PII&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 
-To improve the agent, you need rich traces. But rich traces mean more sensitive data in your observability platform. The table above is how you navigate that tension.
-
----
-
-&lt;!-- .slide: id="lab2-pii" --&gt;
-
-## Lab 2: Run the Agent. Look at the Traces.
-
-You'll see patient names, dates of birth, phone numbers, insurance IDs, and full medical records — in plain text — in your observability platform. Under HIPAA, that's a reportable breach.
-
-We mask it before it gets there, with two layers:
-
-- **Pydantic model annotations** — fields tagged `@pii` or `@phi` are replaced with `&lt;PII_REDACTED&gt;` regardless of string length. NER fails on short strings like `"Patricia Kowalski"`. Annotations don't.
-- **Microsoft Presidio** (spaCy NER + regex) — catches PII embedded in free text: message bodies, clinical notes, LLM reasoning.
-
-Both layers run **client-side**, before any data leaves the process.
-
----
-
-&lt;!-- .slide: id="lab2-presidio" --&gt;
-
-## Lab 2: Why Presidio?
-
-[Microsoft Presidio](https://github.com/microsoft/presidio) is an open-source PII detection and anonymization library. It combines two detection approaches:
-
-- **spaCy NER** — a trained named entity recognition model that identifies people, locations, dates, and other entities in natural language context. Good at finding "Patricia Kowalski" inside a sentence.
-- **Regex patterns** — catches structured PII regardless of context: SSNs, phone numbers, email addresses, credit cards. We add a custom recognizer for insurance member IDs.
-
-It integrates with LangChain via `PresidioAnonymizer`, which hooks into the same callback layer as Langfuse. One callback stack handles both masking and tracing.
-
-The reason we use two layers (Presidio + Pydantic annotations) is that NER struggles with short strings in isolation. A field containing just `"Patricia Kowalski"` may not be confidently classified as a person name. The annotations tell us exactly which fields are sensitive — NER handles the free text where it excels.
+On Orchestrate, every tool output goes into the trace. To log less, return less from your tools.
 
 ---
 
@@ -641,25 +953,25 @@ The reason we use two layers (Presidio + Pydantic annotations) is that NER strug
 
 ## Lab 2: What Traces Actually Show You
 
-With masking in place, traces reveal things you can't see any other way:
+Traces show you things you can't see any other way:
 
-- **Tool call order** — did the agent investigate sensibly, or call everything at once?
+- **Tool call order** — did the agent investigate, or stop after one call?
 - **The implicit summarization problem** — compare what tools returned (ground truth) to what the agent concluded. Discrepancies are visible by eye. Lab 3 automates catching them.
 - **The invisible prompt** — the doctor never sees the message the agent acted on. If the prompt is poorly written or biased, the trace is where you find out.
-- **Cost per run** — token counts per LLM call. At scale, "the agent runs on every patient every day" adds up fast.
+- **Tokens per run** — at scale, "the agent runs on every patient every day" adds up fast.
 
 ---
 
 &lt;!-- .slide: id="lab2-datasets" --&gt;
 
-## Lab 2: Traces as an Evaluation Dataset
+## Lab 2: Traces as Evaluation Data
 
 Traces aren't just for debugging right now — they're raw material for getting better over time.
 
-- **Add to Dataset** — save any trace as a labeled example. Good runs and bad runs. Over time you build a corpus of real agent behavior to use for regression testing and evaluation.
-- **Annotate** — add scores or free-text notes to any trace. When a clinician spots a wrong concern, they annotate the trace with what went wrong. That's a feedback loop from domain experts back to the engineering team — without any code changes.
+- Save good and bad runs as examples. Over time you have a set of real agent behavior to test new versions against.
+- When a clinician spots a wrong concern, record what went wrong. That's feedback from the domain expert to the engineering team.
 
-And then there's **LLM-as-Judge**: use a second LLM to evaluate the first one's output at scale. We'll build this in Lab 3. The traces you're capturing here are exactly the input it needs.
+And then there's **LLM-as-Judge**: use another LLM to check the agent's output at scale. We'll build this in Lab 3, from the same data you see in the trace.
 
 ---
 
@@ -685,7 +997,7 @@ Lab 1 was Model Development — building the agent. Lab 2 was Operations — add
 
 **Run agent → Inspect traces → Identify failure → Implement fix → Run agent**
 
-This is the inner loop of the ADLC's Operations &amp; Governance phase. Each of the three improvements in this lab was driven by something specific visible in the traces — not by guessing, not by re-reading the prompt, not by switching models.
+This is the inner loop of the ADLC's Operations &amp; Governance phase. Each improvement in this lab starts from something you can see in a trace.
 
 Observability only pays off if you act on what you find.
 
@@ -693,15 +1005,15 @@ Observability only pays off if you act on what you find.
 
 &lt;!-- .slide: id="lab3-what-we-found" --&gt;
 
-## Lab 3: What the Traces Told Us
+## Lab 3: What to Look For in the Traces
 
-Three problems visible in the Lab 2 traces:
+Things to check in your Lab 2 traces:
 
-**1. It hallucinates.** Compare tool call outputs (what the data says) to the agent's concerns (what it claims). You'll find evidence strings citing lab values or dates that don't exist in the record.
+**1. Made-up evidence.** Compare the tool output (what the data says) to the agent's concerns (what it claims). Look for lab values or dates that aren't in the record.
 
-**2. It goes off-task.** Despite the system prompt saying not to make clinical recommendations, it suggests diagnoses and proposes treatments. A system prompt is a request, not a constraint.
+**2. Off-task answers.** The instructions say not to make clinical recommendations. Look for suggested diagnoses or treatments anyway. A system prompt is a request, not a constraint.
 
-**3. It dumps everything.** `get_patient_record` returns the full patient record — demographics, all conditions, all labs, all messages — on every call. More data in context = more opportunities to hallucinate from irrelevant information.
+**3. One big tool call.** `get_patient_record` returns the whole record — demographics, all conditions, all labs, all messages. Our agent usually calls it once and stops. More data in context means more chances to make things up.
 
 ---
 
@@ -713,7 +1025,7 @@ You might wonder whether a patient could craft a portal message to hijack the ag
 
 In this system, the risk is reduced by a deliberate architectural decision: the agent runs in the background, and its output goes to the **doctor** — not back to the patient. The patient never sees agent output, so there's no feedback loop to exploit.
 
-This isn't an accident. It's a consequence of choosing a background agent over a chat interface. The "why not a chatbox" decision from Lab 1 is also doing security work here. Security decisions cascade through architecture.
+The patient's message still reaches the agent, as tool output. Nothing on the platform checks tool output, so the agent's instructions and the doctor's review are what stand in the way.
 
 ---
 
@@ -725,54 +1037,43 @@ Replace `get_patient_record` with keyword-based search tools: `search_conditions
 
 Instead of drowning in everything at once, it has to reason first: "The patient mentioned fatigue — let me check thyroid conditions and TSH labs." This is investigation, not retrieval.
 
-Fewer tokens in context means lower cost, less hallucination surface area, and less PHI exposure in the traces.
+Fewer tokens in context means lower cost, less hallucination surface area, and less PHI in the traces.
 
 ---
 
 &lt;!-- .slide: id="lab3-critic" --&gt;
 
-## Lab 3: Claim Extraction + Grounding
+## Lab 3: Checks as Judge Agents
 
-Three steps run after the primary agent:
+Each check is its own agent on Orchestrate, with no tools and its own output schema:
 
-1. **Claim extraction** — pull out every specific, verifiable medical claim from each concern. Vague descriptions ("recent lab results") get filtered out. You can't ground-check something that doesn't assert anything specific.
+1. **Claim extractor** — pulls out every specific, checkable medical claim in each concern. Vague descriptions ("recent lab results") are dropped. You can't check something that doesn't say anything specific.
 
-2. **Grounding check** — each extracted claim is verified against the raw tool output. Did the agent actually see that lab value?
+2. **Grounding judge** (LLM-as-judge) — checks each claim against the patient's record. Is that lab value really there?
 
-3. **Critic** — evaluates on-task behavior plus grounding results; sends revision feedback back to the primary agent if needed.
+3. **Critic** — looks at the grounding results and whether the concern stays on task, and writes feedback for the agent.
 
-Why extract claims first? A grounding model returns one verdict per claim. Without extraction, you can't tell *which part* of a concern is wrong.
+Why extract claims first? The judge returns one verdict per claim, so you can tell *which part* of a concern is wrong.
 
----
-
-&lt;!-- .slide: id="lab3-why-guardian" --&gt;
-
-## Lab 3: Why Granite Guardian?
-
-[Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) is IBM's open-source model fine-tuned specifically for risk and safety detection — not a general LLM doing safety "on the side."
-
-It runs locally via [Ollama](https://ollama.com) — no API calls, no data leaving your machine. On consumer hardware, each claim check takes ~1-2 seconds.
-
-The interface is deliberately minimal. The system message selects the risk detector (`groundedness`, `harm`, etc.). The user message provides the context and the claim. The model returns one token: `Yes` (risk detected) or `No` (safe). That's it.
-
-This specificity matters: Granite Guardian was trained to detect hallucination and harm. A general LLM doing the same job brings its own biases and blind spots to the evaluation — and it's checking its own work. Guardian is a different model, trained for this task, running independently.
+Note: These three are prompts plus a schema, deployed as agents with no tools. You send each one a concern and the patient's data and get structured JSON back, checked the same way as in Lab 1.
 
 ---
 
-&lt;!-- .slide: id="lab3-guardian" --&gt;
+&lt;!-- .slide: id="lab3-judge-bias" --&gt;
 
-## Lab 3: LLM-as-Judge vs. Granite Guardian
+## Lab 3: Who Checks the Checker?
 
-Two options for the grounding step:
+Our judges run on the same model as the agent: gpt-oss-120b. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
 
-&lt;table&gt;
-&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;LLM-as-Judge&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Granite Guardian&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Self-evaluation bias&lt;/td&gt;&lt;td&gt;Yes — checking its own work&lt;/td&gt;&lt;td&gt;No — separate model&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Cost&lt;/td&gt;&lt;td&gt;Uses your API quota&lt;/td&gt;&lt;td&gt;Free, runs locally via Ollama&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Purpose-built&lt;/td&gt;&lt;td&gt;General reasoning&lt;/td&gt;&lt;td&gt;Fine-tuned for groundedness detection&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
+Ways to reduce it:
 
-Guardian uses a specific message format: system message selects the `groundedness` risk detector; user message provides context and one claim. Returns Yes (hallucinated) or No (grounded). The lab lets you toggle between both and compare traces side by side.
+- a judge from a different model family (Orchestrate's catalog has more than one)
+- a model trained for the check, such as a groundedness detector
+- a clinician reviewing a sample of verdicts
+
+Judges cut down on what reaches the doctor. The doctor is still the one who decides.
+
+Note: In the open-source edition, there's an option to check grounding with Granite Guardian running locally. It's a model trained to detect ungrounded claims. We're not running it today. Here, the judge is the same model as the agent, so keep that bias in mind when you read its verdicts.
 
 ---
 
@@ -784,7 +1085,7 @@ Guardian uses a specific message format: system message selects the `groundednes
 
 # Securing Data
 
-Enforce access control at the database layer.
+Who can read what the agent knows? A discussion.
 
 &lt;/div&gt;
 
@@ -792,7 +1093,7 @@ Enforce access control at the database layer.
 
 &lt;!-- .slide: id="lab4-output-is-sensitive" --&gt;
 
-## Lab 4: Agent Output Is PHI Too
+## Lab 4: Agent Output Is Sensitive Data
 
 We've been protecting the patient records the agent reads. But the concerns the agent writes are also sensitive — they're clinical findings derived from patient data.
 
@@ -802,64 +1103,75 @@ In a multi-provider practice, provider A's agent may reach a different conclusio
 
 ---
 
-&lt;!-- .slide: id="lab4-rls" --&gt;
+&lt;!-- .slide: id="lab4-storage-guarantees" --&gt;
 
-## Lab 4: Why Access Control Belongs in the Database
+## Lab 4: Where Does the Agent's Data Live?
 
-**Application-layer filtering**: every query includes `WHERE provider_id = :provider_id`. You have to remember it in every query, every ORM eager-load, every debug endpoint, every migration. Forget it once and data leaks silently.
+&lt;table style="font-size:0.72em"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Data&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Stored in&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;What we saw today&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Traces: tool output, LLM context&lt;/td&gt;&lt;td&gt;watsonx Orchestrate&lt;/td&gt;&lt;td&gt;every seat can read them, kept 30 days&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Agent, tools, connection&lt;/td&gt;&lt;td&gt;watsonx Orchestrate&lt;/td&gt;&lt;td&gt;credentials in the connection&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Patient records&lt;/td&gt;&lt;td&gt;shared EHR on Code Engine&lt;/td&gt;&lt;td&gt;a copy per tenant, keyed by a header&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Concerns&lt;/td&gt;&lt;td&gt;a JSON file on your laptop&lt;/td&gt;&lt;td&gt;no access control, no audit log&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
 
-**Postgres Row-Level Security**: the policy applies to every query automatically — including ones you haven't written yet. A new developer can write `SELECT * FROM concerns` and only sees what the session allows.
+Questions to ask your platform, for each one:
 
-```sql
-CREATE POLICY provider_concern_access ON concerns
-    USING (
-        provider_id = current_setting('app.provider_id', true)
-        OR id IN (SELECT concern_id FROM shared_concerns
-                  WHERE shared_with = current_setting('app.provider_id', true))
-    );
-```
+- Where is it stored, and in which region?
+- Who can read it? Can you limit that per user?
+- How long is it kept? How do you delete it, including backups and exports?
+- Is it encrypted at rest and in transit? Who holds the keys?
 
-One place to maintain the rule, instead of every query in the codebase.
+Note: Ask these about every place the agent's data ends up, including traces. Get the answers from the vendor's documentation. IBM's watsonx data security page says data at rest is encrypted by default, and that you can bring your own keys with Key Protect. Check what applies to the specific service you use. For Orchestrate traces, what we saw in this account is that every seat can read them and they're kept for 30 days.
 
----
-
-&lt;!-- .slide: id="lab4-ownership" --&gt;
-
-## Lab 4: Default Deny, Explicit Grant
-
-Concerns belong to the provider whose agent created them. Dr. Kim and Rachel Torres run agents against the same patients — they get separate concern sets, even for the same patient. The agent is a delegate; its output inherits the identity of whoever invoked it.
-
-The default is isolation. To share a concern, you make an explicit grant — `share_concern()` records it in `shared_concerns`. That action is auditable.
-
-Compare this to most application-layer designs, where the default is permissive and you add filters to restrict. **Default deny inverts the assumption.** Access is exceptional, not normal.
+Sources: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/security-data.html?context=wx
 
 ---
 
-&lt;!-- .slide: id="lab4-scoping" --&gt;
+&lt;!-- .slide: id="lab4-data-layer" --&gt;
 
-## Lab 4: Tool Scoping + Concern Stability
+## Lab 4: Access Control Belongs in the Data Layer
 
-**Tool scoping**: instead of a flat tool list, a factory creates tools scoped to one authorized patient. If the agent tries to access a different patient's record, it gets an explicit denial.
+You can put a rule like "Rachel Torres can't see Dr. Kim's concerns" in four places:
 
-Elena Vasquez's record mentions her neighbor Patricia Kowalski and asks the doctor to check on her. The agent sees the mention, tries to access Patricia's record, and gets denied. The doctor never sees data she didn't authorize.
+- **The prompt.** A request to the model. Text in a patient message can override it.
+- **The UI.** Every other path to the data skips it.
+- **The application's queries.** Forget the `WHERE` clause once, and data leaks.
+- **The data layer.** The store checks every read and write, whichever code asks.
 
-**Concern stability**: the agent receives its previous concerns as context and reuses their IDs. Running it twice doesn't wipe previous work — it builds on it. Downstream systems (notifications, audit logs, care coordination) can reference concern IDs and know they'll persist.
+For example, Postgres row-level security applies a policy to every query, including ones you haven't written yet. The default is deny. Sharing a concern writes an explicit grant, and that grant is a record you can audit.
+
+Note: The repository has a Lab 4 schema with a row-level security policy if you want to read one. We're not running a database today. I want you to know the rule can live in one place, in the store.
+
+---
+
+&lt;!-- .slide: id="lab4-identity" --&gt;
+
+## Lab 4: Identity End to End
+
+The agent acts for a clinician. Its tools should fetch only what that clinician could fetch.
+
+- **The identity comes from the session.** The model never fills it in. If it's a tool argument, a prompt injection can change it.
+- **The check happens below the agent.** The data layer decides what comes back.
+
+Today, neither is true:
+
+- Your tools send your tenant, which separates students. It doesn't identify a clinician.
+- Within your tenant, the tools can read any patient. `list_patients` and `get_inbox` return conditions and message subjects for every patient.
+
+Note: Patient Elena Vasquez's message mentions her neighbor, Patricia Kowalski. Nothing today stops the agent from looking up Patricia's record while it reviews Elena. The Lab 4 code in the repository scopes tools to one patient, but even there the clinic directory tools return every patient's conditions. A real fix needs the clinician's identity checked in the record system.
 
 ---
 
 &lt;!-- .slide: id="lab4-production" --&gt;
 
-## Lab 4: What RLS Doesn't Fully Solve
+## Lab 4: In Production
 
-The RLS policy trusts `current_setting('app.provider_id')` — a session variable the application sets. A Python bug that sets the wrong provider ID would still leak data. RLS centralizes the filter; it doesn't verify the identity.
-
-In production:
-- Each provider authenticates via JWT/OAuth
-- Identity flows into a per-provider database role
-- The policy checks `current_user`, not a session variable the app can misconfigure
-- Langfuse traces need their own RBAC — the same provider who can see concerns in the UI shouldn't automatically see all traces
-
-RLS is defense-in-depth, not a complete security boundary. It's one layer in a stack.
+- Each clinician signs in, with OAuth or SMART on FHIR, and that identity reaches the record system on every tool call
+- Concerns go in a store with access control by clinician, an audit log, and a retention rule
+- Traces get the same treatment: limit who can read them, minimize what goes in, and set how long they're kept
+- Credentials live in the platform's connections or a secrets manager, not in `.env`
+- Each team gets its own Orchestrate instance and only the roles it needs
 
 ---
 
@@ -884,17 +1196,17 @@ RLS is defense-in-depth, not a complete security boundary. It's one layer in a s
 
 **The Agent**
 - Background inbox triage for a doctor's EHR
-- Structured outputs — no free text, no advice, no drafts
+- Structured outputs, checked by your code — no free text, no advice, no drafts
 - Doctor stays in the loop at every step
 
 &lt;/div&gt;
 &lt;div style="flex: 1"&gt;
 
-**The Stack**
-- Lab 1: LangGraph + constrained decoding
-- Lab 2: Langfuse + Presidio
-- Lab 3: Critic loop + Granite Guardian
-- Lab 4: Postgres RLS + scoped tools
+**Each Lab**
+- Lab 1: an agent on Orchestrate, with a schema, validation and one retry
+- Lab 2: Orchestrate traces; controls, plug-ins, and smaller tool output
+- Lab 3: focused tools; grounding and critic checks as judge agents
+- Lab 4: where agent data is stored, and identity end to end
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -910,7 +1222,7 @@ Responsibility isn't something you bolt on at the end.
 - **Build** with constraints from day one — structure limits what the agent can say
 - **Observe** so you can explain every decision — and defend it
 - **Improve** using evidence from real traces, not intuition
-- **Secure** at the infrastructure layer, not just the prompt
+- **Secure** the data the agent reads and writes, in the data layer
         </textarea> </section> </div> </div> </div> <style>
 /* Embedded mode */
 .mkdocs-revealjs-wrapper,
@@ -1872,6 +2184,6 @@ Responsibility isn't something you bolt on at the end.
     initReveal();
   }
 })();
-</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2026 11:21:52 UTC">October 27, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script> <!-- ─────────────────────────────────────── mkdocs-revealjs --> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title="Last update"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 27, 2026 12:49:12 UTC">October 27, 2026</span> </span> <span class=md-source-file__fact> <span class=md-icon title=Contributors> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg> </span> <nav> <a href=mailto:olivia@decoding.ink>Olivia Buzek</a>, <a href=mailto:ombuzek@us.ibm.com>Olivia Buzek (via Claude Code)</a> </nav> </span> </aside> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright © 2025- IBM Research </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/IBM/ai-agents-workshop target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href=https://github.com/IBM/ai-agents-workshop/discussions target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 144c0 97.2-86 176-192 176-26.7 0-52.1-5-75.2-14l-81.6 43.2c-9.3 4.9-20.7 3.2-28.2-4.2s-9.2-18.9-4.2-28.2l35.6-67.2C14.3 220.2 0 183.6 0 144 0 46.8 86-32 192-32s192 78.8 192 176m0 368c-94.1 0-172.4-62.1-188.8-144 120-1.5 224.3-86.9 235.8-202.7 83.3 19.2 145 88.3 145 170.7 0 39.6-14.3 76.2-38.4 105.6l35.6 67.2c4.9 9.3 3.2 20.7-4.2 28.2s-18.9 9.2-28.2 4.2L459.2 498c-23.1 9-48.5 14-75.2 14"></path></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.feedback", "content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.share", "search.suggest", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script id=init-glightbox>const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
 document$.subscribe(()=>{ lightbox.reload(); });
 </script></body></html>
