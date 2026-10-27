@@ -51,7 +51,7 @@ def download_dirs() -> list[Path]:
     dirs = [Path.home() / "Downloads"]
     if is_wsl():
         try:
-            # Ask Windows for the real Downloads folder (it may be redirected, e.g. to OneDrive).
+            # Ask Windows for the real Downloads folder: users or IT policy can move it from %USERPROFILE%\Downloads.
             win = subprocess.run(
                 ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command",
                  "(New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path"],

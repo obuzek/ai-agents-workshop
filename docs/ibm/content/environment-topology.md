@@ -68,7 +68,7 @@ between participants. All participants share a single IBM watsonx.ai API key
 | Component | How provisioned | Required for | Status |
 |---|---|---|---|
 | Python 3.11 + uv | Pre-installed on VSI image | All labs | Confirmed |
-| Workshop repo | `git clone` + `uv sync` | All labs | Confirmed |
+| Workshop repo | `scripts/install.sh` one-liner (clones `txc-2026-ibm`, runs `uv sync`) | All labs | Confirmed |
 | watsonx.ai API key | Shared key provided by facilitator, set in `.env` | All labs | Confirmed |
 | Docker Engine + Compose | Pre-installed on VSI image | Labs 2–4 | Confirmed |
 | Langfuse stack | `docker compose -f docker-compose.langfuse.yml up` | Lab 2+ | **May be replaced by watsonx.governance** |

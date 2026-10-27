@@ -2,78 +2,9 @@
 
 Complete these steps **before the workshop** to make sure your environment is ready.
 
-## 1. Install Tools
+## 1. IBM Cloud: log in and create your API key
 
-### Python 3.11+
-
-=== "macOS"
-    ```bash
-    brew install python@3.11
-    python3 --version
-    ```
-
-=== "Linux"
-    ```bash
-    sudo apt update
-    sudo apt install python3.11 python3.11-venv
-    python3 --version
-    ```
-
-=== "Windows"
-    Download from [python.org](https://www.python.org/downloads/). Check "Add Python to PATH" during installation.
-
-### Git
-
-=== "macOS"
-    ```bash
-    brew install git
-    ```
-
-=== "Linux"
-    ```bash
-    sudo apt install git
-    ```
-
-=== "Windows"
-    Download from [git-scm.com](https://git-scm.com/download/win).
-
-### uv (Python package manager)
-
-=== "macOS/Linux"
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    uv --version
-    ```
-
-=== "macOS (Homebrew)"
-    ```bash
-    brew install uv
-    uv --version
-    ```
-
-=== "Windows"
-    <!-- TODO: verify Windows uv install instructions (see issue) -->
-    ```powershell
-    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-    uv --version
-    ```
-    Alternatively: `winget install --id=astral-sh.uv -e`
-
----
-
-## 2. Clone and Install
-
-```bash
-git clone --branch txc-2026-ibm --single-branch https://github.com/obuzek/ai-agents-workshop.git
-cd ai-agents-workshop
-uv sync
-```
-
----
-
-## 3. IBM Cloud API Key
-
-The workshop code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You create it once in the IBM Cloud web console, then a setup script saves it into the workshop's `.env` file.
+The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate**, and watsonx.governance evaluates it. Your code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You create it in the IBM Cloud web console, and the installer in step 3 saves it for you.
 
 ### Log in to IBM Cloud
 
@@ -104,38 +35,139 @@ The labs use watsonx.governance to evaluate your agent. Its features need a wats
 !!! warning "You only see the key once"
     IBM Cloud shows the key only when you create it. If you close the dialog without downloading it, delete that key and create a new one.
 
-### Save the key into the workshop
+---
 
-From the `ai-agents-workshop` folder, run:
+## 2. Set up IBM Bob
+
+You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's built-in terminal. On Windows, Bob connects to a Linux environment (WSL), so everyone runs the same commands.
+
+=== "macOS"
+
+    1. Download and install [IBM Bob](https://bob.ibm.com/?lnk=hpfp2us), open it, and log in to your Bob account.
+    2. Open a terminal inside Bob: **Terminal → New Terminal** (or <kbd>Ctrl</kbd>+<kbd>`</kbd>).
+
+    Use this terminal for **3. Run the installer** below and every command in the labs.
+
+    !!! tip "If macOS asks to install the Command Line Tools"
+        The installer needs `git`, which comes with Apple's Command Line Tools. If a window pops up asking to install them, click **Install**, wait for it to finish, then run the installer again.
+
+=== "Windows"
+
+    On Windows, the workshop runs inside **WSL** (Windows Subsystem for Linux), using the **FedoraLinux-44** distribution. Bob connects to it, so your terminal and files are in Linux.
+
+    !!! tip "On a TechXchange workshop machine?"
+        WSL and FedoraLinux-44 are already installed. Skip **Install WSL with Fedora** and start at **Connect IBM Bob to WSL**.
+
+    !!! info "What you need"
+        Windows 11 (recommended), or Windows 10 version 2004 (build 19041) or later, with hardware virtualization turned on. On a managed work laptop, WSL may be blocked by policy; check with your IT team before the workshop.
+
+    **Install WSL with Fedora** (once; needs administrator rights and a restart)
+
+    1. Right-click **Windows Terminal** (or **PowerShell**) and choose **Run as administrator**, then run:
+
+        ```powershell
+        wsl --install -d FedoraLinux-44
+        ```
+
+        If you already use WSL, run `wsl --update` first.
+
+    2. Restart Windows when asked.
+    3. Open PowerShell again (administrator not needed) and check that Fedora is installed, with **VERSION 2**:
+
+        ```powershell
+        wsl -l -v
+        ```
+
+        If `FedoraLinux-44` isn't listed, run `wsl --install -d FedoraLinux-44` once more.
+
+    4. Start Fedora once to create your Linux user, either from the Start menu (**FedoraLinux-44**) or with:
+
+        ```powershell
+        wsl -d FedoraLinux-44
+        ```
+
+        It asks you to **create a default Unix user account**: type a username (it doesn't need to match your Windows name). It doesn't ask for a password; your user can already run `sudo` without one. Type `exit` to close it.
+
+    ??? warning "Error 0x80370102, or the install stuck at 0.0%"
+        **0x80370102** means virtualization is off: turn it on in your BIOS/UEFI settings (usually under CPU), make sure the **Virtual Machine Platform** Windows feature is on, and restart.
+
+        **Stuck at 0.0%?** Cancel and run `wsl --install --web-download -d FedoraLinux-44` instead.
+
+    **Connect IBM Bob to WSL**
+
+    5. Download and install the latest [IBM Bob](https://bob.ibm.com/?lnk=hpfp2us), open it, and log in to your Bob account. If you already have Bob, update it: older versions can't set up WSL.
+    6. Open the **Extensions** view (the icon of four squares in the left bar), search for **Open Remote - WSL**, and install the one by **jeanp413**. (Don't use Microsoft's "WSL" extension; its licence only allows it in Microsoft's VS Code.)
+    7. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, type **WSL**, choose **Remote-WSL: Connect to WSL using Distro...**, and pick **FedoraLinux-44**. The first time, Bob takes a minute to set itself up inside Fedora. Use this window from now on.
+
+        Picking the distro matters if you have another one, like Ubuntu, installed: plain **Remote-WSL: Connect to WSL** opens your *default* distro.
+
+    8. In that window, open a terminal: **Terminal → New Terminal**. It runs inside Fedora. Use it for **3. Run the installer** below and every command in the labs.
+
+    !!! tip "Your browser downloads still go to Windows"
+        The API key you download in your Windows browser lands in your Windows **Downloads** folder. The installer looks there too, so you don't need to move it.
+
+    ??? tip "On a VPN or behind a corporate proxy?"
+        If downloads fail inside Fedora but work in Windows, see Microsoft's [WSL networking troubleshooting](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting). On Windows 11, *mirrored* networking often helps with VPNs.
+
+=== "Linux"
+
+    1. Download and install [IBM Bob](https://bob.ibm.com/?lnk=hpfp2us), open it, and log in to your Bob account.
+    2. Open a terminal inside Bob: **Terminal → New Terminal** (or <kbd>Ctrl</kbd>+<kbd>`</kbd>).
+
+    The installer uses your package manager (`dnf`, `apt` or `zypper`) with `sudo` for anything missing, so it may ask for your password.
+
+---
+
+## 3. Run the installer
+
+In Bob's terminal from step 2 (on Windows, Bob connected to WSL), run:
 
 ```bash
-uv run python scripts/ibm_cloud_login.py
+curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-ibm/scripts/install.sh | bash
 ```
 
-The script:
+You don't need Homebrew or a preinstalled Python. The installer:
 
-- Finds `~/Downloads/apikey.json`, and asks you to confirm before using it.
-- Checks the key with IBM Cloud and shows the user and account it belongs to.
-- Asks which **watsonx Orchestrate instance** to use (see below).
-- Saves everything into `.env`, creating `.env` from `.env-example` if needed.
+1. Installs `git`, `curl`, `tar` and `gzip` if they're missing, using your package manager with `sudo`. (On Fedora WSL only `git` is missing, and `sudo` doesn't ask for a password. On other Linux systems it may.)
+2. Installs [uv](https://docs.astral.sh/uv/), which also downloads Python 3.12 for the workshop.
+3. Downloads the workshop into `~/ai-agents-workshop`.
+4. Installs the workshop's Python packages.
+5. Installs the watsonx Orchestrate command-line tool, `orchestrate`.
+6. Connects you to IBM Cloud with your API key (see below).
 
-When it asks for the Orchestrate instance:
+It's safe to run again at any time: it skips what's already done and updates the workshop files.
 
-1. In cloud.ibm.com, open the **Resource list** from the menu on the left.
-2. Expand **AI / Machine Learning** and click the workshop's **watsonx Orchestrate** instance.
-3. In the details panel, copy the **CRN**. It starts with `crn:v1:` and has a copy button next to it.
-4. Paste it into the script. If you already have the instance's API endpoint URL, which starts with `https://api.`, you can paste that instead.
+When it finishes, open the workshop in Bob: **File → Open Folder…**, then choose `ai-agents-workshop` in your home folder.
+
+### Connecting to IBM Cloud
+
+At the end, the installer asks a few questions:
+
+- **Your API key.** It finds the `apikey.json` you downloaded in step 1 and asks you to confirm. On Windows it also looks in your Windows Downloads folder. If it can't find the file, paste the key when asked; it won't appear on screen.
+- **The watsonx Orchestrate instance.** In cloud.ibm.com, open the **Resource list**, expand **AI / Machine Learning**, click the workshop's **watsonx Orchestrate** instance, and copy its **CRN** (it starts with `crn:v1:`; there's a copy button next to it). Paste it at the prompt.
 
 You should see:
 
 ```text
 ✓ API key works: <your workshop username> (account <account id>)
-✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to .../ai-agents-workshop/.env
+✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to …/ai-agents-workshop/.env
 ✓ Your agent and tools will be named with the prefix 'student0_'
 ✓ Orchestrate instance is reachable with this key
+✓ Orchestrate CLI environment 'workshop' is active
 ```
 
-If the file is somewhere else, pass its path: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`. If you don't have the file, run the script without arguments and paste the key when it asks. The key won't appear on screen as you paste it. You can re-run the script at any time to change the key or the instance.
+??? tip "Running the IBM Cloud step on its own"
+    To change your key or instance later, without reinstalling:
+
+    ```bash
+    cd ~/ai-agents-workshop
+    uv run python scripts/ibm_cloud_login.py
+    ```
+
+    Pass a path if your key file is somewhere unusual: `uv run python scripts/ibm_cloud_login.py path/to/apikey.json`.
+
+??? tip "Open a new terminal afterwards"
+    The installer adds `uv` and `orchestrate` to your shell's PATH for **new** terminals. In the terminal you ran it from, run `source $HOME/.local/bin/env` once.
 
 ??? tip "Using the `ibmcloud` CLI too?"
     You don't need the IBM Cloud CLI for the labs. If you want it, log in with the same key file:
@@ -148,104 +180,7 @@ If the file is somewhere else, pass its path: `uv run python scripts/ibm_cloud_l
 
 ---
 
-## 4. LLM Provider Setup
-
-The labs call LLMs via API. You need an API key from **one** provider. Labs 1 and 2 work on the Gemini free tier, but **Labs 3 and 4 make 10-15+ LLM calls per run** — more than free-tier rate limits allow. We recommend getting your own paid API key (OpenAI is the cheapest option — the entire workshop costs under $5).
-
-=== "OpenAI (recommended)"
-    The best option for the full workshop. Cheap, fast, high rate limits.
-
-    1. Sign up at [platform.openai.com](https://platform.openai.com/)
-    2. Add a payment method (credit card required) and set a **usage limit** — $5 is more than enough for the entire workshop
-    3. Go to [API Keys](https://platform.openai.com/api-keys) and create a new secret key
-    4. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra openai
-    cp .env-example .env
-    # Edit .env → uncomment the OpenAI section, set OPENAI_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `gpt-4o-mini` (default) |
-    | **Cost** | ~$0.15 per 1M input tokens — the entire workshop costs under $5 |
-    | **Rate limits** | 500+ requests/min (pay-as-you-go Tier 1) |
-    | **Works for** | All labs |
-
-=== "Google Gemini (free)"
-    **Free tier, no credit card required** — just a Google account. Good for Labs 1 and 2.
-
-    1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
-    2. When prompted to select a project, use the **default project** (usually called "Default Gemini Project" or "Generative Language Client"). Don't create a new project — the Gemini API is already enabled on the default one.
-    3. Click **Create API key** and copy it
-    4. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra gemini
-    cp .env-example .env
-    # Edit .env → set GOOGLE_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `gemini-2.5-flash-lite` (default) |
-    | **Cost** | Free |
-    | **Rate limits** | 15 requests/min, 1,000 requests/day |
-    | **Works for** | Labs 1-2 |
-
-    !!! warning "Created a new Google Cloud project?"
-        If you created your key in a new project, you'll get an `API_KEY_INVALID` error. Either recreate the key in the default project, or enable the [Generative Language API](https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com) on your project.
-
-    !!! warning "Rate limits for Labs 3+"
-        The free tier allows 15 requests per minute. Lab 3's multi-node agent (ReAct + grounding + critic) makes 10-15+ LLM calls per patient, so you'll hit rate limits. For Lab 3 onward, switch to a paid provider (OpenAI is recommended).
-
-=== "Anthropic"
-    1. Sign up at [console.anthropic.com](https://console.anthropic.com/)
-    2. Add a payment method and go to [API Keys](https://console.anthropic.com/settings/keys) to create a key
-    3. Install dependencies and configure your key:
-
-    ```bash
-    uv sync --extra anthropic
-    cp .env-example .env
-    # Edit .env → uncomment the Anthropic section, set ANTHROPIC_API_KEY=your-key
-    ```
-
-    | | |
-    |---|---|
-    | **Model** | `claude-haiku-4-5-20251001` (default) |
-    | **Cost** | ~$1 per 1M input tokens — the entire workshop should cost under $5 |
-    | **Rate limits** | 50+ requests/min (pay-as-you-go) |
-    | **Works for** | All labs |
-
-The total LLM cost for the entire workshop should not exceed **$5** on any paid provider. The workshop uses cheap, fast models — not frontier models — because the goal is learning agent patterns, not benchmarking LLM quality.
-
-See `.env-example` for all available configuration options.
-
-### Verify your API key
-
-After setting up your `.env` file, confirm the LLM is reachable:
-
-```bash
-uv run python scripts/check_llm.py
-```
-
-You should see a short greeting. If you get an authentication error, double-check your API key in `.env`.
-
-!!! tip "Switching providers mid-workshop"
-    Change `LLM_PROVIDER` and the API key in your `.env` file, then restart the agent. No code changes needed.
-
-???+ note "Other free-tier options"
-    If you don't want to pay for an API key, these providers offer free tiers with tool calling and structured output. They aren't pre-configured in `app/llm.py` but could be added.
-
-    | Provider | Free RPM | Free RPD | Best model | Catches |
-    |----------|---------|---------|------------|---------|
-    | [Groq](https://console.groq.com/) | 30 | 1,000 | `llama-4-scout-17b-16e-instruct` | 30K token/min limit; no credit card needed |
-    | [Cerebras](https://cloud.cerebras.ai/) | 30 | 14,400 | `llama-3.3-70b` | 8K context window cap — test whether your prompts fit |
-
----
-
-## 5. Later-Lab Prerequisites
+## 4. Later-Lab Prerequisites
 
 ### Docker (Labs 2, 3, 4)
 
@@ -277,7 +212,7 @@ docker compose version
     The Langfuse and Postgres stacks pull container images on first run. To avoid waiting during the labs:
 
     ```bash
-    cd ai-agents-workshop
+    cd ~/ai-agents-workshop
     docker compose -f docker-compose.langfuse.yml pull  # Lab 2
     docker pull postgres:16                              # Lab 4
     ```
@@ -337,11 +272,12 @@ uv sync --all-extras
 
 ---
 
-## 6. Start the EHR Inbox
+## 5. Start the EHR Inbox
 
-The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it with a single command:
+The workshop uses a simulated Electronic Health Record (EHR) inbox — a patient portal for **Lakeview Family Medicine**. Start it from the workshop folder:
 
 ```bash
+cd ~/ai-agents-workshop
 uv run streamlit run app/ui.py --server.port 8501
 ```
 
