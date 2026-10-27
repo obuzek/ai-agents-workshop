@@ -5,7 +5,7 @@ to, and confirms the key can reach the workshop's Orchestrate instance.
 Safe to re-run: it updates the existing values and leaves the rest of .env alone.
 
 Usage:
-    uv run python scripts/ibm_cloud_login.py                      # looks for ~/Downloads/apikey.json, else asks
+    uv run python scripts/ibm_cloud_login.py                      # finds the newest apikey*.json in Downloads, else asks
     uv run python scripts/ibm_cloud_login.py path/to/apikey.json
     uv run python scripts/ibm_cloud_login.py --instance crn:v1:bluemix:public:watsonx-orchestrate:<region>:a/<account>:<guid>::
 """
@@ -28,19 +28,58 @@ from dotenv import dotenv_values
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = REPO_ROOT / ".env"
 ENV_EXAMPLE = REPO_ROOT / ".env-example"
-DEFAULT_KEY_FILE = Path.home() / "Downloads" / "apikey.json"  # IBM Cloud's default download name
 IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
 # The shared workshop EHR. Every attendee uses it; each gets a private copy of the
 # patients, keyed by EHR_TENANT below.
 SHARED_EHR_URL = os.environ.get("SHARED_EHR_URL", "https://workshop-ehr.2g7six4hbjvx.us-south.codeengine.appdomain.cloud")
 
 
+def is_wsl() -> bool:
+    """True inside Windows Subsystem for Linux."""
+    try:
+        return "microsoft" in Path("/proc/version").read_text().lower()
+    except OSError:
+        return False
+
+
+def download_dirs() -> list[Path]:
+    """Where a browser download of apikey.json is likely to be.
+
+    Inside WSL, the browser is a Windows app, so the file lands in the Windows
+    Downloads folder (under /mnt/c/...), not in the Linux home directory.
+    """
+    dirs = [Path.home() / "Downloads"]
+    if is_wsl():
+        try:
+            # Ask Windows for the real Downloads folder (it may be redirected, e.g. to OneDrive).
+            win = subprocess.run(
+                ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command",
+                 "(New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path"],
+                capture_output=True, text=True, timeout=20,
+            ).stdout.strip()
+            if win:
+                linux = subprocess.run(["wslpath", "-u", win], capture_output=True, text=True, timeout=10).stdout.strip()
+                if linux:
+                    dirs.append(Path(linux))
+        except (OSError, subprocess.SubprocessError):
+            pass
+        dirs += sorted(Path("/mnt/c/Users").glob("*/Downloads"))  # fallback if Windows interop is off
+    return [d for d in dict.fromkeys(dirs) if d.is_dir()]
+
+
+def find_key_file() -> Path | None:
+    """The newest apikey*.json in the download folders (browsers rename repeats to "apikey (1).json")."""
+    candidates = [f for d in download_dirs() for f in d.glob("apikey*.json") if f.is_file()]
+    return max(candidates, key=lambda f: f.stat().st_mtime, default=None)
+
+
 def read_api_key(key_file: Path | None) -> str:
     """Get the API key from a downloaded apikey.json, or ask for it."""
-    if key_file is None and DEFAULT_KEY_FILE.exists():
-        answer = input(f"Use the API key in {DEFAULT_KEY_FILE}? [Y/n] ").strip().lower()
+    found = find_key_file() if key_file is None else None
+    if found is not None:
+        answer = input(f"Use the API key in {found}? [Y/n] ").strip().lower()
         if answer in ("", "y", "yes"):
-            key_file = DEFAULT_KEY_FILE
+            key_file = found
 
     if key_file is not None:
         try:
