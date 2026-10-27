@@ -44,3 +44,22 @@ def bob_access(request: Request):
     if not (url and code) or _expired():
         return JSONResponse(status_code=400, content={"detail": "Not available"}, headers=_cors(request))
     return JSONResponse(content={"url": url, "code": code}, headers=_cors(request))
+
+
+@router.get("/model-access")
+def model_access(request: Request):
+    """How to register the workshop model in Orchestrate (used by lab1/agent/deploy.py).
+
+    Returns the model name, the proxy URL to use as its custom_host, and the proxy
+    token for its connection. Like /bob-access, it stops answering after
+    WORKSHOP_INFO_EXPIRES.
+    """
+    token = os.environ.get("LLM_PROXY_TOKEN", "")
+    if not token or _expired():
+        return JSONResponse(status_code=400, content={"detail": "Not available"}, headers=_cors(request))
+    base = os.environ.get("PUBLIC_URL", "").rstrip("/") or f"https://{request.url.netloc}"
+    return JSONResponse(content={
+        "model": os.environ.get("WORKSHOP_MODEL", "anthropic/claude-sonnet-5-5"),
+        "custom_host": f"{base}/llm/anthropic/v1",
+        "api_key": token,
+    }, headers={"Cache-Control": "no-store"})

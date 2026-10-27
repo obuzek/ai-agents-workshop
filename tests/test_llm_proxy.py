@@ -206,3 +206,20 @@ def test_health_reports_proxy_configured_without_secrets(proxy):
     health = client.get("/health")
     assert health.json()["llm_proxy"] == "configured"
     assert "real-key" not in health.text and "workshop-token" not in health.text
+
+
+def test_model_access_served_before_expiry(monkeypatch):
+    monkeypatch.setenv("LLM_PROXY_TOKEN", "workshop-token")
+    monkeypatch.setenv("PUBLIC_URL", "https://ehr.example.test")
+    client = _info_client(monkeypatch, "2099-01-01T00:00:00Z")
+    body = client.get("/workshop/model-access").json()
+    assert body == {"model": "anthropic/claude-sonnet-5-5",
+                    "custom_host": "https://ehr.example.test/llm/anthropic/v1", "api_key": "workshop-token"}
+    monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")
+
+
+def test_model_access_refused_after_expiry(monkeypatch):
+    monkeypatch.setenv("LLM_PROXY_TOKEN", "workshop-token")
+    client = _info_client(monkeypatch, "2000-01-01T00:00:00Z")
+    assert client.get("/workshop/model-access").status_code == 400
+    monkeypatch.delenv("EHR_MODE"); _reload(monkeypatch, "local")
