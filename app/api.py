@@ -16,6 +16,7 @@ from pydantic import BaseModel
 import requests as http_client
 
 from app import store
+from app.llm_proxy import router as llm_proxy_router
 from app.store import load_patient, load_patients, load_raw_patients, save_reply
 
 logger = logging.getLogger(__name__)
@@ -46,11 +47,15 @@ AGENT_API_URL = os.environ.get("AGENT_API_URL", "http://localhost:8001")
 # In server mode (the shared workshop EHR) every data request names its tenant
 # in the X-Tenant header; each tenant sees only its own copy of the patients.
 OPEN_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
+# The model proxy has its own token check (app/llm_proxy.py) and is only served by the shared EHR.
+LLM_PROXY_PREFIX = "/llm/"
+if store.EHR_MODE == "server":
+    app.include_router(llm_proxy_router)
 
 
 @app.middleware("http")
 async def tenant_from_header(request: Request, call_next):
-    if store.EHR_MODE != "server" or request.url.path in OPEN_PATHS:
+    if store.EHR_MODE != "server" or request.url.path in OPEN_PATHS or request.url.path.startswith(LLM_PROXY_PREFIX):
         return await call_next(request)
     tenant = request.headers.get(store.TENANT_HEADER, "").strip()
     if not tenant:
