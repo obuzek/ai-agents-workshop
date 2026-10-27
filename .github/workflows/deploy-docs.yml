@@ -1,9 +1,12 @@
 name: Deploy Documentation
 
+# /oss/ is built from main; /ibm/ is built from txc-2026-ibm, the branch IBM-edition
+# attendees clone, so the guide always matches the code it describes.
 on:
   push:
     branches:
       - main
+      - txc-2026-ibm
     paths:
       - 'docs/**'
       - '.github/workflows/deploy-docs.yml'
@@ -12,14 +15,27 @@ on:
 permissions:
   contents: write
 
+# Pushes to main and txc-2026-ibm both publish the whole site; run them one at a time.
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout main (open-source edition, build scripts)
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0  # Fetch all history for git info plugins
+
+      - name: Checkout txc-2026-ibm (IBM edition)
+        uses: actions/checkout@v4
+        with:
+          ref: txc-2026-ibm
+          path: ibm-branch
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -44,13 +60,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Build all editions
-        run: docs/build.sh
+        run: IBM_DOCS_DIR="$GITHUB_WORKSPACE/ibm-branch/docs/ibm" docs/build.sh
 
       # mkdocs gh-deploy only publishes a single site, so push the combined build directly.
       - name: Deploy to GitHub Pages
         run: |
           uvx ghp-import==2.1.0 --no-jekyll --push --force --remote origin \
-            --branch gh-pages --message "Deploy docs from ${{ github.sha }}" docs/site
+            --branch gh-pages --message "Deploy docs (triggered by ${{ github.ref_name }} @ ${{ github.sha }})" docs/site
 
       - name: Summary
         run: |
