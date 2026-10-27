@@ -247,8 +247,8 @@ uv run streamlit run app/ui.py --server.port 8501
 uv run uvicorn lab3.agent.api:app --port 8001
 ```
 
-!!! warning "Don't toggle to Guardian without installing it"
-    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. The **Grounding** toggle in the UI will switch to Guardian mode, but the agent will error if you haven't completed the [optional Ollama setup](prerequisites.md#ollama-granite-guardian-lab-3-optional). Only toggle if you installed Ollama, pulled the model, and ran `uv sync --all-extras`.
+!!! warning "Leave grounding on LLM-as-judge"
+    The default grounding mode is LLM-as-judge, which uses your OpenAI API key. Granite Guardian runs locally through Ollama, which isn't part of this edition's setup, so leave the **Grounding** toggle on LLM-as-judge. Switching it to Guardian mode makes the agent error.
 
 Select a patient and click **Run Agent**. The agent will take longer than Lab 2 — it's running the full loop (primary agent → grounding → critic → possibly revise).
 
@@ -304,8 +304,8 @@ The critic sees the concerns plus grounding verdicts and decides: approve or rev
 
 ## Step 5: Toggle Grounding Modes
 
-!!! warning "Granite Guardian requires Ollama"
-    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. To try Granite Guardian, you need Ollama running, the model pulled, and the optional dependency installed — see [Prerequisites](prerequisites.md#ollama-granite-guardian-lab-3-optional). **Do not toggle to Guardian mode unless you completed those steps**, or the agent will error.
+!!! warning "Granite Guardian requires Ollama, which this edition doesn't install"
+    The default mode is **LLM-as-judge**, which works with your existing OpenAI API key. Granite Guardian needs Ollama running locally with the model pulled, which isn't part of this edition's setup. **Don't toggle to Guardian mode**, or the agent will error.
 
 The **Grounding** button at the bottom of the UI toggles between `LLM` and `GUARDIAN` modes. This follows the same pattern as Lab 2's PII masking toggle — a runtime flag on the agent API:
 

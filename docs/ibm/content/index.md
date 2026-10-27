@@ -10,7 +10,7 @@
 3. [Lab 1: The Naive Agent](./lab-1.md) — Build a naive doctor inbox agent and see where it breaks
 4. [Lab 2: Observability](./lab-2.md) — Instrument and trace your agent
 5. [Lab 3: Improving Your Agent](./lab-3.md) — Add a critic agent and Granite Guardian
-6. [Lab 4: Securing Data Used By The Agent](./lab-4.md) — Harden with Postgres RLS and least-privilege access
+6. [Lab 4: Securing Data Used By The Agent](./lab-4.md) — Protect the data your agent reads and writes
 
 ???+ tip "Time Estimate"
     The workshop runs for 2 hours: ~30 minutes of presentation followed by four ~20-minute labs.
@@ -37,7 +37,7 @@ The naive agent is a black box. Add tracing and structured logging so you can se
 Use observability data to identify failure modes. Add a critic agent to evaluate the primary agent's output, and Granite Guardian for groundedness detection.
 
 ### [Lab 4: Securing Data Used By The Agent](./lab-4.md)
-Move from "trust the code" to database-enforced access control with Postgres Row-Level Security. Map the threat model, apply least-privilege, and test against adversarial inputs.
+Agent output is sensitive data too. Discuss why access control belongs in the data layer, not the prompt or the UI: row-level security keyed to the caller, least-privilege credentials, audit logging, and keeping the clinician's identity attached end to end. Then see how the Lab 4 code scopes the agent's tools to one patient.
 
 ---
 
