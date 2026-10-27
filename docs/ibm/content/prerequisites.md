@@ -8,9 +8,7 @@ The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate*
 
 ### Log in to IBM Cloud
 
-1. Open the **login link** from your instructor.
-2. Sign in with the **username and password** for your workshop seat.
-3. You land on the IBM Cloud dashboard at [cloud.ibm.com](https://cloud.ibm.com).
+You log in to IBM Cloud with a **workshop seat login**, not your own IBMid (that one is for Bob). Follow **[IBM Cloud login](ibm-cloud-login.md)**: it has the seat logins, the access link ([ibm.biz/txc26-4217](https://ibm.biz/txc26-4217)), and the steps to get your API key.
 
 ---
 
@@ -80,16 +78,7 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
 
 ### Create your API key
 
-Keep Bob open, and in your browser at [cloud.ibm.com](https://cloud.ibm.com):
-
-1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
-2. In the **IAM menu on the left**, find the **Manage identities** heading and click **API keys** underneath it.
-3. Click **Create**.
-4. Give the key a name, such as `ai-agents-workshop`, and click **Create**.
-5. Click **Copy** to copy the key. Leave this browser tab open until the installer has accepted it.
-
-!!! warning "You only see the key once"
-    IBM Cloud shows the key only when you create it. If you close the dialog before the installer accepts it, delete that key and create a new one.
+Create your API key in the IBM Cloud tab you logged in with, following **[IBM Cloud login → Create your API key](ibm-cloud-login.md#3-create-your-api-key)**. Keep that tab open until the installer accepts the key.
 
 ### Run the installer
 

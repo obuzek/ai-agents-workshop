@@ -2,6 +2,7 @@ nav:
   - Home: index.md
   - Prework:
     - "📋 Prerequisites": prerequisites.md
+    - "🔑 IBM Cloud login": ibm-cloud-login.md
   - Presentation:
     - "📽️ Slides": slides.md
   - Workshop Labs:
