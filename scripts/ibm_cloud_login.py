@@ -13,6 +13,7 @@ Usage:
 import argparse
 import base64
 import getpass
+import hashlib
 import json
 import os
 import re
@@ -28,6 +29,9 @@ ENV_FILE = REPO_ROOT / ".env"
 ENV_EXAMPLE = REPO_ROOT / ".env-example"
 DEFAULT_KEY_FILE = Path.home() / "Downloads" / "apikey.json"  # IBM Cloud's default download name
 IAM_TOKEN_URL = "https://iam.cloud.ibm.com/identity/token"
+# The shared workshop EHR. Every attendee uses it; each gets a private copy of the
+# patients, keyed by EHR_TENANT below.
+SHARED_EHR_URL = os.environ.get("SHARED_EHR_URL", "")
 
 
 def read_api_key(key_file: Path | None) -> str:
@@ -123,6 +127,14 @@ def check_instance(instance_url: str, token: str) -> str | None:
     return None
 
 
+def tenant_id(api_key: str) -> str:
+    """Your tenant on the shared EHR: a one-way fingerprint of your API key.
+
+    Unique to you and stable across re-runs, and the EHR never sees the key itself.
+    """
+    return hashlib.sha256(api_key.encode()).hexdigest()[:24]
+
+
 def set_env_value(text: str, key: str, value: str) -> str:
     """Set KEY=value in .env text, uncommenting `# KEY=...` if that's all there is. Appends if absent."""
     pattern = re.compile(rf"^[ \t]*(?:#[ \t]*)?{re.escape(key)}=.*$", re.MULTILINE)
@@ -168,6 +180,9 @@ def main():
     text = ENV_FILE.read_text()
     text = set_env_value(text, "WXO_API_KEY", api_key)
     text = set_env_value(text, "WXO_NAME_PREFIX", name_prefix(claims))
+    text = set_env_value(text, "EHR_TENANT", tenant_id(api_key))
+    if SHARED_EHR_URL:
+        text = set_env_value(text, "EHR_API_URL", SHARED_EHR_URL)
     if instance_url:
         text = set_env_value(text, "WXO_INSTANCE_URL", instance_url)
     ENV_FILE.write_text(text)

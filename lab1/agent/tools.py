@@ -29,16 +29,17 @@ from ibm_watsonx_orchestrate.agent_builder.connections import ConnectionType, Ex
 from ibm_watsonx_orchestrate.run import connections
 
 # Tools call the EHR API to fetch patient data. Orchestrate can't reach
-# localhost, so the EHR API is deployed publicly (see deploy/ehr-api/) and
-# its URL is stored in an Orchestrate key-value connection rather than
-# hardcoded. import-all.sh creates the connection.
+# localhost, so the tools call the shared workshop EHR. Its URL and your
+# tenant ID (which copy of the patients is yours) live in an Orchestrate
+# key-value connection rather than in this code. deploy.py creates it.
 EHR_APP_ID = "lakeview_ehr"
 EHR_CREDENTIALS = [ExpectedCredentials(app_id=EHR_APP_ID, type=ConnectionType.KEY_VALUE)]
 
 
-def _api_url() -> str:
-    """Read the EHR API base URL from the Orchestrate connection."""
-    return connections.key_value(EHR_APP_ID)["base_url"].rstrip("/")
+def _get(path: str):
+    """GET from the EHR API, using the URL and tenant stored in the Orchestrate connection."""
+    conn = connections.key_value(EHR_APP_ID)
+    return requests.get(f"{conn['base_url'].rstrip('/')}{path}", headers={"X-Tenant": conn.get("tenant", "")})
 
 
 # --- Tools the LLM can call ---
@@ -49,7 +50,7 @@ def _api_url() -> str:
 @tool(expected_credentials=EHR_CREDENTIALS)
 def list_patients() -> list[dict]:
     """Get a summary of all patients: IDs, names, birth dates, active conditions."""
-    resp = requests.get(f"{_api_url()}/patients")
+    resp = _get("/patients")
     resp.raise_for_status()
     return resp.json()
 
@@ -57,7 +58,7 @@ def list_patients() -> list[dict]:
 @tool(expected_credentials=EHR_CREDENTIALS)
 def get_patient_record(patient_id: str) -> dict:
     """Get a patient's full record: demographics, conditions, allergies, medications, lab results, encounter history, messages, and social history."""
-    resp = requests.get(f"{_api_url()}/patients/{patient_id}")
+    resp = _get(f"/patients/{patient_id}")
     resp.raise_for_status()
     return resp.json()
 
@@ -65,7 +66,7 @@ def get_patient_record(patient_id: str) -> dict:
 @tool(expected_credentials=EHR_CREDENTIALS)
 def get_messages(patient_id: str) -> list[dict]:
     """Get all portal messages for a patient, newest first. Includes message body, sender, category, subject, and full thread."""
-    resp = requests.get(f"{_api_url()}/patients/{patient_id}/messages")
+    resp = _get(f"/patients/{patient_id}/messages")
     resp.raise_for_status()
     return resp.json()
 
@@ -80,7 +81,7 @@ def search_labs(patient_id: str, test_name: str) -> list[dict]:
     # Naive implementation: fetch the entire record and filter client-side.
     # A real system would have a dedicated search endpoint or query the DB.
     # This is fine for Lab 1 — later labs can optimize.
-    resp = requests.get(f"{_api_url()}/patients/{patient_id}")
+    resp = _get(f"/patients/{patient_id}")
     resp.raise_for_status()
     record = resp.json()
 
@@ -104,6 +105,6 @@ def search_labs(patient_id: str, test_name: str) -> list[dict]:
 @tool(expected_credentials=EHR_CREDENTIALS)
 def get_inbox() -> list[dict]:
     """Get all messages across ALL patients that still need a provider response. Returns patient name, message subject, date, and category."""
-    resp = requests.get(f"{_api_url()}/inbox")
+    resp = _get("/inbox")
     resp.raise_for_status()
     return resp.json()

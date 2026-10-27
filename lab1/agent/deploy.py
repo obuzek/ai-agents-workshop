@@ -129,8 +129,10 @@ def main():
         connection["app_id"] = app_id
         (tmp / "connection.yaml").write_text(yaml.safe_dump(connection, sort_keys=False))
         orchestrate("connections", "import", "-f", str(tmp / "connection.yaml"))
+        tenant = os.environ.get("EHR_TENANT", "")
         for env in ("draft", "live"):
-            orchestrate("connections", "set-credentials", "-a", app_id, "--env", env, "-e", f"base_url={ehr_api_url}")
+            orchestrate("connections", "set-credentials", "-a", app_id, "--env", env,
+                        "-e", f"base_url={ehr_api_url}", "-e", f"tenant={tenant}")
 
         # 2. Tools. Orchestrate packages tools.py and runs it in its own sandbox.
         #    Newly imported tools take a few minutes to become callable.
