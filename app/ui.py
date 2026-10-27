@@ -382,14 +382,17 @@ def render_medications(patient: Patient):
 
 
 def render_labs(patient: Patient):
-    """Render lab results as expandable panels."""
+    """Render every lab draw, newest first, as a collapsed panel.
+
+    A concern's "Labs from DATE" link opens and marks its draw, however old.
+    """
     if not patient.labs:
         st.info("No lab results.")
         return
 
     highlight_date = st.session_state.get("highlight_lab_date")
 
-    for lab in sorted(patient.labs, key=lambda l: l.date, reverse=True)[:5]:
+    for lab in sorted(patient.labs, key=lambda l: l.date, reverse=True):
         panel_names = ", ".join(p.name for p in lab.panels)
         expanded = (lab.date == highlight_date)
         label = f"{lab.date} — {panel_names}"
@@ -408,11 +411,14 @@ def render_labs(patient: Patient):
 
 
 def render_history(patient: Patient):
-    """Render encounter history (SOAP notes) and social history."""
+    """Render every encounter (SOAP notes), newest first, and social history.
+
+    A concern's "Visit DATE" link opens and marks its encounter, however old.
+    """
     highlight_date = st.session_state.get("highlight_encounter_date")
 
     if patient.encounters:
-        for enc in sorted(patient.encounters, key=lambda e: e.date, reverse=True)[:5]:
+        for enc in sorted(patient.encounters, key=lambda e: e.date, reverse=True):
             expanded = (enc.date == highlight_date)
             label = f"{enc.date} — {enc.reason}"
             if expanded:
