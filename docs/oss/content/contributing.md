@@ -57,7 +57,9 @@ uv sync
 
 # Install MkDocs as a global tool (one-time, for docs work)
 uv tool install "mkdocs==1.6.1" \
-  --with "mkdocs-material==9.7.6" \
+  --with "mkdocs-material==9.7.7" \
+  --with "pymdown-extensions==12.3" \
+  --with "mkdocs-revealjs==0.12.0" \
   --with "mkdocs-awesome-pages-plugin==2.10.1" \
   --with "mkdocs-git-revision-date-localized-plugin==1.5.1" \
   --with "mkdocs-git-authors-plugin==0.10.0" \

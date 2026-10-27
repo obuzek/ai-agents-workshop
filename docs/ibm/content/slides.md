@@ -1,6 +1,14 @@
 ---
 revealjs:
-  presentation: true
+  mode: diapo
+  # Slide geometry lives here rather than in the plugin config: mkdocs-revealjs
+  # has no `width` option in its mkdocs.yml schema, but deck front matter is
+  # passed straight through to Reveal.initialize().
+  width: 1280
+  height: 720
+  # mkdocs-revealjs 0.12 defaults embedded decks to keyboardCondition: focused (keys only work
+  # after clicking the deck). null restores page-wide shortcuts (F/O/S/arrows).
+  keyboardCondition: null
 ---
 
 <!-- .slide: id="title" data-background-gradient="linear-gradient(to top, #0f62fe 0, #0f62fe 16px, #161616 16px)" -->
@@ -907,7 +915,7 @@ Responsibility isn't something you bolt on at the end.
 - **Improve** using evidence from real traces, not intuition
 - **Secure** at the infrastructure layer, not just the prompt
 
-=====
+=====/
 
 <style>
 /* Embedded mode */
