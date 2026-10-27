@@ -6,7 +6,7 @@
 FROM python:3.12-slim
 
 WORKDIR /srv
-RUN pip install --no-cache-dir "fastapi>=0.115" "uvicorn>=0.34" "requests>=2.32"
+RUN pip install --no-cache-dir "fastapi>=0.115" "uvicorn>=0.34" "requests>=2.32" "python-dotenv>=1.0"
 
 COPY app/__init__.py app/api.py app/models.py app/store.py app/
 COPY data/patients data/patients
