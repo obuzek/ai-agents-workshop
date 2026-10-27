@@ -125,7 +125,7 @@ def find_orchestrate_instances(token: str) -> list[dict]:
 
 
 def choose_instance(token: str) -> str:
-    """Pick the Orchestrate instance automatically; ask only if there's more than one (or none)."""
+    """Pick the Orchestrate instance automatically; ask only if there's more than one."""
     try:
         instances = find_orchestrate_instances(token)
     except requests.RequestException:
@@ -141,9 +141,13 @@ def choose_instance(token: str) -> str:
             choice = input(f"Which one is the workshop's? [1-{len(instances)}]: ").strip()
             if choice.isdigit() and 1 <= int(choice) <= len(instances):
                 return instances[int(choice) - 1]["url"]
-    print("Couldn't find a watsonx Orchestrate instance for this key. Ask your instructor for its CRN or URL.")
-    value = input("Paste the instance CRN or URL: ").strip()
-    return resolve_instance_url(value) if value else ""
+    # No instance visible means the key belongs to an account without the workshop's
+    # Orchestrate instance (usually: created while signed in with your own IBMid).
+    print("✗ This API key can't see the workshop's watsonx Orchestrate instance.\n"
+          "  It was probably created in a different IBM Cloud account (for example, signed in with your own IBMid).\n"
+          "  Log in with your workshop seat through the access link on the IBM Cloud login page,\n"
+          "  create a new API key there, and run this again: uv run python scripts/ibm_cloud_login.py")
+    return ""
 
 
 def check_instance(instance_url: str, token: str) -> str | None:
@@ -260,8 +264,7 @@ def main(argv: list[str] | None = None):
     print(f"✓ Your agent and tools will be named with the prefix {prefix!r}")
 
     if not instance_url:
-        print("! No Orchestrate instance set. Re-run the script once your instructor gives you its CRN or URL.")
-        return
+        sys.exit(1)
     error = check_instance(instance_url, token)
     if error:
         sys.exit(f"✗ Saved, but couldn't reach the Orchestrate instance: {error}")
