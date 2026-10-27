@@ -18,6 +18,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -135,6 +136,29 @@ def tenant_id(api_key: str) -> str:
     return hashlib.sha256(api_key.encode()).hexdigest()[:24]
 
 
+ORCHESTRATE_ENV = "workshop"
+
+
+def setup_orchestrate_cli(instance_url: str, api_key: str) -> str | None:
+    """Add and activate an `orchestrate` CLI environment for this instance (used by deploy.py).
+
+    Returns an error message, or None on success. The key goes in on stdin so it
+    never appears in the process list.
+    """
+    if not shutil.which("orchestrate"):
+        return "the Orchestrate CLI isn't installed. Run: uv tool install ibm-watsonx-orchestrate"
+    # Re-running asks "update the environment?"; answer yes so the URL stays current.
+    add = subprocess.run(["orchestrate", "env", "add", "-n", ORCHESTRATE_ENV, "-u", instance_url, "-t", "ibm_iam"],
+                         input="y\n", capture_output=True, text=True, timeout=60)
+    if add.returncode != 0:
+        return f"`orchestrate env add` failed: {(add.stderr or add.stdout).strip()[-200:]}"
+    activate = subprocess.run(["orchestrate", "env", "activate", ORCHESTRATE_ENV],
+                              input=api_key + "\n", capture_output=True, text=True, timeout=120)
+    if activate.returncode != 0 or "now active" not in (activate.stdout + activate.stderr):
+        return f"`orchestrate env activate` failed: {(activate.stderr or activate.stdout).strip()[-200:]}"
+    return None
+
+
 def set_env_value(text: str, key: str, value: str) -> str:
     """Set KEY=value in .env text, uncommenting `# KEY=...` if that's all there is. Appends if absent."""
     pattern = re.compile(rf"^[ \t]*(?:#[ \t]*)?{re.escape(key)}=.*$", re.MULTILINE)
@@ -197,6 +221,11 @@ def main():
     if error:
         sys.exit(f"✗ Saved, but couldn't reach the Orchestrate instance: {error}")
     print("✓ Orchestrate instance is reachable with this key")
+
+    error = setup_orchestrate_cli(instance_url, api_key)
+    if error:
+        sys.exit(f"✗ Couldn't set up the Orchestrate CLI: {error}")
+    print(f"✓ Orchestrate CLI environment '{ORCHESTRATE_ENV}' is active (deploy with: uv run python -m lab1.agent.deploy)")
 
 
 if __name__ == "__main__":
