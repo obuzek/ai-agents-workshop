@@ -463,13 +463,18 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                 trigger_agent(patient_id)
                 st.session_state["agent_just_triggered"] = True
                 st.rerun(scope="fragment")
+    # Show what happened for *this* patient, not the last run of any patient.
+    run = (status.get("patients") or {}).get(patient_id)
     with col_status:
         if is_running:
-            st.caption("Agent is processing patients...")
-        elif status.get("last_run"):
-            st.caption(f"Last run: {status['last_run'][:19]}")
-        if status.get("error"):
-            st.caption(f"Error: {status['error']}")
+            busy_with = status.get("running_patient")
+            st.caption("Reviewing this patient (about a minute)..." if busy_with in (None, patient_id)
+                       else f"Busy reviewing {busy_with}. Try this patient when it finishes.")
+        elif run and not run.get("error"):
+            n = run.get("concerns") or 0
+            st.caption(f"Last run {run['finished'][11:16]} UTC · {n} concern{'s' if n != 1 else ''} found")
+    if run and run.get("error") and not is_running:
+        st.error(run["error"])
 
     # Clear the trigger flag once the status endpoint confirms running
     if status.get("running"):
@@ -587,7 +592,10 @@ def render_concerns(patient_id: str, messages: list[Message] = None):
                         mark_concern_resolved(patient_id, concern.id)
                         st.rerun()
     else:
-        st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")
+        if run and not run.get("error"):
+            st.info("The agent reviewed this patient and found no concerns. Run it again, or try another patient.")
+        elif not (run and run.get("error")):
+            st.info("No concerns identified yet. Click 'Run Agent' to analyze this patient.")
 
 
 def render_inbox(messages: list[Message]) -> int:
@@ -701,22 +709,35 @@ if providers:
         st.cache_data.clear()
         st.rerun()
 
-# Load data
-patient_list = load_patient_list()
+# Load data. If the EHR can't be reached, say so plainly instead of showing a traceback.
+try:
+    patient_list = load_patient_list()
 
-# Filter patients by active role (Lab 4)
-role_patient_ids = get_role_patients()
-if role_patient_ids:
-    patient_list = [p for p in patient_list if p["id"] in role_patient_ids]
+    # Filter patients by active role (Lab 4)
+    role_patient_ids = get_role_patients()
+    if role_patient_ids:
+        patient_list = [p for p in patient_list if p["id"] in role_patient_ids]
 
-inbox = load_inbox()
-all_concerns = {p["id"]: load_concerns(p["id"]) for p in patient_list}
+    inbox = load_inbox()
+    all_concerns = {p["id"]: load_concerns(p["id"]) for p in patient_list}
+except requests.RequestException:
+    st.error("Couldn't load patient data from the workshop EHR. Wait a few seconds and try again. "
+             "If it keeps happening, run: uv run python scripts/check_setup.py")
+    if st.button("Try again"):
+        st.cache_data.clear()
+        st.rerun()
+    st.stop()
+
 selected_id = render_patient_selector(patient_list, inbox, all_concerns)
 
 st.divider()
 
-patient = load_patient(selected_id)
-messages = load_messages(selected_id)
+try:
+    patient = load_patient(selected_id)
+    messages = load_messages(selected_id)
+except requests.RequestException:
+    st.error("Couldn't load this patient's record. Wait a few seconds and pick the patient again.")
+    st.stop()
 
 # Row 1: Medical record + Concerns
 col_record, col_concerns = st.columns([3, 2])
