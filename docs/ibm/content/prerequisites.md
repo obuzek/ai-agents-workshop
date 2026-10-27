@@ -4,25 +4,13 @@ Complete these steps **before the workshop** to make sure your environment is re
 
 ## 1. IBM Cloud: log in
 
-The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate**, and watsonx.governance evaluates it. Your code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You'll create it in step 3, right before the installer asks for it.
+The workshop runs on IBM Cloud. Your agent is deployed to **watsonx Orchestrate**. Your code talks to IBM Cloud with an **API key**: a long secret string that acts on your behalf. You'll create it in step 3, right before the installer asks for it.
 
 ### Log in to IBM Cloud
 
 1. Open the **login link** from your instructor.
 2. Sign in with the **username and password** for your workshop seat.
 3. You land on the IBM Cloud dashboard at [cloud.ibm.com](https://cloud.ibm.com).
-
-### Open watsonx once
-
-The labs use watsonx.governance to evaluate your agent. Its features need a watsonx user profile, and IBM creates that profile the first time you open watsonx. Do this once, before the workshop:
-
-1. In the menu on the left, open the **Resource list**.
-2. Expand **AI / Machine Learning** and click the workshop's **watsonx.ai Studio** instance. Its name starts with `ws-`.
-3. Click **Launch** and choose **IBM watsonx**.
-4. Accept the terms if asked, and wait for the watsonx home page to load. You can close it afterwards.
-
-!!! warning "Skip this and Lab 3 won't work"
-    Without this one-time visit, watsonx.governance calls fail with an authorization error ("Failed to verify user profile existence").
 
 ---
 
