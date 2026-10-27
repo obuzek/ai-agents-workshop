@@ -28,6 +28,83 @@ revealjs:
 
 ---
 
+<!-- .slide: id="watsonx-products" -->
+
+## watsonx.ai Studio vs watsonx Orchestrate vs watsonx.governance
+
+<div style="display:flex;gap:28px;font-size:0.78em;line-height:1.4">
+<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.ai Studio</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"A studio of integrated tools for building generative AI and machine learning solutions"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Foundation models: IBM and open source</li>
+<li>Prompt Lab: experiment with prompts</li>
+<li>Projects: shared workspaces for assets</li>
+<li>Tuning, RAG, deployments</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">You open it once. That creates the watsonx profile that governance needs.</p>
+</div>
+<div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx Orchestrate</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"An agent management platform designed to help build, deploy, orchestrate, manage and govern AI agents"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Agents and the tools they call</li>
+<li>Connections that hold credentials</li>
+<li>Controls and plug-ins: guardrails, PII</li>
+<li>Traces and evaluation</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">Where you build and run your agent: definition, tools, connection, controls, traces.</p>
+</div>
+<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.governance</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"Govern any AI, anywhere with real-time visibility, enterprise controls, and continuous accountability"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Evaluating and monitoring AI output</li>
+<li>Metrics, factsheets, model history</li>
+<li>AI risk management</li>
+<li>Policy and regulatory compliance</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">The evaluation concepts behind Lab 3: grounding, judges, metrics.</p>
+</div>
+</div>
+
+Note: You'll hear about three watsonx products today. watsonx.ai Studio is where you work with models directly, try prompts in Prompt Lab, and keep things in projects. Today you only open it once. Opening it creates the watsonx profile that governance needs.
+
+watsonx Orchestrate is where your agent lives. The agent, its tools, its connection to the EHR, the controls on it, and the traces of every run are all in Orchestrate.
+
+watsonx.governance is for evaluating and monitoring AI, and for managing risk. In Lab 3 we build the kind of checks it's designed to track: grounding, judges, metrics.
+
+Sources (IBM's own descriptions):
+- watsonx.ai: https://www.ibm.com/products/watsonx-ai and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx ("a studio of integrated tools…", Prompt Lab, projects)
+- Prompt Lab and projects: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/get-started-prompt-lab.html?context=wx
+- watsonx Orchestrate: https://www.ibm.com/products/watsonx-orchestrate
+- watsonx.governance: https://www.ibm.com/products/watsonx-governance and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx (evaluate prompts, monitor output, factsheets, risk)
+
+---
+
+<!-- .slide: id="todays-modules" -->
+
+## Today's modules
+
+<div style="display:grid;grid-template-columns:auto auto 1fr;gap:0.7em 1em;align-items:baseline;font-size:0.78em;margin-top:0.6em">
+<div style="font-size:1.6em;font-weight:300;color:#0f62fe">1</div><div><strong>Build</strong></div><div>An agent on Orchestrate: definition, tools, deploy</div>
+<div style="font-size:1.6em;font-weight:300;color:#0f62fe">2</div><div><strong>Observe</strong></div><div>Traces, and why traces are PHI. Controls and plug-ins for PII</div>
+<div style="font-size:1.6em;font-weight:300;color:#0f62fe">3</div><div><strong>Improve</strong></div><div>Checks: grounding, LLM-as-judge and a critic, as judge agents</div>
+<div style="font-size:1.6em;font-weight:300;color:#0f62fe">4</div><div><strong>Secure</strong></div><div>Agent output is sensitive data. Data storage guarantees. Identity end to end (discussion)</div>
+</div>
+
+<p style="font-size:0.7em;opacity:0.75;margin-top:2em">Labs 1–3: run it, then look at what changed. Lab 4: a discussion.</p>
+
+Note: Here's the plan. In Lab 1 you deploy an agent to Orchestrate. In Lab 2 we look at its traces. They're full of patient data, so we'll look at what Orchestrate can mask, and what it can't. In Lab 3 we add checks on the agent's output, using other agents as judges. Lab 4 is a discussion: where does the agent's output get stored, and who gets to see it?
+
+---
+
 <!-- .slide: id="section-agents" data-background="#0f62fe" -->
 
 <div style="color:#fff">
@@ -438,7 +515,7 @@ Note: These four dimensions map directly to the four labs: build, observe, impro
 </div>
 </div>
 
-Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally: a JSON file, then Postgres in Lab 4. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
+Note: Before we build, here's how the pieces you'll run today fit together. Three places. On your laptop: the Streamlit UI on 8501, a local EHR API on 8000, and the lab agent service on 8001. Your .env holds your IBM Cloud API key, your Orchestrate instance URL, your seat prefix like student0_, and your EHR tenant, which is just a SHA-256 fingerprint of your key. When you click Run Agent, the agent service starts a run on watsonx Orchestrate in the shared TechZone account in Toronto. Your agent, studentN_lakeview_inbox_agent, runs its ReAct loop and LLM calls there, with your prefixed tools and your prefixed connection. When the tools need patient data, they call the shared EHR on Code Engine, an instructor-owned FastAPI service in Dallas, sending your tenant from the connection. The UI reads patient data through the local EHR API, which forwards to the same service with the same tenant, so the UI and the cloud agent see the same private copy. The agent service validates the JSON that comes back and stores concerns locally in a JSON file. Now, what would change in production? The EHR would be a real system of record, say a FHIR API, with real per-user auth like SMART-on-FHIR instead of a fingerprint header. The UI and agent service would be hosted centrally behind SSO. Concerns go to a governed database and credentials to a secrets manager or platform connections, not a .env file. And each team would get its own instance, not one shared account where every seat is admin. We made these shortcuts so 34 people could get running in ten minutes; none of them are what you'd ship.
 
 ---
 
@@ -484,29 +561,141 @@ A **background agent** is triggered by data arriving — a new patient message �
 
 ---
 
-<!-- .slide: id="lab1-langgraph" -->
+<!-- .slide: id="lab1-why-orchestrate" -->
 
-## Lab 1: Why LangGraph?
+## Lab 1: Why Orchestrate?
 
-The ReAct loop — observe, reason, act, repeat — needs orchestration: state tracking, conditional routing, tool execution, loop termination. You could write that yourself. LangGraph gives it to you.
+The ReAct loop (observe, reason, act, repeat) needs something to run it. On watsonx Orchestrate, you describe the agent in a YAML file, and Orchestrate runs the loop.
 
-```python
-def _build_agent():
-    llm = get_chat_model()
-    return create_react_agent(
-        model=llm,
-        tools=ALL_TOOLS,
-        prompt=SYSTEM_PROMPT,
-        response_format=PatientConcerns,
-    )
+<div style="display:flex;gap:32px;align-items:flex-start">
+<div style="flex:1;min-width:0;font-size:1.45em">
+
+```yaml
+# lab1/agent/agent.yaml (excerpt)
+kind: native
+name: lakeview_inbox_agent
+style: react_core
+llm: groq/openai/gpt-oss-120b
+instructions: |
+  You are a clinical inbox assistant ...
+tools:
+  - list_patients
+  - get_patient_record
 ```
 
-That's the whole agent. `create_react_agent` handles the loop:
-1. Send system prompt + user message to the LLM
-2. If the LLM returns tool calls → execute them, feed results back, go to 1
-3. If the LLM is done → one final call with Structured Outputs to produce a `PatientConcerns` object
+</div>
+<div style="flex:1;min-width:0;font-size:0.95em">
 
-In Lab 3, we use the same `StateGraph` primitives to wire together the critic loop. Each component has one job; the graph connects them.
+- Orchestrate runs the loop. Your code starts a run and reads the answer.
+- Tools run in IBM Cloud. Credentials live in a connection.
+- Every run is traced automatically.
+- Controls and plug-ins act on the agent's input and output.
+- Models come from Orchestrate's model catalog.
+- You can't set a breakpoint in a tool. You read the trace instead.
+
+</div>
+</div>
+
+Note: There's an open-source edition of this workshop with a fully local LangGraph version of this agent. If you want to read that code, go look at it there. It's designed to run on a laptop, so we didn't use it in a hosted setting like this one.
+
+Here, the agent is this YAML file: instructions, a model, and a list of tools. Orchestrate runs the loop and the tools, and it keeps a trace of every run. You can't step through it in a debugger, so you'll use the traces in Lab 2.
+
+---
+
+<!-- .slide: id="lab1-anatomy" -->
+
+## Anatomy of an Orchestrate agent
+
+<svg class="anat-diagram" viewBox="0 0 1180 548" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="On your machine, deploy.py reads agent.yaml, tools.py and connection.yaml and imports them into watsonx Orchestrate. agent.py starts runs through the runs API. In Orchestrate, the agent's ReAct loop calls the tool runtime, which uses the connection's credentials to call the shared EHR. Every LLM call and tool call is recorded in traces." style="width:100%;max-height:560px;height:auto;display:block">
+<style>
+.anat-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.anat-diagram text { fill: currentColor; font-size: 17px; }
+.anat-diagram text.b { font-size: 19px; font-weight: 600; }
+.anat-diagram text.mono { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; }
+.anat-diagram text.muted { fill: #8d8d8d; }
+.anat-diagram text.zone { fill: #8d8d8d; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; }
+.anat-diagram text.on-accent { fill: #fff; }
+.anat-diagram text.edge-label { font-size: 16px; fill: #8d8d8d; }
+.anat-diagram text.edge-label.accent { fill: #4589ff; }
+.anat-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.anat-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.anat-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.anat-diagram .group { fill: none; stroke: #8d8d8d; stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.anat-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#anat-arrow); }
+.anat-diagram .edge.accent { stroke: #0f62fe; marker-end: url(#anat-arrow-accent); }
+.anat-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#anat-arrow-muted); }
+.anat-diagram .edge.dashed { stroke-dasharray: 8 6; }
+</style>
+<defs>
+<marker id="anat-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+<marker id="anat-arrow-accent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0f62fe"/></marker>
+<marker id="anat-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/></marker>
+</defs>
+<!-- zone 1: your machine (x 0-330) -->
+<rect class="group" x="1" y="1" width="329" height="546"/>
+<text class="zone" x="24" y="32">YOUR MACHINE</text>
+<rect class="node" x="24" y="52" width="282" height="76"/>
+<text class="mono" x="44" y="82">agent.py</text>
+<text x="44" y="110">starts runs, checks the JSON</text>
+<rect class="node" x="24" y="164" width="282" height="76"/>
+<text class="mono" x="44" y="194">deploy.py</text>
+<text x="44" y="222">imports the three files below</text>
+<line class="edge muted" x1="165" y1="300" x2="165" y2="240"/>
+<text class="edge-label" x="177" y="276">reads</text>
+<rect class="node fill" x="24" y="300" width="282" height="72"/>
+<text class="mono" x="44" y="330">agent.yaml</text>
+<text x="44" y="358">instructions · model · tools</text>
+<rect class="node fill" x="24" y="384" width="282" height="72"/>
+<text class="mono" x="44" y="414">tools.py</text>
+<text x="44" y="442"><tspan font-family="'IBM Plex Mono', monospace">@tool</tspan> functions</text>
+<rect class="node fill" x="24" y="468" width="282" height="72"/>
+<text class="mono" x="44" y="498">connection.yaml</text>
+<text x="44" y="526">EHR URL + your tenant</text>
+<!-- zone 2: watsonx Orchestrate (x 420-860) -->
+<rect class="group" x="420" y="1" width="439" height="546"/>
+<text class="zone" x="444" y="32">WATSONX ORCHESTRATE</text>
+<rect class="node accent" x="444" y="52" width="392" height="120"/>
+<text class="b on-accent" x="464" y="84">Agent: ReAct loop + LLM</text>
+<text class="on-accent" x="464" y="112">studentN_lakeview_inbox_agent</text>
+<text class="on-accent" x="464" y="140" opacity="0.85">gpt-oss-120b from the model catalog</text>
+<rect class="node" x="476" y="236" width="138" height="100"/>
+<text class="b" x="490" y="268">Connections</text>
+<text x="490" y="296">base URL,</text>
+<text x="490" y="320">tenant</text>
+<rect class="node" x="666" y="236" width="170" height="100"/>
+<text class="b" x="684" y="268">Tool runtime</text>
+<text x="684" y="296">runs your</text>
+<text x="684" y="320"><tspan font-family="'IBM Plex Mono', monospace">@tool</tspan> code</text>
+<rect class="node fill" x="444" y="412" width="392" height="112"/>
+<text class="b" x="464" y="444">Traces</text>
+<text x="464" y="472">every LLM call and tool call,</text>
+<text x="464" y="498">with inputs and outputs</text>
+<!-- edges inside Orchestrate -->
+<line class="edge" x1="751" y1="172" x2="751" y2="236"/>
+<text class="edge-label" x="763" y="210">tool calls</text>
+<line class="edge" x1="614" y1="286" x2="666" y2="286"/>
+<line class="edge muted dashed" x1="458" y1="172" x2="458" y2="412"/>
+<line class="edge muted dashed" x1="751" y1="336" x2="751" y2="412"/>
+<!-- machine to Orchestrate -->
+<line class="edge accent" x1="306" y1="92" x2="444" y2="92"/>
+<text class="edge-label accent" x="375" y="80" text-anchor="middle">runs API</text>
+<line class="edge accent" x1="306" y1="202" x2="420" y2="202"/>
+<text class="edge-label accent" x="363" y="190" text-anchor="middle">import</text>
+<!-- zone 3: shared EHR (x 940-1180) -->
+<rect class="group" x="940" y="1" width="239" height="546"/>
+<text class="zone" x="964" y="32">CODE ENGINE</text>
+<rect class="node" x="964" y="226" width="192" height="120"/>
+<text class="b" x="982" y="258">Shared EHR</text>
+<text x="982" y="286">a private copy</text>
+<text x="982" y="312">per tenant</text>
+<line class="edge" x1="836" y1="286" x2="964" y2="286"/>
+<text class="edge-label" x="900" y="274" text-anchor="middle">HTTPS</text>
+<text class="edge-label" x="900" y="308" text-anchor="middle">X-Tenant</text>
+</svg>
+
+Note: Here's what lives where. On your machine, agent.yaml is the agent definition, tools.py has the tools, and connection.yaml sets up the connection to the EHR. deploy.py adds your seat prefix and imports all three into Orchestrate. agent.py starts a run and checks the JSON that comes back.
+
+In Orchestrate, the agent runs the loop with gpt-oss-120b. When it calls a tool, Orchestrate runs your tool code, and the tool calls the shared EHR with your tenant. Every LLM call and tool call shows up in the trace. We'll look at those in Lab 2.
 
 ---
 
@@ -514,7 +703,7 @@ In Lab 3, we use the same `StateGraph` primitives to wire together the critic lo
 
 ## Lab 1: Tools and the Output Contract
 
-Each function decorated with `@tool` does three things: registers it as callable, generates a JSON schema from type hints and docstring, and makes it available during the ReAct loop. The agent decides which tools to call and in what order — we don't script that.
+Each function in `tools.py` decorated with `@tool` (from the Orchestrate ADK) does three things: registers it as callable, generates a JSON schema from type hints and docstring, and lets `deploy.py` import it into Orchestrate. The agent decides which tools to call and in what order — we don't script that.
 
 The doctor never sees raw LLM output. The agent fills in a typed `Concern`:
 
@@ -532,14 +721,20 @@ The contract between agent and UI is explicit. The UI renders the schema. That's
 
 ## Lab 1: Structured Outputs ≠ "Please Return JSON"
 
-LLMs generate one token at a time. **Constrained decoding** masks out invalid tokens at each step — the model literally cannot produce malformed output. It's the difference between asking someone to drive the speed limit and installing a speed governor.
+LLMs generate one token at a time. Some inference services offer **constrained decoding** (the server masks tokens that would break the schema). It's the difference between asking someone to drive the speed limit and installing a speed governor.
 
-This is different from prompting for structure:
+Without it, we recommend: **prompt with the schema, validate, retry once.**
 
-- **Prompting**: describe the format in the prompt; the model tries to follow it. Sometimes it wraps the JSON in markdown. Sometimes it invents fields.
-- **Constrained decoding**: the schema is enforced at the token level. No retries, no parsing code, no stripping code fences.
+- `deploy.py` builds the JSON schema from `models.py` and adds it to the agent's instructions
+- `agent.py` checks every answer against the Pydantic model, and retries once with the error
 
-For a background agent with no human watching, this isn't a nice-to-have. If the output doesn't parse at 3 AM, the pipeline fails silently.
+For a background agent with no human watching, this isn't a nice-to-have. If the output doesn't parse at 3 AM, nobody finds out.
+
+Quick test: `uv run python scripts/check_structured_outputs.py --patients 3 --skip-judges`
+
+Note: Constrained decoding is something the inference server does. Our agent on Orchestrate doesn't have it, so our code does the checking. When we tested this agent, 20 of 24 answers were valid on the first try, and all 24 were valid after one retry. The quick test runs your agent on three patients and prints the same numbers.
+
+There are signs constrained outputs may come back to the mainstream: [Jev](https://opentweet.io/jev/vs-openai-structured-outputs)
 
 ---
 
@@ -569,26 +764,173 @@ That creates a tension: the richer your traces, the more useful they are for deb
 
 ---
 
-<!-- .slide: id="lab2-langfuse" -->
+<!-- .slide: id="lab2-orchestrate-traces" -->
 
-## Lab 2: Why Langfuse?
+## Lab 2: Traces in Orchestrate
 
-Langfuse is an open-source LLM observability platform. Self-hostable — in this lab it runs entirely in Docker on your machine. Nothing leaves the building.
+Orchestrate traces every run of your agent. There's no code to add.
 
-Instrumenting the agent takes three lines:
+Each trace has:
 
-```python
-handler = create_langfuse_handler()
+- the run, from start to answer
+- every LLM call: model, input, output, token counts
+- every tool call: arguments and the full output
 
-result = agent.invoke(
-    {"messages": [...]},
-    config={"callbacks": [handler]},
-)
-```
+You can read traces in the Orchestrate UI, with `orchestrate observability traces` in the CLI, or through the API.
 
-The `CallbackHandler` hooks into LangChain's callback system, which LangGraph propagates automatically to every LLM call and tool call in the ReAct loop. You don't instrument each step — you instrument the entry point.
+Traces show tokens, but not cost. To estimate cost, multiply tokens by the model's price.
 
-What you get: full traces with nested spans, token counts and cost per LLM call, tool call inputs and outputs, session grouping by patient, and a UI for browsing, filtering, annotating, and building evaluation datasets.
+Note: In the open-source edition, this lab is about adding tracing to the agent. Here it's already on. Run the agent on a patient, then open the trace and find your agent by its seat prefix. Look at what the tool returned. You'll see the whole patient record in there.
+
+---
+
+<!-- .slide: id="lab2-traces-are-phi" -->
+
+## Lab 2: Traces Are PHI
+
+Open a trace and look at the tool output. It's the patient's full record: name, date of birth, phone, insurance ID, conditions, messages.
+
+In this workshop's Orchestrate instance:
+
+- every seat can see every seat's traces
+- traces are kept for 30 days
+
+Treat the trace store like any other copy of patient data. Follow the data:
+
+<p style="font-size:0.85em;margin-left:1em"><strong>EHR</strong> → tool output → model context → <strong>trace store</strong> → answer → concerns file</p>
+
+At each step, ask: who can read it, how long is it kept, and what was removed before it got there?
+
+Note: This is data provenance. Before you put an agent in front of real patient data, trace where that data goes and what happens to it at each step. Here, the full record goes from the EHR into the tool output, into the model, into the trace, and parts of it end up in the answer and in the concerns file on your laptop. The data is synthetic today, so it's fine that everyone can see each other's traces. With real patients, that's a breach.
+
+---
+
+<!-- .slide: id="lab2-policy-engine" -->
+
+## Lab 2: Gateway and policy in Orchestrate
+
+<svg class="gw-diagram" viewBox="0 0 1180 562" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A run goes from the caller through Controls at agent_pre_invoke, where the PII Filter masks what the user types, to the agent's ReAct loop. The agent's LLM calls go through the model gateway; its tool calls go through the tool runtime to the shared EHR. The answer goes through your plug-in at agent_post_invoke, which masks phone, email, date of birth and member ID, and then to the caller. Control hooks after tools and after the agent did not run in our tests. Every step writes to the trace store, which holds raw tool output and LLM context, is visible tenant-wide, and keeps traces 30 days. Patient messages reach the model as tool output, and no control checks tool output." style="width:100%;max-height:540px;height:auto;display:block">
+<style>
+.gw-diagram { font-family: 'IBM Plex Sans', sans-serif; color: inherit; }
+.gw-diagram text { fill: currentColor; font-size: 16px; }
+.gw-diagram text.b { font-size: 18px; font-weight: 600; }
+.gw-diagram text.mono { font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
+.gw-diagram text.muted { fill: #8d8d8d; }
+.gw-diagram text.on-accent { fill: #fff; }
+.gw-diagram text.ok { fill: #4589ff; font-weight: 600; }
+.gw-diagram text.bad { fill: #fa4d56; font-weight: 600; }
+.gw-diagram text.edge-label { font-size: 15px; fill: #8d8d8d; }
+.gw-diagram .node { fill: none; stroke: currentColor; stroke-width: 1.5px; }
+.gw-diagram .node.policy { stroke: #0f62fe; stroke-width: 2.5px; }
+.gw-diagram .node.accent { fill: #0f62fe; stroke: none; }
+.gw-diagram .node.fill { fill: rgba(141,141,141,0.18); stroke: none; }
+.gw-diagram .node.phi { fill: rgba(250,77,86,0.12); stroke: #fa4d56; stroke-width: 1.5px; }
+.gw-diagram .node.norun { fill: none; stroke: #fa4d56; stroke-width: 1.5px; stroke-dasharray: 5 4; }
+.gw-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2px; marker-end: url(#gw-arrow); }
+.gw-diagram .edge.both { marker-start: url(#gw-arrow); }
+.gw-diagram .edge.muted { stroke: #8d8d8d; marker-end: url(#gw-arrow-muted); }
+.gw-diagram .edge.dashed { stroke-dasharray: 7 5; }
+.gw-diagram .edge.warn { stroke: #fa4d56; stroke-dasharray: 5 4; marker-end: none; }
+</style>
+<defs>
+<marker id="gw-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+<marker id="gw-arrow-muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8d8d8d"/></marker>
+</defs>
+<!-- row 0: model gateway above the agent -->
+<rect class="node fill" x="380" y="2" width="580" height="96"/>
+<text class="b" x="400" y="32">Model gateway <tspan class="muted" font-weight="400">(public preview)</tspan></text>
+<text x="400" y="58">model policies: fallback · load-balance · retry</text>
+<text x="400" y="84">gpt-oss-120b on groq or bedrock · granite · …</text>
+<text class="muted" x="940" y="32" text-anchor="end">for reliability</text>
+<!-- legend -->
+<text class="ok" x="0" y="32">✓ worked in our tests</text>
+<text class="muted" x="0" y="58">? exists, untested</text>
+<text class="bad" x="0" y="84">✗ did not run in our tests</text>
+<!-- row 1 -->
+<rect class="node" x="0" y="140" width="130" height="160"/>
+<text class="b" x="16" y="172">Caller</text>
+<text x="16" y="200">runs API</text>
+<text x="16" y="224">or chat</text>
+<rect class="node policy" x="170" y="140" width="250" height="160"/>
+<text class="b" x="186" y="172">Controls</text>
+<text class="mono muted" x="186" y="196">agent_pre_invoke</text>
+<text x="186" y="228"><tspan class="ok">✓</tspan> PII Filter: masks</text>
+<text x="208" y="250">PII the user types</text>
+<text x="186" y="280"><tspan class="muted">?</tspan> Guardrails: jailbreak, HAP</text>
+<rect class="node accent" x="460" y="140" width="230" height="160"/>
+<text class="b on-accent" x="478" y="172">Agent</text>
+<text class="on-accent" x="478" y="200">ReAct loop</text>
+<text class="on-accent" x="478" y="228">reads tool output,</text>
+<text class="on-accent" x="478" y="252">writes the answer</text>
+<rect class="node policy" x="730" y="140" width="230" height="160"/>
+<text class="b" x="746" y="172">Your plug-in</text>
+<text class="mono muted" x="746" y="196">agent_post_invoke</text>
+<text x="746" y="222"><tspan class="ok">✓</tspan> masks phone, email,</text>
+<text x="768" y="244">DOB, member ID</text>
+<rect class="node norun" x="742" y="256" width="206" height="32"/>
+<text x="752" y="278"><tspan class="bad">✗</tspan> a control here</text>
+<rect class="node" x="1000" y="140" width="180" height="160"/>
+<text class="b" x="1016" y="172">Answer</text>
+<text x="1016" y="200">back to</text>
+<text x="1016" y="224">the caller</text>
+<line class="edge" x1="130" y1="220" x2="170" y2="220"/>
+<line class="edge" x1="420" y1="220" x2="460" y2="220"/>
+<line class="edge" x1="690" y1="220" x2="730" y2="220"/>
+<line class="edge" x1="960" y1="220" x2="1000" y2="220"/>
+<line class="edge both" x1="575" y1="140" x2="575" y2="98"/>
+<text class="edge-label" x="587" y="125">LLM calls</text>
+<!-- row 2 -->
+<rect class="node" x="460" y="340" width="230" height="110"/>
+<text class="b" x="478" y="370">Tool runtime</text>
+<text x="478" y="396">your <tspan font-family="'IBM Plex Mono', monospace">@tool</tspan> code</text>
+<rect class="node norun" x="472" y="408" width="206" height="32"/>
+<text x="482" y="430"><tspan class="bad">✗</tspan> tool_post_invoke</text>
+<line class="edge both" x1="575" y1="300" x2="575" y2="340"/>
+<text class="edge-label" x="587" y="326">tool calls</text>
+<rect class="node" x="730" y="340" width="170" height="110"/>
+<text class="b" x="746" y="370">Shared EHR</text>
+<text x="746" y="396">full patient</text>
+<text x="746" y="420">record</text>
+<line class="edge both" x1="690" y1="395" x2="730" y2="395"/>
+<!-- indirect injection callout -->
+<rect class="node phi" x="1000" y="322" width="180" height="146"/>
+<text class="b" x="1014" y="350">Injection path</text>
+<text x="1014" y="376">Patient messages</text>
+<text x="1014" y="398">reach the agent as</text>
+<text x="1014" y="420">tool output. No</text>
+<text x="1014" y="442">control checks it.</text>
+<!-- trace store -->
+<rect class="node phi" x="170" y="492" width="1010" height="68"/>
+<text class="b" x="190" y="520">Trace store</text>
+<text x="190" y="546">raw tool output + LLM context = PHI · every seat can see it · kept 30 days</text>
+<line class="edge muted dashed" x1="295" y1="300" x2="295" y2="492"/>
+<line class="edge muted dashed" x1="575" y1="450" x2="575" y2="492"/>
+<line class="edge muted dashed" x1="940" y1="300" x2="940" y2="492"/>
+</svg>
+
+Note: Here's what we actually tested. The PII Filter control runs before the agent, and it masked PII that the user typed. The Content Guardrails control exists, for jailbreak and hate, abuse and profanity, but we didn't test it. Control hooks after a tool call and after the agent were accepted when we set them up, but they never ran. A Python plug-in after the agent did run, and it masked phone numbers, emails, dates of birth and member IDs in the answer.
+
+The model gateway is for reliability: falling back to another provider, load balancing, retries. It doesn't apply any policy to the content.
+
+Two things to notice. Everything goes into the trace store before any masking happens. And patient messages come back to the agent as tool output, which nothing checks. That's where prompt injection would come from in this agent.
+
+---
+
+<!-- .slide: id="lab2-pii-layers" -->
+
+## Lab 2: Three Places to Remove PHI
+
+<table style="font-size:0.7em">
+<tr><td></td><td><strong>Runs</strong></td><td><strong>Model</strong></td><td><strong>Trace</strong></td><td><strong>Answer</strong></td></tr>
+<tr><td><strong>Control:</strong> PII Filter</td><td>before the agent, on user input</td><td>user input only</td><td>✗</td><td>✗</td></tr>
+<tr><td><strong>Plug-in</strong> (Python)</td><td>after the agent, on the answer</td><td>✗</td><td>✗</td><td>✓ identifiers</td></tr>
+<tr><td><strong>Minimize at the source</strong></td><td>in the tool or the EHR</td><td>✓</td><td>✓</td><td>✓</td></tr>
+</table>
+
+- The PII Filter and the plug-in use patterns. They catch phone numbers and IDs, not names.
+- Only the tool can keep PHI out of the model and the trace. If the tool doesn't return it, nothing downstream has it.
+
+Note: The control and the plug-in are useful, but look at the trace column. Neither one changes what's in the trace. The only way to keep PHI out of the trace is to have the tool return less. That's one reason Lab 3 replaces the tool that returns the whole record.
 
 ---
 
@@ -606,37 +948,7 @@ Not everything should be in your traces.
 <tr><td>Trace structure / spans</td><td>Session metadata</td><td>Unmasked PII</td></tr>
 </table>
 
-To improve the agent, you need rich traces. But rich traces mean more sensitive data in your observability platform. The table above is how you navigate that tension.
-
----
-
-<!-- .slide: id="lab2-pii" -->
-
-## Lab 2: Run the Agent. Look at the Traces.
-
-You'll see patient names, dates of birth, phone numbers, insurance IDs, and full medical records — in plain text — in your observability platform. Under HIPAA, that's a reportable breach.
-
-We mask it before it gets there, with two layers:
-
-- **Pydantic model annotations** — fields tagged `@pii` or `@phi` are replaced with `<PII_REDACTED>` regardless of string length. NER fails on short strings like `"Patricia Kowalski"`. Annotations don't.
-- **Microsoft Presidio** (spaCy NER + regex) — catches PII embedded in free text: message bodies, clinical notes, LLM reasoning.
-
-Both layers run **client-side**, before any data leaves the process.
-
----
-
-<!-- .slide: id="lab2-presidio" -->
-
-## Lab 2: Why Presidio?
-
-[Microsoft Presidio](https://github.com/microsoft/presidio) is an open-source PII detection and anonymization library. It combines two detection approaches:
-
-- **spaCy NER** — a trained named entity recognition model that identifies people, locations, dates, and other entities in natural language context. Good at finding "Patricia Kowalski" inside a sentence.
-- **Regex patterns** — catches structured PII regardless of context: SSNs, phone numbers, email addresses, credit cards. We add a custom recognizer for insurance member IDs.
-
-It integrates with LangChain via `PresidioAnonymizer`, which hooks into the same callback layer as Langfuse. One callback stack handles both masking and tracing.
-
-The reason we use two layers (Presidio + Pydantic annotations) is that NER struggles with short strings in isolation. A field containing just `"Patricia Kowalski"` may not be confidently classified as a person name. The annotations tell us exactly which fields are sensitive — NER handles the free text where it excels.
+On Orchestrate, every tool output goes into the trace. To log less, return less from your tools.
 
 ---
 
@@ -644,25 +956,25 @@ The reason we use two layers (Presidio + Pydantic annotations) is that NER strug
 
 ## Lab 2: What Traces Actually Show You
 
-With masking in place, traces reveal things you can't see any other way:
+Traces show you things you can't see any other way:
 
-- **Tool call order** — did the agent investigate sensibly, or call everything at once?
+- **Tool call order** — did the agent investigate, or stop after one call?
 - **The implicit summarization problem** — compare what tools returned (ground truth) to what the agent concluded. Discrepancies are visible by eye. Lab 3 automates catching them.
 - **The invisible prompt** — the doctor never sees the message the agent acted on. If the prompt is poorly written or biased, the trace is where you find out.
-- **Cost per run** — token counts per LLM call. At scale, "the agent runs on every patient every day" adds up fast.
+- **Tokens per run** — at scale, "the agent runs on every patient every day" adds up fast.
 
 ---
 
 <!-- .slide: id="lab2-datasets" -->
 
-## Lab 2: Traces as an Evaluation Dataset
+## Lab 2: Traces as Evaluation Data
 
 Traces aren't just for debugging right now — they're raw material for getting better over time.
 
-- **Add to Dataset** — save any trace as a labeled example. Good runs and bad runs. Over time you build a corpus of real agent behavior to use for regression testing and evaluation.
-- **Annotate** — add scores or free-text notes to any trace. When a clinician spots a wrong concern, they annotate the trace with what went wrong. That's a feedback loop from domain experts back to the engineering team — without any code changes.
+- Save good and bad runs as examples. Over time you have a set of real agent behavior to test new versions against.
+- When a clinician spots a wrong concern, record what went wrong. That's feedback from the domain expert to the engineering team.
 
-And then there's **LLM-as-Judge**: use a second LLM to evaluate the first one's output at scale. We'll build this in Lab 3. The traces you're capturing here are exactly the input it needs.
+And then there's **LLM-as-Judge**: use another LLM to check the agent's output at scale. We'll build this in Lab 3, from the same data you see in the trace.
 
 ---
 
@@ -688,7 +1000,7 @@ Lab 1 was Model Development — building the agent. Lab 2 was Operations — add
 
 **Run agent → Inspect traces → Identify failure → Implement fix → Run agent**
 
-This is the inner loop of the ADLC's Operations & Governance phase. Each of the three improvements in this lab was driven by something specific visible in the traces — not by guessing, not by re-reading the prompt, not by switching models.
+This is the inner loop of the ADLC's Operations & Governance phase. Each improvement in this lab starts from something you can see in a trace.
 
 Observability only pays off if you act on what you find.
 
@@ -696,15 +1008,15 @@ Observability only pays off if you act on what you find.
 
 <!-- .slide: id="lab3-what-we-found" -->
 
-## Lab 3: What the Traces Told Us
+## Lab 3: What to Look For in the Traces
 
-Three problems visible in the Lab 2 traces:
+Things to check in your Lab 2 traces:
 
-**1. It hallucinates.** Compare tool call outputs (what the data says) to the agent's concerns (what it claims). You'll find evidence strings citing lab values or dates that don't exist in the record.
+**1. Made-up evidence.** Compare the tool output (what the data says) to the agent's concerns (what it claims). Look for lab values or dates that aren't in the record.
 
-**2. It goes off-task.** Despite the system prompt saying not to make clinical recommendations, it suggests diagnoses and proposes treatments. A system prompt is a request, not a constraint.
+**2. Off-task answers.** The instructions say not to make clinical recommendations. Look for suggested diagnoses or treatments anyway. A system prompt is a request, not a constraint.
 
-**3. It dumps everything.** `get_patient_record` returns the full patient record — demographics, all conditions, all labs, all messages — on every call. More data in context = more opportunities to hallucinate from irrelevant information.
+**3. One big tool call.** `get_patient_record` returns the whole record — demographics, all conditions, all labs, all messages. Our agent usually calls it once and stops. More data in context means more chances to make things up.
 
 ---
 
@@ -716,7 +1028,7 @@ You might wonder whether a patient could craft a portal message to hijack the ag
 
 In this system, the risk is reduced by a deliberate architectural decision: the agent runs in the background, and its output goes to the **doctor** — not back to the patient. The patient never sees agent output, so there's no feedback loop to exploit.
 
-This isn't an accident. It's a consequence of choosing a background agent over a chat interface. The "why not a chatbox" decision from Lab 1 is also doing security work here. Security decisions cascade through architecture.
+The patient's message still reaches the agent, as tool output. Nothing on the platform checks tool output, so the agent's instructions and the doctor's review are what stand in the way.
 
 ---
 
@@ -728,54 +1040,43 @@ Replace `get_patient_record` with keyword-based search tools: `search_conditions
 
 Instead of drowning in everything at once, it has to reason first: "The patient mentioned fatigue — let me check thyroid conditions and TSH labs." This is investigation, not retrieval.
 
-Fewer tokens in context means lower cost, less hallucination surface area, and less PHI exposure in the traces.
+Fewer tokens in context means lower cost, less hallucination surface area, and less PHI in the traces.
 
 ---
 
 <!-- .slide: id="lab3-critic" -->
 
-## Lab 3: Claim Extraction + Grounding
+## Lab 3: Checks as Judge Agents
 
-Three steps run after the primary agent:
+Each check is its own agent on Orchestrate, with no tools and its own output schema:
 
-1. **Claim extraction** — pull out every specific, verifiable medical claim from each concern. Vague descriptions ("recent lab results") get filtered out. You can't ground-check something that doesn't assert anything specific.
+1. **Claim extractor** — pulls out every specific, checkable medical claim in each concern. Vague descriptions ("recent lab results") are dropped. You can't check something that doesn't say anything specific.
 
-2. **Grounding check** — each extracted claim is verified against the raw tool output. Did the agent actually see that lab value?
+2. **Grounding judge** (LLM-as-judge) — checks each claim against the patient's record. Is that lab value really there?
 
-3. **Critic** — evaluates on-task behavior plus grounding results; sends revision feedback back to the primary agent if needed.
+3. **Critic** — looks at the grounding results and whether the concern stays on task, and writes feedback for the agent.
 
-Why extract claims first? A grounding model returns one verdict per claim. Without extraction, you can't tell *which part* of a concern is wrong.
+Why extract claims first? The judge returns one verdict per claim, so you can tell *which part* of a concern is wrong.
 
----
-
-<!-- .slide: id="lab3-why-guardian" -->
-
-## Lab 3: Why Granite Guardian?
-
-[Granite Guardian](https://www.ibm.com/granite/docs/models/guardian/) is IBM's open-source model fine-tuned specifically for risk and safety detection — not a general LLM doing safety "on the side."
-
-It runs locally via [Ollama](https://ollama.com) — no API calls, no data leaving your machine. On consumer hardware, each claim check takes ~1-2 seconds.
-
-The interface is deliberately minimal. The system message selects the risk detector (`groundedness`, `harm`, etc.). The user message provides the context and the claim. The model returns one token: `Yes` (risk detected) or `No` (safe). That's it.
-
-This specificity matters: Granite Guardian was trained to detect hallucination and harm. A general LLM doing the same job brings its own biases and blind spots to the evaluation — and it's checking its own work. Guardian is a different model, trained for this task, running independently.
+Note: These three are prompts plus a schema, deployed as agents with no tools. You send each one a concern and the patient's data and get structured JSON back, checked the same way as in Lab 1.
 
 ---
 
-<!-- .slide: id="lab3-guardian" -->
+<!-- .slide: id="lab3-judge-bias" -->
 
-## Lab 3: LLM-as-Judge vs. Granite Guardian
+## Lab 3: Who Checks the Checker?
 
-Two options for the grounding step:
+Our judges run on the same model as the agent: gpt-oss-120b. A model checking its own kind of output has a bias. It tends to make the same mistakes it's looking for.
 
-<table>
-<tr><td></td><td><strong>LLM-as-Judge</strong></td><td><strong>Granite Guardian</strong></td></tr>
-<tr><td>Self-evaluation bias</td><td>Yes — checking its own work</td><td>No — separate model</td></tr>
-<tr><td>Cost</td><td>Uses your API quota</td><td>Free, runs locally via Ollama</td></tr>
-<tr><td>Purpose-built</td><td>General reasoning</td><td>Fine-tuned for groundedness detection</td></tr>
-</table>
+Ways to reduce it:
 
-Guardian uses a specific message format: system message selects the `groundedness` risk detector; user message provides context and one claim. Returns Yes (hallucinated) or No (grounded). The lab lets you toggle between both and compare traces side by side.
+- a judge from a different model family (Orchestrate's catalog has more than one)
+- a model trained for the check, such as a groundedness detector
+- a clinician reviewing a sample of verdicts
+
+Judges cut down on what reaches the doctor. The doctor is still the one who decides.
+
+Note: In the open-source edition, there's an option to check grounding with Granite Guardian running locally. It's a model trained to detect ungrounded claims. We're not running it today. Here, the judge is the same model as the agent, so keep that bias in mind when you read its verdicts.
 
 ---
 
@@ -787,7 +1088,7 @@ Guardian uses a specific message format: system message selects the `groundednes
 
 # Securing Data
 
-Enforce access control at the database layer.
+Who can read what the agent knows? A discussion.
 
 </div>
 
@@ -795,7 +1096,7 @@ Enforce access control at the database layer.
 
 <!-- .slide: id="lab4-output-is-sensitive" -->
 
-## Lab 4: Agent Output Is PHI Too
+## Lab 4: Agent Output Is Sensitive Data
 
 We've been protecting the patient records the agent reads. But the concerns the agent writes are also sensitive — they're clinical findings derived from patient data.
 
@@ -805,64 +1106,75 @@ In a multi-provider practice, provider A's agent may reach a different conclusio
 
 ---
 
-<!-- .slide: id="lab4-rls" -->
+<!-- .slide: id="lab4-storage-guarantees" -->
 
-## Lab 4: Why Access Control Belongs in the Database
+## Lab 4: Where Does the Agent's Data Live?
 
-**Application-layer filtering**: every query includes `WHERE provider_id = :provider_id`. You have to remember it in every query, every ORM eager-load, every debug endpoint, every migration. Forget it once and data leaks silently.
+<table style="font-size:0.72em">
+<tr><td><strong>Data</strong></td><td><strong>Stored in</strong></td><td><strong>What we saw today</strong></td></tr>
+<tr><td>Traces: tool output, LLM context</td><td>watsonx Orchestrate</td><td>every seat can read them, kept 30 days</td></tr>
+<tr><td>Agent, tools, connection</td><td>watsonx Orchestrate</td><td>credentials in the connection</td></tr>
+<tr><td>Patient records</td><td>shared EHR on Code Engine</td><td>a copy per tenant, keyed by a header</td></tr>
+<tr><td>Concerns</td><td>a JSON file on your laptop</td><td>no access control, no audit log</td></tr>
+</table>
 
-**Postgres Row-Level Security**: the policy applies to every query automatically — including ones you haven't written yet. A new developer can write `SELECT * FROM concerns` and only sees what the session allows.
+Questions to ask your platform, for each one:
 
-```sql
-CREATE POLICY provider_concern_access ON concerns
-    USING (
-        provider_id = current_setting('app.provider_id', true)
-        OR id IN (SELECT concern_id FROM shared_concerns
-                  WHERE shared_with = current_setting('app.provider_id', true))
-    );
-```
+- Where is it stored, and in which region?
+- Who can read it? Can you limit that per user?
+- How long is it kept? How do you delete it, including backups and exports?
+- Is it encrypted at rest and in transit? Who holds the keys?
 
-One place to maintain the rule, instead of every query in the codebase.
+Note: Ask these about every place the agent's data ends up, including traces. Get the answers from the vendor's documentation. IBM's watsonx data security page says data at rest is encrypted by default, and that you can bring your own keys with Key Protect. Check what applies to the specific service you use. For Orchestrate traces, what we saw in this account is that every seat can read them and they're kept for 30 days.
 
----
-
-<!-- .slide: id="lab4-ownership" -->
-
-## Lab 4: Default Deny, Explicit Grant
-
-Concerns belong to the provider whose agent created them. Dr. Kim and Rachel Torres run agents against the same patients — they get separate concern sets, even for the same patient. The agent is a delegate; its output inherits the identity of whoever invoked it.
-
-The default is isolation. To share a concern, you make an explicit grant — `share_concern()` records it in `shared_concerns`. That action is auditable.
-
-Compare this to most application-layer designs, where the default is permissive and you add filters to restrict. **Default deny inverts the assumption.** Access is exceptional, not normal.
+Sources: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/security-data.html?context=wx
 
 ---
 
-<!-- .slide: id="lab4-scoping" -->
+<!-- .slide: id="lab4-data-layer" -->
 
-## Lab 4: Tool Scoping + Concern Stability
+## Lab 4: Access Control Belongs in the Data Layer
 
-**Tool scoping**: instead of a flat tool list, a factory creates tools scoped to one authorized patient. If the agent tries to access a different patient's record, it gets an explicit denial.
+You can put a rule like "Rachel Torres can't see Dr. Kim's concerns" in four places:
 
-Elena Vasquez's record mentions her neighbor Patricia Kowalski and asks the doctor to check on her. The agent sees the mention, tries to access Patricia's record, and gets denied. The doctor never sees data she didn't authorize.
+- **The prompt.** A request to the model. Text in a patient message can override it.
+- **The UI.** Every other path to the data skips it.
+- **The application's queries.** Forget the `WHERE` clause once, and data leaks.
+- **The data layer.** The store checks every read and write, whichever code asks.
 
-**Concern stability**: the agent receives its previous concerns as context and reuses their IDs. Running it twice doesn't wipe previous work — it builds on it. Downstream systems (notifications, audit logs, care coordination) can reference concern IDs and know they'll persist.
+For example, Postgres row-level security applies a policy to every query, including ones you haven't written yet. The default is deny. Sharing a concern writes an explicit grant, and that grant is a record you can audit.
+
+Note: The repository has a Lab 4 schema with a row-level security policy if you want to read one. We're not running a database today. I want you to know the rule can live in one place, in the store.
+
+---
+
+<!-- .slide: id="lab4-identity" -->
+
+## Lab 4: Identity End to End
+
+The agent acts for a clinician. Its tools should fetch only what that clinician could fetch.
+
+- **The identity comes from the session.** The model never fills it in. If it's a tool argument, a prompt injection can change it.
+- **The check happens below the agent.** The data layer decides what comes back.
+
+Today, neither is true:
+
+- Your tools send your tenant, which separates students. It doesn't identify a clinician.
+- Within your tenant, the tools can read any patient. `list_patients` and `get_inbox` return conditions and message subjects for every patient.
+
+Note: Patient Elena Vasquez's message mentions her neighbor, Patricia Kowalski. Nothing today stops the agent from looking up Patricia's record while it reviews Elena. The Lab 4 code in the repository scopes tools to one patient, but even there the clinic directory tools return every patient's conditions. A real fix needs the clinician's identity checked in the record system.
 
 ---
 
 <!-- .slide: id="lab4-production" -->
 
-## Lab 4: What RLS Doesn't Fully Solve
+## Lab 4: In Production
 
-The RLS policy trusts `current_setting('app.provider_id')` — a session variable the application sets. A Python bug that sets the wrong provider ID would still leak data. RLS centralizes the filter; it doesn't verify the identity.
-
-In production:
-- Each provider authenticates via JWT/OAuth
-- Identity flows into a per-provider database role
-- The policy checks `current_user`, not a session variable the app can misconfigure
-- Langfuse traces need their own RBAC — the same provider who can see concerns in the UI shouldn't automatically see all traces
-
-RLS is defense-in-depth, not a complete security boundary. It's one layer in a stack.
+- Each clinician signs in, with OAuth or SMART on FHIR, and that identity reaches the record system on every tool call
+- Concerns go in a store with access control by clinician, an audit log, and a retention rule
+- Traces get the same treatment: limit who can read them, minimize what goes in, and set how long they're kept
+- Credentials live in the platform's connections or a secrets manager, not in `.env`
+- Each team gets its own Orchestrate instance and only the roles it needs
 
 ---
 
@@ -887,17 +1199,17 @@ RLS is defense-in-depth, not a complete security boundary. It's one layer in a s
 
 **The Agent**
 - Background inbox triage for a doctor's EHR
-- Structured outputs — no free text, no advice, no drafts
+- Structured outputs, checked by your code — no free text, no advice, no drafts
 - Doctor stays in the loop at every step
 
 </div>
 <div style="flex: 1">
 
-**The Stack**
-- Lab 1: LangGraph + constrained decoding
-- Lab 2: Langfuse + Presidio
-- Lab 3: Critic loop + Granite Guardian
-- Lab 4: Postgres RLS + scoped tools
+**Each Lab**
+- Lab 1: an agent on Orchestrate, with a schema, validation and one retry
+- Lab 2: Orchestrate traces; controls, plug-ins, and smaller tool output
+- Lab 3: focused tools; grounding and critic checks as judge agents
+- Lab 4: where agent data is stored, and identity end to end
 
 </div>
 </div>
@@ -913,7 +1225,7 @@ Responsibility isn't something you bolt on at the end.
 - **Build** with constraints from day one — structure limits what the agent can say
 - **Observe** so you can explain every decision — and defend it
 - **Improve** using evidence from real traces, not intuition
-- **Secure** at the infrastructure layer, not just the prompt
+- **Secure** the data the agent reads and writes, in the data layer
 
 =====/
 
