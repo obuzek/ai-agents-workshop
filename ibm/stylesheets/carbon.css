@@ -1,0 +1,76 @@
+/*
+ * IBM Carbon reskin for the IBM edition.
+ * Palette values are Carbon v11 tokens: https://carbondesignsystem.com/elements/color/tokens/
+ *   Gray 100 #161616 · Gray 90 #262626 · Gray 80 #393939 · Gray 10 #f4f4f4
+ *   Blue 60 #0f62fe (interactive) · Blue 70 #0043ce (hover) · Blue 40 #78a9ff (interactive, dark)
+ */
+
+/* Header and tabs: Carbon UI shell (Gray 100) */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #161616;
+  --md-primary-fg-color--light: #393939;
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #c6c6c6;
+  --md-typeset-a-color: #0f62fe;
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #0043ce;
+  --md-accent-fg-color--transparent: rgba(15, 98, 254, 0.1);
+  --md-accent-bg-color: #ffffff;
+}
+
+/* Dark mode: Carbon Gray 100 theme */
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-default-bg-color: #161616;
+  --md-code-bg-color: #262626;
+  --md-footer-bg-color: #262626;
+  --md-footer-bg-color--dark: #161616;
+  --md-typeset-a-color: #78a9ff;
+}
+
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
+  --md-accent-fg-color: #a6c8ff;
+  --md-accent-fg-color--transparent: rgba(120, 169, 255, 0.1);
+}
+
+.md-header {
+  border-bottom: 1px solid #393939;
+}
+
+/* Blue 60 underline on the active tab, as in Carbon's header nav */
+.md-tabs__item--active .md-tabs__link {
+  box-shadow: inset 0 -3px 0 #0f62fe;
+}
+
+/* Carbon uses square corners throughout */
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset pre > code,
+.md-typeset .md-button,
+.md-search__form,
+.md-search__output {
+  border-radius: 0;
+}
+
+.md-typeset .md-button--primary {
+  background-color: #0f62fe;
+  border-color: #0f62fe;
+  color: #ffffff;
+}
+
+.md-typeset .md-button--primary:hover {
+  background-color: #0043ce;
+  border-color: #0043ce;
+}
+
+/* Carbon headings run lighter than Material's defaults */
+.md-typeset h1 {
+  font-weight: 300;
+}
+
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: 400;
+}
