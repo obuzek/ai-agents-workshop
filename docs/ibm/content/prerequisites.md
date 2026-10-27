@@ -78,14 +78,33 @@ You'll work in **IBM Bob**, IBM's AI-powered IDE, and run every command in Bob's
 
 ### Create your API key
 
-Create your API key in the IBM Cloud tab you logged in with, following **[IBM Cloud login → Create your API key](ibm-cloud-login.md#3-create-your-api-key)**. Keep that tab open until the installer accepts the key.
+Your code talks to IBM Cloud with an **API key**. Create it in the IBM Cloud tab where you logged in with your **workshop seat** (see [IBM Cloud login](ibm-cloud-login.md); not your own IBMid):
+
+1. In the **top menu bar**, open the **Manage** dropdown and choose **Access (IAM)**.
+2. In the **IAM menu on the left**, find the **Manage identities** heading and click **API keys** underneath it.
+3. Click **Create**.
+4. Give the key a name, such as `ai-agents-workshop`, and click **Create**.
+5. Click **Copy** to copy the key. Leave this browser tab open until the installer has accepted it.
+
+!!! warning "You only see the key once"
+    IBM Cloud shows the key only when you create it. If you close the dialog before the installer accepts it, delete that key and create a new one.
+
+### The workshop's Orchestrate instance
+
+Everyone uses the same watsonx Orchestrate instance. Its CRN (IBM Cloud's ID for it) is:
+
+```text
+crn:v1:bluemix:public:watsonx-orchestrate:ca-tor:a/2b3886f67e2b4a8c836209316ea567df:2c470347-3d72-4846-b08c-384bb29591b4::
+```
+
+The installer command below already includes it, so you don't need to paste it anywhere.
 
 ### Run the installer
 
 In Bob's terminal from step 2 (on Windows, the Bob window connected to WSL), run:
 
 ```bash
-curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-ibm/scripts/install.sh | bash
+curl -LsSf https://raw.githubusercontent.com/obuzek/ai-agents-workshop/txc-2026-ibm/scripts/install.sh | WXO_INSTANCE='crn:v1:bluemix:public:watsonx-orchestrate:ca-tor:a/2b3886f67e2b4a8c836209316ea567df:2c470347-3d72-4846-b08c-384bb29591b4::' bash
 ```
 
 You don't need Homebrew or a preinstalled Python. The installer:
@@ -102,7 +121,7 @@ It's safe to run again at any time: it skips what's already done and updates the
 
 ### Paste your API key
 
-When the installer reaches `[6/7] Connect to IBM Cloud`, paste the key you copied in the browser and press Enter. Nothing appears as you paste; that's on purpose. The script checks the key with IBM Cloud, finds the workshop's watsonx Orchestrate instance, saves your settings to `.env`, and connects the `orchestrate` CLI. Then it checks the whole setup.
+When the installer reaches `[6/7] Connect to IBM Cloud`, paste the key you copied in the browser and press Enter. Nothing appears as you paste; that's on purpose. The script checks the key with IBM Cloud, connects to the workshop's watsonx Orchestrate instance (the CRN above), saves your settings to `.env`, and connects the `orchestrate` CLI. Then it checks the whole setup.
 
 You'll see:
 
@@ -111,7 +130,6 @@ You'll see:
 Created .env from .env-example
 Paste your IBM Cloud API key (it won't show as you paste), then press Enter:
 ✓ API key works: <your workshop username> (account <account id>)
-✓ Found your watsonx Orchestrate instance: <instance name>
 ✓ Saved WXO_API_KEY and WXO_INSTANCE_URL to …/ai-agents-workshop/.env
 ✓ Your agent and tools will be named with the prefix 'student0_'
 ✓ Orchestrate instance is reachable with this key
@@ -139,6 +157,8 @@ uv run python scripts/ibm_cloud_login.py
 ```
 
 Use the same command later if your key expires.
+
+It remembers the workshop's instance from your first run. If it says it can't see the instance, add the CRN from above: `uv run python scripts/ibm_cloud_login.py --instance '<CRN>'`.
 
 When the installer finishes:
 

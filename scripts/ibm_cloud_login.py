@@ -245,7 +245,16 @@ def main(argv: list[str] | None = None):
     claims = token_claims(token)
     print(f"✓ API key works: {describe_token(claims)}")
 
-    instance_url = resolve_instance_url(args.instance) if args.instance else choose_instance(token)
+    # Use the instance given on the command line, else the one saved by an earlier run,
+    # else find it from the key.
+    saved = re.search(r"^WXO_INSTANCE_URL=(https://\S+)$", ENV_FILE.read_text(), flags=re.MULTILINE)
+    if args.instance:
+        instance_url = resolve_instance_url(args.instance)
+    elif saved:
+        instance_url = saved.group(1)
+        print("✓ Using the watsonx Orchestrate instance saved in .env")
+    else:
+        instance_url = choose_instance(token)
 
     prefix = args.dev_prefix if args.dev_prefix is not None else name_prefix(claims)
     tenant = args.dev_tenant if args.dev_tenant is not None else tenant_id(api_key)

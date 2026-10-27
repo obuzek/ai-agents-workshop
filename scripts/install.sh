@@ -20,6 +20,7 @@
 #   WORKSHOP_DIR     where to put the workshop   (default: ~/ai-agents-workshop)
 #   WORKSHOP_BRANCH  which branch to use          (default: txc-2026-ibm)
 #   SKIP_LOGIN=1     skip the IBM Cloud login step (and check only the local setup)
+#   WXO_INSTANCE     the workshop's Orchestrate instance CRN or URL (found from your key otherwise)
 
 # Everything lives in main(), called on the last line, so a download cut off
 # halfway through runs nothing.
@@ -71,7 +72,9 @@ main() {
     elif [[ -r /dev/tty ]]; then
         # This script arrives on stdin (curl | bash), so give the login script the
         # keyboard explicitly; it asks for your API key.
-        if (cd "$dir" && uv run python scripts/ibm_cloud_login.py </dev/tty); then
+        local login_args=()
+        [[ -n "${WXO_INSTANCE:-}" ]] && login_args=(--instance "$WXO_INSTANCE")
+        if (cd "$dir" && uv run python scripts/ibm_cloud_login.py ${login_args[@]+"${login_args[@]}"} </dev/tty); then
             logged_in=1
         else
             warn "IBM Cloud setup didn't finish. Fix the issue above, then run: cd $dir && uv run python scripts/ibm_cloud_login.py"
