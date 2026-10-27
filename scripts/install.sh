@@ -38,7 +38,7 @@ main() {
 
     step 2 "uv and Python"
     ensure_uv
-    uv python install "$python_version" >/dev/null
+    uv python install "$python_version" >/dev/null 2>&1 || die "uv couldn't install Python $python_version."
     ok "uv $(uv --version | awk '{print $2}'), Python $python_version"
 
     step 3 "Workshop files"
@@ -55,7 +55,11 @@ main() {
         uv tool install --python "$python_version" ibm-watsonx-orchestrate --quiet
     fi
     uv tool update-shell >/dev/null 2>&1 || true  # puts ~/.local/bin on PATH in new shells
-    ok "$(orchestrate --version 2>/dev/null | head -1 || echo "orchestrate installed")"
+    # `orchestrate --version` prints the version but exits non-zero, so don't trust its status.
+    local adk_version
+    adk_version="$(orchestrate --version 2>/dev/null | head -1 || true)"
+    command -v orchestrate >/dev/null 2>&1 || die "The Orchestrate CLI didn't install."
+    ok "${adk_version:-orchestrate CLI installed}"
 
     step 6 "Connect to IBM Cloud"
     if [[ "${SKIP_LOGIN:-}" == "1" ]]; then
