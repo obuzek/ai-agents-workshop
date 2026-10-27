@@ -28,87 +28,6 @@ revealjs:
 
 ---
 
-<!-- .slide: id="watsonx-products" -->
-
-## watsonx.ai Studio vs watsonx Orchestrate vs watsonx.governance
-
-<div style="display:flex;gap:28px;font-size:0.78em;line-height:1.4">
-<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
-<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.ai Studio</p>
-<p style="margin:0 0 0.8em;opacity:0.75">"A studio of integrated tools for building generative AI and machine learning solutions"</p>
-<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
-<ul style="margin:0 0 0.8em 1em">
-<li>Foundation models: IBM and open source</li>
-<li>Prompt Lab: experiment with prompts</li>
-<li>Projects: shared workspaces for assets</li>
-<li>Tuning, RAG, deployments</li>
-</ul>
-<p style="margin:0 0 0.3em"><strong>Today</strong></p>
-<p style="margin:0">You open it once. That creates the watsonx profile that governance needs.</p>
-</div>
-<div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.6em">
-<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx Orchestrate</p>
-<p style="margin:0 0 0.8em;opacity:0.75">"An agent management platform designed to help build, deploy, orchestrate, manage and govern AI agents"</p>
-<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
-<ul style="margin:0 0 0.8em 1em">
-<li>Agents and the tools they call</li>
-<li>Connections that hold credentials</li>
-<li>Controls and plug-ins: guardrails, PII</li>
-<li>Traces and evaluation</li>
-</ul>
-<p style="margin:0 0 0.3em"><strong>Today</strong></p>
-<p style="margin:0">Where you build and run your agent: definition, tools, connection, controls, traces.</p>
-</div>
-<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
-<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.governance</p>
-<p style="margin:0 0 0.8em;opacity:0.75">"Govern any AI, anywhere with real-time visibility, enterprise controls, and continuous accountability"</p>
-<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
-<ul style="margin:0 0 0.8em 1em">
-<li>Evaluating and monitoring AI output</li>
-<li>Metrics, factsheets, model history</li>
-<li>AI risk management</li>
-<li>Policy and regulatory compliance</li>
-</ul>
-<p style="margin:0 0 0.3em"><strong>Today</strong></p>
-<p style="margin:0">The evaluation concepts behind Lab 3: grounding, judges, metrics.</p>
-</div>
-</div>
-
-Note: You'll hear about three watsonx products today. watsonx.ai Studio is where you work with models directly, try prompts in Prompt Lab, and keep things in projects. Today you only open it once. Opening it creates the watsonx profile that governance needs.
-
-watsonx Orchestrate is where your agent lives. The agent, its tools, its connection to the EHR, the controls on it, and the traces of every run are all in Orchestrate.
-
-watsonx.governance is for evaluating and monitoring AI, and for managing risk. In Lab 3 we build the kind of checks it's designed to track: grounding, judges, metrics.
-
-Sources (IBM's own descriptions):
-- watsonx.ai: https://www.ibm.com/products/watsonx-ai and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx ("a studio of integrated tools…", Prompt Lab, projects)
-- Prompt Lab and projects: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/get-started-prompt-lab.html?context=wx
-- watsonx Orchestrate: https://www.ibm.com/products/watsonx-orchestrate
-- watsonx.governance: https://www.ibm.com/products/watsonx-governance and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx (evaluate prompts, monitor output, factsheets, risk)
-
----
-
-<!-- .slide: id="which-model" -->
-
-## Which model?
-
-Today's agent runs on **Claude Sonnet 5.5**. It's a high-end model at a reasonable cost.
-
-- In Orchestrate it's `virtual-model/anthropic/claude-sonnet-5-5`, reached through Orchestrate's model gateway.
-- Orchestrate can be set up with many model backends: watsonx.ai, Anthropic, OpenAI, AWS Bedrock, Ollama and others.
-- Through watsonx.ai you can choose open-weights models, or deploy your own. That's one way to run on-prem.
-
-Note: We're using Claude Sonnet 5.5 today because it's a strong model at a reasonable price. We tried the free gpt-oss-120b first. It often stopped after one look at the patient record, so it missed things.
-
-You're not locked into one model. Orchestrate's model gateway can talk to a long list of providers. If your data can't leave your building, watsonx.ai has open-weights models, and you can deploy your own model there.
-
-Sources:
-- Providers Orchestrate supports for models: https://developer.watson-orchestrate.ibm.com/llm/managing_llm.md
-- watsonx.ai models: https://www.ibm.com/products/watsonx-ai
-- Deploying your own model in watsonx.ai: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
-
----
-
 <!-- .slide: id="todays-modules" -->
 
 ## Today's modules
@@ -444,6 +363,87 @@ Agent-based systems introduce additional considerations:
 - **Observability** — can you explain what the agent did and why?
 
 Note: These four dimensions map directly to the four labs: build, observe, improve, secure.
+
+---
+
+<!-- .slide: id="watsonx-products" -->
+
+## watsonx.ai Studio vs watsonx Orchestrate vs watsonx.governance
+
+<div style="display:flex;gap:28px;font-size:0.78em;line-height:1.4">
+<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.ai Studio</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"A studio of integrated tools for building generative AI and machine learning solutions"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Foundation models: IBM and open source</li>
+<li>Prompt Lab: experiment with prompts</li>
+<li>Projects: shared workspaces for assets</li>
+<li>Tuning, RAG, deployments</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">You open it once. That creates the watsonx profile that governance needs.</p>
+</div>
+<div style="flex:1;border-top:4px solid #0f62fe;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx Orchestrate</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"An agent management platform designed to help build, deploy, orchestrate, manage and govern AI agents"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Agents and the tools they call</li>
+<li>Connections that hold credentials</li>
+<li>Controls and plug-ins: guardrails, PII</li>
+<li>Traces and evaluation</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">Where you build and run your agent: definition, tools, connection, controls, traces.</p>
+</div>
+<div style="flex:1;border-top:4px solid #8d8d8d;padding-top:0.6em">
+<p style="margin:0 0 0.2em;font-weight:600;font-size:1.25em">watsonx.governance</p>
+<p style="margin:0 0 0.8em;opacity:0.75">"Govern any AI, anywhere with real-time visibility, enterprise controls, and continuous accountability"</p>
+<p style="margin:0 0 0.3em"><strong>What it's for</strong></p>
+<ul style="margin:0 0 0.8em 1em">
+<li>Evaluating and monitoring AI output</li>
+<li>Metrics, factsheets, model history</li>
+<li>AI risk management</li>
+<li>Policy and regulatory compliance</li>
+</ul>
+<p style="margin:0 0 0.3em"><strong>Today</strong></p>
+<p style="margin:0">The evaluation concepts behind Lab 3: grounding, judges, metrics.</p>
+</div>
+</div>
+
+Note: You'll hear about three watsonx products today. watsonx.ai Studio is where you work with models directly, try prompts in Prompt Lab, and keep things in projects. Today you only open it once. Opening it creates the watsonx profile that governance needs.
+
+watsonx Orchestrate is where your agent lives. The agent, its tools, its connection to the EHR, the controls on it, and the traces of every run are all in Orchestrate.
+
+watsonx.governance is for evaluating and monitoring AI, and for managing risk. In Lab 3 we build the kind of checks it's designed to track: grounding, judges, metrics.
+
+Sources (IBM's own descriptions):
+- watsonx.ai: https://www.ibm.com/products/watsonx-ai and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx ("a studio of integrated tools…", Prompt Lab, projects)
+- Prompt Lab and projects: https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/get-started-prompt-lab.html?context=wx
+- watsonx Orchestrate: https://www.ibm.com/products/watsonx-orchestrate
+- watsonx.governance: https://www.ibm.com/products/watsonx-governance and https://www.ibm.com/docs/en/watsonx/saas?topic=overview-watsonx (evaluate prompts, monitor output, factsheets, risk)
+
+---
+
+<!-- .slide: id="which-model" -->
+
+## Which model?
+
+Today's agent runs on **Claude Sonnet 5.5**. It's a high-end model at a reasonable cost.
+
+- In Orchestrate it's `virtual-model/anthropic/claude-sonnet-5-5`, reached through Orchestrate's model gateway.
+- Orchestrate can be set up with many model backends: watsonx.ai, Anthropic, OpenAI, AWS Bedrock, Ollama and others.
+- Through watsonx.ai you can choose open-weights models, or deploy your own. That's one way to run on-prem.
+
+Note: We're using Claude Sonnet 5.5 today because it's a strong model at a reasonable price. We tried the free gpt-oss-120b first. It often stopped after one look at the patient record, so it missed things.
+
+You're not locked into one model. Orchestrate's model gateway can talk to a long list of providers. If your data can't leave your building, watsonx.ai has open-weights models, and you can deploy your own model there.
+
+Sources:
+- Providers Orchestrate supports for models: https://developer.watson-orchestrate.ibm.com/llm/managing_llm.md
+- watsonx.ai models: https://www.ibm.com/products/watsonx-ai
+- Deploying your own model in watsonx.ai: https://www.ibm.com/docs/en/SSYOK8/wsj/analyze-data/deploy-custom-fm-cloud.html
 
 ---
 
