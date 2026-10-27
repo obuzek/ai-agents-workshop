@@ -20,6 +20,7 @@ import json
 import os
 import re
 import threading
+import time
 from contextvars import ContextVar
 from pathlib import Path
 
@@ -123,6 +124,12 @@ def _tenant_records() -> dict[str, dict]:
 # --- remote mode: forward to the shared EHR ---
 
 
+# One UI redraw asks the local API for the patient list several times, and each
+# answer is a ~500 KB download of every record. Reuse it briefly; a reply clears it.
+REMOTE_CACHE_SECONDS = 5
+_remote_records: tuple[float, list[dict]] | None = None
+
+
 def _remote(method: str, path: str, **kwargs):
     resp = requests.request(method, f"{REMOTE_URL}{path}", headers={TENANT_HEADER: REMOTE_TENANT},
                             timeout=30, **kwargs)
@@ -140,7 +147,10 @@ def load_raw_patients() -> list[dict]:
     if EHR_MODE == "server":
         return list(_tenant_records().values())
     if EHR_MODE == "remote":
-        return _remote("GET", "/records")
+        global _remote_records
+        if _remote_records is None or time.monotonic() - _remote_records[0] > REMOTE_CACHE_SECONDS:
+            _remote_records = (time.monotonic(), _remote("GET", "/records"))
+        return _remote_records[1]
     return [json.loads(p.read_text()) for p in sorted(DATA_DIR.glob("*.json"))]
 
 
@@ -172,8 +182,10 @@ def save_reply(patient_id: str, message_id: str, sender_name: str, body: str, da
             _append_reply(_tenant_records()[patient_id], message_id, sender_name, body, date)
         return
     if EHR_MODE == "remote":
+        global _remote_records
         _remote("POST", f"/patients/{patient_id}/messages/{message_id}/reply",
                 json={"sender_name": sender_name, "body": body})
+        _remote_records = None
         return
 
     # Local: write straight to the JSON file to preserve its full structure.
